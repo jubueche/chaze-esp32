@@ -10,6 +10,7 @@
  /home/julian/eclipse-workspace/chaze-esp32/build/console/libconsole.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/cxx/libcxx.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/driver/libdriver.a.sections_info
+ /home/julian/eclipse-workspace/chaze-esp32/build/esp-azure/libesp-azure.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/esp-tls/libesp-tls.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/esp32/libesp32.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/esp_adc_cal/libesp_adc_cal.a.sections_info
@@ -26,6 +27,7 @@
  /home/julian/eclipse-workspace/chaze-esp32/build/freertos/libfreertos.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/heap/libheap.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/idf_test/libidf_test.a.sections_info
+ /home/julian/eclipse-workspace/chaze-esp32/build/iothub_client_sample_mqtt/libiothub_client_sample_mqtt.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/jsmn/libjsmn.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/json/libjson.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/libsodium/liblibsodium.a.sections_info

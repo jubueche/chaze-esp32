@@ -29,7 +29,7 @@
             			
             <storageModule moduleId="cdtBuildSystem" version="4.0.0">
                 				
-                <configuration buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
+                <configuration artifactName="${ProjName}" buildProperties="" description="" id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005" name="Default" parent="org.eclipse.cdt.build.core.emptycfg">
                     					
                     <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.53109158" name="/" resourcePath="">
                         						
@@ -76,6 +76,66 @@
                             <tool id="cdt.managedbuild.tool.gnu.cross.assembler.116506868" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.2139942878" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    					
+                    <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.1641644989" name="/" resourcePath="components/iothub_client_sample_mqtt">
+                        						
+                        <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1451046264" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.prefix.1338056761.886771932" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1338056761"/>
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.6894666" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
+                            							
+                            <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1117465738" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
+                                								
+                                <option id="gnu.c.compiler.option.include.paths.1159809173" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/iothub_client_sample_mqtt/include"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_service_client/inc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${IDF_PATH}/components/esp32/include&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${IDF_PATH}/components/freertos/include/&quot;"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.2115144709" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.902375829" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <option id="gnu.cpp.compiler.option.include.paths.1594446390" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/iothub_client_sample_mqtt/include"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.300106038" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.linker.724804281" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1529332991"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1063258859" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1045270675"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.archiver.1602176257" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1125006303"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.assembler.1974291086" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.assembler.input.669204214" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
                                 							
                             </tool>
                             						
@@ -133,7 +193,25 @@
     	
     <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
         		
-        <buildTargets/>
+        <buildTargets>
+            			
+            <target name="flash" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+                				
+                <buildCommand>make</buildCommand>
+                				
+                <buildArguments>-j4</buildArguments>
+                				
+                <buildTarget>flash</buildTarget>
+                				
+                <stopOnError>true</stopOnError>
+                				
+                <useDefaultCommand>true</useDefaultCommand>
+                				
+                <runAllBuilders>true</runAllBuilders>
+                			
+            </target>
+            		
+        </buildTargets>
         	
     </storageModule>
     

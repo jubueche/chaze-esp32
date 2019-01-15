@@ -1,8 +1,8 @@
 port/mbedtls_debug.o: \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/port/mbedtls_debug.c \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/macro_utils.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -18,7 +18,7 @@ port/mbedtls_debug.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings_types.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -65,11 +65,11 @@ port/mbedtls_debug.o: \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/mbedtls/include/mbedtls/ssl.h \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_debug.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/macro_utils.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
@@ -101,7 +101,7 @@ port/mbedtls_debug.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings_types.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 

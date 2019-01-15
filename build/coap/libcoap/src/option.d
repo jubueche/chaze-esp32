@@ -129,10 +129,10 @@ libcoap/src/option.o: \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/hashkey.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/str.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/encode.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/macro_utils.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings_types.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/debug.h
 
 /home/julian/Documents/esp/esp-idf/components/coap/port/include/coap_config.h:
@@ -393,13 +393,13 @@ libcoap/src/option.o: \
 
 /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/encode.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/macro_utils.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/AzureIoT/src/az_iot/c-utility/inc/azure_c_shared_utility/strings_types.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
 
 /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/debug.h:
 /home/julian/Documents/esp/esp-idf/components/coap/libcoap/src/option.c:
