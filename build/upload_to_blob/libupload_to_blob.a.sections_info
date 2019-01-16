@@ -1,0 +1,42 @@
+In archive /home/julian/eclipse-workspace/chaze-esp32/build/upload_to_blob/libupload_to_blob.a:
+
+upload_to_blob.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.upload_to_blob 00000068  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .text         00000000  00000000  00000000  0000009c  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000000  00000000  00000000  0000009c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000000  00000000  00000000  0000009c  2**0
+                  ALLOC
+  4 .rodata.str1.4 00000222  00000000  00000000  0000009c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .text.upload_to_blob 000000c2  00000000  00000000  000002c0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .debug_frame  00000028  00000000  00000000  00000384  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  7 .debug_info   000005ff  00000000  00000000  000003ac  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  8 .debug_abbrev 00000175  00000000  00000000  000009ab  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000013  00000000  00000000  00000b20  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 10 .debug_aranges 00000020  00000000  00000000  00000b33  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  00000b53  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 12 .debug_line   00000339  00000000  00000000  00000b63  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 13 .debug_str    000005c9  00000000  00000000  00000e9c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 14 .comment      0000003b  00000000  00000000  00001465  2**0
+                  CONTENTS, READONLY
+ 15 .xtensa.info  00000038  00000000  00000000  000014a0  2**0
+                  CONTENTS, READONLY
+ 16 .xt.lit       00000008  00000000  00000000  000014d8  2**0
+                  CONTENTS, RELOC, READONLY
+ 17 .xt.prop      00000078  00000000  00000000  000014e0  2**0
+                  CONTENTS, RELOC, READONLY

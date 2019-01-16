@@ -1,11 +1,9 @@
-/* esp-azure example
+//   This example code is in the Public Domain (or CC0 licensed, at your option.)
 
-   This example code is in the Public Domain (or CC0 licensed, at your option.)
+//   Unless required by applicable law or agreed to in writing, this
+//   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+//   CONDITIONS OF ANY KIND, either express or implied.
 
-   Unless required by applicable law or agreed to in writing, this
-   software is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-   CONDITIONS OF ANY KIND, either express or implied.
-*/
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -19,7 +17,7 @@
 
 #include "nvs_flash.h"
 
-#include "iothub_client_sample_mqtt.h"
+#include "upload_to_blob.h"
 
 #define EXAMPLE_WIFI_SSID "EatOrBeEaten"
 #define EXAMPLE_WIFI_PASS "Fussball08"
@@ -29,9 +27,7 @@ EventGroupHandle_t wifi_event_group;
 #ifndef BIT0
 #define BIT0 (0x1 << 0)
 #endif
-/* The event group allows multiple bits for each event,
-   but we only care about one event - are we connected
-   to the AP with an IP? */
+
 const int CONNECTED_BIT = BIT0;
 
 static const char *TAG = "azure";
@@ -46,8 +42,7 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
         xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
         break;
     case SYSTEM_EVENT_STA_DISCONNECTED:
-        /* This is a workaround as ESP platform WiFi libs don't currently
-           auto-reassociate. */
+
         esp_wifi_connect();
         xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
         break;
@@ -83,7 +78,7 @@ void azure_task(void *pvParameter)
                         false, true, portMAX_DELAY);
     ESP_LOGI(TAG, "Connected to AP success!");
 
-    iothub_client_sample_mqtt_run();
+    upload_to_blob();
 
     vTaskDelete(NULL);
 }
@@ -100,7 +95,7 @@ void app_main()
 
     initialise_wifi();
 
-    if ( xTaskCreate(&azure_task, "azure_task", 1024 * 5, NULL, 5, NULL) != pdPASS ) {
+    if ( xTaskCreate(&azure_task, "azure_task", 1024 * 8, NULL, 5, NULL) != pdPASS ) {
         printf("create azure task failed\r\n");
     }
 

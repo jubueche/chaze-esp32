@@ -83,6 +83,52 @@
                         					
                     </folderInfo>
                     					
+                    <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.1262524980" name="/" resourcePath="components/upload_to_blob">
+                        						
+                        <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1809573646" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.prefix.1338056761.1934425213" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1338056761"/>
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.217751031" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
+                            							
+                            <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1592737850" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
+                                								
+                                <option id="gnu.c.compiler.option.include.paths.53315237" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1750615533" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.591002406" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1550418340" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.linker.955002372" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1529332991"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.188853092" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1045270675"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.archiver.134209292" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1125006303"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.assembler.1704669172" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.assembler.input.713339965" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    					
                     <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.1641644989" name="/" resourcePath="components/iothub_client_sample_mqtt">
                         						
                         <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1451046264" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
@@ -136,6 +182,100 @@
                             <tool id="cdt.managedbuild.tool.gnu.cross.assembler.1974291086" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.assembler.input.669204214" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    					
+                    <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.885371029" name="/" resourcePath="components/esp-azure/azure-iot-sdk-c/c-utility/src">
+                        						
+                        <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.88200735" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.prefix.1338056761.1393744197" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1338056761"/>
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.2081445682" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.111329123" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
+                                								
+                                <option id="gnu.c.compiler.option.include.paths.1738366491" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1095309031" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.252045112" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1814450153" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1610424142" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1529332991"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1979626691" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1045270675"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.archiver.475301983" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1125006303"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.assembler.493612063" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.assembler.input.1877097695" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    					
+                    <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.868103028" name="/" resourcePath="main">
+                        						
+                        <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.825944154" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.prefix.1338056761.730992662" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1338056761"/>
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.744908019" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
+                            							
+                            <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.236983000" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
+                                								
+                                <option id="gnu.c.compiler.option.include.paths.1342472910" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/iothub_client_sample_mqtt/include"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_service_client/inc"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/include"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1851203882" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1013979539" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.617123350" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1922889568" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1529332991"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.434848113" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1045270675"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.archiver.1495852599" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1125006303"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.assembler.195402330" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.assembler.input.784281222" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
                                 							
                             </tool>
                             						

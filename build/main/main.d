@@ -135,7 +135,7 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
  /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/iothub_client_sample_mqtt/include/iothub_client_sample_mqtt.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/include/upload_to_blob.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -409,5 +409,5 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 
 /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/iothub_client_sample_mqtt/include/iothub_client_sample_mqtt.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/include/upload_to_blob.h:
 /home/julian/eclipse-workspace/chaze-esp32/main/./main.c:
