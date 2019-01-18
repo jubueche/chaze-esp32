@@ -197,9 +197,11 @@
                             							
                             <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.2081445682" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
                             							
+                            <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+                            							
                             <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.111329123" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
                                 								
-                                <option id="gnu.c.compiler.option.include.paths.1738366491" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+                                <option id="gnu.c.compiler.option.include.paths.1738366491" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility"/>
                                     								

@@ -131,11 +131,22 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_event_loop.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/err.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp_opts.h \
  /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs_flash.h \
  /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/include/upload_to_blob.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/include/upload_to_blob.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob_block/include/upload_to_blob_block.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xlogging.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -401,6 +412,12 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/err.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp_opts.h:
+
 /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs_flash.h:
 
 /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h:
@@ -410,4 +427,20 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/include/upload_to_blob.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob_block/include/upload_to_blob_block.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xlogging.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h:
 /home/julian/eclipse-workspace/chaze-esp32/main/./main.c:

@@ -55,6 +55,7 @@
  /home/julian/eclipse-workspace/chaze-esp32/build/ulp/libulp.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/unity/libunity.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/upload_to_blob/libupload_to_blob.a.sections_info
+ /home/julian/eclipse-workspace/chaze-esp32/build/upload_to_blob_block/libupload_to_blob_block.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/vfs/libvfs.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/wear_levelling/libwear_levelling.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/wifi_provisioning/libwifi_provisioning.a.sections_info

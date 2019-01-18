@@ -20,7 +20,7 @@ and removing calls to _DoWork will yield the same results. */
 #include "iothub_message.h"
 #include "iothubtransporthttp.h"
 
-
+#define SET_TRUSTED_CERT_IN_SAMPLES 1
 #ifdef SET_TRUSTED_CERT_IN_SAMPLES
 #include "certs.h"
 #endif // SET_TRUSTED_CERT_IN_SAMPLES
@@ -29,7 +29,9 @@ and removing calls to _DoWork will yield the same results. */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
 //static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessKey=dZ5ISRh3j73oHmWzd6sK9zT6sqH8g9VqcRjEgk9l5dQ=";
-static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessSignature=sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-01-16T20:32:18Z&st=2019-01-16T12:32:18Z&spr=https,http&sig=zAmmEItShbWW%2BsypaBI4bXYlabwY%2BSmvaqPksBZMe%2FU%3D";
+//static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessSignature=sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-01-16T20:32:18Z&st=2019-01-16T12:32:18Z&spr=https,http&sig=zAmmEItShbWW%2BsypaBI4bXYlabwY%2BSmvaqPksBZMe%2FU%3D";
+//static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessKey=c1akmgbcSk1MH/R+9maJQJsODmaJfHL0YnpQEbkaBeg=";
+static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessSignature=sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-01-17T21:55:53Z&st=2019-01-17T13:55:53Z&spr=https,http&sig=ZxzwAUdQ73PHDARHETL4cqBSGrWkM6Is4pgyC09MrRs%3D";
 
 /*Optional string with http proxy host and integer for http proxy port (Linux only)         */
 static const char* proxyHost = NULL;

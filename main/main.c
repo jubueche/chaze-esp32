@@ -15,9 +15,16 @@
 #include "esp_event_loop.h"
 #include "esp_log.h"
 
+//Include time setting lib
+#include "lwip/err.h"
+#include "lwip/apps/sntp.h"
+
 #include "nvs_flash.h"
 
 #include "upload_to_blob.h"
+#include "upload_to_blob_block.h"
+
+#include "azure_c_shared_utility/xlogging.h"
 
 #define EXAMPLE_WIFI_SSID "EatOrBeEaten"
 #define EXAMPLE_WIFI_PASS "Fussball08"
@@ -31,6 +38,7 @@ EventGroupHandle_t wifi_event_group;
 const int CONNECTED_BIT = BIT0;
 
 static const char *TAG = "azure";
+
 
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
@@ -78,13 +86,15 @@ void azure_task(void *pvParameter)
                         false, true, portMAX_DELAY);
     ESP_LOGI(TAG, "Connected to AP success!");
 
-    upload_to_blob();
+    int res = upload_to_blob_block();
+    //upload_to_blob();
 
     vTaskDelete(NULL);
 }
 
 void app_main()
 {
+
     // Initialize NVS
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES) {
@@ -95,7 +105,7 @@ void app_main()
 
     initialise_wifi();
 
-    if ( xTaskCreate(&azure_task, "azure_task", 1024 * 8, NULL, 5, NULL) != pdPASS ) {
+    if ( xTaskCreate(&azure_task, "azure_task", 1024 * 14, NULL, 5, NULL) != pdPASS ) {
         printf("create azure task failed\r\n");
     }
 
