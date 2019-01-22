@@ -492,51 +492,51 @@ platform_esp.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.platform_init 0000001c  00000000  00000000  00000034  2**2
+  0 .literal.platform_init 0000002c  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.platform_get_default_tlsio 00000004  00000000  00000000  00000050  2**2
+  1 .literal.platform_get_default_tlsio 00000004  00000000  00000000  00000060  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.platform_deinit 00000004  00000000  00000000  00000054  2**2
+  2 .literal.platform_deinit 00000004  00000000  00000000  00000064  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.platform_get_platform_info 00000008  00000000  00000000  00000058  2**2
+  3 .literal.platform_get_platform_info 00000008  00000000  00000000  00000068  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .text         00000000  00000000  00000000  00000060  2**0
+  4 .text         00000000  00000000  00000000  00000070  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  5 .data         00000000  00000000  00000000  00000060  2**0
+  5 .data         00000000  00000000  00000000  00000070  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          00000000  00000000  00000000  00000060  2**0
+  6 .bss          00000000  00000000  00000000  00000070  2**0
                   ALLOC
-  7 .rodata.str1.4 00000041  00000000  00000000  00000060  2**2
+  7 .rodata.str1.4 00000075  00000000  00000000  00000070  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .text.platform_init 00000039  00000000  00000000  000000a4  2**2
+  8 .text.platform_init 00000054  00000000  00000000  000000e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .text.platform_get_default_tlsio 0000000d  00000000  00000000  000000e0  2**2
+  9 .text.platform_get_default_tlsio 0000000d  00000000  00000000  0000013c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .text.platform_deinit 0000000b  00000000  00000000  000000f0  2**2
+ 10 .text.platform_deinit 0000000b  00000000  00000000  0000014c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .text.platform_get_platform_info 00000010  00000000  00000000  000000fc  2**2
+ 11 .text.platform_get_platform_info 00000010  00000000  00000000  00000158  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .debug_frame  00000070  00000000  00000000  0000010c  2**2
+ 12 .debug_frame  00000070  00000000  00000000  00000168  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 13 .debug_info   000005de  00000000  00000000  0000017c  2**0
+ 13 .debug_info   0000062a  00000000  00000000  000001d8  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 14 .debug_abbrev 0000018d  00000000  00000000  0000075a  2**0
+ 14 .debug_abbrev 00000186  00000000  00000000  00000802  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_aranges 00000038  00000000  00000000  000008e7  2**0
+ 15 .debug_aranges 00000038  00000000  00000000  00000988  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 16 .debug_ranges 00000028  00000000  00000000  0000091f  2**0
+ 16 .debug_ranges 00000028  00000000  00000000  000009c0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 17 .debug_line   00000398  00000000  00000000  00000947  2**0
+ 17 .debug_line   0000039e  00000000  00000000  000009e8  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 18 .debug_str    000005bd  00000000  00000000  00000cdf  2**0
+ 18 .debug_str    000005dd  00000000  00000000  00000d86  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000003b  00000000  00000000  0000129c  2**0
+ 19 .comment      0000003b  00000000  00000000  00001363  2**0
                   CONTENTS, READONLY
- 20 .xtensa.info  00000038  00000000  00000000  000012d7  2**0
+ 20 .xtensa.info  00000038  00000000  00000000  0000139e  2**0
                   CONTENTS, READONLY
- 21 .xt.lit       00000020  00000000  00000000  0000130f  2**0
+ 21 .xt.lit       00000020  00000000  00000000  000013d6  2**0
                   CONTENTS, RELOC, READONLY
- 22 .xt.prop      000000c0  00000000  00000000  0000132f  2**0
+ 22 .xt.prop      000000c0  00000000  00000000  000013f6  2**0
                   CONTENTS, RELOC, READONLY
 
 tlsio_esp_tls.o:     file format elf32-xtensa-le

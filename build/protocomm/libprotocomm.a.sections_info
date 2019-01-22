@@ -949,65 +949,65 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
   3 .literal.stopped 00000004  00000000  00000000  00000084  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.protocomm_console_task 00000058  00000000  00000000  00000088  2**2
+  4 .literal.protocomm_console_task 00000064  00000000  00000000  00000088  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.protocomm_console_stop 0000001c  00000000  00000000  000000e0  2**2
+  5 .literal.protocomm_console_stop 00000028  00000000  00000000  000000ec  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.protocomm_console_start 00000020  00000000  00000000  000000fc  2**2
+  6 .literal.protocomm_console_start 00000020  00000000  00000000  00000114  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .text         00000000  00000000  00000000  0000011c  2**0
+  7 .text         00000000  00000000  00000000  00000134  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  8 .data         00000000  00000000  00000000  0000011c  2**0
+  8 .data         00000000  00000000  00000000  00000134  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000000  00000000  00000000  0000011c  2**0
+  9 .bss          00000000  00000000  00000000  00000134  2**0
                   ALLOC
- 10 .text.protocomm_console_remove_endpoint 00000007  00000000  00000000  0000011c  2**2
+ 10 .text.protocomm_console_remove_endpoint 00000007  00000000  00000000  00000134  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 11 .rodata.str1.4 0000009a  00000000  00000000  00000124  2**2
+ 11 .rodata.str1.4 000000ef  00000000  00000000  0000013c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 12 .text.protocomm_console_add_endpoint 00000021  00000000  00000000  000001c0  2**2
+ 12 .text.protocomm_console_add_endpoint 00000021  00000000  00000000  0000022c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .text.hex2bin 0000002c  00000000  00000000  000001e4  2**2
+ 13 .text.hex2bin 0000002c  00000000  00000000  00000250  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 14 .text.common_cmd_handler 000000be  00000000  00000000  00000210  2**2
+ 14 .text.common_cmd_handler 000000be  00000000  00000000  0000027c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .text.stopped 00000020  00000000  00000000  000002d0  2**2
+ 15 .text.stopped 00000020  00000000  00000000  0000033c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .text.protocomm_console_task 00000140  00000000  00000000  000002f0  2**2
+ 16 .text.protocomm_console_task 00000158  00000000  00000000  0000035c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .text.protocomm_console_stop 0000003c  00000000  00000000  00000430  2**2
+ 17 .text.protocomm_console_stop 00000054  00000000  00000000  000004b4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .text.protocomm_console_start 00000056  00000000  00000000  0000046c  2**2
+ 18 .text.protocomm_console_start 00000056  00000000  00000000  00000508  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .bss.console_task 00000004  00000000  00000000  000004c4  2**2
+ 19 .bss.console_task 00000004  00000000  00000000  00000560  2**2
                   ALLOC
- 20 .bss.pc_console 00000004  00000000  00000000  000004c4  2**2
+ 20 .bss.pc_console 00000004  00000000  00000000  00000560  2**2
                   ALLOC
- 21 .data.session_id 00000004  00000000  00000000  000004c4  2**2
+ 21 .data.session_id 00000004  00000000  00000000  00000560  2**2
                   CONTENTS, ALLOC, LOAD, DATA
- 22 .debug_frame  000000d0  00000000  00000000  000004c8  2**2
+ 22 .debug_frame  000000d0  00000000  00000000  00000564  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 23 .debug_info   00000e23  00000000  00000000  00000598  2**0
+ 23 .debug_info   00000e91  00000000  00000000  00000634  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 24 .debug_abbrev 00000256  00000000  00000000  000013bb  2**0
+ 24 .debug_abbrev 00000256  00000000  00000000  000014c5  2**0
                   CONTENTS, READONLY, DEBUGGING
- 25 .debug_loc    000003b3  00000000  00000000  00001611  2**0
+ 25 .debug_loc    000003b3  00000000  00000000  0000171b  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 26 .debug_aranges 00000058  00000000  00000000  000019c4  2**0
+ 26 .debug_aranges 00000058  00000000  00000000  00001ace  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 27 .debug_ranges 00000048  00000000  00000000  00001a1c  2**0
+ 27 .debug_ranges 00000048  00000000  00000000  00001b26  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 28 .debug_line   0000080b  00000000  00000000  00001a64  2**0
+ 28 .debug_line   00000827  00000000  00000000  00001b6e  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 29 .debug_str    000008f3  00000000  00000000  0000226f  2**0
+ 29 .debug_str    000008f3  00000000  00000000  00002395  2**0
                   CONTENTS, READONLY, DEBUGGING
- 30 .comment      0000003b  00000000  00000000  00002b62  2**0
+ 30 .comment      0000003b  00000000  00000000  00002c88  2**0
                   CONTENTS, READONLY
- 31 .xtensa.info  00000038  00000000  00000000  00002b9d  2**0
+ 31 .xtensa.info  00000038  00000000  00000000  00002cc3  2**0
                   CONTENTS, READONLY
- 32 .xt.lit       00000038  00000000  00000000  00002bd5  2**0
+ 32 .xt.lit       00000038  00000000  00000000  00002cfb  2**0
                   CONTENTS, RELOC, READONLY
- 33 .xt.prop      00000324  00000000  00000000  00002c0d  2**0
+ 33 .xt.prop      00000324  00000000  00000000  00002d33  2**0
                   CONTENTS, RELOC, READONLY
 
 protocomm_httpd.o:     file format elf32-xtensa-le

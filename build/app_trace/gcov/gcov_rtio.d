@@ -85,7 +85,9 @@ gcov/gcov_rtio.o: \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/timer_group_reg.h \
  /home/julian/Documents/esp/esp-idf/components/app_trace/include/esp_app_trace.h \
  /home/julian/Documents/esp/esp-idf/components/app_trace/include/esp_app_trace_util.h \
- /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_dbg_stubs.h
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_dbg_stubs.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_task_wdt.h:
 
@@ -258,4 +260,8 @@ gcov/gcov_rtio.o: \
 /home/julian/Documents/esp/esp-idf/components/app_trace/include/esp_app_trace_util.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_dbg_stubs.h:
+
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
+
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 /home/julian/Documents/esp/esp-idf/components/app_trace/gcov/gcov_rtio.c:

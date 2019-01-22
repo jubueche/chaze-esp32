@@ -10,33 +10,33 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   2 .bss          00000000  00000000  00000000  00000034  2**0
                   ALLOC
-  3 .reserved_memory_address 00000028  00000000  00000000  00000034  2**2
+  3 .reserved_memory_address 00000030  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .rodata.soc_memory_region_count 00000004  00000000  00000000  0000005c  2**2
+  4 .rodata.soc_memory_region_count 00000004  00000000  00000000  00000064  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .rodata.soc_memory_regions 000002b0  00000000  00000000  00000060  2**2
+  5 .rodata.soc_memory_regions 000002b0  00000000  00000000  00000068  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  6 .rodata.soc_memory_type_count 00000004  00000000  00000000  00000310  2**2
+  6 .rodata.soc_memory_type_count 00000004  00000000  00000000  00000318  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .rodata.str1.4 000000a5  00000000  00000000  00000314  2**2
+  7 .rodata.str1.4 000000a5  00000000  00000000  0000031c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .rodata.soc_memory_types 0000012c  00000000  00000000  000003bc  2**2
+  8 .rodata.soc_memory_types 0000012c  00000000  00000000  000003c4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
-  9 .debug_info   00000243  00000000  00000000  000004e8  2**0
+  9 .debug_info   00000254  00000000  00000000  000004f0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 10 .debug_abbrev 0000009e  00000000  00000000  0000072b  2**0
+ 10 .debug_abbrev 0000009e  00000000  00000000  00000744  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_aranges 00000018  00000000  00000000  000007c9  2**0
+ 11 .debug_aranges 00000018  00000000  00000000  000007e2  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_line   000001b8  00000000  00000000  000007e1  2**0
+ 12 .debug_line   000001b8  00000000  00000000  000007fa  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    000002e0  00000000  00000000  00000999  2**0
+ 13 .debug_str    000002fa  00000000  00000000  000009b2  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .comment      0000003b  00000000  00000000  00000c79  2**0
+ 14 .comment      0000003b  00000000  00000000  00000cac  2**0
                   CONTENTS, READONLY
- 15 .xtensa.info  00000038  00000000  00000000  00000cb4  2**0
+ 15 .xtensa.info  00000038  00000000  00000000  00000ce7  2**0
                   CONTENTS, READONLY
- 16 .xt.prop      0000006c  00000000  00000000  00000cec  2**0
+ 16 .xt.prop      00000078  00000000  00000000  00000d1f  2**0
                   CONTENTS, RELOC, READONLY
 
 rtc_pm.o:     file format elf32-xtensa-le
@@ -444,45 +444,47 @@ rtc_clk_init.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.rtc_clk_xtal_freq_estimate 00000020  00000000  00000000  00000034  2**2
+  0 .literal.rtc_clk_xtal_freq_estimate 0000004c  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.rtc_clk_init 0000008c  00000000  00000000  00000054  2**2
+  1 .literal.rtc_clk_init 000000a4  00000000  00000000  00000080  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .text         00000000  00000000  00000000  000000e0  2**0
+  2 .text         00000000  00000000  00000000  00000124  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  3 .data         00000000  00000000  00000000  000000e0  2**0
+  3 .data         00000000  00000000  00000000  00000124  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .bss          00000000  00000000  00000000  000000e0  2**0
+  4 .bss          00000000  00000000  00000000  00000124  2**0
                   ALLOC
-  5 .text.rtc_clk_xtal_freq_estimate 00000064  00000000  00000000  000000e0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .rodata.str1.4 00000043  00000000  00000000  00000144  2**2
+  5 .rodata.str1.4 000001cb  00000000  00000000  00000124  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .text.rtc_clk_init 000001d6  00000000  00000000  00000188  2**2
+  6 .text.rtc_clk_xtal_freq_estimate 000000b2  00000000  00000000  000002f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .debug_frame  00000040  00000000  00000000  00000360  2**2
+  7 .rodata.rtc_clk_xtal_freq_estimate 00000064  00000000  00000000  000003a4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+  8 .text.rtc_clk_init 0000020a  00000000  00000000  00000408  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  9 .debug_frame  00000040  00000000  00000000  00000614  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  9 .debug_info   0000072c  00000000  00000000  000003a0  2**0
+ 10 .debug_info   00000819  00000000  00000000  00000654  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 10 .debug_abbrev 00000236  00000000  00000000  00000acc  2**0
+ 11 .debug_abbrev 00000236  00000000  00000000  00000e6d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000169  00000000  00000000  00000d02  2**0
+ 12 .debug_loc    000001d6  00000000  00000000  000010a3  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_aranges 00000028  00000000  00000000  00000e6b  2**0
+ 13 .debug_aranges 00000028  00000000  00000000  00001279  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 13 .debug_ranges 00000018  00000000  00000000  00000e93  2**0
+ 14 .debug_ranges 00000018  00000000  00000000  000012a1  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 14 .debug_line   00000391  00000000  00000000  00000eab  2**0
+ 15 .debug_line   000003e5  00000000  00000000  000012b9  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 15 .debug_str    000006bc  00000000  00000000  0000123c  2**0
+ 16 .debug_str    000006bc  00000000  00000000  0000169e  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .comment      0000003b  00000000  00000000  000018f8  2**0
+ 17 .comment      0000003b  00000000  00000000  00001d5a  2**0
                   CONTENTS, READONLY
- 17 .xtensa.info  00000038  00000000  00000000  00001933  2**0
+ 18 .xtensa.info  00000038  00000000  00000000  00001d95  2**0
                   CONTENTS, READONLY
- 18 .xt.lit       00000010  00000000  00000000  0000196b  2**0
+ 19 .xt.lit       00000010  00000000  00000000  00001dcd  2**0
                   CONTENTS, RELOC, READONLY
- 19 .xt.prop      00000180  00000000  00000000  0000197b  2**0
+ 20 .xt.prop      000001a4  00000000  00000000  00001ddd  2**0
                   CONTENTS, RELOC, READONLY
 
 gpio_periph.o:     file format elf32-xtensa-le

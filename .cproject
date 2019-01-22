@@ -189,6 +189,54 @@
                         					
                     </folderInfo>
                     					
+                    <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.442123196" name="/" resourcePath="components/MAX30101">
+                        						
+                        <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1424938810" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.prefix.1338056761.1562624937" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1338056761"/>
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.1182134285" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
+                            							
+                            <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1468677059" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1478074426" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.927601546" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <option id="gnu.cpp.compiler.option.include.paths.1996435580" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/Wire/src"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/Configuration/include}&quot;"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.908511459" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1600201866" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1529332991"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1942395322" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1045270675"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.archiver.985684409" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1125006303"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.assembler.1813035128" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.assembler.input.1496636694" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    					
                     <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.885371029" name="/" resourcePath="components/esp-azure/azure-iot-sdk-c/c-utility/src">
                         						
                         <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.88200735" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
@@ -256,6 +304,10 @@
                                     <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility"/>
                                     									
                                     <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/include"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/upload_to_blob_block/include}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/MAX30101/include}&quot;"/>
                                     								
                                 </option>
                                 								
@@ -264,6 +316,12 @@
                             </tool>
                             							
                             <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1013979539" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <option id="gnu.cpp.compiler.option.include.paths.796158774" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/MAX30101/include}&quot;"/>
+                                    								
+                                </option>
                                 								
                                 <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.617123350" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
                                 							

@@ -79,7 +79,9 @@ host_file_io.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_intr.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_api.h \
- /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h
+ /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
@@ -240,4 +242,8 @@ host_file_io.o: \
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_api.h:
 
 /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h:
+
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
+
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 /home/julian/Documents/esp/esp-idf/components/app_trace/./host_file_io.c:

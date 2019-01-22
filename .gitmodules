@@ -4,3 +4,6 @@
 [submodule "components/esp-azure"]
 	path = components/esp-azure
 	url = https://github.com/espressif/esp-azure
+[submodule "components/esp-idf"]
+	path = components/esp-idf
+	url = https://github.com/espressif/esp-idf

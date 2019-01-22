@@ -2,7 +2,7 @@
 set(COMPONENT_REQUIRES )
 set(COMPONENT_PRIV_REQUIRES )
 
-set(COMPONENT_SRCS "main.c"
+set(COMPONENT_SRCS "main.cpp"
 					"iothub_client_sample_mqtt.c")
 set(COMPONENT_ADD_INCLUDEDIRS ".")
 

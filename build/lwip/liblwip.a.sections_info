@@ -4633,119 +4633,119 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  15 .literal.sys_arch_mbox_tryfetch 00000004  00000000  00000000  000000a4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .literal.sys_mbox_free 00000014  00000000  00000000  000000a8  2**2
+ 16 .literal.sys_mbox_free 0000003c  00000000  00000000  000000a8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .literal.sys_thread_new 00000008  00000000  00000000  000000bc  2**2
+ 17 .literal.sys_thread_new 00000008  00000000  00000000  000000e4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .literal.sys_init 00000028  00000000  00000000  000000c4  2**2
+ 18 .literal.sys_init 00000028  00000000  00000000  000000ec  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .literal.sys_jiffies 00000004  00000000  00000000  000000ec  2**2
+ 19 .literal.sys_jiffies 00000004  00000000  00000000  00000114  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .literal.sys_now 00000004  00000000  00000000  000000f0  2**2
+ 20 .literal.sys_now 00000004  00000000  00000000  00000118  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .literal.sys_arch_protect 00000008  00000000  00000000  000000f4  2**2
+ 21 .literal.sys_arch_protect 00000008  00000000  00000000  0000011c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .literal.sys_arch_unprotect 00000008  00000000  00000000  000000fc  2**2
+ 22 .literal.sys_arch_unprotect 00000008  00000000  00000000  00000124  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .literal.sys_thread_sem_init 0000002c  00000000  00000000  00000104  2**2
+ 23 .literal.sys_thread_sem_init 0000002c  00000000  00000000  0000012c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 24 .literal.sys_thread_sem_get 0000000c  00000000  00000000  00000130  2**2
+ 24 .literal.sys_thread_sem_get 0000000c  00000000  00000000  00000158  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .literal.sys_thread_sem_deinit 00000010  00000000  00000000  0000013c  2**2
+ 25 .literal.sys_thread_sem_deinit 00000010  00000000  00000000  00000164  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 26 .literal.sys_delay_ms 00000008  00000000  00000000  0000014c  2**2
+ 26 .literal.sys_delay_ms 00000008  00000000  00000000  00000174  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .text         00000000  00000000  00000000  00000154  2**0
+ 27 .text         00000000  00000000  00000000  0000017c  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 28 .data         00000000  00000000  00000000  00000154  2**0
+ 28 .data         00000000  00000000  00000000  0000017c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 29 .bss          00000000  00000000  00000000  00000154  2**0
+ 29 .bss          00000000  00000000  00000000  0000017c  2**0
                   ALLOC
- 30 .text.sys_thread_sem_free 0000001c  00000000  00000000  00000154  2**2
+ 30 .text.sys_thread_sem_free 0000001c  00000000  00000000  0000017c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 31 .text.sys_mutex_new 00000019  00000000  00000000  00000170  2**2
+ 31 .text.sys_mutex_new 00000019  00000000  00000000  00000198  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .text.sys_mutex_lock 00000016  00000000  00000000  0000018c  2**2
+ 32 .text.sys_mutex_lock 00000016  00000000  00000000  000001b4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 33 .text.sys_mutex_trylock 0000001d  00000000  00000000  000001a4  2**2
+ 33 .text.sys_mutex_trylock 0000001d  00000000  00000000  000001cc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .text.sys_mutex_unlock 00000013  00000000  00000000  000001c4  2**2
+ 34 .text.sys_mutex_unlock 00000013  00000000  00000000  000001ec  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 35 .text.sys_mutex_free 0000000e  00000000  00000000  000001d8  2**2
+ 35 .text.sys_mutex_free 0000000e  00000000  00000000  00000200  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 36 .text.sys_sem_new 00000041  00000000  00000000  000001e8  2**2
+ 36 .text.sys_sem_new 00000041  00000000  00000000  00000210  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 37 .text.sys_sem_signal 00000013  00000000  00000000  0000022c  2**2
+ 37 .text.sys_sem_signal 00000013  00000000  00000000  00000254  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 38 .text.sys_sem_signal_isr 0000001e  00000000  00000000  00000240  2**2
+ 38 .text.sys_sem_signal_isr 0000001e  00000000  00000000  00000268  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 39 .text.sys_arch_sem_wait 0000006a  00000000  00000000  00000260  2**2
+ 39 .text.sys_arch_sem_wait 0000006a  00000000  00000000  00000288  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 40 .text.sys_sem_free 0000000e  00000000  00000000  000002cc  2**2
+ 40 .text.sys_sem_free 0000000e  00000000  00000000  000002f4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 41 .text.sys_mbox_new 0000003d  00000000  00000000  000002dc  2**2
+ 41 .text.sys_mbox_new 0000003d  00000000  00000000  00000304  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 42 .text.sys_mbox_post 0000001a  00000000  00000000  0000031c  2**2
+ 42 .text.sys_mbox_post 0000001a  00000000  00000000  00000344  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 43 .text.sys_mbox_trypost 00000021  00000000  00000000  00000338  2**2
+ 43 .text.sys_mbox_trypost 00000021  00000000  00000000  00000360  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 44 .text.sys_arch_mbox_fetch 0000005a  00000000  00000000  0000035c  2**2
+ 44 .text.sys_arch_mbox_fetch 0000005a  00000000  00000000  00000384  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 45 .text.sys_arch_mbox_tryfetch 00000024  00000000  00000000  000003b8  2**2
+ 45 .text.sys_arch_mbox_tryfetch 00000024  00000000  00000000  000003e0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 46 .text.sys_mbox_set_owner 0000000e  00000000  00000000  000003dc  2**2
+ 46 .text.sys_mbox_set_owner 0000000e  00000000  00000000  00000404  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 47 .text.sys_mbox_free 00000054  00000000  00000000  000003ec  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 48 .text.sys_thread_new 00000028  00000000  00000000  00000440  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 49 .rodata.str1.4 00000086  00000000  00000000  00000468  2**2
+ 47 .rodata.str1.4 0000014a  00000000  00000000  00000414  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 50 .text.sys_init 00000040  00000000  00000000  000004f0  2**2
+ 48 .text.sys_mbox_free 000000ac  00000000  00000000  00000560  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 51 .text.sys_jiffies 0000000d  00000000  00000000  00000530  2**2
+ 49 .text.sys_thread_new 00000028  00000000  00000000  0000060c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 52 .text.sys_now 00000011  00000000  00000000  00000540  2**2
+ 50 .text.sys_init 00000040  00000000  00000000  00000634  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 53 .text.sys_arch_protect 00000010  00000000  00000000  00000554  2**2
+ 51 .text.sys_jiffies 0000000d  00000000  00000000  00000674  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 54 .text.sys_arch_unprotect 0000000e  00000000  00000000  00000564  2**2
+ 52 .text.sys_now 00000011  00000000  00000000  00000684  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 55 .text.sys_thread_sem_init 0000006f  00000000  00000000  00000574  2**2
+ 53 .text.sys_arch_protect 00000010  00000000  00000000  00000698  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 56 .text.sys_thread_sem_get 0000001a  00000000  00000000  000005e4  2**2
+ 54 .text.sys_arch_unprotect 0000000e  00000000  00000000  000006a8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 57 .text.sys_thread_sem_deinit 00000026  00000000  00000000  00000600  2**2
+ 55 .text.sys_thread_sem_init 0000006f  00000000  00000000  000006b8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 58 .text.sys_delay_ms 00000014  00000000  00000000  00000628  2**2
+ 56 .text.sys_thread_sem_get 0000001a  00000000  00000000  00000728  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 59 .bss.sys_thread_sem_key 00000004  00000000  00000000  0000063c  2**2
+ 57 .text.sys_thread_sem_deinit 00000026  00000000  00000000  00000744  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 58 .text.sys_delay_ms 00000014  00000000  00000000  0000076c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 59 .bss.sys_thread_sem_key 00000004  00000000  00000000  00000780  2**2
                   ALLOC
- 60 .bss.g_lwip_protect_mutex 00000004  00000000  00000000  0000063c  2**2
+ 60 .bss.g_lwip_protect_mutex 00000004  00000000  00000000  00000780  2**2
                   ALLOC
- 61 .debug_frame  000002b0  00000000  00000000  0000063c  2**2
+ 61 .debug_frame  000002b0  00000000  00000000  00000780  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 62 .debug_info   00000e41  00000000  00000000  000008ec  2**0
+ 62 .debug_info   00000eec  00000000  00000000  00000a30  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 63 .debug_abbrev 0000025e  00000000  00000000  0000172d  2**0
+ 63 .debug_abbrev 0000025e  00000000  00000000  0000191c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 64 .debug_loc    0000048e  00000000  00000000  0000198b  2**0
+ 64 .debug_loc    0000048e  00000000  00000000  00001b7a  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 65 .debug_aranges 000000f8  00000000  00000000  00001e19  2**0
+ 65 .debug_aranges 000000f8  00000000  00000000  00002008  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 66 .debug_ranges 000000e8  00000000  00000000  00001f11  2**0
+ 66 .debug_ranges 000000e8  00000000  00000000  00002100  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 67 .debug_line   00000850  00000000  00000000  00001ff9  2**0
+ 67 .debug_line   0000087e  00000000  00000000  000021e8  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 68 .debug_str    00000892  00000000  00000000  00002849  2**0
+ 68 .debug_str    00000892  00000000  00000000  00002a66  2**0
                   CONTENTS, READONLY, DEBUGGING
- 69 .comment      0000003b  00000000  00000000  000030db  2**0
+ 69 .comment      0000003b  00000000  00000000  000032f8  2**0
                   CONTENTS, READONLY
- 70 .xtensa.info  00000038  00000000  00000000  00003116  2**0
+ 70 .xtensa.info  00000038  00000000  00000000  00003333  2**0
                   CONTENTS, READONLY
- 71 .xt.lit       000000d8  00000000  00000000  0000314e  2**0
+ 71 .xt.lit       000000d8  00000000  00000000  0000336b  2**0
                   CONTENTS, RELOC, READONLY
- 72 .xt.prop      000007c8  00000000  00000000  00003226  2**0
+ 72 .xt.prop      000007ec  00000000  00000000  00003443  2**0
                   CONTENTS, RELOC, READONLY
 
 wlanif.o:     file format elf32-xtensa-le
@@ -4921,55 +4921,65 @@ lwip_debug.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.dbg_lwip_tcp_pcb_list_show 00000004  00000000  00000000  00000034  2**2
+  0 .literal.dbg_lwip_tcp_pcb_one_show 0000015c  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.dbg_lwip_tcp_pcb_show 00000018  00000000  00000000  00000038  2**2
+  1 .literal.dbg_lwip_tcp_pcb_list_show 00000004  00000000  00000000  00000190  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.dbg_lwip_udp_pcb_show 00000004  00000000  00000000  00000050  2**2
+  2 .literal.dbg_lwip_tcp_pcb_show 00000040  00000000  00000000  00000194  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .text         00000000  00000000  00000000  00000054  2**0
+  3 .literal.dbg_lwip_udp_pcb_one_show 0000005c  00000000  00000000  000001d4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  4 .literal.dbg_lwip_udp_pcb_show 00000008  00000000  00000000  00000230  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  5 .literal.dbg_lwip_tcp_rxtx_show 00000010  00000000  00000000  00000238  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  6 .literal.dbg_lwip_udp_rxtx_show 00000010  00000000  00000000  00000248  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  7 .text         00000000  00000000  00000000  00000258  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .data         00000000  00000000  00000000  00000054  2**0
+  8 .data         00000000  00000000  00000000  00000258  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .bss          00000000  00000000  00000000  00000054  2**0
+  9 .bss          00000000  00000000  00000000  00000258  2**0
                   ALLOC
-  6 .text.dbg_lwip_tcp_pcb_one_show 0000002b  00000000  00000000  00000054  2**2
+ 10 .rodata.str1.4 0000067b  00000000  00000000  00000258  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 11 .text.dbg_lwip_tcp_pcb_one_show 000003f3  00000000  00000000  000008d4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .text.dbg_lwip_tcp_pcb_list_show 00000015  00000000  00000000  00000080  2**2
+ 12 .text.dbg_lwip_tcp_pcb_list_show 00000015  00000000  00000000  00000cc8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .text.dbg_lwip_tcp_pcb_show 00000026  00000000  00000000  00000098  2**2
+ 13 .text.dbg_lwip_tcp_pcb_show 00000072  00000000  00000000  00000ce0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .text.dbg_lwip_udp_pcb_one_show 00000005  00000000  00000000  000000c0  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, CODE
- 10 .text.dbg_lwip_udp_pcb_show 00000013  00000000  00000000  000000c8  2**2
+ 14 .text.dbg_lwip_udp_pcb_one_show 000000ee  00000000  00000000  00000d54  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .text.dbg_lwip_tcp_rxtx_show 00000005  00000000  00000000  000000dc  2**2
+ 15 .text.dbg_lwip_udp_pcb_show 0000001b  00000000  00000000  00000e44  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 16 .text.dbg_lwip_tcp_rxtx_show 0000001e  00000000  00000000  00000e60  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 17 .text.dbg_lwip_udp_rxtx_show 0000001e  00000000  00000000  00000e80  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 18 .text.dbg_lwip_stats_show 00000005  00000000  00000000  00000ea0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 12 .text.dbg_lwip_udp_rxtx_show 00000005  00000000  00000000  000000e4  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, CODE
- 13 .text.dbg_lwip_stats_show 00000005  00000000  00000000  000000ec  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, CODE
- 14 .debug_frame  000000d0  00000000  00000000  000000f4  2**2
+ 19 .debug_frame  000000d0  00000000  00000000  00000ea8  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 15 .debug_info   00000d65  00000000  00000000  000001c4  2**0
+ 20 .debug_info   00001642  00000000  00000000  00000f78  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 16 .debug_abbrev 000001c9  00000000  00000000  00000f29  2**0
+ 21 .debug_abbrev 000001e7  00000000  00000000  000025ba  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_loc    0000003d  00000000  00000000  000010f2  2**0
+ 22 .debug_loc    0000003d  00000000  00000000  000027a1  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 18 .debug_aranges 00000058  00000000  00000000  0000112f  2**0
+ 23 .debug_aranges 00000058  00000000  00000000  000027de  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 19 .debug_ranges 00000048  00000000  00000000  00001187  2**0
+ 24 .debug_ranges 00000048  00000000  00000000  00002836  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 20 .debug_line   00000402  00000000  00000000  000011cf  2**0
+ 25 .debug_line   0000053b  00000000  00000000  0000287e  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 21 .debug_str    000008e1  00000000  00000000  000015d1  2**0
+ 26 .debug_str    00000901  00000000  00000000  00002db9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 22 .comment      0000003b  00000000  00000000  00001eb2  2**0
+ 27 .comment      0000003b  00000000  00000000  000036ba  2**0
                   CONTENTS, READONLY
- 23 .xtensa.info  00000038  00000000  00000000  00001eed  2**0
+ 28 .xtensa.info  00000038  00000000  00000000  000036f5  2**0
                   CONTENTS, READONLY
- 24 .xt.lit       00000018  00000000  00000000  00001f25  2**0
+ 29 .xt.lit       00000038  00000000  00000000  0000372d  2**0
                   CONTENTS, RELOC, READONLY
- 25 .xt.prop      000001c8  00000000  00000000  00001f3d  2**0
+ 30 .xt.prop      000001f8  00000000  00000000  00003765  2**0
                   CONTENTS, RELOC, READONLY
