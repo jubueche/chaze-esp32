@@ -226,6 +226,7 @@ public:
 	void init(maxim_config_t *);
 	void read_fifo(uint32_t *, uint8_t);
 	void read_n(uint32_t *, uint8_t);
+	void get_values(uint32_t *, uint8_t *);
 
 	void disable_interrupts(void);
 	void init_interrupt(void);

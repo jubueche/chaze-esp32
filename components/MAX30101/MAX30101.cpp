@@ -160,6 +160,82 @@ static void gpio_task_example(void* arg)
     }
 }
 
+/*
+ *
+ */
+void MAX30101::read_n(uint32_t *data, uint8_t n){
+	//Set the read and write pointer to 0
+	this->setFIFO_RD_PTR(0);
+	this->setFIFO_WR_PTR(0);
+	this->setIntEnable(0);
+	fifo_full_interrupt = false;
+
+	if(mode == SPO2_MODE){
+		/*
+		 * 1) Set mode to SPO2 mode and set A_FULL_EN.
+		 * 2) Enable DIE_TEMP_RDY_INT and set TEMP_EN.
+		 * 3) ISR reads Temp data and clears interrupt register by reading frac or Int status 1.
+		 * 4) Interrupt is generated that the FIFO is almost full.
+		 * 5) Read n FIFO data points, update the read pointer.
+		 */
+		this->setMODE_CONFIG(SPO2_MODE);
+		this->setIntEnable(INT_A_FULL_EN | INT_DIE_TEMP_RDY_EN);
+		this->setTEMP_EN();
+
+		for(;;){
+			if(fifo_full_interrupt){
+				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
+				read_fifo(data, n);
+				fifo_full_interrupt = false;
+				break;
+			}
+		}
+	}
+	else if(mode == HEART_RATE_MODE){
+		/*
+		 * 1) Set mode to HR mode and set A_FULL_EN.
+		 * 2) Interrupt will be generated.
+		 * 3) Read the data.
+		 */
+		this->setMODE_CONFIG(HEART_RATE_MODE);
+		this->setIntEnable(INT_A_FULL_EN);
+
+		for(;;){
+			if(fifo_full_interrupt){
+				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
+				read_fifo(data, n);
+				fifo_full_interrupt = false;
+				break;
+			}
+		}
+
+	}
+	else{
+		/*
+		 * 1) Set mode to SPO2 mode and set A_FULL_EN.
+		 * 2) Enable DIE_TEMP_RDY_INT and set TEMP_EN.
+		 * 3) ISR reads Temp data and clears interrupt register by reading frac or Int status 1.
+		 * 4) Interrupt is generated that the FIFO is almost full.
+		 * 5) Read n FIFO data points, update the read pointer.
+		 */
+		this->setMODE_CONFIG(MULTI_LED_MODE);
+		this->setIntEnable(INT_A_FULL_EN | INT_DIE_TEMP_RDY_EN);
+		this->setTEMP_EN();
+
+		for(;;){
+			if(fifo_full_interrupt){
+				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
+				read_fifo(data, n);
+				fifo_full_interrupt = false;
+				break;
+			}
+		}
+		//Convert to 3*N long uint32_t array: [RED RED RED (N) ... IR IR (N) ... GREEN GREEN (N)]
+
+	}
+}
+
+
 //If we get an interrupt that signals us that new data has arrived, we read the data
 void MAX30101::read_fifo(uint32_t * data, uint8_t n){
 	/*
@@ -206,58 +282,28 @@ void MAX30101::read_fifo(uint32_t * data, uint8_t n){
 		}
 		printf("\n");
 
+		//Convert values into ints
+		this->get_values(data, tmp);
+
+	} else{
+		// 1 Sample = 3* Channel1(RED) + 3*Channel2(IR) + 3*Channel3(Green) --> 3*3*N
+		uint8_t tmp[9*n];
+		this->get_n_FIFO_DATA(tmp,9*n);
+		for(int i=0;i<9*n;i++){
+			printf("Data: %d\n", tmp[i]);
+		}
+		printf("\n");
 	}
 }
 
+/*
+ * Params: 	out: Array that stores converted integers
+ * 			data: data containing the read, raw values
+ */
+void MAX30101::get_values(uint32_t * out, uint8_t  * data){
 
-void MAX30101::read_n(uint32_t *data, uint8_t n){
-	//Set the read and write pointer to 0
-	this->setFIFO_RD_PTR(0);
-	this->setFIFO_WR_PTR(0);
-	this->setIntEnable(0);
-	fifo_full_interrupt = false;
-
-	if(mode == SPO2_MODE){
-		/*
-		 * 1) Set mode to SPO2 mode and set A_FULL_EN.
-		 * 2) Enable DIE_TEMP_RDY_INT and set TEMP_EN.
-		 * 3) ISR reads Temp data and clears interrupt register by reading frac or Int status 1.
-		 * 4) Interrupt is generated that the FIFO is almost full.
-		 * 5) Read n FIFO data points, update the read pointer.
-		 */
-		this->setMODE_CONFIG(SPO2_MODE);
-		this->setIntEnable(INT_A_FULL_EN | INT_DIE_TEMP_RDY_EN);
-		this->setTEMP_EN();
-
-		for(;;){
-			if(fifo_full_interrupt){
-				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
-				read_fifo(data, n);
-				fifo_full_interrupt = false;
-				break;
-			}
-		}
-	}
-	else if(mode == HEART_RATE_MODE){
-		/*
-		 * 1) Set mode to HR mode and set A_FULL_EN.
-		 * 2) Interrupt will be generated.
-		 * 3) Read the data.
-		 */
-		this->setMODE_CONFIG(HEART_RATE_MODE);
-		this->setIntEnable(INT_A_FULL_EN);
-
-		for(;;){
-			if(fifo_full_interrupt){
-				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
-				read_fifo(data, n);
-				fifo_full_interrupt = false;
-				break;
-			}
-		}
-	}
-	else{
-
+	if(this->mode == HEART_RATE_MODE){
+		printf("N = %d\n", sizeof(data));
 	}
 }
 

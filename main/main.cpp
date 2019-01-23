@@ -11,7 +11,7 @@ extern "C" void app_main()
 
 	maxim_config_t ex1 = {.PA1 = PA_0_2, .PA2 = PA_0_2, .PA3 = PA_0_2, .PA4 = PA_0_2,
 							  .SMP_AVE = SMP_AVE_NO, .FIFO_ROLL = FIFO_ROLL_DIS, .FIFO_A_FULL = FIFO_A_FULL_0,
-							  .MODE = HEART_RATE_MODE, .SPO2_ADC_RGE = ADC_2048, .SPO2_SR = SR_50, .LED_PW = PW_69};
+							  .MODE = MULTI_LED_MODE, .SPO2_ADC_RGE = ADC_2048, .SPO2_SR = SR_50, .LED_PW = PW_69};
 
 
 	max30101.init(&ex1);
