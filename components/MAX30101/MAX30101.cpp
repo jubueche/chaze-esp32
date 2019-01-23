@@ -138,9 +138,7 @@ static void gpio_task_example(void* arg)
             config = max->getIntEnable();
 
             if(interrupt_status & INT_ST_A_FULL){
-            	printf("ISR: Read Ptr: %d  Write Ptr: %d\n", max->getFIFO_RD_PTR(),max->getFIFO_WR_PTR());
             	max->fifo_full_interrupt = true; //Set the volatile flag for the main thread
-            	printf("FIFO almost full.\n");
             }
             if(interrupt_status & INT_ST_PPG_RGY){
             	printf("New FIFO data ready.\n");
@@ -197,6 +195,7 @@ void MAX30101::read_fifo(uint32_t * data, uint8_t n){
 		for(int i=0;i<6*n;i++){
 			printf("Data: %d\n", tmp[i]);
 		}
+		printf("\n");
 	} else if(current_mode == HEART_RATE_MODE){
 		//SLOT1: Red LED
 		// 1 Sample = 3*Channel 1 --> 3*1*N
@@ -205,12 +204,13 @@ void MAX30101::read_fifo(uint32_t * data, uint8_t n){
 		for(int i=0;i<3*n;i++){
 			printf("Data: %d\n", tmp[i]);
 		}
+		printf("\n");
 
 	}
 }
 
 
-void MAX30101::read_n(uint8_t mode, uint32_t *data, uint8_t n){
+void MAX30101::read_n(uint32_t *data, uint8_t n){
 	//Set the read and write pointer to 0
 	this->setFIFO_RD_PTR(0);
 	this->setFIFO_WR_PTR(0);
@@ -261,8 +261,7 @@ void MAX30101::read_n(uint8_t mode, uint32_t *data, uint8_t n){
 	}
 }
 
-void MAX30101::init_interrupt(uint16_t interrupt_flags){
-
+void MAX30101::init_interrupt(){
 	/*
 	 * Add hardware interrupt handler.
 	 */
@@ -277,12 +276,8 @@ void MAX30101::init_interrupt(uint16_t interrupt_flags){
 	gpio_config(&gpioConfig);
 	ESP_ERROR_CHECK (gpio_install_isr_service(0));
 	ESP_ERROR_CHECK (gpio_isr_handler_add(gpio_num_t_INT_PIN, gpio_isr_handler, NULL));
-	/*
-	 * Configure sensor interrupts.
-	 */
-	this->setIntEnable(interrupt_flags);
-	I2B(this->getIntEnable());
-	I2B(this->getIntEnable());
+
+	this->setIntEnable(0);
 }
 
 void MAX30101::disable_interrupts(void){
@@ -292,15 +287,13 @@ void MAX30101::disable_interrupts(void){
 
 
 //Params: adc_range = MAX30101_RANGE16384, sample_rate, pulse_width, led_current,slot_multi
-void MAX30101::init(multi_led_config_t * args){
-	printf("Start Initiliazing...\n");
-	uint16_t interrupt_flag = (args->A_FULL_EN | args->PPG_RDY_EN | args->ALC_OVF_EN | args->DIE_TEMP_RDY_EN);
-	I2B(interrupt_flag);
+void MAX30101::init(maxim_config_t * args){
 
 	printf("Reset...\n");
 	this->reset();
 
 	this->setMODE_CONFIG(args->MODE);
+	mode = args->MODE;
 	printf("Set mode configuration to: ");
 	I2B(this->getMODE_CONFIG());
 
@@ -320,9 +313,18 @@ void MAX30101::init(multi_led_config_t * args){
 		}
 	}
 
+	uint16_t HR_SLOT_CONFIG = ((uint16_t)SLOT_NONE << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
+	uint16_t SPO2_SLOT_CONFIG = ((uint16_t)SLOT_IR << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
+	uint16_t MULTI_SLOT_CONFIG = ((uint16_t)SLOT_IR << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_GREEN;
+
 	printf("Setting slot configurations...: ");
-	uint16_t slot_config = ((uint16_t)args->SLOT2 << 12) | ((uint16_t)args->SLOT1 << 8) | ((uint16_t)args->SLOT4 << 4) | args->SLOT4;
-	this->setSLOT(slot_config);
+	if(args->MODE == HEART_RATE_MODE){
+		this->setSLOT(HR_SLOT_CONFIG);
+	} else if(args->MODE == SPO2_MODE){
+		this->setSLOT(SPO2_SLOT_CONFIG);
+	} else{
+		this->setSLOT(MULTI_SLOT_CONFIG);
+	}
 	I2B(this->getSLOT());
 
 	//Set LED pulse width
@@ -334,8 +336,8 @@ void MAX30101::init(multi_led_config_t * args){
 	}
 
 	//Initialize the interrupts
-	printf("Setting interrupts...:");
-	this->init_interrupt(interrupt_flag);
+	printf("Setting interrupts...: ");
+	this->init_interrupt();
 
 }
 

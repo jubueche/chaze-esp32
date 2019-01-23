@@ -120,18 +120,10 @@ typedef struct {
 	uint8_t FIFO_ROLL;
 	uint8_t FIFO_A_FULL;
 	uint8_t MODE;
-	uint8_t SLOT1;
-	uint8_t SLOT2;
-	uint8_t SLOT3;
-	uint8_t SLOT4;
 	uint8_t SPO2_ADC_RGE;
 	uint8_t SPO2_SR;
 	uint8_t LED_PW;
-	uint16_t A_FULL_EN;
-	uint16_t PPG_RDY_EN;
-	uint16_t ALC_OVF_EN;
-	uint16_t DIE_TEMP_RDY_EN;
-} multi_led_config_t;
+} maxim_config_t;
 
 
 
@@ -159,6 +151,7 @@ public:
 	gpio_num_t gpio_num_t_INT_PIN = GPIO_NUM_15;
 	volatile bool fifo_full_interrupt;
 	volatile bool fifo_newdata_interrupt;
+	uint8_t mode;
 	/*
 	 * Constructor:
 	 */
@@ -230,12 +223,12 @@ public:
 	void setTEMP_EN(void);
 
 	void reset(void);
-	void init(multi_led_config_t *);
+	void init(maxim_config_t *);
 	void read_fifo(uint32_t *, uint8_t);
-	void read_n(uint8_t, uint32_t *, uint8_t);
+	void read_n(uint32_t *, uint8_t);
 
 	void disable_interrupts(void);
-	void init_interrupt(uint16_t);
+	void init_interrupt(void);
 };
 
 
