@@ -72,9 +72,7 @@
 /*
  * Commands
  */
-#define HEART_RATE_MODE 0x02 //B(010)
-#define MULTI_LED_MODE  0x07 //B(111)
-#define SPO2_MODE       0x03 //B(011)
+
 
 #define RESET 0x40 //B(01000000)
 
@@ -87,6 +85,8 @@ static xQueueHandle gpio_evt_queue = NULL;
  * @params: Source data (SDA), Source Clock (SCK), address of the chip.
  */
 MAX30101::MAX30101(i2c_port_t I2C_MASTER_NUM) {
+	fifo_full_interrupt = false;
+	fifo_newdata_interrupt = false;
 	port_num = I2C_MASTER_NUM;
 
 	if(port_num == I2C_NUM_1){
@@ -124,14 +124,141 @@ static void IRAM_ATTR gpio_isr_handler(void* arg)
     xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
 }
 
+
 static void gpio_task_example(void* arg)
 {
+	MAX30101 *max = (MAX30101 *) arg;
     uint32_t io_num;
+    uint16_t interrupt_status, config;
+    float temp;
+    uint8_t temp_int, temp_frac;
     for(;;) {
         if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            printf("Interrupt!\n");
+            interrupt_status = max->getIntStatus();
+            config = max->getIntEnable();
+
+            if(interrupt_status & INT_ST_A_FULL){
+            	printf("ISR: Read Ptr: %d  Write Ptr: %d\n", max->getFIFO_RD_PTR(),max->getFIFO_WR_PTR());
+            	max->fifo_full_interrupt = true; //Set the volatile flag for the main thread
+            	printf("FIFO almost full.\n");
+            }
+            if(interrupt_status & INT_ST_PPG_RGY){
+            	printf("New FIFO data ready.\n");
+            }
+            if(interrupt_status & INT_ST_ALC_OVF){
+            	printf("Ambient light cancellation overflow.\n");
+            }
+            if(interrupt_status & INT_ST_DIE_TEMP_RDY){
+            	temp_int = max->getTEMP_INT();
+				temp_frac = max->getTEMP_FRAC();
+				temp = ((float)temp_int)+(((float)temp_frac)/16.0);
+				printf("Temp: %.2f\n", temp);
+
+            }
+            if(interrupt_status & INT_ST_PWR_RDY){
+            	printf("Power ready.\n");
+            }
         }
     }
+}
+
+//If we get an interrupt that signals us that new data has arrived, we read the data
+void MAX30101::read_fifo(uint32_t * data, uint8_t n){
+	/*
+	 * LED1 is the red LED
+	 * LED2 is the IR
+	 * LED3 is the green LED
+	 * If the mode is 0x02 (HR) only the Red LED is on and one sample consists of 3 bytes.
+	 * Read like this: LED1[23:16]<-ReadFIFO, LED1[15:8]<-ReadFIFO, LED1[7:0]<-ReadFIFO.
+	 */
+	uint8_t num_available_samples =FIFO_DEPTH - (this->getFIFO_CONFIG() & 0x0F);
+	uint8_t current_mode = this->getMODE_CONFIG();
+	uint8_t rd_ptr, wr_ptr;
+
+	rd_ptr = this->getFIFO_RD_PTR();
+	wr_ptr = this->getFIFO_WR_PTR();
+
+	printf("Read Ptr: %d  Write Ptr: %d\n", rd_ptr, wr_ptr);
+	printf("Num. of avail. points: %d\n", num_available_samples);
+	if(num_available_samples < n){
+		printf("ERROR: Requested more samples than available.\n");
+		return;
+	}
+
+
+	if(current_mode == SPO2_MODE){
+
+		//SLOT1: Red LED
+		//SLOT2: IF
+		//1 Sample = 3*Channel 1 + 3* Channel 2 --> 3*NUM_CHANNELS*N
+
+		uint8_t tmp[6*n];
+		this->get_n_FIFO_DATA(tmp,6*n);
+		for(int i=0;i<6*n;i++){
+			printf("Data: %d\n", tmp[i]);
+		}
+	} else if(current_mode == HEART_RATE_MODE){
+		//SLOT1: Red LED
+		// 1 Sample = 3*Channel 1 --> 3*1*N
+		uint8_t tmp[3*n];
+		this->get_n_FIFO_DATA(tmp,3*n);
+		for(int i=0;i<3*n;i++){
+			printf("Data: %d\n", tmp[i]);
+		}
+
+	}
+}
+
+
+void MAX30101::read_n(uint8_t mode, uint32_t *data, uint8_t n){
+	//Set the read and write pointer to 0
+	this->setFIFO_RD_PTR(0);
+	this->setFIFO_WR_PTR(0);
+	this->setIntEnable(0);
+	fifo_full_interrupt = false;
+
+	if(mode == SPO2_MODE){
+		/*
+		 * 1) Set mode to SPO2 mode and set A_FULL_EN.
+		 * 2) Enable DIE_TEMP_RDY_INT and set TEMP_EN.
+		 * 3) ISR reads Temp data and clears interrupt register by reading frac or Int status 1.
+		 * 4) Interrupt is generated that the FIFO is almost full.
+		 * 5) Read n FIFO data points, update the read pointer.
+		 */
+		this->setMODE_CONFIG(SPO2_MODE);
+		this->setIntEnable(INT_A_FULL_EN | INT_DIE_TEMP_RDY_EN);
+		this->setTEMP_EN();
+
+		for(;;){
+			if(fifo_full_interrupt){
+				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
+				read_fifo(data, n);
+				fifo_full_interrupt = false;
+				break;
+			}
+		}
+	}
+	else if(mode == HEART_RATE_MODE){
+		/*
+		 * 1) Set mode to HR mode and set A_FULL_EN.
+		 * 2) Interrupt will be generated.
+		 * 3) Read the data.
+		 */
+		this->setMODE_CONFIG(HEART_RATE_MODE);
+		this->setIntEnable(INT_A_FULL_EN);
+
+		for(;;){
+			if(fifo_full_interrupt){
+				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
+				read_fifo(data, n);
+				fifo_full_interrupt = false;
+				break;
+			}
+		}
+	}
+	else{
+
+	}
 }
 
 void MAX30101::init_interrupt(uint16_t interrupt_flags){
@@ -140,7 +267,7 @@ void MAX30101::init_interrupt(uint16_t interrupt_flags){
 	 * Add hardware interrupt handler.
 	 */
 	gpio_evt_queue = xQueueCreate(10, sizeof(gpio_num_t));
-	xTaskCreate(gpio_task_example, "gpio_task_example", 2048, NULL, 10, NULL);
+	xTaskCreate(gpio_task_example, "gpio_task_example", 2048, this, 10, NULL);
 	gpio_config_t gpioConfig;
 	gpioConfig.pin_bit_mask = GPIO_SEL_15;
 	gpioConfig.mode = GPIO_MODE_INPUT;
@@ -155,6 +282,7 @@ void MAX30101::init_interrupt(uint16_t interrupt_flags){
 	 */
 	this->setIntEnable(interrupt_flags);
 	I2B(this->getIntEnable());
+	I2B(this->getIntEnable());
 }
 
 void MAX30101::disable_interrupts(void){
@@ -162,33 +290,17 @@ void MAX30101::disable_interrupts(void){
 	//vTaskDelete(gpio_task_example);
 }
 
-//Since this uses HR mode, only the red LED is used. Note: Temperature is not important.
-void MAX30101::initHR(uint8_t SMP_AVE, uint8_t FIFO_ROLL, uint8_t FIFO_A_FULL,
-		uint16_t A_FULL_EN, uint16_t PPG_RDY_EN, uint16_t ALC_OVF_EN, uint16_t DIE_TEMP_RDY_EN){
-	uint16_t int_flags = (A_FULL_EN | PPG_RDY_EN | ALC_OVF_EN | DIE_TEMP_RDY_EN);
-	this->reset();
-	//Set the mode
-	this->setMODE_CONFIG(HEART_RATE_MODE);
-	//Configure the FIFO: Sample Averaging, Rollover Enabled, FIFO_A_FULL
-	uint8_t fifo_config = (SMP_AVE << 5) | (FIFO_ROLL << 4) | (FIFO_A_FULL);
-	this->setFIFO_CONFIG(fifo_config);
 
-	//Initialize the interrupts
-	this->init_interrupt(int_flags);
-}
 //Params: adc_range = MAX30101_RANGE16384, sample_rate, pulse_width, led_current,slot_multi
-void MAX30101::init_multi_led(multi_led_config_t * args){
-	printf("Start Initiliazing Multi LED mode...\n");
+void MAX30101::init(multi_led_config_t * args){
+	printf("Start Initiliazing...\n");
 	uint16_t interrupt_flag = (args->A_FULL_EN | args->PPG_RDY_EN | args->ALC_OVF_EN | args->DIE_TEMP_RDY_EN);
+	I2B(interrupt_flag);
 
 	printf("Reset...\n");
-	printf("It was: ");
-	I2B(this->getMODE_CONFIG());
 	this->reset();
-	printf("Set mode configuration to: ");
-	I2B(this->getMODE_CONFIG());
 
-	this->setMODE_CONFIG(MULTI_LED_MODE);
+	this->setMODE_CONFIG(args->MODE);
 	printf("Set mode configuration to: ");
 	I2B(this->getMODE_CONFIG());
 
@@ -200,13 +312,13 @@ void MAX30101::init_multi_led(multi_led_config_t * args){
 	printf("Setting pulse amplitudes of the LEDS(1-4): ");
 	//Set pulse amplitude of every LED
 	this->setLED1_PA(args->PA1);
-	this->setLED2_PA(args->PA2);
-	this->setLED3_PA(args->PA3);
-	this->setLED4_PA(args->PA4);
-	I2B(this->getLED1_PA());
-	I2B(this->getLED2_PA());
-	I2B(this->getLED3_PA());
-	I2B(this->getLED4_PA());
+	if(args->MODE != HEART_RATE_MODE){
+		this->setLED2_PA(args->PA2);
+		if(args->MODE == MULTI_LED_MODE){
+			this->setLED3_PA(args->PA3);
+			this->setLED4_PA(args->PA4);
+		}
+	}
 
 	printf("Setting slot configurations...: ");
 	uint16_t slot_config = ((uint16_t)args->SLOT2 << 12) | ((uint16_t)args->SLOT1 << 8) | ((uint16_t)args->SLOT4 << 4) | args->SLOT4;
@@ -214,38 +326,17 @@ void MAX30101::init_multi_led(multi_led_config_t * args){
 	I2B(this->getSLOT());
 
 	//Set LED pulse width
-	printf("Setting SPO2 configs...: ");
-	uint8_t spo2_config = (args->SPO2_ADC_RGE | args->SPO2_SR | args->LED_PW);
-	this->setSPO2_CONFIG(spo2_config);
-	I2B(this->getSPO2_CONFIG());
+	if(args->MODE != HEART_RATE_MODE){
+		printf("Setting SPO2 configs...: ");
+		uint8_t spo2_config = (args->SPO2_ADC_RGE | args->SPO2_SR | args->LED_PW);
+		this->setSPO2_CONFIG(spo2_config);
+		I2B(this->getSPO2_CONFIG());
+	}
 
 	//Initialize the interrupts
 	printf("Setting interrupts...:");
 	this->init_interrupt(interrupt_flag);
 
-}
-
-//If we get an interrupt that signals us that new data has arrived, we read the data
-void MAX30101::read_new_fifo(){
-
-	uint32_t data[3] ;
-	uint8_t fifo_wr_ptr, fifo_rd_ptr ;
-	int num_available_samples = 0 ;
-	//int num_samples_to_read = 0 ;
-	int i ;
-
-	fifo_wr_ptr = this->getFIFO_WR_PTR();
-	fifo_rd_ptr = this->getFIFO_RD_PTR();
-
-	num_available_samples = (fifo_wr_ptr + FIFO_DEPTH - fifo_rd_ptr) % FIFO_DEPTH;
-	printf("=== %d data ===\n", num_available_samples) ;
-	for (i = 0 ; i < num_available_samples ; i++ ) {
-		data[0] = this->getFIFO_DATA(); /* LED1 */
-		data[1] = this->getFIFO_DATA(); /* LED2 */
-		data[2] = this->getFIFO_DATA(); /* LED3 */
-		printf("LED1: 0x%05X, LED2: 0x%05X, LED3: 0x%05X\n",
-			data[0], data[1], data[2]) ;
-	}
 }
 
 
@@ -346,6 +437,13 @@ uint16_t MAX30101::getIntStatus(void)
     return(value);
 }
 
+uint8_t MAX30101::getIntStatus1(void)
+{
+	uint8_t res[1];
+	readReg_IDF(0x01, res, 1);
+	return res[0];
+}
+
 uint16_t MAX30101::getIntEnable(void)
 {
     uint8_t res[2];
@@ -426,6 +524,11 @@ uint8_t MAX30101::getFIFO_DATA(void)
     readReg_IDF(REG_FIFO_DATA, &data, 1) ;
     return(data);
 }
+
+void MAX30101::get_n_FIFO_DATA(uint8_t * data, size_t n){
+	readReg_IDF(REG_FIFO_DATA, data, n);
+}
+
 
 void MAX30101::setFIFO_DATA(uint8_t data)
 {
@@ -593,7 +696,3 @@ void  MAX30101::setTEMP_EN(void)
     res[0] = data;
     writeReg_IDF(REG_TEMP_EN, res, 1);
 }
-
-
-
-

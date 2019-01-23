@@ -94,6 +94,22 @@
 #define INT_ALC_OVF_EN      0x2000 //B(0010000000000000)
 #define INT_DIE_TEMP_RDY_EN 0x0002 //B(0000000000000010)
 
+/*
+ * Interrupt status masks
+ */
+#define INT_ST_A_FULL       0x8000 /* FIFO Almost Full Flag */
+#define INT_ST_PPG_RGY      0x4000 /* New FIFO Data Ready */
+#define INT_ST_ALC_OVF      0x2000 /* Ambient Light Cancellation Overflow */
+#define INT_ST_PWR_RDY      0x0100 /* Power Ready Flag */
+#define INT_ST_DIE_TEMP_RDY 0x0002 /* Internal Temperature Ready Flag */
+
+/*
+ * Modes
+ */
+#define HEART_RATE_MODE 0x02 //B(010)
+#define MULTI_LED_MODE  0x07 //B(111)
+#define SPO2_MODE       0x03 //B(011)
+
 //Hashtag perfect memory allocation :)
 typedef struct {
 	uint8_t PA1;
@@ -103,6 +119,7 @@ typedef struct {
 	uint8_t SMP_AVE;
 	uint8_t FIFO_ROLL;
 	uint8_t FIFO_A_FULL;
+	uint8_t MODE;
 	uint8_t SLOT1;
 	uint8_t SLOT2;
 	uint8_t SLOT3;
@@ -140,6 +157,8 @@ public:
 	i2c_port_t port_num;
 	TwoWire MAXI2C;
 	gpio_num_t gpio_num_t_INT_PIN = GPIO_NUM_15;
+	volatile bool fifo_full_interrupt;
+	volatile bool fifo_newdata_interrupt;
 	/*
 	 * Constructor:
 	 */
@@ -165,6 +184,7 @@ public:
 
 	//Interrupts:
 	uint16_t getIntStatus(void);
+	uint8_t getIntStatus1(void);
 	uint16_t getIntEnable(void);
 	void setIntEnable(uint16_t);
 
@@ -179,6 +199,7 @@ public:
 	void setFIFO_RD_PTR(uint8_t);
 	uint8_t getFIFO_DATA(void);
 	void setFIFO_DATA(uint8_t);
+	void get_n_FIFO_DATA(uint8_t*,size_t);
 	uint8_t getFIFO_CONFIG(void);
 	void setFIFO_CONFIG(uint8_t);
 
@@ -209,9 +230,9 @@ public:
 	void setTEMP_EN(void);
 
 	void reset(void);
-	void initHR(uint8_t,uint8_t,uint8_t,uint16_t,uint16_t,uint16_t,uint16_t);
-	void init_multi_led(multi_led_config_t *);
-	void read_new_fifo(void);
+	void init(multi_led_config_t *);
+	void read_fifo(uint32_t *, uint8_t);
+	void read_n(uint8_t, uint32_t *, uint8_t);
 
 	void disable_interrupts(void);
 	void init_interrupt(uint16_t);
