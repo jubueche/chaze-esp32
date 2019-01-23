@@ -266,33 +266,24 @@ void MAX30101::read_fifo(uint32_t * data, uint8_t n){
 		//SLOT2: IF
 		//1 Sample = 3*Channel 1 + 3* Channel 2 --> 3*NUM_CHANNELS*N
 
-		uint8_t tmp[6*n];
-		this->get_n_FIFO_DATA(tmp,6*n);
-		for(int i=0;i<6*n;i++){
-			printf("Data: %d\n", tmp[i]);
-		}
-		printf("\n");
+		uint8_t tmp[3*n];
+		this->get_n_FIFO_DATA(tmp,3*n); //n already has the factor two in it
+		this->get_values(data, n, tmp, 3*n);
+
 	} else if(current_mode == HEART_RATE_MODE){
 		//SLOT1: Red LED
 		// 1 Sample = 3*Channel 1 --> 3*1*N
 		uint8_t tmp[3*n];
 		this->get_n_FIFO_DATA(tmp,3*n);
-		for(int i=0;i<3*n;i++){
-			printf("Data: %d\n", tmp[i]);
-		}
-		printf("\n");
 
 		//Convert values into ints
-		this->get_values(data, tmp);
+		this->get_values(data, n, tmp, 3*n); //Pointer to return array, number of samples to return, 3 times more recorded data
 
 	} else{
 		// 1 Sample = 3* Channel1(RED) + 3*Channel2(IR) + 3*Channel3(Green) --> 3*3*N
-		uint8_t tmp[9*n];
-		this->get_n_FIFO_DATA(tmp,9*n);
-		for(int i=0;i<9*n;i++){
-			printf("Data: %d\n", tmp[i]);
-		}
-		printf("\n");
+		uint8_t tmp[3*n];
+		this->get_n_FIFO_DATA(tmp,3*n); //n already the factor 3 in it, since we have to return 3 times as much data
+		this->get_values(data, n, tmp, 3*n);
 	}
 }
 
@@ -300,12 +291,18 @@ void MAX30101::read_fifo(uint32_t * data, uint8_t n){
  * Params: 	out: Array that stores converted integers
  * 			data: data containing the read, raw values
  */
-void MAX30101::get_values(uint32_t * out, uint8_t  * data){
+void MAX30101::get_values(uint32_t * out, uint8_t num_out, uint8_t  * raw, uint8_t num_raw){
 
-	if(this->mode == HEART_RATE_MODE){
-		printf("N = %d\n", sizeof(data));
+
+	uint8_t j = 0; //Index for raw data
+	for(int i = 0; i< num_out; i++){
+		out[i] = (uint32_t) 0 | ((uint32_t) raw[j] << 16) | ((uint32_t) raw[j+1] << 8) | ((uint32_t) raw[j+2]);
+		out[i] = out[i] >> this->adc_shift;
+		//printf("Int: %d\n", out[i]);
+		j = j + 3;
 	}
 }
+
 
 void MAX30101::init_interrupt(){
 	/*
@@ -340,6 +337,9 @@ void MAX30101::init(maxim_config_t * args){
 
 	this->setMODE_CONFIG(args->MODE);
 	mode = args->MODE;
+	//ADC_16384 0x60 //B(01100000) >>5=00000011 =3, 3-3=0 //
+	adc_shift = 3-(args->SPO2_ADC_RGE >> 5); //Ex.: ADC_8192  0x40 //B(01000000), >>5 =00000010 = 2 ->3-2=1
+	printf("ADC Shift: %d\n", adc_shift);
 	printf("Set mode configuration to: ");
 	I2B(this->getMODE_CONFIG());
 

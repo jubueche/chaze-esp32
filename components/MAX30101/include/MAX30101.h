@@ -152,6 +152,7 @@ public:
 	volatile bool fifo_full_interrupt;
 	volatile bool fifo_newdata_interrupt;
 	uint8_t mode;
+	uint8_t adc_shift;
 	/*
 	 * Constructor:
 	 */
@@ -226,7 +227,8 @@ public:
 	void init(maxim_config_t *);
 	void read_fifo(uint32_t *, uint8_t);
 	void read_n(uint32_t *, uint8_t);
-	void get_values(uint32_t *, uint8_t *);
+	void get_values(uint32_t *, uint8_t, uint8_t *, uint8_t);
+
 
 	void disable_interrupts(void);
 	void init_interrupt(void);
