@@ -69,11 +69,6 @@
 
 #define USE_IDF
 
-/*
- * Commands
- */
-
-
 #define RESET 0x40 //B(01000000)
 
 const char * TAG = "Chaze";
@@ -138,6 +133,7 @@ static void gpio_task_example(void* arg)
             config = max->getIntEnable();
 
             if(interrupt_status & INT_ST_A_FULL){
+            	printf("A FULL INT \n");
             	max->fifo_full_interrupt = true; //Set the volatile flag for the main thread
             }
             if(interrupt_status & INT_ST_PPG_RGY){
@@ -189,6 +185,7 @@ void MAX30101::read_n(uint32_t *data, uint8_t n){
 				fifo_full_interrupt = false;
 				break;
 			}
+			vTaskDelay(50);
 		}
 	}
 	else if(mode == HEART_RATE_MODE){
@@ -207,6 +204,7 @@ void MAX30101::read_n(uint32_t *data, uint8_t n){
 				fifo_full_interrupt = false;
 				break;
 			}
+			vTaskDelay(50);
 		}
 
 	}
@@ -229,9 +227,8 @@ void MAX30101::read_n(uint32_t *data, uint8_t n){
 				fifo_full_interrupt = false;
 				break;
 			}
+			vTaskDelay(50);
 		}
-		//Convert to 3*N long uint32_t array: [RED RED RED (N) ... IR IR (N) ... GREEN GREEN (N)]
-
 	}
 }
 
@@ -293,7 +290,6 @@ void MAX30101::read_fifo(uint32_t * data, uint8_t n){
  */
 void MAX30101::get_values(uint32_t * out, uint8_t num_out, uint8_t  * raw, uint8_t num_raw){
 
-
 	uint8_t j = 0; //Index for raw data
 	for(int i = 0; i< num_out; i++){
 		out[i] = (uint32_t) 0 | ((uint32_t) raw[j] << 16) | ((uint32_t) raw[j+1] << 8) | ((uint32_t) raw[j+2]);
@@ -321,6 +317,8 @@ void MAX30101::init_interrupt(){
 	ESP_ERROR_CHECK (gpio_isr_handler_add(gpio_num_t_INT_PIN, gpio_isr_handler, NULL));
 
 	this->setIntEnable(0);
+	//Read one time to clear the register and to pull up the pin again.
+	this->getIntStatus();
 }
 
 void MAX30101::disable_interrupts(void){

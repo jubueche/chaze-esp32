@@ -14,13 +14,13 @@ extern "C" void app_main()
 
 	maxim_config_t ex1 = {.PA1 = PA_0_2, .PA2 = PA_0_2, .PA3 = PA_0_2, .PA4 = PA_0_2,
 							  .SMP_AVE = SMP_AVE_NO, .FIFO_ROLL = FIFO_ROLL_DIS, .FIFO_A_FULL = FIFO_A_FULL_0,
-							  .MODE = MULTI_LED_MODE, .SPO2_ADC_RGE = ADC_2048, .SPO2_SR = SR_50, .LED_PW = PW_69};
+							  .MODE = HEART_RATE_MODE, .SPO2_ADC_RGE = ADC_2048, .SPO2_SR = SR_50, .LED_PW = PW_69};
 
 
 	//SAMPLE 10 converted points (uint32_t)
 	max30101.init(&ex1);
 	uint8_t n = 10;
-	uint8_t num_channels = 3; // If mode  = HEART RATE it is 1, for SPO2 its 2, for Multi LED its 3
+	uint8_t num_channels = 1; // If mode  = HEART RATE it is 1, for SPO2 its 2, for Multi LED its 3
 	uint32_t data[num_channels * n];
 
 	while(1){
