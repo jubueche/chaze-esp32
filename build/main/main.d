@@ -118,7 +118,10 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/ctype.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/pgmspace.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Printable.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h
 
 /home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h:
 
@@ -359,4 +362,10 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
 /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Printable.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h:
 /home/julian/eclipse-workspace/chaze-esp32/main/./main.cpp:

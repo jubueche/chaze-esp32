@@ -110,16 +110,21 @@
 #define MULTI_LED_MODE  0x07 //B(111)
 #define SPO2_MODE       0x03 //B(011)
 
+/*
+ * Interrupt flag set timeout.
+ */
+#define INT_TIMEOUT 100
+
 //Hashtag perfect memory allocation :)
 typedef struct {
 	uint8_t PA1;
 	uint8_t PA2;
 	uint8_t PA3;
 	uint8_t PA4;
+	uint8_t MODE;
 	uint8_t SMP_AVE;
 	uint8_t FIFO_ROLL;
 	uint8_t FIFO_A_FULL;
-	uint8_t MODE;
 	uint8_t SPO2_ADC_RGE;
 	uint8_t SPO2_SR;
 	uint8_t LED_PW;
@@ -148,11 +153,12 @@ public:
 	 */
 	i2c_port_t port_num;
 	TwoWire MAXI2C;
-	gpio_num_t gpio_num_t_INT_PIN = GPIO_NUM_15;
+	gpio_num_t max30101_gpio_num_t_INT_PIN = GPIO_NUM_15;
 	volatile bool fifo_full_interrupt;
 	volatile bool fifo_newdata_interrupt;
 	uint8_t mode;
 	uint8_t adc_shift;
+	float temp;
 	/*
 	 * Constructor:
 	 */
@@ -225,12 +231,21 @@ public:
 
 	void reset(void);
 	void init(maxim_config_t *);
+	void set_slots(void);
 	void read_fifo(uint32_t *, uint8_t);
 	void read_n(uint32_t *, uint8_t);
 	void get_values(uint32_t *, uint8_t, uint8_t *, uint8_t);
 
+	void read_n_hr(uint32_t *, uint8_t);
+	void read_n_hr(uint32_t *, uint8_t, maxim_config_t *);
+	void read_n_spo2(uint32_t *, uint32_t *, uint8_t);
+	void read_n_spo2(uint32_t *, uint32_t *, uint8_t, maxim_config_t *);
+	void read_n_multi(uint32_t *, uint32_t *, uint32_t *, uint8_t);
+	void read_n_multi(uint32_t *, uint32_t *, uint32_t *, uint8_t, maxim_config_t *);
+	float get_temp(void);
 
-	void disable_interrupts(void);
+	void shutdown(void);
+	void resume(void);
 	void init_interrupt(void);
 };
 
