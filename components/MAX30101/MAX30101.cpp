@@ -1,42 +1,28 @@
 /*#include "MAX30101.h"
 #include "Configuration.h"
 #include "time.h"
-
-
-
 extern "C" void app_main()
 {
-
-
 	// TODO:
 	// - Implement read_hr()
 	// - Implement read_spo2()
 	// - Implement temperature compensation -> Change read_n_* functions to record the temp when triggering interrupt.
 	// - Safe error handling
-
 	MAX30101 max30101(I2C_NUM_1);
-
-
 	// IMPORTANT: Check Table 11 and 12 if SR vs. PW is ok. @ https://datasheets.maximintegrated.com/en/ds/MAX30101.pdf
 	maxim_config_t ex1 = {.PA1 = PA_0_2, .PA2 = PA_0_2, .PA3 = PA_0_2, .PA4 = PA_0_2,
 							  .MODE = HEART_RATE_MODE, .SMP_AVE = SMP_AVE_2, .FIFO_ROLL = FIFO_ROLL_DIS, .FIFO_A_FULL = FIFO_A_FULL_0,
 							  .SPO2_ADC_RGE = ADC_16384, .SPO2_SR = SR_1000, .LED_PW = PW_411};
-
 	max30101.init(&ex1);
 	uint32_t red[32];
-
 while(1){
-
 	max30101.read_n(red, 32);
-
 	for(int i=0;i<32;i++){
 		printf("%d\n",red[i]);
 	}
 	//vTaskDelay(30);
 }
-
 }
-
 */
 
 
@@ -200,10 +186,12 @@ static void max30101_interrupt_handler(void* arg)
 
 void MAX30101::read_n(uint32_t *data, uint8_t n){
 	//Set the read and write pointer to 0
+
 	this->setFIFO_RD_PTR(0);
 	this->setFIFO_WR_PTR(0);
-	this->setIntEnable(0);
+
 	fifo_full_interrupt = false;
+	this->setIntEnable(0);
 
 	if(mode == SPO2_MODE){
 		/*
@@ -226,6 +214,7 @@ void MAX30101::read_n(uint32_t *data, uint8_t n){
 			}
 			vTaskDelay(50);
 		}
+
 	}
 	else if(mode == HEART_RATE_MODE){
 		/*
@@ -236,15 +225,17 @@ void MAX30101::read_n(uint32_t *data, uint8_t n){
 		this->setMODE_CONFIG(HEART_RATE_MODE);
 		this->setIntEnable(INT_A_FULL_EN);
 
-		for(int i = 0; i<INT_TIMEOUT; i++){
+		for(;;){
 			if(fifo_full_interrupt){
 				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
 				read_fifo(data, n);
+
 				fifo_full_interrupt = false;
 				break;
 			}
-			vTaskDelay(50);
+			//vTaskDelay(3);
 		}
+
 	}
 	else{
 		/*
@@ -273,6 +264,7 @@ void MAX30101::read_n(uint32_t *data, uint8_t n){
 
 //If we get an interrupt that signals us that new data has arrived, we read the data
 void MAX30101::read_fifo(uint32_t * data, uint8_t n){
+
 	/*
 	 * LED1 is the red LED
 	 * LED2 is the IR
@@ -328,8 +320,7 @@ void MAX30101::get_values(uint32_t * out, uint8_t num_out, uint8_t  * raw, uint8
 	uint8_t j = 0; //Index for raw data
 	for(int i = 0; i< num_out; i++){
 		out[i] = (uint32_t) 0 | ((uint32_t) raw[j] << 16) | ((uint32_t) raw[j+1] << 8) | ((uint32_t) raw[j+2]);
-		out[i] = out[i] & 0x0003FF;//00000000 00000011 11111111 11111111 = 0x0003FF
-		out[i] = out[i] >> this->adc_shift;
+		out[i] = out[i] & 0x3FFFF;//00000000 00000011 11111111 11111111 = 0x0003FF
 		j = j + 3;
 	}
 }
@@ -390,7 +381,7 @@ void MAX30101::init_interrupt(){
 	ESP_ERROR_CHECK (gpio_install_isr_service(0));
 	ESP_ERROR_CHECK (gpio_isr_handler_add(max30101_gpio_num_t_INT_PIN, gpio_isr_handler, NULL));
 
-	this->setIntEnable(0);
+	this->setIntEnable(INT_A_FULL_EN);
 	//Read one time to clear the register and to pull up the pin again.
 	this->getIntStatus();
 }

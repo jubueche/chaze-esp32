@@ -1,12 +1,13 @@
 #ifndef _CONFIGURATION_H
 #define _CONFIGURATION_H
 
+#include "time.h"
 /*
  * Section: I2C
  */
 #define I2C_MASTER_SCL_IO GPIO_NUM_22 //GPIO of SCL
 #define I2C_MASTER_SDA_IO GPIO_NUM_23 //GPIO of SDA
-#define I2C_MASTER_FREQ_HZ 100000 //100 kHz is standard, but also 400kHz is supported
+#define I2C_MASTER_FREQ_HZ 400000 //100 kHz is standard, but also 400kHz is supported
 #define READ_BIT 1
 #define WRITE_BIT 0
 #define ACK_CHECK_EN 0x1 //Master will check ACK from slave
@@ -110,6 +111,30 @@ static void to_bin_string(uint32_t n){
 	my_reverse(word);
 	printf(word);
 	printf("\n");
+}
+
+static uint32_t min(uint32_t a, uint32_t b){
+	if(a < b){
+		return a;
+	} else return b;
+}
+
+static uint32_t max(uint32_t a, uint32_t b){
+	if(a < b){
+		return b;
+	} else return a;
+}
+
+static float min(float a, float b){
+	if(a < b){
+		return a;
+	} else return b;
+}
+
+static float max(float a, float b){
+	if(a < b){
+		return b;
+	} else return a;
 }
 
 #endif

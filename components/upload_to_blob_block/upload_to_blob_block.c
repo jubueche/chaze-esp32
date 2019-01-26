@@ -21,7 +21,7 @@ and removing calls to _DoWork will yield the same results. */
 #include "iothub_message.h"
 #include "iothubtransporthttp.h"
 
-#define SET_TRUSTED_CERT_IN_SAMPLES 1
+#define SET_TRUSTED_CERT_IN_SAMPLES 0
 
 #ifdef SET_TRUSTED_CERT_IN_SAMPLES
 #include "certs.h"
@@ -31,7 +31,6 @@ and removing calls to _DoWork will yield the same results. */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
 static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessKey=c1akmgbcSk1MH/R+9maJQJsODmaJfHL0YnpQEbkaBeg=";
-//static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessSignature=sv=2018-03-28&ss=b&srt=sco&sp=rwdlac&se=2019-01-17T21:55:53Z&st=2019-01-17T13:55:53Z&spr=https,http&sig=ZxzwAUdQ73PHDARHETL4cqBSGrWkM6Is4pgyC09MrRs%3D";
 
 /*Optional string with http proxy host and integer for http proxy port (Linux only)         */
 static const char* proxyHost = NULL;
@@ -117,13 +116,13 @@ int upload_to_blob_block(void)
         }
         else
         {
-            if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, "subdir/hello_world_utc_mbbb.txt", getDataCallback, NULL) != IOTHUB_CLIENT_OK)
+            if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, "test.txt", getDataCallback, NULL) != IOTHUB_CLIENT_OK)
             {
-                //(void)printf("hello world failed to upload\n");
+                printf("hello world failed to upload\n");
             }
             else
             {
-                //(void)printf("hello world has been created\n");
+                printf("hello world has been created\n");
             }
         }
 
