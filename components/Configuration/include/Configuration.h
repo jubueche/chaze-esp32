@@ -7,7 +7,7 @@
  */
 #define I2C_MASTER_SCL_IO GPIO_NUM_22 //GPIO of SCL
 #define I2C_MASTER_SDA_IO GPIO_NUM_23 //GPIO of SDA
-#define I2C_MASTER_FREQ_HZ 400000 //100 kHz is standard, but also 400kHz is supported
+#define I2C_MASTER_FREQ_HZ 100000 //100 kHz is standard, but also 400kHz is supported
 #define READ_BIT 1
 #define WRITE_BIT 0
 #define ACK_CHECK_EN 0x1 //Master will check ACK from slave

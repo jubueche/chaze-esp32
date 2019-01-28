@@ -2,7 +2,6 @@
 #define _MAX30101_H_
 
 #include "driver/i2c.h"
-#include "Wire.h"
 #include "Configuration.h"
 
 /**
@@ -115,6 +114,11 @@
  */
 #define INT_TIMEOUT 100
 
+/*
+ * Storage size for local circular buffer
+ */
+#define STORAGE_SIZE 32
+
 //Hashtag perfect memory allocation :)
 typedef struct {
 	uint8_t PA1;
@@ -124,13 +128,19 @@ typedef struct {
 	uint8_t MODE;
 	uint8_t SMP_AVE;
 	uint8_t FIFO_ROLL;
-	uint8_t FIFO_A_FULL;
 	uint8_t SPO2_ADC_RGE;
 	uint8_t SPO2_SR;
 	uint8_t LED_PW;
 } maxim_config_t;
 
-
+typedef struct CBuff
+{
+uint32_t red[STORAGE_SIZE];
+uint32_t IR[STORAGE_SIZE];
+uint32_t green[STORAGE_SIZE];
+uint8_t head;
+uint8_t tail;
+} cbuff_struct;
 
 
 class MAX30101
@@ -152,17 +162,13 @@ public:
 	 * Fields:
 	 */
 	i2c_port_t port_num;
-	TwoWire MAXI2C;
 	gpio_num_t max30101_gpio_num_t_INT_PIN = GPIO_NUM_15;
-	volatile bool fifo_full_interrupt;
-	volatile bool fifo_newdata_interrupt;
-	uint8_t mode;
-	uint8_t adc_shift;
-	float temp;
+	cbuff_struct cbuff;
 	/*
 	 * Constructor:
 	 */
-	MAX30101(i2c_port_t);
+	MAX30101(maxim_config_t *);
+	MAX30101();
 
 	/*
 	 * Helper functions:
@@ -230,23 +236,24 @@ public:
 	void setTEMP_EN(void);
 
 	void reset(void);
+	void reset_FIFO(void);
 	void init(maxim_config_t *);
 	void set_slots(void);
-	void read_fifo(uint32_t *, uint8_t);
-	void read_n(uint32_t *, uint8_t);
-	void get_values(uint32_t *, uint8_t, uint8_t *, uint8_t);
 
-	void read_n_hr(uint32_t *, uint8_t);
-	void read_n_hr(uint32_t *, uint8_t, maxim_config_t *);
-	void read_n_spo2(uint32_t *, uint32_t *, uint8_t);
-	void read_n_spo2(uint32_t *, uint32_t *, uint8_t, maxim_config_t *);
-	void read_n_multi(uint32_t *, uint32_t *, uint32_t *, uint8_t);
-	void read_n_multi(uint32_t *, uint32_t *, uint32_t *, uint8_t, maxim_config_t *);
 	float get_temp(void);
 
-	void shutdown(void);
-	void resume(void);
-	void init_interrupt(void);
+	uint16_t check(void);
+	uint8_t get_mode(void);
+	bool safeCheck(uint64_t);
+	uint8_t available(void);
+	void nextSample(void);
+	uint32_t getFIFOGreen(void);
+	uint32_t getFIFOIR(void);
+	uint32_t getFIFORed(void);
+	uint32_t getGreen(void);
+	uint32_t getIR(void);
+	uint32_t getRed(void);
+
 };
 
 

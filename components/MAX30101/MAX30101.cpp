@@ -1,38 +1,3 @@
-/*#include "MAX30101.h"
-#include "Configuration.h"
-#include "time.h"
-extern "C" void app_main()
-{
-	// TODO:
-	// - Implement read_hr()
-	// - Implement read_spo2()
-	// - Implement temperature compensation -> Change read_n_* functions to record the temp when triggering interrupt.
-	// - Safe error handling
-	MAX30101 max30101(I2C_NUM_1);
-	// IMPORTANT: Check Table 11 and 12 if SR vs. PW is ok. @ https://datasheets.maximintegrated.com/en/ds/MAX30101.pdf
-	maxim_config_t ex1 = {.PA1 = PA_0_2, .PA2 = PA_0_2, .PA3 = PA_0_2, .PA4 = PA_0_2,
-							  .MODE = HEART_RATE_MODE, .SMP_AVE = SMP_AVE_2, .FIFO_ROLL = FIFO_ROLL_DIS, .FIFO_A_FULL = FIFO_A_FULL_0,
-							  .SPO2_ADC_RGE = ADC_16384, .SPO2_SR = SR_1000, .LED_PW = PW_411};
-	max30101.init(&ex1);
-	uint32_t red[32];
-while(1){
-	max30101.read_n(red, 32);
-	for(int i=0;i<32;i++){
-		printf("%d\n",red[i]);
-	}
-	//vTaskDelay(30);
-}
-}
-*/
-
-
-
-/**
- * MAX30101
- * High-Sensitivity Pulse Oximeter and
- * Heart-Rate Sensor for Wearable Health
- */
-
 #include <stdio.h>
 #include "FreeRTOS.h"
 #include "freertos/task.h"
@@ -40,13 +5,11 @@ while(1){
 #include "driver/gpio.h"
 #include "esp_log.h"
 #include "sdkconfig.h"
+#include "string.h"
 
 
 #include "MAX30101.h"
 #include "Configuration.h"
-#include "Wire.h"
-
-
 
 /* Status */
 #define REG_INT_MSB        0x00 /* Interrupt Status 1 */
@@ -96,7 +59,6 @@ while(1){
 #define TEMP_EN_MASK 0xFE
 
 
-#define USE_IDF
 
 #define RESET	 0x40 //B(01000000)
 #define SHUTDOWN 0x80 //B(10000000)
@@ -105,311 +67,25 @@ while(1){
 const char * TAG = "Chaze";
 
 static xQueueHandle gpio_evt_queue = NULL;
+
+MAX30101::MAX30101(){ }
 /*
  * @brief
  * Constructor of the class.
  * @params: Source data (SDA), Source Clock (SCK), address of the chip.
  */
-MAX30101::MAX30101(i2c_port_t I2C_MASTER_NUM) {
-	fifo_full_interrupt = false;
-	fifo_newdata_interrupt = false;
-	port_num = I2C_MASTER_NUM;
+MAX30101::MAX30101(maxim_config_t * args) {
 
-	if(port_num == I2C_NUM_1){
-		MAXI2C = Wire;
-	} else{
-		MAXI2C = Wire1;
-	}
-	MAXI2C.begin(I2C_MASTER_SDA_IO, I2C_MASTER_SCL_IO, I2C_MASTER_FREQ_HZ);
-#ifdef USE_IDF
-	ESP_ERROR_CHECK(i2c_master_init_IDF());
-#endif
-}
+	this->port_num = I2C_NUM_1;
 
-/*
- * @brief: High level implementation using Wire.h Read Register from Maxim sensor.
- * @params: addr: Register address, data: pointer to array to store data, size: number of bytes to read
- */
-void MAX30101::readReg(uint8_t addr, uint8_t * data, size_t size){
-	if (size == 0){
-		return;
-	}
-	MAXI2C.beginTransmission(MAXIM_I2C_ADRS);
-	MAXI2C.write(addr); //Set pointer to Register adress
-	MAXI2C.endTransmission();
+	ESP_ERROR_CHECK(this->i2c_master_init_IDF());
 
-	MAXI2C.requestFrom(MAXIM_I2C_ADRS,size);
-	for(int i = 0;i < size; i++){
-		data[i] = MAXI2C.read();
-	}
-}
-
-static void IRAM_ATTR gpio_isr_handler(void* arg)
-{
-    uint32_t gpio_num = (uint32_t) arg;
-    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
-}
-
-
-static void max30101_interrupt_handler(void* arg)
-{
-	MAX30101 *max = (MAX30101 *) arg;
-    uint32_t io_num;
-    uint16_t interrupt_status, config;
-    uint8_t temp_int, temp_frac;
-    for(;;) {
-        if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            interrupt_status = max->getIntStatus();
-            config = max->getIntEnable();
-
-            if(interrupt_status & INT_ST_A_FULL){
-            	max->fifo_full_interrupt = true; //Set the volatile flag for the main thread
-            }
-            if(interrupt_status & INT_ST_PPG_RGY){
-            	printf("New FIFO data ready.\n");
-            }
-            if(interrupt_status & INT_ST_ALC_OVF){
-            	printf("Ambient light cancellation overflow.\n");
-            }
-            if(interrupt_status & INT_ST_DIE_TEMP_RDY){
-            	temp_int = max->getTEMP_INT();
-				temp_frac = max->getTEMP_FRAC();
-				max->temp = ((float)temp_int)+(((float)temp_frac)/16.0);
-            }
-            if(interrupt_status & INT_ST_PWR_RDY){
-            	printf("Power ready.\n");
-            }
-        }
-    }
-}
-
-
-void MAX30101::read_n(uint32_t *data, uint8_t n){
-	//Set the read and write pointer to 0
-
-	this->setFIFO_RD_PTR(0);
-	this->setFIFO_WR_PTR(0);
-
-	fifo_full_interrupt = false;
-	this->setIntEnable(0);
-
-	if(mode == SPO2_MODE){
-		/*
-		 * 1) Set mode to SPO2 mode and set A_FULL_EN.
-		 * 2) Enable DIE_TEMP_RDY_INT and set TEMP_EN.
-		 * 3) ISR reads Temp data and clears interrupt register by reading frac or Int status 1.
-		 * 4) Interrupt is generated that the FIFO is almost full.
-		 * 5) Read n FIFO data points, update the read pointer.
-		 */
-		this->setMODE_CONFIG(SPO2_MODE);
-		this->setIntEnable(INT_A_FULL_EN | INT_DIE_TEMP_RDY_EN);
-		this->setTEMP_EN();
-
-		for(int i = 0; i<INT_TIMEOUT; i++){
-			if(fifo_full_interrupt){
-				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
-				read_fifo(data, n);
-				fifo_full_interrupt = false;
-				break;
-			}
-			vTaskDelay(50);
-		}
-
-	}
-	else if(mode == HEART_RATE_MODE){
-		/*
-		 * 1) Set mode to HR mode and set A_FULL_EN.
-		 * 2) Interrupt will be generated.
-		 * 3) Read the data.
-		 */
-		this->setMODE_CONFIG(HEART_RATE_MODE);
-		this->setIntEnable(INT_A_FULL_EN);
-
-		for(;;){
-			if(fifo_full_interrupt){
-				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF)
-				read_fifo(data, n);
-
-				fifo_full_interrupt = false;
-				break;
-			}
-			//vTaskDelay(3);
-		}
-
-	}
-	else{
-		/*
-		 * 1) Set mode to MULTI mode and set A_FULL_EN.
-		 * 2) Enable DIE_TEMP_RDY_INT and set TEMP_EN.
-		 * 3) ISR reads Temp data and clears interrupt register by reading frac or Int status 1.
-		 * 4) Interrupt is generated that the FIFO is almost full.
-		 * 5) Read n FIFO data points, update the read pointer.
-		 */
-		this->setMODE_CONFIG(MULTI_LED_MODE);
-		this->setIntEnable(INT_A_FULL_EN | INT_DIE_TEMP_RDY_EN);
-		this->setTEMP_EN();
-
-		for(int i = 0; i<INT_TIMEOUT; i++){
-			if(fifo_full_interrupt){
-				//Read the n samples from the FIFO. Note: The mode is SPO2_MODE so one sample = 6 Bytes (3 for red LED, 3 for IF, 3 for Green)
-				read_fifo(data, n);
-				fifo_full_interrupt = false;
-				break;
-			}
-			vTaskDelay(50);
-		}
-	}
-}
-
-
-//If we get an interrupt that signals us that new data has arrived, we read the data
-void MAX30101::read_fifo(uint32_t * data, uint8_t n){
-
-	/*
-	 * LED1 is the red LED
-	 * LED2 is the IR
-	 * LED3 is the green LED
-	 * If the mode is 0x02 (HR) only the Red LED is on and one sample consists of 3 bytes.
-	 * Read like this: LED1[23:16]<-ReadFIFO, LED1[15:8]<-ReadFIFO, LED1[7:0]<-ReadFIFO.
-	 */
-	uint8_t num_available_samples =FIFO_DEPTH - (this->getFIFO_CONFIG() & 0x0F);
-	uint8_t current_mode = this->getMODE_CONFIG();
-	uint8_t rd_ptr, wr_ptr;
-
-	rd_ptr = this->getFIFO_RD_PTR();
-	wr_ptr = this->getFIFO_WR_PTR();
-
-	if(num_available_samples < n){
-		printf("ERROR: Requested more samples than available.\n");
-		return;
-	}
-
-	if(current_mode == SPO2_MODE){
-
-		//SLOT1: Red LED
-		//SLOT2: IF
-		//1 Sample = 3*Channel 1 + 3* Channel 2 --> 3*NUM_CHANNELS*N
-
-		uint8_t tmp[3*n];
-		this->get_n_FIFO_DATA(tmp,3*n); //n already has the factor two in it
-		this->get_values(data, n, tmp, 3*n);
-
-	} else if(current_mode == HEART_RATE_MODE){
-		//SLOT1: Red LED
-		// 1 Sample = 3*Channel 1 --> 3*1*N
-		uint8_t tmp[3*n];
-		this->get_n_FIFO_DATA(tmp,3*n);
-
-		//Convert values into ints
-		this->get_values(data, n, tmp, 3*n); //Pointer to return array, number of samples to return, 3 times more recorded data
-
-	} else{
-		// 1 Sample = 3* Channel1(RED) + 3*Channel2(IR) + 3*Channel3(Green) --> 3*3*N
-		uint8_t tmp[3*n];
-		this->get_n_FIFO_DATA(tmp,3*n); //n already the factor 3 in it, since we have to return 3 times as much data
-		this->get_values(data, n, tmp, 3*n);
-	}
-}
-
-/*
- * Params: 	out: Array that stores converted integers
- * 			data: data containing the read, raw values
- */
-void MAX30101::get_values(uint32_t * out, uint8_t num_out, uint8_t  * raw, uint8_t num_raw){
-
-	uint8_t j = 0; //Index for raw data
-	for(int i = 0; i< num_out; i++){
-		out[i] = (uint32_t) 0 | ((uint32_t) raw[j] << 16) | ((uint32_t) raw[j+1] << 8) | ((uint32_t) raw[j+2]);
-		out[i] = out[i] & 0x3FFFF;//00000000 00000011 11111111 11111111 = 0x0003FF
-		j = j + 3;
-	}
-}
-
-void MAX30101::shutdown(){
-	//Disable interrupts on the chip
-	this->setIntEnable(0);
-
-	this->setLED1_PA(PA_0_0);
-	this->setLED2_PA(PA_0_0);
-	this->setLED3_PA(PA_0_0);
-	this->setLED4_PA(PA_0_0);
-
-	//Set shutdown bit to 1
-	this->setMODE_CONFIG(SHUTDOWN);
-
-	//Detach interrupts from the pin gpio_num_t_INT_PIN
-	ESP_ERROR_CHECK(gpio_isr_handler_remove(max30101_gpio_num_t_INT_PIN));
-}
-
-void MAX30101::resume(){
-
-	//Set shutdown bit to 0
-	this->setMODE_CONFIG(RESUME);
-
-	//Attach interrupts to the pin: pin gpio_num_t_INT_PIN
-	gpio_config_t gpioConfig;
-	gpioConfig.pin_bit_mask = GPIO_SEL_15;
-	gpioConfig.mode = GPIO_MODE_INPUT;
-	gpioConfig.pull_up_en = GPIO_PULLUP_ENABLE;
-	gpioConfig.pull_down_en = GPIO_PULLDOWN_DISABLE;
-	gpioConfig.intr_type = GPIO_INTR_NEGEDGE;
-	gpio_config(&gpioConfig);
-	ESP_ERROR_CHECK (gpio_isr_handler_add(max30101_gpio_num_t_INT_PIN, gpio_isr_handler, NULL));
-	this->setIntEnable(0);
-	//Read one time to clear the register and to pull up the pin again.
-	this->getIntStatus();
-	this->setLED1_PA(PA_0_2);
-	this->setLED2_PA(PA_0_2);
-	this->setLED3_PA(PA_0_2);
-	this->setLED4_PA(PA_0_2);
-}
-
-
-void MAX30101::init_interrupt(){
-	/*
-	 * Add hardware interrupt handler.
-	 */
-	gpio_evt_queue = xQueueCreate(10, sizeof(gpio_num_t));
-	xTaskCreate(max30101_interrupt_handler, "max30101_interrupt_handler", 2048, this, 10, NULL);
-	gpio_config_t gpioConfig;
-	gpioConfig.pin_bit_mask = GPIO_SEL_15;
-	gpioConfig.mode = GPIO_MODE_INPUT;
-	gpioConfig.pull_up_en = GPIO_PULLUP_ENABLE;
-	gpioConfig.pull_down_en = GPIO_PULLDOWN_DISABLE;
-	gpioConfig.intr_type = GPIO_INTR_NEGEDGE;
-	gpio_config(&gpioConfig);
-	ESP_ERROR_CHECK (gpio_install_isr_service(0));
-	ESP_ERROR_CHECK (gpio_isr_handler_add(max30101_gpio_num_t_INT_PIN, gpio_isr_handler, NULL));
-
-	this->setIntEnable(INT_A_FULL_EN);
-	//Read one time to clear the register and to pull up the pin again.
-	this->getIntStatus();
-}
-
-
-
-//Params: adc_range = MAX30101_RANGE16384, sample_rate, pulse_width, led_current,slot_multi
-void MAX30101::init(maxim_config_t * args){
-
-	printf("Reset...\n");
 	this->reset();
-	mode = args->MODE;
-	this->setMODE_CONFIG(mode);
+	this->setMODE_CONFIG(args->MODE);
 
-	temp = 0;
-
-	//ADC_16384 0x60 //B(01100000) >>5=00000011 =3, 3-3=0 //
-	adc_shift = 3-(args->SPO2_ADC_RGE >> 5); //Ex.: ADC_8192  0x40 //B(01000000), >>5 =00000010 = 2 ->3-2=1
-	printf("ADC Shift: %d\n", adc_shift);
-	printf("Set mode configuration to: ");
-	I2B(this->getMODE_CONFIG());
-
-	printf("Setting FIFO flags to: ");
-	uint8_t fifo_config = (args->SMP_AVE) | (args->FIFO_ROLL) | (args->FIFO_A_FULL);
+	uint8_t fifo_config = (args->SMP_AVE) | (args->FIFO_ROLL) | (FIFO_A_FULL_0);
 	this->setFIFO_CONFIG(fifo_config);
-	I2B(this->getFIFO_CONFIG());
 
-	printf("Setting pulse amplitudes of the LEDS(1-4): ");
 	//Set pulse amplitude of every LED
 	this->setLED1_PA(args->PA1);
 	this->setLED2_PA(args->PA2);
@@ -419,35 +95,227 @@ void MAX30101::init(maxim_config_t * args){
 	set_slots();
 
 	//Set LED pulse width
-	printf("Setting SPO2 configs...: ");
 	uint8_t spo2_config = (args->SPO2_ADC_RGE | args->SPO2_SR | args->LED_PW);
 	this->setSPO2_CONFIG(spo2_config);
-	I2B(this->getSPO2_CONFIG());
 
-	//Initialize the interrupts
-	printf("Setting interrupts...: ");
-	this->init_interrupt();
+	this->reset_FIFO();
 
+}
+
+
+//Report the most recent red value
+uint32_t MAX30101::getRed(void)
+{
+  //Check the sensor for new data for 250ms
+  if(this->safeCheck(250000))
+    return (this->cbuff.red[this->cbuff.head]);
+  else
+    return(0); //Sensor failed to find new data
+}
+
+//Report the most recent IR value
+uint32_t MAX30101::getIR(void)
+{
+  //Check the sensor for new data for 250ms
+  if(this->safeCheck(250000))
+    return (this->cbuff.IR[this->cbuff.head]);
+  else
+    return(0); //Sensor failed to find new data
+}
+
+//Report the most recent Green value
+uint32_t MAX30101::getGreen(void)
+{
+  //Check the sensor for new data for 250ms = 250000 us
+  if(this->safeCheck(250000))
+    return (this->cbuff.green[this->cbuff.head]);
+  else
+    return(0); //Sensor failed to find new data
+}
+
+//Report the next Red value in the FIFO
+uint32_t MAX30101::getFIFORed(void)
+{
+  return (this->cbuff.red[this->cbuff.tail]);
+}
+
+//Report the next IR value in the FIFO
+uint32_t MAX30101::getFIFOIR(void)
+{
+  return (this->cbuff.IR[this->cbuff.tail]);
+}
+
+//Report the next Green value in the FIFO
+uint32_t MAX30101::getFIFOGreen(void)
+{
+  return (this->cbuff.green[this->cbuff.tail]);
+}
+
+//Advance the tail
+void MAX30101::nextSample(void)
+{
+  if(available()) //Only advance the tail if new data is available
+  {
+	  this->cbuff.tail++;
+	  this->cbuff.tail %= STORAGE_SIZE; //Wrap condition
+  }
+}
+
+uint8_t MAX30101::available(void)
+{
+  int8_t numberOfSamples = this->cbuff.head - this->cbuff.tail;
+  if (numberOfSamples < 0) numberOfSamples += STORAGE_SIZE;
+
+  return numberOfSamples;
+}
+
+bool MAX30101::safeCheck(uint64_t maxTimeToCheck)
+{
+	uint64_t t1 = (uint64_t) esp_timer_get_time();
+	uint64_t t2;
+	uint16_t ret;
+  while(1)
+  {
+	t2 = (uint64_t) esp_timer_get_time();
+	if(t2 - t1 > maxTimeToCheck){
+		return false;
+	}
+	ret = this->check();
+	if(ret != 0){
+		return true;
+	}
+	vTaskDelay(1);
+	}
+}
+
+
+uint16_t MAX30101::check(void)
+{
+  //Read register FIDO_DATA in (3-byte * number of active LED) chunks
+  //Until FIFO_RD_PTR = FIFO_WR_PTR
+
+  int8_t readPointer = this->getFIFO_RD_PTR();
+  int8_t writePointer = this->getFIFO_WR_PTR();
+  //printf("RD: %d WR: %d\n", readPointer, writePointer);
+  uint8_t active_leds;
+
+  if(this->get_mode() == HEART_RATE_MODE){
+	  active_leds = 1;
+  } else if(this->get_mode() == SPO2_MODE){
+	  active_leds = 2;
+  } else{
+	  active_leds = 3;
+  }
+
+  int32_t numberOfSamples = 0;
+
+  //Do we have new data?
+  if (readPointer != writePointer)
+  {
+    //Calculate the number of readings we need to get from sensor
+    numberOfSamples = writePointer - readPointer;
+    if (numberOfSamples < 0) numberOfSamples += FIFO_DEPTH; //Wrap condition
+
+    //We now have the number of readings, now calc bytes to read
+    int32_t bytesLeftToRead = numberOfSamples * active_leds * 3;
+    int32_t counter = 0;
+    uint8_t tmp[bytesLeftToRead];
+
+    this->get_n_FIFO_DATA(tmp, bytesLeftToRead);
+
+    while(counter < bytesLeftToRead)
+    {
+
+    	this->cbuff.head++; //Advance the head of the storage struct
+    	this->cbuff.head %= STORAGE_SIZE; //Wrap condition
+
+        uint8_t temp[sizeof(uint32_t)]; //Array of 4 bytes that we will convert into long
+        uint32_t tempLong;
+
+        //Burst read three bytes - RED
+        temp[3] = 0;
+        temp[2] = tmp[counter];
+        temp[1] = tmp[counter+1];
+        temp[0] = tmp[counter+2];
+
+        //Convert array to long
+        memcpy(&tempLong, temp, sizeof(tempLong));
+
+		tempLong &= 0x3FFFF; //Zero out all but 18 bits
+		//printf("%d\n", tempLong);
+
+		this->cbuff.red[this->cbuff.head] = tempLong; //Store this reading into the cbuff array
+        counter += 3;
+
+        if (active_leds > 1)
+        {
+          //Burst read three more bytes - IR
+        	temp[3] = 0;
+			temp[2] = tmp[counter];
+			temp[1] = tmp[counter+1];
+			temp[0] = tmp[counter+2];
+
+          //Convert array to long
+          memcpy(&tempLong, temp, sizeof(tempLong));
+
+		  tempLong &= 0x3FFFF; //Zero out all but 18 bits
+
+		  this->cbuff.IR[this->cbuff.head] = tempLong;
+		  counter += 3;
+        }
+
+        if (active_leds > 2)
+        {
+          //Burst read three more bytes - Green
+        	temp[3] = 0;
+			temp[2] = tmp[counter];
+			temp[1] = tmp[counter+1];
+			temp[0] = tmp[counter+2];
+
+          //Convert array to long
+          memcpy(&tempLong, temp, sizeof(tempLong));
+
+		  tempLong &= 0x3FFFF; //Zero out all but 18 bits
+
+		  this->cbuff.green[this->cbuff.head] = tempLong;
+          counter += 3;
+        }
+
+      }
+
+  } //End if readPtr != writePtr
+
+  return numberOfSamples;
+}
+
+uint8_t MAX30101::get_mode(void){
+	return this->getMODE_CONFIG() & 0x07;
+}
+
+
+void MAX30101::reset_FIFO(void){
+	this->setFIFO_RD_PTR(0);
+	this->setFIFO_WR_PTR(0);
 }
 
 /*
  * Need to set mode before calling this function.
  */
-void MAX30101::set_slots(){
-	uint16_t HR_SLOT_CONFIG = ((uint16_t)SLOT_NONE << 12) | ((uint16_t)SLOT_IR << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
+void MAX30101::set_slots(void){
+	uint16_t HR_SLOT_CONFIG = ((uint16_t)SLOT_NONE << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
 	uint16_t SPO2_SLOT_CONFIG = ((uint16_t)SLOT_IR << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
 	uint16_t MULTI_SLOT_CONFIG = ((uint16_t)SLOT_IR << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_GREEN;
 
-	if(mode == HEART_RATE_MODE){
+	if(this->get_mode() == HEART_RATE_MODE){
 		this->setSLOT(HR_SLOT_CONFIG);
-	} else if(mode == SPO2_MODE){
+	} else if(this->get_mode() == SPO2_MODE){
 		this->setSLOT(SPO2_SLOT_CONFIG);
 	} else{
 		this->setSLOT(MULTI_SLOT_CONFIG);
 	}
 }
 
-esp_err_t MAX30101::i2c_master_init_IDF()
+esp_err_t MAX30101::i2c_master_init_IDF(void)
 {
     i2c_config_t conf;
     conf.mode = I2C_MODE_MASTER;
@@ -461,6 +329,7 @@ esp_err_t MAX30101::i2c_master_init_IDF()
                               I2C_MASTER_RX_BUF_DISABLE,
                               I2C_MASTER_TX_BUF_DISABLE, 0);
 }
+
 
 esp_err_t MAX30101::write(uint8_t * data_wr, size_t size){
 	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
@@ -518,7 +387,7 @@ void MAX30101::writeReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 	free(t);
 }
 
-void MAX30101::reset(){
+void MAX30101::reset(void){
 	//Reset the board
 	this->setMODE_CONFIG(RESET);
 }
@@ -633,6 +502,7 @@ uint8_t MAX30101::getFIFO_DATA(void)
 }
 
 void MAX30101::get_n_FIFO_DATA(uint8_t * data, size_t n){
+
 	readReg_IDF(REG_FIFO_DATA, data, n);
 }
 
@@ -803,3 +673,33 @@ void  MAX30101::setTEMP_EN(void)
     res[0] = data;
     writeReg_IDF(REG_TEMP_EN, res, 1);
 }
+
+
+
+/*
+    uint64_t t1, t2;
+
+ 	while(1){
+
+	uint8_t samplesTaken = 0;
+	t1 = (uint64_t) esp_timer_get_time();
+
+	while(samplesTaken < 10)
+	{
+	t1 = (uint64_t) esp_timer_get_time();
+	max30101.check(); //Check the sensor, read up to 3 samples
+	t2 = (uint64_t) esp_timer_get_time();
+		while (max30101.available()) //do we have new data?
+		{
+		  samplesTaken++;
+		  max30101.getFIFORed();
+		  max30101.nextSample(); //We're finished with this sample so move to next sample
+		}
+	}
+
+	t2 = (uint64_t) esp_timer_get_time();
+	printf("samples[%d]\n Hz [%.02f]", samplesTaken, (float)samplesTaken / ((t2 - t1) / 1000000.0));
+	}
+
+
+ */

@@ -86,39 +86,10 @@ MAX30101.o: \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h \
- /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/inttypes.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h \
- /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/event_groups.h \
- /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/timers.h \
- /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Stream.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Print.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/pgmspace.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Printable.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h \
+ /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
@@ -293,71 +264,13 @@ MAX30101.o: \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h:
-
-/home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/inttypes.h:
-
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/math.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h:
-
-/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/event_groups.h:
-
-/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/timers.h:
-
-/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Stream.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Print.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/pgmspace.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/Printable.h:
+/home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h:
 /home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/./MAX30101.cpp:
