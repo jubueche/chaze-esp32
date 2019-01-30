@@ -320,6 +320,8 @@
                                 <option id="gnu.cpp.compiler.option.include.paths.796158774" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/MAX30101/include}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include"/>
                                     								
                                 </option>
                                 								
@@ -395,13 +397,13 @@
         		
         <buildTargets>
             			
-            <target name="flash" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+            <target name="all" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
                 				
                 <buildCommand>make</buildCommand>
                 				
                 <buildArguments>-j4</buildArguments>
                 				
-                <buildTarget>flash</buildTarget>
+                <buildTarget>all</buildTarget>
                 				
                 <stopOnError>true</stopOnError>
                 				

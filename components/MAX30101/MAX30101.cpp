@@ -64,21 +64,25 @@
 #define SHUTDOWN 0x80 //B(10000000)
 #define RESUME	 0x00
 
-const char * TAG = "Chaze";
+const char * TAG = "Chaze-MAX30101";
 
-static xQueueHandle gpio_evt_queue = NULL;
-
+/**
+ * @brief Default constructor.
+ */
 MAX30101::MAX30101(){ }
-/*
- * @brief
- * Constructor of the class.
- * @params: Source data (SDA), Source Clock (SCK), address of the chip.
+
+/**
+ * @brief Constructor.
+ * @param args Holding the configuration information.
  */
 MAX30101::MAX30101(maxim_config_t * args) {
 
 	this->port_num = I2C_NUM_1;
 
-	ESP_ERROR_CHECK(this->i2c_master_init_IDF());
+	esp_err_t err = (this->i2c_master_init_IDF());
+	if(err != ESP_OK){
+		ESP_LOGE(TAG, "Failed to initialize I2C connection.");
+	}
 
 	this->reset();
 	this->setMODE_CONFIG(args->MODE);
@@ -99,11 +103,14 @@ MAX30101::MAX30101(maxim_config_t * args) {
 	this->setSPO2_CONFIG(spo2_config);
 
 	this->reset_FIFO();
+	this->getIntStatus();
 
 }
 
-
-//Report the most recent red value
+/**
+ * @brief Report the most recent red value.
+ * @return Most recent red value.
+ */
 uint32_t MAX30101::getRed(void)
 {
   //Check the sensor for new data for 250ms
@@ -113,7 +120,10 @@ uint32_t MAX30101::getRed(void)
     return(0); //Sensor failed to find new data
 }
 
-//Report the most recent IR value
+/**
+ * @brief Report the most recent IR value.
+ * @return Most recent IR value.
+ */
 uint32_t MAX30101::getIR(void)
 {
   //Check the sensor for new data for 250ms
@@ -123,7 +133,10 @@ uint32_t MAX30101::getIR(void)
     return(0); //Sensor failed to find new data
 }
 
-//Report the most recent Green value
+/**
+ * @brief Report the most recent green value.
+ * @return Most recent green value.
+ */
 uint32_t MAX30101::getGreen(void)
 {
   //Check the sensor for new data for 250ms = 250000 us
@@ -133,25 +146,37 @@ uint32_t MAX30101::getGreen(void)
     return(0); //Sensor failed to find new data
 }
 
-//Report the next Red value in the FIFO
+/**
+ * @brief Get the element, which was recently added to the circular buffer.
+ * @return Red value.
+ */
 uint32_t MAX30101::getFIFORed(void)
 {
   return (this->cbuff.red[this->cbuff.tail]);
 }
 
-//Report the next IR value in the FIFO
+/**
+ * @brief Get the element, which was recently added to the circular buffer.
+ * @return IR value.
+ */
 uint32_t MAX30101::getFIFOIR(void)
 {
   return (this->cbuff.IR[this->cbuff.tail]);
 }
 
-//Report the next Green value in the FIFO
+/**
+ * @brief Get the element, which was recently added to the circular buffer.
+ * @return Green value.
+ */
 uint32_t MAX30101::getFIFOGreen(void)
 {
   return (this->cbuff.green[this->cbuff.tail]);
 }
 
-//Advance the tail
+/**
+ * @brief If we have just read a value from the circular buffer, we have to call nextSample().
+ * This advances ths tail pointer only if there is still data in the buffer.
+ */
 void MAX30101::nextSample(void)
 {
   if(available()) //Only advance the tail if new data is available
@@ -161,6 +186,10 @@ void MAX30101::nextSample(void)
   }
 }
 
+/**
+ * @brief Checks whether there is unread data in the circular buffer.
+ * @return Number of available samples in the buffer.
+ */
 uint8_t MAX30101::available(void)
 {
   int8_t numberOfSamples = this->cbuff.head - this->cbuff.tail;
@@ -169,6 +198,11 @@ uint8_t MAX30101::available(void)
   return numberOfSamples;
 }
 
+/**
+ * @brief Checks for a given amount of time if there is new data in the FIFO of the sensor.
+ * @param maxTimeToCheck Parameter to avoid looping forever if the sensor is not responding. Typically set to 250ms.
+ * @return Boolean indicating success or failure.
+ */
 bool MAX30101::safeCheck(uint64_t maxTimeToCheck)
 {
 	uint64_t t1 = (uint64_t) esp_timer_get_time();
@@ -188,7 +222,11 @@ bool MAX30101::safeCheck(uint64_t maxTimeToCheck)
 	}
 }
 
-
+/**
+ * @brief Checks if new data is available in the FIFO and, depending on the mode, reads numberOfSamples*numLED's*3 bytes
+ * and writes them to the circular buffer. It also advances the head pointer of the circ. buffer.
+ * @return Number of samples read. Remember, one sample comprises either 3,6 or 9 bytes depending on the number of LED's.
+ */
 uint16_t MAX30101::check(void)
 {
   //Read register FIDO_DATA in (3-byte * number of active LED) chunks
@@ -240,9 +278,7 @@ uint16_t MAX30101::check(void)
 
         //Convert array to long
         memcpy(&tempLong, temp, sizeof(tempLong));
-
 		tempLong &= 0x3FFFF; //Zero out all but 18 bits
-		//printf("%d\n", tempLong);
 
 		this->cbuff.red[this->cbuff.head] = tempLong; //Store this reading into the cbuff array
         counter += 3;
@@ -288,21 +324,28 @@ uint16_t MAX30101::check(void)
   return numberOfSamples;
 }
 
+/**
+ *
+ * @return Current mode.
+ */
 uint8_t MAX30101::get_mode(void){
 	return this->getMODE_CONFIG() & 0x07;
 }
 
-
+/**
+ * @brief Resets the pointers of the FIFO. Called at startup.
+ */
 void MAX30101::reset_FIFO(void){
 	this->setFIFO_RD_PTR(0);
 	this->setFIFO_WR_PTR(0);
 }
 
-/*
- * Need to set mode before calling this function.
+/**
+ * @brief It is important to set the mode prior to setting the slots.The slots determine in which order on sample
+ * is filled with data. The order of the slots bitwise is: Slot2 - Slot1 - Slot 4 - Slot3.
  */
 void MAX30101::set_slots(void){
-	uint16_t HR_SLOT_CONFIG = ((uint16_t)SLOT_NONE << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
+	uint16_t HR_SLOT_CONFIG = ((uint16_t)SLOT_NONE << 12) | ((uint16_t)SLOT_IR << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
 	uint16_t SPO2_SLOT_CONFIG = ((uint16_t)SLOT_IR << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_NONE;
 	uint16_t MULTI_SLOT_CONFIG = ((uint16_t)SLOT_IR << 12) | ((uint16_t)SLOT_RED << 8) | ((uint16_t)SLOT_NONE << 4) | SLOT_GREEN;
 
@@ -314,7 +357,10 @@ void MAX30101::set_slots(void){
 		this->setSLOT(MULTI_SLOT_CONFIG);
 	}
 }
-
+/**
+ * @brief Initialize I2C.
+ * @return Error message or ESP_OK.
+ */
 esp_err_t MAX30101::i2c_master_init_IDF(void)
 {
     i2c_config_t conf;
@@ -330,7 +376,12 @@ esp_err_t MAX30101::i2c_master_init_IDF(void)
                               I2C_MASTER_TX_BUF_DISABLE, 0);
 }
 
-
+/**
+ * @brief Write a package to the I2C bus.
+ * @param data_wr Payload to write.
+ * @param size Size of the payload.
+ * @return
+ */
 esp_err_t MAX30101::write(uint8_t * data_wr, size_t size){
 	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 	i2c_master_start(cmd);
@@ -342,6 +393,12 @@ esp_err_t MAX30101::write(uint8_t * data_wr, size_t size){
 	return err;
 }
 
+/**
+ * @brief Reads from the MAX30101.
+ * @param data_rd Pointer to array to be filled.
+ * @param size Number of uint8_t's to read.
+ * @return Error or ESP_OK.
+ */
 esp_err_t MAX30101::read(uint8_t * data_rd, size_t size){
 	if (size == 0) {
 	        return ESP_OK;
@@ -359,16 +416,35 @@ esp_err_t MAX30101::read(uint8_t * data_rd, size_t size){
 	return ret;
 }
 
+/**
+ * @brief Read certain register from the MAX30101.
+ * @param reg Register address.
+ * @param data Data to hold the read data
+ * @param size Number of uint8_t's expected.
+ */
 void MAX30101::readReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 	if(size < 1){
 		return;
 	}
 	uint8_t t[1] = {reg};
-	ESP_ERROR_CHECK(write(t, 1));
+	esp_err_t err = write(t, 1);
+	if(err != ESP_OK){
+		ESP_LOGE(TAG, "Failed to write to I2C");
+	}
 	vTaskDelay(30 / portTICK_RATE_MS);
-	ESP_ERROR_CHECK(read(data,size));
+	err = read(data,size);
+	if(err != ESP_OK){
+		ESP_LOGE(TAG, "Failed to read from I2C");
+
+	}
 }
 
+/**
+ * @brief Writes to a register.
+ * @param reg Address of the register.
+ * @param data Data to write in uint8_t.
+ * @param size Number of uin8_t's to write.
+ */
 void MAX30101::writeReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 	if(size < 1){
 		return;
@@ -383,7 +459,10 @@ void MAX30101::writeReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 	for(int i = 0;i<size;i++){
 		t[i+1] = data[i];
 	}
-	ESP_ERROR_CHECK(write(t, size+1)); //Write reg+data -> 1+size
+	esp_err_t err = write(t, size+1); //Write reg+data -> 1+size
+	if(err != ESP_OK){
+		ESP_LOGE(TAG, "Failed to write to I2C.");
+	}
 	free(t);
 }
 
@@ -440,9 +519,7 @@ void MAX30101::setIntEnable(uint16_t mask)
     writeReg_IDF(REG_INT_ENB_MSB, res, 2);
 }
 
-/*
- * TEST from here:
- */
+
 uint8_t MAX30101::getFIFO_WR_PTR(void)
 {
     uint8_t data;
@@ -674,32 +751,37 @@ void  MAX30101::setTEMP_EN(void)
     writeReg_IDF(REG_TEMP_EN, res, 1);
 }
 
-
-
-/*
-    uint64_t t1, t2;
-
- 	while(1){
-
-	uint8_t samplesTaken = 0;
-	t1 = (uint64_t) esp_timer_get_time();
-
-	while(samplesTaken < 10)
-	{
-	t1 = (uint64_t) esp_timer_get_time();
-	max30101.check(); //Check the sensor, read up to 3 samples
-	t2 = (uint64_t) esp_timer_get_time();
-		while (max30101.available()) //do we have new data?
-		{
-		  samplesTaken++;
-		  max30101.getFIFORed();
-		  max30101.nextSample(); //We're finished with this sample so move to next sample
-		}
+int32_t MAX30101::get_sampling_freq(void){
+	uint8_t spo2_config = this->getSPO2_CONFIG();
+	uint8_t sr = spo2_config & 0x1C;
+	uint8_t averaging = this->getFIFO_CONFIG() &  0xE0;
+	float factor;
+	if(averaging == SMP_AVE_NO){
+		factor = 1;
+	} else if(averaging == SMP_AVE_2){
+		factor = 2;
+	} else if(averaging == SMP_AVE_4){
+		factor = 4;
+	} else if(averaging == SMP_AVE_8){
+		factor = 8;
+	} else if(averaging == SMP_AVE_16){
+		factor = 16;
+	} else{
+		factor = 32;
 	}
-
-	t2 = (uint64_t) esp_timer_get_time();
-	printf("samples[%d]\n Hz [%.02f]", samplesTaken, (float)samplesTaken / ((t2 - t1) / 1000000.0));
+	if(sr == SR_100){
+		return (int32_t) 100/factor;
+	} else if(sr == SR_200){
+		return (int32_t) 200/factor;
+	} else if(sr == SR_400){
+		return (int32_t) 400/factor;
+	} else if(sr == SR_800){
+		return (int32_t) 800/factor;
+	} else if(sr == SR_1600){
+		return (int32_t) 1600/factor;
+	} else{
+		return (int32_t) 3200/factor;
 	}
+}
 
 
- */

@@ -13,12 +13,14 @@ extern "C" void app_main()
 	 */
 
 	/*IMPORTANT: Check Table 11 and 12 if SR vs. PW is ok. @ https://datasheets.maximintegrated.com/en/ds/MAX30101.pdf */
-	HeartRate hr(10);
-	uint32_t bpm;
+	HeartRate hr(1);
 
 	while(1){
-		bpm = hr.get_heart_rate();
-		vTaskDelay(10000 / portTICK_PERIOD_MS);
+		hr.get_heart_rate();
+		while(1){
+			vTaskDelay(10000 / portTICK_PERIOD_MS);
+		}
+
 	}
 }
 

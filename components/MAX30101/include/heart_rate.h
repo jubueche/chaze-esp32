@@ -7,10 +7,10 @@
 #define ALPHA 				0.95
 
 #define DEFAULT_SR 		SR_100
-#define DEFAULT_ADC 	ADC_16384
-#define DEFAULT_PW		PW_411
+#define DEFAULT_ADC 	ADC_2048
+#define DEFAULT_PW		PW_69
 #define DEFAULT_MODE 	HEART_RATE_MODE
-#define DEFAULT_PA 		PA_51
+#define DEFAULT_PA 		PA_6_2
 #define DEFAULT_SMP_AVE SMP_AVE_NO
 
 

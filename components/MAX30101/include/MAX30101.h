@@ -119,7 +119,6 @@
  */
 #define STORAGE_SIZE 32
 
-//Hashtag perfect memory allocation :)
 typedef struct {
 	uint8_t PA1;
 	uint8_t PA2;
@@ -148,15 +147,6 @@ class MAX30101
 public:
 	//7-bit slave address
 	static const uint8_t MAXIM_I2C_ADRS   = 0x57;
-	//8-bit write address
-	static const uint8_t MAXIM_I2C_W_ADRS = 0xAE;
-	//8-bit read address
-	static const uint8_t MAXIM_I2C_R_ADRS = 0xAF;
-	//Max # Bytes in FIFO
-	static const uint16_t MAXIM_FIFO_BYTES = 288;
-	//# of bytes per LED channel
-	static const uint8_t MAXIM_BYTES_PER_CH = 3;
-
 
 	/*
 	 * Fields:
@@ -170,19 +160,12 @@ public:
 	MAX30101(maxim_config_t *);
 	MAX30101();
 
-	/*
-	 * Helper functions:
-	 */
 	void readReg(uint8_t, uint8_t *, size_t);
 	void readReg_IDF(uint8_t, uint8_t *, size_t);
 	void writeReg_IDF(uint8_t, uint8_t *, size_t);
 	esp_err_t i2c_master_init_IDF(void);
 	esp_err_t read(uint8_t *, size_t);
 	esp_err_t write(uint8_t *, size_t);
-
-	/*
-	 * Relevant class functions:
-	 */
 
 	//Board information:
 	uint8_t readID(void);
@@ -239,6 +222,7 @@ public:
 	void reset_FIFO(void);
 	void init(maxim_config_t *);
 	void set_slots(void);
+	int32_t get_sampling_freq(void);
 
 	float get_temp(void);
 
@@ -255,6 +239,5 @@ public:
 	uint32_t getRed(void);
 
 };
-
 
 #endif /* _MAX30101_H_ */

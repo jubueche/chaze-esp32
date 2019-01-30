@@ -18,7 +18,7 @@
 
 #define B(x) S_to_binary_(#x)
 #define I2B(x) to_bin_string(x)
-
+/*
 static inline unsigned long long S_to_binary_(const char *s)
 {
     unsigned long long i = 0;
@@ -136,5 +136,5 @@ static float max(float a, float b){
 		return b;
 	} else return a;
 }
-
+*/
 #endif
