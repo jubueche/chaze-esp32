@@ -1,15 +1,36 @@
-/***************************************************************************
-  This is a library for the BNO055 orientation sensor
-  Designed specifically to work with the Adafruit BNO055 Breakout.
-  Pick one up today in the adafruit shop!
-  ------> http://www.adafruit.com/products
-  These sensors use I2C to communicate, 2 pins are required to interface.
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit andopen-source hardware by purchasing products
-  from Adafruit!
-  Written by KTOWN for Adafruit Industries.
-  MIT license, all text above must be included in any redistribution
- ***************************************************************************/
+
+//Working main.cpp file:
+
+/*
+#include "BNO055.h"
+
+
+extern "C" void app_main()
+{
+
+	BNO055 bno = BNO055();
+
+	if (!bno.begin())
+	  {
+	    printf("No connection.\n");
+	  }
+
+	while(1){
+		imu::Quaternion quat = bno.getQuat();
+
+		// Display the quat data
+		printf("qW: %.04f qX: %.04f qY: %.04f qZ: %.04f\n",quat.w(),quat.y(),quat.x(), quat.z());
+
+		uint8_t system, gyro, accel, mag = 0;
+		bno.getCalibration(&system, &gyro, &accel, &mag);
+
+		printf("CALIBRATION: Sys= %d Gyro= %d Accel= %d Mag= %d", system, gyro, accel, mag);
+		vTaskDelay(100 / portTICK_PERIOD_MS);
+	}
+}
+
+ */
+
 
 #include <math.h>
 #include <limits.h>
@@ -55,7 +76,7 @@ bool BNO055::begin(bno055_opmode_t mode)
   uint8_t id = read8(BNO055_CHIP_ID_ADDR);
   if(id != BNO055_ID)
   {
-    vTaskDelay(1000); // hold on for boot
+    vTaskDelay(1000 / portTICK_PERIOD_MS); // hold on for boot
     id = read8(BNO055_CHIP_ID_ADDR);
     if(id != BNO055_ID) {
       return false;  // still not? ok bail
@@ -69,13 +90,13 @@ bool BNO055::begin(bno055_opmode_t mode)
   write8(BNO055_SYS_TRIGGER_ADDR, 0x20);
   while (read8(BNO055_CHIP_ID_ADDR) != BNO055_ID)
   {
-    vTaskDelay(10);
+    vTaskDelay(10 / portTICK_PERIOD_MS);
   }
-  vTaskDelay(50);
+  vTaskDelay(50 / portTICK_PERIOD_MS);
 
   /* Set to normal power mode */
   write8(BNO055_PWR_MODE_ADDR, POWER_MODE_NORMAL);
-  vTaskDelay(10);
+  vTaskDelay(10 / portTICK_PERIOD_MS);
 
   setPage(PAGE_0);
 
@@ -92,16 +113,16 @@ bool BNO055::begin(bno055_opmode_t mode)
   /* Configure axis mapping (see section 3.4) */
   /*
   write8(BNO055_AXIS_MAP_CONFIG_ADDR, REMAP_CONFIG_P2); // P0-P7, Default is P1
-  vTaskDelay(10);
+  vTaskDelay(10 / portTICK_PERIOD_MS);
   write8(BNO055_AXIS_MAP_SIGN_ADDR, REMAP_SIGN_P2); // P0-P7, Default is P1
-  vTaskDelay(10);
+  vTaskDelay(10 / portTICK_PERIOD_MS);
   */
 
   write8(BNO055_SYS_TRIGGER_ADDR, 0x0);
-  vTaskDelay(10);
+  vTaskDelay(10 /portTICK_PERIOD_MS);
   /* Set the requested operating mode (see section 3.3) */
   setMode(mode);
-  vTaskDelay(20);
+  vTaskDelay(20 / portTICK_PERIOD_MS);
 
   return true;
 }
@@ -113,7 +134,7 @@ void BNO055::setPage(bno055_page_t page)
 {
     _page = page;
     write8(BNO055_PAGE_ID_ADDR, _page);
-    vTaskDelay(30);
+    vTaskDelay(30 / portTICK_PERIOD_MS);
 }
 
 /*!
@@ -123,7 +144,7 @@ void BNO055::setMode(bno055_opmode_t mode)
 {
   _mode = mode;
   write8(BNO055_OPR_MODE_ADDR, _mode);
-  vTaskDelay(30);
+  vTaskDelay(30 / portTICK_PERIOD_MS);
 }
 
 /*!
@@ -135,17 +156,17 @@ void BNO055::setExtCrystalUse(bool usextal)
 
   /* Switch to config mode (just in case since this is the default) */
   setMode(OPERATION_MODE_CONFIG);
-  vTaskDelay(25);
+  vTaskDelay(25 / portTICK_PERIOD_MS);
   setPage(PAGE_0);
   if (usextal) {
     write8(BNO055_SYS_TRIGGER_ADDR, 0x80);
   } else {
     write8(BNO055_SYS_TRIGGER_ADDR, 0x00);
   }
-  vTaskDelay(10);
+  vTaskDelay(10 / portTICK_PERIOD_MS);
   /* Set the requested operating mode (see section 3.3) */
   setMode(modeback);
-  vTaskDelay(20);
+  vTaskDelay(20 / portTICK_PERIOD_MS);
 }
 
 /**
@@ -161,7 +182,7 @@ void BNO055::resetInterrupts()
 
     // Write back the entire register
     write8(BNO055_SYS_TRIGGER_ADDR, sysTrigger);
-    vTaskDelay(30);
+    vTaskDelay(30 / portTICK_PERIOD_MS);
 }
 
 /*!
@@ -193,7 +214,7 @@ void BNO055::enableInterruptsOnXYZ(uint8_t x, uint8_t y, uint8_t z)
 
     // Write back the entire register
     write8(ACC_INT_Settings_ADDR, intSettings);
-    vTaskDelay(30);
+    vTaskDelay(30 / portTICK_PERIOD_MS);
 
     // Return the mode to the last mode
     setPage(PAGE_0);
@@ -240,7 +261,7 @@ void BNO055::enableSlowNoMotion(uint8_t threshold, uint8_t duration, uint8_t mot
     // Fire on the pin
     setInterruptMaskAccelNM(ENABLE);
 
-    vTaskDelay(30);
+    vTaskDelay(30 /portTICK_PERIOD_MS);
 
     // Return the mode to the last mode
     setPage(PAGE_0);
@@ -275,7 +296,7 @@ void BNO055::disableSlowNoMotion()
     // Stop firing on the pin
     setInterruptMaskAccelNM(DISABLE);
 
-    vTaskDelay(30);
+    vTaskDelay(30 / portTICK_PERIOD_MS);
 
     // Return the mode to the last mode
     setPage(PAGE_0);
@@ -320,7 +341,7 @@ void BNO055::enableAnyMotion(uint8_t threshold, uint8_t duration)
     // Fire on the pin
     setInterruptMaskAccelAM(ENABLE);
 
-    vTaskDelay(30);
+    vTaskDelay(30 / portTICK_PERIOD_MS);
 
     // Return the mode to the last mode
     setPage(PAGE_0);
@@ -355,7 +376,7 @@ void BNO055::disableAnyMotion()
     // Stop firing on the pin
     setInterruptMaskAccelAM(DISABLE);
 
-    vTaskDelay(30);
+    vTaskDelay(30 / portTICK_PERIOD_MS);
 
     // Return the mode to the last mode
     setPage(PAGE_0);
@@ -454,7 +475,7 @@ void BNO055::getSystemStatus(uint8_t *system_status, uint8_t *self_test_result, 
   if (system_error != 0)
     *system_error     = read8(BNO055_SYS_ERR_ADDR);
 
-  vTaskDelay(200);
+  vTaskDelay(200 / portTICK_PERIOD_MS);
 }
 
 /**
@@ -662,7 +683,7 @@ bool BNO055::getSensorOffsets(bno055_offsets_t &offsets_type)
     {
         bno055_opmode_t lastMode = _mode;
         setMode(OPERATION_MODE_CONFIG);
-        vTaskDelay(25);
+        vTaskDelay(25 / portTICK_PERIOD_MS);
 
         offsets_type.accel_offset_x = (read8(ACCEL_OFFSET_X_MSB_ADDR) << 8) | (read8(ACCEL_OFFSET_X_LSB_ADDR));
         offsets_type.accel_offset_y = (read8(ACCEL_OFFSET_Y_MSB_ADDR) << 8) | (read8(ACCEL_OFFSET_Y_LSB_ADDR));
@@ -692,7 +713,7 @@ void BNO055::setSensorOffsets(const uint8_t* calibData)
 {
     bno055_opmode_t lastMode = _mode;
     setMode(OPERATION_MODE_CONFIG);
-    vTaskDelay(25);
+    vTaskDelay(25 / portTICK_PERIOD_MS);
 
     /* A writeLen() would make this much cleaner */
     write8(ACCEL_OFFSET_X_LSB_ADDR, calibData[0]);
@@ -732,7 +753,7 @@ void BNO055::setSensorOffsets(const bno055_offsets_t &offsets_type)
 {
     bno055_opmode_t lastMode = _mode;
     setMode(OPERATION_MODE_CONFIG);
-    vTaskDelay(25);
+    vTaskDelay(25 / portTICK_PERIOD_MS);
 
     write8(ACCEL_OFFSET_X_LSB_ADDR, (offsets_type.accel_offset_x) & 0x0FF);
     write8(ACCEL_OFFSET_X_MSB_ADDR, (offsets_type.accel_offset_x >> 8) & 0x0FF);
@@ -898,3 +919,19 @@ esp_err_t BNO055::read(uint8_t * data_rd, size_t size){
 uint8_t BNO055::sliceValueIntoRegister(uint8_t value, uint8_t reg, uint8_t mask, uint8_t position) {
     return (reg & ~mask) | ((value << position) & mask);
 }
+
+
+
+/***************************************************************************
+  This is a library for the BNO055 orientation sensor
+  Designed specifically to work with the Adafruit BNO055 Breakout.
+  Pick one up today in the adafruit shop!
+  ------> http://www.adafruit.com/products
+  These sensors use I2C to communicate, 2 pins are required to interface.
+  Adafruit invests time and resources providing this open source code,
+  please support Adafruit andopen-source hardware by purchasing products
+  from Adafruit!
+  Written by KTOWN for Adafruit Industries.
+  MIT license, all text above must be included in any redistribution
+ ***************************************************************************/
+

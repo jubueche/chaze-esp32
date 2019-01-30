@@ -127,6 +127,50 @@
                         					
                     </folderInfo>
                     					
+                    <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.500374342" name="/" resourcePath="components/MS5837">
+                        						
+                        <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1307504453" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.prefix.1338056761.568589151" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1338056761"/>
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.952965748" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
+                            							
+                            <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.2067196122" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.505125232" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.407286510" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <option id="gnu.cpp.compiler.option.include.paths.762783478" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/MS5837/include}&quot;"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.444510354" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.linker.954182786" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1529332991"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1294714111" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1045270675"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.archiver.277703740" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1125006303"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.assembler.1597504830" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.assembler.input.786742980" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    					
                     <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.1262524980" name="/" resourcePath="components/upload_to_blob">
                         						
                         <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1809573646" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
@@ -368,6 +412,8 @@
                                     <listOptionValue builtIn="false" value="/home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/BNO055/include}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/MS5837/include}&quot;"/>
                                     								
                                 </option>
                                 								

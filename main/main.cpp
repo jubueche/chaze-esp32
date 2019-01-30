@@ -1,27 +1,17 @@
-#include "BNO055.h"
-
+#include "MS5837.h"
 
 extern "C" void app_main()
 {
-
-	BNO055 bno = BNO055();
-
-	if (!bno.begin())
-	  {
-	    printf("No connection.\n");
-	  }
+	MS5837 ms5837 = MS5837();
+	ms5837.init();
+	ms5837.setModel(MS5837::MS5837_02BA);
+	ms5837.setFluidDensity(997);
 
 	while(1){
-		imu::Quaternion quat = bno.getQuat();
-
-		/* Display the quat data */
-		printf("qW: %.04f qX: %.04f qY: %.04f qZ: %.04f\n",quat.w(),quat.y(),quat.x(), quat.z());
-
-		uint8_t system, gyro, accel, mag = 0;
-		bno.getCalibration(&system, &gyro, &accel, &mag);
-
-		printf("CALIBRATION: Sys= %d Gyro= %d Accel= %d Mag= %d", system, gyro, accel, mag);
-		vTaskDelay(100 / portTICK_PERIOD_MS);
+		ms5837.read_vals();
+		vTaskDelay(20 / portTICK_PERIOD_MS);
+		printf("Pressure: %.2f", ms5837.pressure());
+		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
-}
 
+}

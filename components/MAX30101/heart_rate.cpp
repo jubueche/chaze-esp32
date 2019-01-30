@@ -181,7 +181,6 @@ void HeartRate::lowPassButterworthFilter(float x, butterworthFilter_t * filterRe
 
 #include "heart_rate.h"
 #include "Configuration.h"
-#include "time.h"
 
 extern "C" void app_main()
 {

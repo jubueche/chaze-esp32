@@ -1,5 +1,5 @@
 main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/BNO055.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/MS5837/include/MS5837.h \
  /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
@@ -84,20 +84,14 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/list.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/Sensor.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/imumaths.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/vector.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/matrix.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/quaternion.h
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/BNO055.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/MS5837/include/MS5837.h:
 
 /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h:
 
@@ -267,6 +261,10 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h:
 
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
+
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
+
 /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
@@ -274,20 +272,4 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
 /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/Sensor.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/imumaths.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/vector.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/math.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/matrix.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/quaternion.h:
 /home/julian/eclipse-workspace/chaze-esp32/main/./main.cpp:
