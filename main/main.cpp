@@ -1,26 +1,27 @@
-#include "heart_rate.h"
-#include "Configuration.h"
-#include "time.h"
+#include "BNO055.h"
+
 
 extern "C" void app_main()
 {
 
-	/* TODO:
-	 * - Implement read_hr()
-	 * - Implement read_spo2()
-	 * - Implement temperature compensation -> Change read_n_* functions to record the temp when triggering interrupt.
-	 * - Safe error handling
-	 */
+	BNO055 bno = BNO055();
 
-	/*IMPORTANT: Check Table 11 and 12 if SR vs. PW is ok. @ https://datasheets.maximintegrated.com/en/ds/MAX30101.pdf */
-	HeartRate hr(1);
+	if (!bno.begin())
+	  {
+	    printf("No connection.\n");
+	  }
 
 	while(1){
-		hr.get_heart_rate();
-		while(1){
-			vTaskDelay(10000 / portTICK_PERIOD_MS);
-		}
+		imu::Quaternion quat = bno.getQuat();
 
+		/* Display the quat data */
+		printf("qW: %.04f qX: %.04f qY: %.04f qZ: %.04f\n",quat.w(),quat.y(),quat.x(), quat.z());
+
+		uint8_t system, gyro, accel, mag = 0;
+		bno.getCalibration(&system, &gyro, &accel, &mag);
+
+		printf("CALIBRATION: Sys= %d Gyro= %d Accel= %d Mag= %d", system, gyro, accel, mag);
+		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 }
 

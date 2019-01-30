@@ -1,4 +1,5 @@
-/home/julian/eclipse-workspace/chaze-esp32/build/Chaze_ble/libChaze_ble.a.sections_info
+/home/julian/eclipse-workspace/chaze-esp32/build/BNO055/libBNO055.a.sections_info
+ /home/julian/eclipse-workspace/chaze-esp32/build/Chaze_ble/libChaze_ble.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/Configuration/libConfiguration.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/MAX30101/libMAX30101.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/app_trace/libapp_trace.a.sections_info

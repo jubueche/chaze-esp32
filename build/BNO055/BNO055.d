@@ -1,24 +1,27 @@
-main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/BNO055.h \
- /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h \
- /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
- /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
+BNO055.o: \
+ /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/BNO055.cpp \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/config.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_types.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/limits.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/BNO055.h \
+ /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
@@ -80,7 +83,6 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/semphr.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/limits.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/list.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
@@ -93,29 +95,15 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
  /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/vector.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/matrix.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/quaternion.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/quaternion.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
+ /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/BNO055.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/math.h:
 
-/home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h:
-
-/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h:
-
-/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h:
 
@@ -125,17 +113,37 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h:
 
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h:
+
 /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_types.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_types.h:
 
+/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h:
+
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/limits.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/BNO055.h:
+
+/home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h:
 
@@ -259,8 +267,6 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/limits.h:
-
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/list.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h:
@@ -285,9 +291,13 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/math.h:
-
 /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/matrix.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/BNO055/include/quaternion.h:
-/home/julian/eclipse-workspace/chaze-esp32/main/./main.cpp:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
+
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
+
+/home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/BNO055/./BNO055.cpp:
