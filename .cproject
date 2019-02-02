@@ -83,6 +83,60 @@
                         					
                     </folderInfo>
                     					
+                    <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.594098260" name="/" resourcePath="components/WiFiOTA">
+                        						
+                        <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.1526770531" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.prefix.1338056761.539697472" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1338056761"/>
+                            							
+                            <option id="cdt.managedbuild.option.gnu.cross.path.1718294829.1995350898" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1718294829"/>
+                            							
+                            <targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.1884452388" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.2113798571">
+                                								
+                                <option id="gnu.c.compiler.option.include.paths.779562250" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/app_wifi/include}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/WiFiOTA/include}&quot;"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.12666810" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.930567850" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.2023347731">
+                                								
+                                <option id="gnu.cpp.compiler.option.include.paths.296459274" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/app_wifi/include}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/WiFiOTA/include}&quot;"/>
+                                    								
+                                </option>
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.917784227" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+                                							
+                            </tool>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1187364176" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1529332991"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.669734253" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1045270675"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.archiver.537920764" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.1125006303"/>
+                            							
+                            <tool id="cdt.managedbuild.tool.gnu.cross.assembler.1368468619" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.116506868">
+                                								
+                                <inputType id="cdt.managedbuild.tool.gnu.assembler.input.1377148199" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+                                							
+                            </tool>
+                            						
+                        </toolChain>
+                        					
+                    </folderInfo>
+                    					
                     <folderInfo id="cdt.managedbuild.toolchain.gnu.cross.base.1532070005.304744330" name="/" resourcePath="components/BNO055">
                         						
                         <toolChain id="cdt.managedbuild.toolchain.gnu.cross.base.125144250" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.base" unusedChildren="">
@@ -414,6 +468,12 @@
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/BNO055/include}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/MS5837/include}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc}&quot;"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/chaze-esp32/components/Chaze_ble/include}&quot;"/>
                                     								
                                 </option>
                                 								

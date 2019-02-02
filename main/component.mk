@@ -7,3 +7,6 @@
 # please read the ESP-IDF documents if you need to do this.
 #
 CFLAGS += -DSET_TRUSTED_CERT_IN_SAMPLES
+COMPONENT_EMBED_TXTFILES :=  ${PROJECT_PATH}/main/server_certs/certs.pem
+COMPONENT_EMBED_TXTFILES :=  ${PROJECT_PATH}/main/server_certs/howsmyssl_com_root_cert.pem
+COMPONENT_EMBED_TXTFILES :=  ${PROJECT_PATH}/main/server_certs/msft_ssl_cert.pem

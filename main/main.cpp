@@ -1,17 +1,20 @@
-#include "MS5837.h"
+#include <string.h>
+#include <stdlib.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_log.h"
+#include "esp_system.h"
+#include "nvs_flash.h"
+
+extern "C" {
+#include "WiFiOTA.h"
+}
 
 extern "C" void app_main()
 {
-	MS5837 ms5837 = MS5837();
-	ms5837.init();
-	ms5837.setModel(MS5837::MS5837_02BA);
-	ms5837.setFluidDensity(997);
+	check_and_update();
 
 	while(1){
-		ms5837.read_vals();
-		vTaskDelay(20 / portTICK_PERIOD_MS);
-		printf("Pressure: %.2f", ms5837.pressure());
-		vTaskDelay(1000 / portTICK_PERIOD_MS);
+		vTaskDelay(1000);
 	}
-
 }

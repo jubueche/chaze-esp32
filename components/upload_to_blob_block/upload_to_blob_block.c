@@ -21,7 +21,6 @@ and removing calls to _DoWork will yield the same results. */
 #include "iothub_message.h"
 #include "iothubtransporthttp.h"
 
-#define SET_TRUSTED_CERT_IN_SAMPLES 0
 
 #ifdef SET_TRUSTED_CERT_IN_SAMPLES
 #include "certs.h"
