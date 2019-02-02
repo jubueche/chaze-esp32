@@ -4,39 +4,39 @@ main.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.app_main 00000008  00000000  00000000  00000034  2**2
+  0 .literal.app_main 00000014  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .text         00000000  00000000  00000000  0000003c  2**0
+  1 .text         00000000  00000000  00000000  00000048  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .data         00000000  00000000  00000000  0000003c  2**0
+  2 .data         00000000  00000000  00000000  00000048  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  3 .bss          00000000  00000000  00000000  0000003c  2**0
+  3 .bss          00000000  00000000  00000000  00000048  2**0
                   ALLOC
-  4 .text.app_main 00000015  00000000  00000000  0000003c  2**2
+  4 .text.app_main 00000031  00000000  00000000  00000048  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .debug_frame  00000028  00000000  00000000  00000054  2**2
+  5 .debug_frame  00000028  00000000  00000000  0000007c  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  6 .eh_frame     00000028  00000000  00000000  0000007c  2**2
+  6 .eh_frame     00000028  00000000  00000000  000000a4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
-  7 .debug_info   000005c5  00000000  00000000  000000a4  2**0
+  7 .debug_info   00000633  00000000  00000000  000000cc  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  8 .debug_abbrev 000000c6  00000000  00000000  00000669  2**0
+  8 .debug_abbrev 000000d3  00000000  00000000  000006ff  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_aranges 00000020  00000000  00000000  0000072f  2**0
+  9 .debug_aranges 00000020  00000000  00000000  000007d2  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 10 .debug_ranges 00000010  00000000  00000000  0000074f  2**0
+ 10 .debug_ranges 00000010  00000000  00000000  000007f2  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 11 .debug_line   00000268  00000000  00000000  0000075f  2**0
+ 11 .debug_line   00000323  00000000  00000000  00000802  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_str    00000a69  00000000  00000000  000009c7  2**0
+ 12 .debug_str    00000a8a  00000000  00000000  00000b25  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .comment      0000003b  00000000  00000000  00001430  2**0
+ 13 .comment      0000003b  00000000  00000000  000015af  2**0
                   CONTENTS, READONLY
- 14 .xtensa.info  00000038  00000000  00000000  0000146b  2**0
+ 14 .xtensa.info  00000038  00000000  00000000  000015ea  2**0
                   CONTENTS, READONLY
- 15 .xt.lit       00000008  00000000  00000000  000014a3  2**0
+ 15 .xt.lit       00000008  00000000  00000000  00001622  2**0
                   CONTENTS, RELOC, READONLY
- 16 .xt.prop      00000030  00000000  00000000  000014ab  2**0
+ 16 .xt.prop      00000030  00000000  00000000  0000162a  2**0
                   CONTENTS, RELOC, READONLY
 
 msft_ssl_cert.pem.txt.o:     file format elf32-xtensa-le

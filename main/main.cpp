@@ -6,13 +6,19 @@
 #include "esp_system.h"
 #include "nvs_flash.h"
 
+
 extern "C" {
 #include "WiFiOTA.h"
+#include "wdt.h"
 }
 
 extern "C" void app_main()
 {
-	check_and_update();
+	start_wdt(5, true);
+	vTaskDelay(4900 / portTICK_RATE_MS);
+	feed_wdt();
+	vTaskDelay(5100 / portTICK_RATE_MS);
+
 
 	while(1){
 		vTaskDelay(1000);

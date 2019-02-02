@@ -3,6 +3,7 @@
  /home/julian/eclipse-workspace/chaze-esp32/build/Configuration/libConfiguration.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/MAX30101/libMAX30101.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/MS5837/libMS5837.a.sections_info
+ /home/julian/eclipse-workspace/chaze-esp32/build/WDT/libWDT.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/WiFiOTA/libWiFiOTA.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/app_trace/libapp_trace.a.sections_info
  /home/julian/eclipse-workspace/chaze-esp32/build/app_update/libapp_update.a.sections_info

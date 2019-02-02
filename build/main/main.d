@@ -86,7 +86,8 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
  /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/WiFiOTA/include/WiFiOTA.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/WiFiOTA/include/WiFiOTA.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/WDT/include/wdt.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
@@ -263,4 +264,6 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
 /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/WiFiOTA/include/WiFiOTA.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/WDT/include/wdt.h:
 /home/julian/eclipse-workspace/chaze-esp32/main/./main.cpp:
