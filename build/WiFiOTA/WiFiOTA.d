@@ -88,6 +88,56 @@ WiFiOTA.o: \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi.h \
+ /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/queue.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_types.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_interface.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h \
+ /home/julian/Documents/esp/esp-idf/components/esp_event/include/esp_event.h \
+ /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/semphr.h \
+ /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
+ /home/julian/Documents/esp/esp-idf/components/esp_event/include/esp_event_base.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_event_legacy.h \
+ /home/julian/Documents/esp/esp-idf/components/tcpip_adapter/include/tcpip_adapter.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/queue.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_types.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip_addr.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/opt.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/lwipopts.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/unistd.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/unistd.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/unistd.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/fcntl.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_default_fcntl.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stat.h \
+ /home/julian/Documents/esp/esp-idf/components/vfs/include/sys/ioctl.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/select.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_task.h \
+ /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/netif/dhcp_state.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/debug.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/arch.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/arch/cc.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/arch/sys_arch.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/arch/vfs_lwip.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/inttypes.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip4_addr.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip6_addr.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h \
+ /home/julian/Documents/esp/esp-idf/components/lwip/include/apps/dhcpserver/dhcpserver.h \
+ /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h \
+ /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/event_groups.h \
+ /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/timers.h \
+ /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h \
  /home/julian/Documents/esp/esp-idf/components/json/cJSON/cJSON.h \
  /home/julian/Documents/esp/esp-idf/components/esp_http_client/include/esp_http_client.h \
  /home/julian/Documents/esp/esp-idf/components/nghttp/port/include/http_parser.h
@@ -267,6 +317,106 @@ WiFiOTA.o: \
 /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi.h:
+
+/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/rom/queue.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_types.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_interface.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp_event/include/esp_event.h:
+
+/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/semphr.h:
+
+/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp_event/include/esp_event_base.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_event_legacy.h:
+
+/home/julian/Documents/esp/esp-idf/components/tcpip_adapter/include/tcpip_adapter.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/rom/queue.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_types.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip_addr.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/opt.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/lwipopts.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/unistd.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/unistd.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/unistd.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/fcntl.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_default_fcntl.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stat.h:
+
+/home/julian/Documents/esp/esp-idf/components/vfs/include/sys/ioctl.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/select.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_task.h:
+
+/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/netif/dhcp_state.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/debug.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/arch.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/arch/cc.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/arch/sys_arch.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/arch/vfs_lwip.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/inttypes.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip4_addr.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip6_addr.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h:
+
+/home/julian/Documents/esp/esp-idf/components/lwip/include/apps/dhcpserver/dhcpserver.h:
+
+/home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h:
+
+/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/event_groups.h:
+
+/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/timers.h:
+
+/home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h:
 
 /home/julian/Documents/esp/esp-idf/components/json/cJSON/cJSON.h:
 

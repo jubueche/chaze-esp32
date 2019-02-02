@@ -22,9 +22,7 @@ and removing calls to _DoWork will yield the same results. */
 #include "iothubtransporthttp.h"
 
 
-#ifdef SET_TRUSTED_CERT_IN_SAMPLES
 #include "certs.h"
-#endif // SET_TRUSTED_CERT_IN_SAMPLES
 
 /*String containing Hostname, Device Id & Device Key in the format:                         */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
@@ -78,7 +76,6 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
 
     // This callback returns IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_OK to indicate that the upload shall continue.
     // To abort the upload, it should return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_ABORT
-    printf("Returning");
     return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_OK;
 }
 
@@ -99,11 +96,7 @@ int upload_to_blob_block(void)
     }
     else
     {
-#ifdef SET_TRUSTED_CERT_IN_SAMPLES
-        // Setting the Trusted Certificate.  This is only necessary on system with without
-        // built in certificate stores.
         IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
-#endif // SET_TRUSTED_CERT_IN_SAMPLES
 
         HTTP_PROXY_OPTIONS http_proxy_options = { 0 };
         http_proxy_options.host_address = proxyHost;
@@ -138,7 +131,7 @@ int upload_to_blob_block(void)
 
 
 
-//Working main.c file, important: Change CMakeLists.txt to
+//Working main.cpp file, important: Change CMakeLists.txt to
 
 /*
 # Edit following two lines to set component requirements (see docs)
@@ -182,59 +175,21 @@ component_compile_definitions(SET_TRUSTED_CERT_IN_SAMPLES)
 
 #include "azure_c_shared_utility/xlogging.h"
 
+extern "C"{
+#include "app_wifi.h"
+}
+
 #define EXAMPLE_WIFI_SSID "EatOrBeEaten"
 #define EXAMPLE_WIFI_PASS "Fussball08"
 
-EventGroupHandle_t wifi_event_group;
 
 #ifndef BIT0
 #define BIT0 (0x1 << 0)
 #endif
 
-const int CONNECTED_BIT = BIT0;
 
 static const char *TAG = "azure";
 
-
-static esp_err_t event_handler(void *ctx, system_event_t *event)
-{
-    switch(event->event_id) {
-    case SYSTEM_EVENT_STA_START:
-        esp_wifi_connect();
-        break;
-    case SYSTEM_EVENT_STA_GOT_IP:
-        xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        break;
-    case SYSTEM_EVENT_STA_DISCONNECTED:
-
-        esp_wifi_connect();
-        xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
-        break;
-    default:
-        break;
-    }
-    return ESP_OK;
-}
-
-static void initialise_wifi(void)
-{
-    tcpip_adapter_init();
-    wifi_event_group = xEventGroupCreate();
-    ESP_ERROR_CHECK( esp_event_loop_init(event_handler, NULL) );
-    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-    ESP_ERROR_CHECK( esp_wifi_init(&cfg) );
-    ESP_ERROR_CHECK( esp_wifi_set_storage(WIFI_STORAGE_RAM) );
-    wifi_config_t wifi_config = {
-        .sta = {
-            .ssid = EXAMPLE_WIFI_SSID,
-            .password = EXAMPLE_WIFI_PASS,
-        },
-    };
-    ESP_LOGI(TAG, "Setting WiFi configuration SSID %s...", wifi_config.sta.ssid);
-    ESP_ERROR_CHECK( esp_wifi_set_mode(WIFI_MODE_STA) );
-    ESP_ERROR_CHECK( esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
-    ESP_ERROR_CHECK( esp_wifi_start() );
-}
 
 void azure_task(void *pvParameter)
 {
@@ -248,22 +203,15 @@ void azure_task(void *pvParameter)
     vTaskDelete(NULL);
 }
 
-void app_main()
+extern "C" void app_main()
 {
 
-    // Initialize NVS
-    esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES) {
-        ESP_ERROR_CHECK(nvs_flash_erase());
-        ret = nvs_flash_init();
-    }
-    ESP_ERROR_CHECK( ret );
-
-    initialise_wifi();
+    wifi_initialise();
 
     if ( xTaskCreate(&azure_task, "azure_task", 1024 * 8, NULL, 5, NULL) != pdPASS ) {
         printf("create azure task failed\r\n");
     }
 
 }
+
  */

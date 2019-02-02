@@ -1,8 +1,14 @@
 #ifndef _WIFI_FUNCTIONS_H_
 #define _WIFI_FUNCTIONS_H_
 
+#include "esp_wifi.h"
+#include "freertos/event_groups.h"
+
+
 #define WIFI_SSID			"EatOrBeEaten"
 #define WIFI_PASS			"Fussball08"
+
+EventGroupHandle_t wifi_event_group;
 
 void wifi_initialise(void);
 void wifi_wait_connected();
