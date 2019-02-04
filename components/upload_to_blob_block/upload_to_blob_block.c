@@ -27,7 +27,7 @@ and removing calls to _DoWork will yield the same results. */
 /*String containing Hostname, Device Id & Device Key in the format:                         */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
-static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessKey=c1akmgbcSk1MH/R+9maJQJsODmaJfHL0YnpQEbkaBeg=";
+static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze1;SharedAccessKey=aFyZrV362aMj/hEaxz0Wlq2eg6UMWMmjU3hwrDxzy1M=";
 
 /*Optional string with http proxy host and integer for http proxy port (Linux only)         */
 static const char* proxyHost = NULL;
@@ -88,7 +88,9 @@ int upload_to_blob_block(void)
     (void)printf("Starting the IoTHub client sample upload to blob with multiple blocks...\r\n");
 
 
+
     device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(connectionString, HTTP_Protocol);
+
 
     if (device_ll_handle == NULL)
     {
