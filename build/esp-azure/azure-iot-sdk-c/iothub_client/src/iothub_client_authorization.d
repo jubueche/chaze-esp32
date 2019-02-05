@@ -43,7 +43,9 @@ azure-iot-sdk-c/iothub_client/src/iothub_client_authorization.o: \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/internal/iothub_client_authorization.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xio.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optionhandler.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optionhandler.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 
@@ -132,4 +134,8 @@ azure-iot-sdk-c/iothub_client/src/iothub_client_authorization.o: \
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xio.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optionhandler.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h:
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/src/iothub_client_authorization.c:

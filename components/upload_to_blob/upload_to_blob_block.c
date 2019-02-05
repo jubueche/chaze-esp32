@@ -27,7 +27,7 @@ and removing calls to _DoWork will yield the same results. */
 /*String containing Hostname, Device Id & Device Key in the format:                         */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessKey=<device_key>"                */
 /*  "HostName=<host_name>;DeviceId=<device_id>;SharedAccessSignature=<device_sas_token>"    */
-static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze1;SharedAccessKey=aFyZrV362aMj/hEaxz0Wlq2eg6UMWMmjU3hwrDxzy1M=";
+static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessKey=NXRr58pAsSBSl4WEYRg4GEASAj9TcsAovAaIG4HkEHc=";
 
 /*Optional string with http proxy host and integer for http proxy port (Linux only)         */
 static const char* proxyHost = NULL;
@@ -172,7 +172,6 @@ component_compile_definitions(SET_TRUSTED_CERT_IN_SAMPLES)
 
 #include "nvs_flash.h"
 
-#include "upload_to_blob.h"
 #include "upload_to_blob_block.h"
 
 #include "azure_c_shared_utility/xlogging.h"

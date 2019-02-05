@@ -20,6 +20,9 @@ azure-iot-sdk-c/iothub_client/src/iothub_client_core_ll.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
@@ -54,9 +57,6 @@ azure-iot-sdk-c/iothub_client/src/iothub_client_core_ll.o: \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_options.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_version.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_transport_ll.h \
@@ -112,6 +112,12 @@ azure-iot-sdk-c/iothub_client/src/iothub_client_core_ll.o: \
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h:
 
@@ -180,12 +186,6 @@ azure-iot-sdk-c/iothub_client/src/iothub_client_core_ll.o: \
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_options.h:
 

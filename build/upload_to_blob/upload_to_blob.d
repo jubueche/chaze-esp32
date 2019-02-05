@@ -49,7 +49,7 @@ upload_to_blob.o: \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/certs/certs.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/port/inc/certs.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -149,5 +149,5 @@ upload_to_blob.o: \
 
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/certs/certs.h:
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/port/inc/certs.h:
 /home/julian/eclipse-workspace/chaze-esp32/components/upload_to_blob/./upload_to_blob.c:

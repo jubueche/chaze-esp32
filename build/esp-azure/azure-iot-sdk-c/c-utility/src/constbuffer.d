@@ -16,11 +16,11 @@ azure-iot-sdk-c/c-utility/src/constbuffer.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h \
+ /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/constbuffer.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/buffer_.h \
  /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xlogging.h \
@@ -71,15 +71,15 @@ azure-iot-sdk-c/c-utility/src/constbuffer.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h:
-
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
-
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h:
+
+/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
 
 /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/constbuffer.h:
 

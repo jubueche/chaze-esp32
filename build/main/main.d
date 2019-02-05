@@ -1,26 +1,22 @@
-main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
+main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.cpp \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/config.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_types.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -53,8 +49,6 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/xtruntime-core-state.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_crosscore_int.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_timer.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/heap/include/esp_heap_caps.h \
  /home/julian/Documents/esp/esp-idf/components/heap/include/multi_heap.h \
@@ -104,9 +98,13 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
  /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip_addr.h \
  /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/opt.h \
  /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/lwipopts.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/unistd.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/unistd.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/unistd.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/fcntl.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_default_fcntl.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stat.h \
@@ -133,15 +131,9 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_event_loop.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs_flash.h \
- /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h \
- /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h \
- /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/err.h \
- /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp.h \
- /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp_opts.h
+ /home/julian/eclipse-workspace/chaze-esp32/components/wifi_synch/include/wifi_synch.h
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h:
 
@@ -155,6 +147,10 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h:
 
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h:
+
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h:
@@ -163,19 +159,7 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_types.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h:
-
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/time.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h:
 
@@ -183,7 +167,7 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/time.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -248,10 +232,6 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_crosscore_int.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_timer.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h:
 
@@ -351,11 +331,19 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 
 /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/lwipopts.h:
 
+/home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/time.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h:
+
 /home/julian/Documents/esp/esp-idf/components/newlib/include/unistd.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/unistd.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/unistd.h:
+
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/time.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/fcntl.h:
 
@@ -409,17 +397,5 @@ main.o: /home/julian/eclipse-workspace/chaze-esp32/main/main.c \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 
-/home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs_flash.h:
-
-/home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h:
-
-/home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h:
-
-/home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
-
-/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/err.h:
-
-/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp.h:
-
-/home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/apps/sntp_opts.h:
-/home/julian/eclipse-workspace/chaze-esp32/main/./main.c:
+/home/julian/eclipse-workspace/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
+/home/julian/eclipse-workspace/chaze-esp32/main/./main.cpp:

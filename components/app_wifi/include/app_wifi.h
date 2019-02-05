@@ -10,6 +10,7 @@
 
 EventGroupHandle_t wifi_event_group;
 
+esp_err_t event_handler(void *, system_event_t *);
 void wifi_initialise(void);
 void wifi_wait_connected();
 
