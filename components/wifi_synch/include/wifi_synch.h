@@ -2,11 +2,12 @@
 #define WIFI_SYNCH_H
 
 
-void synch_via_wifi(void);
+void synch_via_wifi(void *);
 void synch_with_azure(void *);
 bool poll_wifi(void);
 char * get_ssid(void);
 char * get_password(void);
+
 
 #endif
 
