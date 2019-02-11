@@ -1,0 +1,1 @@
+COMPONENT_EMBED_TXTFILES :=  ${PROJECT_PATH}/main/server_certs/msft_ssl_cert.pem
