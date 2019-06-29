@@ -1,11 +1,11 @@
 wifi_synch.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/wifi_synch/wifi_synch.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/wifi_synch/wifi_synch.c \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_assert.h \
@@ -33,29 +33,30 @@ wifi_synch.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/shared_util_options.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_device_client_ll.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_transport_ll.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_ll.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/shared_util_options.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_device_client_ll.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_transport_ll.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_ll.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_common.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_common.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/port/inc/certs.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/port/inc/certs.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
@@ -155,7 +156,7 @@ wifi_synch.o: \
  /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/wifi_synch/include/wifi_synch.h
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/wifi_synch/include/wifi_synch.h
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
@@ -167,7 +168,7 @@ wifi_synch.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
 
@@ -223,21 +224,21 @@ wifi_synch.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/shared_util_options.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/shared_util_options.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_device_client_ll.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_device_client_ll.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_transport_ll.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_transport_ll.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_ll.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_ll.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
 
@@ -245,17 +246,17 @@ wifi_synch.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_common.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_common.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/errno.h:
 
@@ -263,11 +264,13 @@ wifi_synch.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/port/inc/certs.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h:
+
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/port/inc/certs.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -467,5 +470,5 @@ wifi_synch.o: \
 
 /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/wifi_synch/./wifi_synch.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/wifi_synch/./wifi_synch.c:

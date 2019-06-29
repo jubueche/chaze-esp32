@@ -1,6 +1,6 @@
 cores/esp32/esp32-hal-uart.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.c \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
@@ -19,7 +19,7 @@ cores/esp32/esp32-hal-uart.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
@@ -29,7 +29,7 @@ cores/esp32/esp32-hal-uart.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_system.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
@@ -64,17 +64,17 @@ cores/esp32/esp32-hal-uart.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/xtensa-versions.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core-matmap.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
@@ -97,13 +97,13 @@ cores/esp32/esp32-hal-uart.o: \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/limits.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/list.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/semphr.h \
@@ -118,7 +118,7 @@ cores/esp32/esp32-hal-uart.o: \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/uart_reg.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/rtc.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
 
@@ -156,7 +156,7 @@ cores/esp32/esp32-hal-uart.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -176,7 +176,7 @@ cores/esp32/esp32-hal-uart.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_system.h:
 
@@ -246,7 +246,7 @@ cores/esp32/esp32-hal-uart.o: \
 
 /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
@@ -254,19 +254,19 @@ cores/esp32/esp32-hal-uart.o: \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -312,19 +312,19 @@ cores/esp32/esp32-hal-uart.o: \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/list.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/task.h:
 
@@ -351,4 +351,4 @@ cores/esp32/esp32-hal-uart.o: \
 /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/uart_reg.h:
 
 /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/rtc.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.c:

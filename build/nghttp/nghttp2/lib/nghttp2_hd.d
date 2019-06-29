@@ -36,7 +36,7 @@ nghttp2/lib/nghttp2_hd.o: \
  /home/julian/Documents/esp/esp-idf/components/nghttp/nghttp2/lib/nghttp2_mem.h \
  /home/julian/Documents/esp/esp-idf/components/nghttp/nghttp2/lib/nghttp2_rcbuf.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/nghttp/nghttp2/lib/nghttp2_helper.h \
  /home/julian/Documents/esp/esp-idf/components/nghttp/nghttp2/lib/nghttp2_debug.h
@@ -113,7 +113,7 @@ nghttp2/lib/nghttp2_hd.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h:
 

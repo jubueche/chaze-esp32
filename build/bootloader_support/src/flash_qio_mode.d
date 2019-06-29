@@ -6,7 +6,7 @@ src/flash_qio_mode.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/bootloader_support/include_bootloader/flash_qio_mode.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_assert.h \
@@ -53,7 +53,7 @@ src/flash_qio_mode.o: \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
 

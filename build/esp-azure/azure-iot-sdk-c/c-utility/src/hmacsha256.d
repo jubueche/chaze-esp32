@@ -1,7 +1,7 @@
 azure-iot-sdk-c/c-utility/src/hmacsha256.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/src/hmacsha256.c \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmacsha256.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/src/hmacsha256.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmacsha256.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -17,16 +17,16 @@ azure-iot-sdk-c/c-utility/src/hmacsha256.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/buffer_.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmac.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/sha.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/buffer_.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmac.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/sha.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmacsha256.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmacsha256.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
@@ -58,15 +58,15 @@ azure-iot-sdk-c/c-utility/src/hmacsha256.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/buffer_.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/buffer_.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmac.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/hmac.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/sha.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/sha.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/src/hmacsha256.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/src/hmacsha256.c:

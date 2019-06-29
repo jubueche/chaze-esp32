@@ -31,7 +31,7 @@ src/wpa2/tls/tlsv1_client_write.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
@@ -130,7 +130,7 @@ src/wpa2/tls/tlsv1_client_write.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h:
 

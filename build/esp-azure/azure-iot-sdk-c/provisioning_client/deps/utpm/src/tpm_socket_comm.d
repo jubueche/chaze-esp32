@@ -1,5 +1,5 @@
 azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -18,23 +18,23 @@ azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xlogging.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xlogging.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/inc/azure_utpm_c/tpm_socket_comm.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/inc/azure_utpm_c/tpm_socket_comm.h \
  /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/sys/socket.h \
  /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/sockets.h \
  /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/opt.h \
@@ -49,7 +49,7 @@ azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.o: \
  /home/julian/Documents/esp/esp-idf/components/vfs/include/sys/ioctl.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/select.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_task.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/hal.h \
@@ -167,19 +167,19 @@ azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/gballoc.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xlogging.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/xlogging.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
 
@@ -193,13 +193,13 @@ azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/optimize_size.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/inc/azure_utpm_c/tpm_socket_comm.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/inc/azure_utpm_c/tpm_socket_comm.h:
 
 /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/sys/socket.h:
 
@@ -229,7 +229,7 @@ azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_task.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
@@ -390,4 +390,4 @@ azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.o: \
 /home/julian/Documents/esp/esp-idf/components/lwip/port/esp32/include/arpa/inet.h:
 
 /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/../../../lwip/src/include/lwip/inet.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/provisioning_client/deps/utpm/src/tpm_socket_comm.c:

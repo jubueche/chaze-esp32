@@ -1,94 +1,92 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/wifi_synch/libwifi_synch.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/wifi_synch/libwifi_synch.a:
 
 wifi_synch.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.synch_with_azure 00000074  00000000  00000000  00000034  2**2
+  0 .literal.synch_with_azure 000000a0  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.getDataCallback 00000028  00000000  00000000  000000a8  2**2
+  1 .literal.event_handler 0000005c  00000000  00000000  000000d4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.event_handler 00000060  00000000  00000000  000000d0  2**2
+  2 .literal.get_data 00000064  00000000  00000000  00000130  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.scan_for_ssid 000000a0  00000000  00000000  00000130  2**2
+  3 .literal.getDataCallback 0000003c  00000000  00000000  00000194  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.poll_wifi 000000c4  00000000  00000000  000001d0  2**2
+  4 .literal.scan_for_ssid 000000bc  00000000  00000000  000001d0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.synch_via_wifi 0000009c  00000000  00000000  00000294  2**2
+  5 .literal.poll_wifi 00000104  00000000  00000000  0000028c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.get_ssid 00000004  00000000  00000000  00000330  2**2
+  6 .literal.synch_via_wifi 00000104  00000000  00000000  00000390  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal.get_password 00000004  00000000  00000000  00000334  2**2
+  7 .literal.get_ssid 00000004  00000000  00000000  00000494  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .text         00000000  00000000  00000000  00000338  2**0
+  8 .literal.get_password 00000004  00000000  00000000  00000498  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  9 .text         00000000  00000000  00000000  0000049c  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  9 .data         00000000  00000000  00000000  00000338  2**0
+ 10 .data         00000000  00000000  00000000  0000049c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 10 .bss          00000000  00000000  00000000  00000338  2**0
+ 11 .bss          00000000  00000000  00000000  0000049c  2**0
                   ALLOC
- 11 .rodata.str1.4 0000065d  00000000  00000000  00000338  2**2
+ 12 .rodata.str1.4 00000a6d  00000000  00000000  0000049c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 12 .text.synch_with_azure 000000b3  00000000  00000000  00000998  2**2
+ 13 .text.synch_with_azure 0000017c  00000000  00000000  00000f0c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .text.getDataCallback 00000080  00000000  00000000  00000a4c  2**2
+ 14 .text.event_handler 000000d4  00000000  00000000  00001088  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 14 .text.event_handler 000000e2  00000000  00000000  00000acc  2**2
+ 15 .text.get_data 0000017e  00000000  00000000  0000115c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .text.get_data 00000020  00000000  00000000  00000bb0  2**2
+ 16 .text.getDataCallback 000000cc  00000000  00000000  000012dc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .text.scan_for_ssid 000001ce  00000000  00000000  00000bd0  2**2
+ 17 .text.scan_for_ssid 00000252  00000000  00000000  000013a8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .rodata       00000060  00000000  00000000  00000da0  2**2
+ 18 .text.poll_wifi 000002d1  00000000  00000000  000015fc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 19 .text.synch_via_wifi 0000023c  00000000  00000000  000018d0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 20 .text.get_ssid 00000008  00000000  00000000  00001b0c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 21 .text.get_password 00000008  00000000  00000000  00001b14  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 22 .rodata.__func__$8574 0000000e  00000000  00000000  00001b1c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 18 .text.poll_wifi 000001f2  00000000  00000000  00000e00  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .text.synch_via_wifi 00000103  00000000  00000000  00000ff4  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .text.get_ssid 00000008  00000000  00000000  000010f8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .text.get_password 00000008  00000000  00000000  00001100  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .rodata.__func__$8528 0000000e  00000000  00000000  00001108  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 23 .rodata.__func__$8593 0000000a  00000000  00000000  00001118  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 24 .rodata.__func__$8569 0000000e  00000000  00000000  00001124  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 25 .rodata.__func__$8539 0000000f  00000000  00000000  00001134  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 26 .rodata.CONNECTED_BIT 00000004  00000000  00000000  00001144  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 27 .bss.block_count 00000004  00000000  00000000  00001148  2**2
+ 23 .bss.allow_to_connect 00000001  00000000  00000000  00001b2a  2**0
                   ALLOC
- 28 .bss.xSemaphore 00000004  00000000  00000000  00001148  2**2
+ 24 .rodata.CONNECTED_BIT 00000004  00000000  00000000  00001b2c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 25 .bss.block_count 00000004  00000000  00000000  00001b30  2**2
                   ALLOC
- 29 .data.TAG     00000004  00000000  00000000  00001148  2**2
+ 26 .bss.xSemaphore 00000004  00000000  00000000  00001b30  2**2
+                  ALLOC
+ 27 .data.TAG     00000004  00000000  00000000  00001b30  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 30 .data.password 00000020  00000000  00000000  0000114c  2**2
+ 28 .data.deviceId 00000020  00000000  00000000  00001b34  2**2
                   CONTENTS, ALLOC, LOAD, DATA
- 31 .data.ssid    00000020  00000000  00000000  0000116c  2**2
+ 29 .data.password 00000020  00000000  00000000  00001b54  2**2
                   CONTENTS, ALLOC, LOAD, DATA
- 32 .debug_frame  000000e8  00000000  00000000  0000118c  2**2
+ 30 .data.ssid    00000020  00000000  00000000  00001b74  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 31 .debug_frame  000000e8  00000000  00000000  00001b94  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 33 .debug_info   00003017  00000000  00000000  00001274  2**0
+ 32 .debug_info   000032cf  00000000  00000000  00001c7c  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 34 .debug_abbrev 000003e3  00000000  00000000  0000428b  2**0
+ 33 .debug_abbrev 000003e7  00000000  00000000  00004f4b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 35 .debug_loc    00000464  00000000  00000000  0000466e  2**0
+ 34 .debug_loc    00000395  00000000  00000000  00005332  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 36 .debug_aranges 00000060  00000000  00000000  00004ad2  2**0
+ 35 .debug_aranges 00000060  00000000  00000000  000056c7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 37 .debug_ranges 00000088  00000000  00000000  00004b32  2**0
+ 36 .debug_ranges 00000070  00000000  00000000  00005727  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 38 .debug_line   00000a78  00000000  00000000  00004bba  2**0
+ 37 .debug_line   00000d08  00000000  00000000  00005797  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 39 .debug_str    000021ca  00000000  00000000  00005632  2**0
+ 38 .debug_str    0000224f  00000000  00000000  0000649f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 40 .comment      0000003b  00000000  00000000  000077fc  2**0
+ 39 .comment      0000003b  00000000  00000000  000086ee  2**0
                   CONTENTS, READONLY
- 41 .xtensa.info  00000038  00000000  00000000  00007837  2**0
+ 40 .xtensa.info  00000038  00000000  00000000  00008729  2**0
                   CONTENTS, READONLY
- 42 .xt.lit       00000040  00000000  00000000  0000786f  2**0
+ 41 .xt.lit       00000048  00000000  00000000  00008761  2**0
                   CONTENTS, RELOC, READONLY
- 43 .xt.prop      0000039c  00000000  00000000  000078af  2**0
+ 42 .xt.prop      00000594  00000000  00000000  000087a9  2**0
                   CONTENTS, RELOC, READONLY

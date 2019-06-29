@@ -22,7 +22,7 @@ rmt.o: /home/julian/Documents/esp/esp-idf/components/driver/rmt.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/hal.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
@@ -139,7 +139,7 @@ rmt.o: /home/julian/Documents/esp/esp-idf/components/driver/rmt.c \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 

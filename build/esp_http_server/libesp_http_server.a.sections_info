@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/esp_http_server/libesp_http_server.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/esp_http_server/libesp_http_server.a:
 
 httpd_main.o:     file format elf32-xtensa-le
 
@@ -60,21 +60,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  27 .text.httpd_stop 000000a9  00000000  00000000  0000102c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 28 .rodata.__func__$6951 0000000b  00000000  00000000  000010d8  2**2
+ 28 .rodata.__func__$6978 0000000b  00000000  00000000  000010d8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 29 .rodata.__func__$6926 00000012  00000000  00000000  000010e4  2**2
+ 29 .rodata.__func__$6953 00000012  00000000  00000000  000010e4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 30 .rodata.__func__$6883 00000019  00000000  00000000  000010f8  2**2
+ 30 .rodata.__func__$6910 00000019  00000000  00000000  000010f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 31 .rodata.__func__$6855 00000012  00000000  00000000  00001114  2**2
+ 31 .rodata.__func__$6882 00000012  00000000  00000000  00001114  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 32 .rodata.__func__$6892 00000017  00000000  00000000  00001128  2**2
+ 32 .rodata.__func__$6919 00000017  00000000  00000000  00001128  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 33 .rodata.__func__$6908 0000000d  00000000  00000000  00001140  2**2
+ 33 .rodata.__func__$6935 0000000d  00000000  00000000  00001140  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 34 .rodata.__func__$6919 0000000d  00000000  00000000  00001150  2**2
+ 34 .rodata.__func__$6946 0000000d  00000000  00000000  00001150  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 35 .rodata.__func__$6872 00000011  00000000  00000000  00001160  2**2
+ 35 .rodata.__func__$6899 00000011  00000000  00000000  00001160  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  36 .debug_frame  00000148  00000000  00000000  00001174  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
@@ -90,15 +90,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  42 .debug_line   00000c16  00000000  00000000  000042c6  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 43 .debug_str    00000e80  00000000  00000000  00004edc  2**0
+ 43 .debug_str    00000e84  00000000  00000000  00004edc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 44 .comment      0000003b  00000000  00000000  00005d5c  2**0
+ 44 .comment      0000003b  00000000  00000000  00005d60  2**0
                   CONTENTS, READONLY
- 45 .xtensa.info  00000038  00000000  00000000  00005d97  2**0
+ 45 .xtensa.info  00000038  00000000  00000000  00005d9b  2**0
                   CONTENTS, READONLY
- 46 .xt.lit       00000058  00000000  00000000  00005dcf  2**0
+ 46 .xt.lit       00000058  00000000  00000000  00005dd3  2**0
                   CONTENTS, RELOC, READONLY
- 47 .xt.prop      00000600  00000000  00000000  00005e27  2**0
+ 47 .xt.prop      00000600  00000000  00000000  00005e2b  2**0
                   CONTENTS, RELOC, READONLY
 
 httpd_txrx.o:     file format elf32-xtensa-le
@@ -201,21 +201,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  47 .text.httpd_default_recv 0000002c  00000000  00000000  000010cc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 48 .rodata.__func__$6996 0000000f  00000000  00000000  000010f8  2**2
+ 48 .rodata.__func__$7023 0000000f  00000000  00000000  000010f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 49 .rodata.__func__$6981 0000000f  00000000  00000000  00001108  2**2
+ 49 .rodata.__func__$7008 0000000f  00000000  00000000  00001108  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 50 .rodata.__func__$6975 00000014  00000000  00000000  00001118  2**2
+ 50 .rodata.__func__$7002 00000014  00000000  00000000  00001118  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 51 .rodata.__func__$6868 0000000f  00000000  00000000  0000112c  2**2
+ 51 .rodata.__func__$6895 0000000f  00000000  00000000  0000112c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 52 .rodata.__func__$6909 00000013  00000000  00000000  0000113c  2**2
+ 52 .rodata.__func__$6936 00000013  00000000  00000000  0000113c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 53 .rodata.__func__$6901 0000000d  00000000  00000000  00001150  2**2
+ 53 .rodata.__func__$6928 0000000d  00000000  00000000  00001150  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 54 .rodata.__func__$6885 00000014  00000000  00000000  00001160  2**2
+ 54 .rodata.__func__$6912 00000014  00000000  00000000  00001160  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 55 .rodata.__func__$6860 0000000b  00000000  00000000  00001174  2**2
+ 55 .rodata.__func__$6887 0000000b  00000000  00000000  00001174  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  56 .debug_frame  00000238  00000000  00000000  00001180  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
@@ -231,15 +231,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  62 .debug_line   00000bfb  00000000  00000000  0000421a  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 63 .debug_str    00000c70  00000000  00000000  00004e15  2**0
+ 63 .debug_str    00000c74  00000000  00000000  00004e15  2**0
                   CONTENTS, READONLY, DEBUGGING
- 64 .comment      0000003b  00000000  00000000  00005a85  2**0
+ 64 .comment      0000003b  00000000  00000000  00005a89  2**0
                   CONTENTS, READONLY
- 65 .xtensa.info  00000038  00000000  00000000  00005ac0  2**0
+ 65 .xtensa.info  00000038  00000000  00000000  00005ac4  2**0
                   CONTENTS, READONLY
- 66 .xt.lit       000000a0  00000000  00000000  00005af8  2**0
+ 66 .xt.lit       000000a0  00000000  00000000  00005afc  2**0
                   CONTENTS, RELOC, READONLY
- 67 .xt.prop      00000a50  00000000  00000000  00005b98  2**0
+ 67 .xt.prop      00000a50  00000000  00000000  00005b9c  2**0
                   CONTENTS, RELOC, READONLY
 
 httpd_uri.o:     file format elf32-xtensa-le
@@ -282,19 +282,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  17 .text.httpd_uri 000000fa  00000000  00000000  000007f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .rodata.__func__$6890 00000018  00000000  00000000  000008ec  2**2
+ 18 .rodata.__func__$6917 00000018  00000000  00000000  000008ec  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 19 .rodata.__func__$6901 0000000a  00000000  00000000  00000904  2**2
+ 19 .rodata.__func__$6928 0000000a  00000000  00000000  00000904  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 20 .rodata.__func__$6878 00000022  00000000  00000000  00000910  2**2
+ 20 .rodata.__func__$6905 00000022  00000000  00000000  00000910  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 21 .rodata.__func__$6870 00000015  00000000  00000000  00000934  2**2
+ 21 .rodata.__func__$6897 00000015  00000000  00000000  00000934  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 22 .rodata.__func__$6862 0000001d  00000000  00000000  0000094c  2**2
+ 22 .rodata.__func__$6889 0000001d  00000000  00000000  0000094c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 23 .rodata.__func__$6841 00000017  00000000  00000000  0000096c  2**2
+ 23 .rodata.__func__$6868 00000017  00000000  00000000  0000096c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 24 .rodata.__func__$6850 0000001b  00000000  00000000  00000984  2**2
+ 24 .rodata.__func__$6877 0000001b  00000000  00000000  00000984  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  25 .debug_frame  000000b8  00000000  00000000  000009a0  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
@@ -310,15 +310,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  31 .debug_line   0000072f  00000000  00000000  0000250a  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 32 .debug_str    00000a7a  00000000  00000000  00002c39  2**0
+ 32 .debug_str    00000a7e  00000000  00000000  00002c39  2**0
                   CONTENTS, READONLY, DEBUGGING
- 33 .comment      0000003b  00000000  00000000  000036b3  2**0
+ 33 .comment      0000003b  00000000  00000000  000036b7  2**0
                   CONTENTS, READONLY
- 34 .xtensa.info  00000038  00000000  00000000  000036ee  2**0
+ 34 .xtensa.info  00000038  00000000  00000000  000036f2  2**0
                   CONTENTS, READONLY
- 35 .xt.lit       00000038  00000000  00000000  00003726  2**0
+ 35 .xt.lit       00000038  00000000  00000000  0000372a  2**0
                   CONTENTS, RELOC, READONLY
- 36 .xt.prop      000003f0  00000000  00000000  0000375e  2**0
+ 36 .xt.prop      000003f0  00000000  00000000  00003762  2**0
                   CONTENTS, RELOC, READONLY
 
 httpd_parse.o:     file format elf32-xtensa-le
@@ -427,33 +427,33 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  50 .text.httpd_req_get_hdr_value_str 000000a6  00000000  00000000  000014d8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 51 .rodata.__func__$7015 00000016  00000000  00000000  00001580  2**2
+ 51 .rodata.__func__$7042 00000016  00000000  00000000  00001580  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 52 .rodata.__func__$6994 00000011  00000000  00000000  00001598  2**2
+ 52 .rodata.__func__$7021 00000011  00000000  00000000  00001598  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 53 .rodata.__func__$6886 00000011  00000000  00000000  000015ac  2**2
+ 53 .rodata.__func__$6913 00000011  00000000  00000000  000015ac  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 54 .rodata.__func__$6945 0000000c  00000000  00000000  000015c0  2**2
+ 54 .rodata.__func__$6972 0000000c  00000000  00000000  000015c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 55 .rodata.__func__$6935 0000000b  00000000  00000000  000015cc  2**2
+ 55 .rodata.__func__$6962 0000000b  00000000  00000000  000015cc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 56 .rodata.__func__$6872 00000007  00000000  00000000  000015d8  2**2
+ 56 .rodata.__func__$6899 00000007  00000000  00000000  000015d8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 57 .rodata.__func__$6895 00000010  00000000  00000000  000015e0  2**2
+ 57 .rodata.__func__$6922 00000010  00000000  00000000  000015e0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 58 .rodata.__func__$6905 00000010  00000000  00000000  000015f0  2**2
+ 58 .rodata.__func__$6932 00000010  00000000  00000000  000015f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 59 .rodata.__func__$6912 00000014  00000000  00000000  00001600  2**2
+ 59 .rodata.__func__$6939 00000014  00000000  00000000  00001600  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 60 .rodata.__func__$6920 0000000b  00000000  00000000  00001614  2**2
+ 60 .rodata.__func__$6947 0000000b  00000000  00000000  00001614  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 61 .rodata.__func__$6880 0000000e  00000000  00000000  00001620  2**2
+ 61 .rodata.__func__$6907 0000000e  00000000  00000000  00001620  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 62 .rodata.__func__$6865 0000000b  00000000  00000000  00001630  2**2
+ 62 .rodata.__func__$6892 0000000b  00000000  00000000  00001630  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 63 .rodata.__func__$6926 0000000b  00000000  00000000  0000163c  2**2
+ 63 .rodata.__func__$6953 0000000b  00000000  00000000  0000163c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 64 .rodata.__func__$6966 00000010  00000000  00000000  00001648  2**2
+ 64 .rodata.__func__$6993 00000010  00000000  00000000  00001648  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  65 .debug_frame  00000250  00000000  00000000  00001658  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
@@ -469,15 +469,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  71 .debug_line   00000fb7  00000000  00000000  00005542  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 72 .debug_str    00000f2f  00000000  00000000  000064f9  2**0
+ 72 .debug_str    00000f33  00000000  00000000  000064f9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 73 .comment      0000003b  00000000  00000000  00007428  2**0
+ 73 .comment      0000003b  00000000  00000000  0000742c  2**0
                   CONTENTS, READONLY
- 74 .xtensa.info  00000038  00000000  00000000  00007463  2**0
+ 74 .xtensa.info  00000038  00000000  00000000  00007467  2**0
                   CONTENTS, READONLY
- 75 .xt.lit       000000b8  00000000  00000000  0000749b  2**0
+ 75 .xt.lit       000000b8  00000000  00000000  0000749f  2**0
                   CONTENTS, RELOC, READONLY
- 76 .xt.prop      00000b70  00000000  00000000  00007553  2**0
+ 76 .xt.prop      00000b70  00000000  00000000  00007557  2**0
                   CONTENTS, RELOC, READONLY
 
 httpd_sess.o:     file format elf32-xtensa-le
@@ -562,15 +562,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  38 .text.httpd_sess_close_lru 00000072  00000000  00000000  00000820  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 39 .rodata.__func__$6956 00000015  00000000  00000000  00000894  2**2
+ 39 .rodata.__func__$6983 00000015  00000000  00000000  00000894  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 40 .rodata.__func__$6937 00000013  00000000  00000000  000008ac  2**2
+ 40 .rodata.__func__$6964 00000013  00000000  00000000  000008ac  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 41 .rodata.__func__$6914 00000012  00000000  00000000  000008c0  2**2
+ 41 .rodata.__func__$6941 00000012  00000000  00000000  000008c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 42 .rodata.__func__$6906 0000001a  00000000  00000000  000008d4  2**2
+ 42 .rodata.__func__$6933 0000001a  00000000  00000000  000008d4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 43 .rodata.__func__$6854 0000000f  00000000  00000000  000008f0  2**2
+ 43 .rodata.__func__$6881 0000000f  00000000  00000000  000008f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  44 .debug_frame  000001f0  00000000  00000000  00000900  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
@@ -586,15 +586,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  50 .debug_line   00000a86  00000000  00000000  00002b84  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 51 .debug_str    00000a6e  00000000  00000000  0000360a  2**0
+ 51 .debug_str    00000a72  00000000  00000000  0000360a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 52 .comment      0000003b  00000000  00000000  00004078  2**0
+ 52 .comment      0000003b  00000000  00000000  0000407c  2**0
                   CONTENTS, READONLY
- 53 .xtensa.info  00000038  00000000  00000000  000040b3  2**0
+ 53 .xtensa.info  00000038  00000000  00000000  000040b7  2**0
                   CONTENTS, READONLY
- 54 .xt.lit       00000078  00000000  00000000  000040eb  2**0
+ 54 .xt.lit       00000078  00000000  00000000  000040ef  2**0
                   CONTENTS, RELOC, READONLY
- 55 .xt.prop      00000834  00000000  00000000  00004163  2**0
+ 55 .xt.prop      00000834  00000000  00000000  00004167  2**0
                   CONTENTS, RELOC, READONLY
 
 ctrl_sock.o:     file format elf32-xtensa-le
@@ -639,13 +639,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  18 .debug_line   00000317  00000000  00000000  00000b50  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 19 .debug_str    000003b7  00000000  00000000  00000e67  2**0
+ 19 .debug_str    000003bb  00000000  00000000  00000e67  2**0
                   CONTENTS, READONLY, DEBUGGING
- 20 .comment      0000003b  00000000  00000000  0000121e  2**0
+ 20 .comment      0000003b  00000000  00000000  00001222  2**0
                   CONTENTS, READONLY
- 21 .xtensa.info  00000038  00000000  00000000  00001259  2**0
+ 21 .xtensa.info  00000038  00000000  00000000  0000125d  2**0
                   CONTENTS, READONLY
- 22 .xt.lit       00000020  00000000  00000000  00001291  2**0
+ 22 .xt.lit       00000020  00000000  00000000  00001295  2**0
                   CONTENTS, RELOC, READONLY
- 23 .xt.prop      000000fc  00000000  00000000  000012b1  2**0
+ 23 .xt.prop      000000fc  00000000  00000000  000012b5  2**0
                   CONTENTS, RELOC, READONLY

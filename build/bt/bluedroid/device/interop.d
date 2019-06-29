@@ -16,7 +16,7 @@ bluedroid/device/interop.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_trace.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
@@ -75,7 +75,7 @@ bluedroid/device/interop.o: \
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_trace.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 

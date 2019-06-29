@@ -29,10 +29,10 @@ deps_config := \
 	/home/julian/Documents/esp/esp-idf/components/vfs/Kconfig \
 	/home/julian/Documents/esp/esp-idf/components/wear_levelling/Kconfig \
 	/home/julian/Documents/esp/esp-idf/components/app_update/Kconfig.projbuild \
-	/home/julian/eclipse-workspace/chaze-esp32/components/arduino/Kconfig.projbuild \
+	/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/Kconfig.projbuild \
 	/home/julian/Documents/esp/esp-idf/components/bootloader/Kconfig.projbuild \
 	/home/julian/Documents/esp/esp-idf/components/esptool_py/Kconfig.projbuild \
-	/home/julian/eclipse-workspace/chaze-esp32/main/Kconfig.projbuild \
+	/home/julian/esp/eclipse-workspace/chaze-esp32/main/Kconfig.projbuild \
 	/home/julian/Documents/esp/esp-idf/components/partition_table/Kconfig.projbuild \
 	/home/julian/Documents/esp/esp-idf/Kconfig
 

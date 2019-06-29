@@ -31,7 +31,7 @@ lib/http_auth.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/queue.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_interface.h \
  /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip_addr.h \
@@ -195,7 +195,7 @@ lib/http_auth.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h:
 

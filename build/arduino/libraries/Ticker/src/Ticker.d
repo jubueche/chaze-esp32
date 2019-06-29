@@ -1,6 +1,6 @@
 libraries/Ticker/src//Ticker.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src/Ticker.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src/Ticker.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src/Ticker.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src/Ticker.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_timer.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
@@ -24,13 +24,13 @@ libraries/Ticker/src//Ticker.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src/Ticker.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src/Ticker.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_timer.h:
 
@@ -78,7 +78,7 @@ libraries/Ticker/src//Ticker.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 
@@ -87,4 +87,4 @@ libraries/Ticker/src//Ticker.o: \
 /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src//Ticker.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/Ticker/src//Ticker.cpp:

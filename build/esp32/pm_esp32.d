@@ -23,7 +23,7 @@ pm_esp32.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/param.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -145,7 +145,7 @@ pm_esp32.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h:
 

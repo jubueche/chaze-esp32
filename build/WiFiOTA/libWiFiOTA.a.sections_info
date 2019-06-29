@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/WiFiOTA/libWiFiOTA.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/WiFiOTA/libWiFiOTA.a:
 
 WiFiOTA.o:     file format elf32-xtensa-le
 
@@ -44,17 +44,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  19 .debug_ranges 00000030  00000000  00000000  00001711  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 20 .debug_line   00000581  00000000  00000000  00001741  2**0
+ 20 .debug_line   00000589  00000000  00000000  00001741  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 21 .debug_str    00000853  00000000  00000000  00001cc2  2**0
+ 21 .debug_str    0000085b  00000000  00000000  00001cca  2**0
                   CONTENTS, READONLY, DEBUGGING
- 22 .comment      0000003b  00000000  00000000  00002515  2**0
+ 22 .comment      0000003b  00000000  00000000  00002525  2**0
                   CONTENTS, READONLY
- 23 .xtensa.info  00000038  00000000  00000000  00002550  2**0
+ 23 .xtensa.info  00000038  00000000  00000000  00002560  2**0
                   CONTENTS, READONLY
- 24 .xt.lit       00000020  00000000  00000000  00002588  2**0
+ 24 .xt.lit       00000020  00000000  00000000  00002598  2**0
                   CONTENTS, RELOC, READONLY
- 25 .xt.prop      0000021c  00000000  00000000  000025a8  2**0
+ 25 .xt.prop      0000021c  00000000  00000000  000025b8  2**0
                   CONTENTS, RELOC, READONLY
 
 msft_ssl_cert.pem.txt.o:     file format elf32-xtensa-le

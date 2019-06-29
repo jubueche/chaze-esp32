@@ -17,7 +17,7 @@ hwcrypto/aes.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/mbedtls/include/mbedtls/aes.h \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/esp_mem.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/stdlib.h \
@@ -128,7 +128,7 @@ hwcrypto/aes.o: \
 
 /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/esp_mem.h:
 

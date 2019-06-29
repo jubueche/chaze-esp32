@@ -1,7 +1,7 @@
 eth_phy/phy_lan8720.o: \
  /home/julian/Documents/esp/esp-idf/components/ethernet/eth_phy/phy_lan8720.c \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
@@ -40,7 +40,7 @@ eth_phy/phy_lan8720.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 

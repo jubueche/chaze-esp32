@@ -9,7 +9,7 @@ src/crypto/md4-internal.o: \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_assert.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -58,7 +58,7 @@ src/crypto/md4-internal.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 

@@ -1,7 +1,7 @@
 src/secure_boot.o: \
  /home/julian/Documents/esp/esp-idf/components/bootloader_support/src/secure_boot.c \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
@@ -42,7 +42,7 @@ src/secure_boot.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h:
 

@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/xtensa-debug-module/libxtensa-debug-module.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/xtensa-debug-module/libxtensa-debug-module.a:
 
 eri.o:     file format elf32-xtensa-le
 
@@ -75,13 +75,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  16 .debug_line   000001fb  00000000  00000000  00000638  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 17 .debug_str    0000031a  00000000  00000000  00000833  2**0
+ 17 .debug_str    0000031e  00000000  00000000  00000833  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .comment      0000003b  00000000  00000000  00000b4d  2**0
+ 18 .comment      0000003b  00000000  00000000  00000b51  2**0
                   CONTENTS, READONLY
- 19 .xtensa.info  00000038  00000000  00000000  00000b88  2**0
+ 19 .xtensa.info  00000038  00000000  00000000  00000b8c  2**0
                   CONTENTS, READONLY
- 20 .xt.lit       00000018  00000000  00000000  00000bc0  2**0
+ 20 .xt.lit       00000018  00000000  00000000  00000bc4  2**0
                   CONTENTS, RELOC, READONLY
- 21 .xt.prop      00000090  00000000  00000000  00000bd8  2**0
+ 21 .xt.prop      00000090  00000000  00000000  00000bdc  2**0
                   CONTENTS, RELOC, READONLY

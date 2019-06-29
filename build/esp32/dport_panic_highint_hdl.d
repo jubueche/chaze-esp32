@@ -14,7 +14,7 @@ dport_panic_highint_hdl.o: \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_context.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/xtruntime-frames.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_panic.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/dport_reg.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h
@@ -47,7 +47,7 @@ dport_panic_highint_hdl.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_panic.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h:
 

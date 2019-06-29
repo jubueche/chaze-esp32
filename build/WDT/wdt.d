@@ -1,5 +1,6 @@
-wdt.o: /home/julian/eclipse-workspace/chaze-esp32/components/WDT/wdt.c \
- /home/julian/eclipse-workspace/chaze-esp32/components/WDT/include/wdt.h \
+wdt.o: \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/WDT/wdt.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/WDT/include/wdt.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
@@ -22,7 +23,7 @@ wdt.o: /home/julian/eclipse-workspace/chaze-esp32/components/WDT/wdt.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
@@ -83,7 +84,7 @@ wdt.o: /home/julian/eclipse-workspace/chaze-esp32/components/WDT/wdt.c \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/WDT/include/wdt.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/WDT/include/wdt.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h:
 
@@ -129,7 +130,7 @@ wdt.o: /home/julian/eclipse-workspace/chaze-esp32/components/WDT/wdt.c \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 
@@ -248,4 +249,4 @@ wdt.o: /home/julian/eclipse-workspace/chaze-esp32/components/WDT/wdt.c \
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/WDT/./wdt.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/WDT/./wdt.c:

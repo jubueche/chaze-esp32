@@ -26,7 +26,7 @@ modbus/ascii/mbascii.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_assert.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/uart_struct.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
@@ -163,7 +163,7 @@ modbus/ascii/mbascii.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h:
 

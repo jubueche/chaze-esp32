@@ -24,7 +24,7 @@ bluedroid/stack/sdp/sdp_discovery.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_target.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/bt_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -100,7 +100,7 @@ bluedroid/stack/sdp/sdp_discovery.o: \
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_target.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/bt_types.h:
 

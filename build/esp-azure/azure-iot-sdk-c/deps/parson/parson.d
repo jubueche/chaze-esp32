@@ -1,6 +1,6 @@
 azure-iot-sdk-c/deps/parson/parson.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.c \
- /home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -30,7 +30,7 @@ azure-iot-sdk-c/deps/parson/parson.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -87,4 +87,4 @@ azure-iot-sdk-c/deps/parson/parson.o: \
 /home/julian/Documents/esp/esp-idf/components/newlib/include/errno.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/errno.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/deps/parson/parson.c:

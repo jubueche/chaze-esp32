@@ -1,6 +1,6 @@
 intr_alloc.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/intr_alloc.c \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
@@ -85,7 +85,7 @@ intr_alloc.o: \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_ipc.h
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
 

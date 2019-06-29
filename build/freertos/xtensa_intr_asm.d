@@ -14,7 +14,7 @@ xtensa_intr_asm.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/system.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/xtruntime-frames.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_context.h
 
@@ -46,7 +46,7 @@ xtensa_intr_asm.o: \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 

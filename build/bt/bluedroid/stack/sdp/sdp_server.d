@@ -24,7 +24,7 @@ bluedroid/stack/sdp/sdp_server.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/Documents/esp/esp-idf/components/heap/include/esp_heap_caps.h \
  /home/julian/Documents/esp/esp-idf/components/heap/include/multi_heap.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/btu.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_target.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/dyn_mem.h \
@@ -98,7 +98,7 @@ bluedroid/stack/sdp/sdp_server.o: \
 
 /home/julian/Documents/esp/esp-idf/components/heap/include/multi_heap.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/btu.h:
 

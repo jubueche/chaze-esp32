@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/upload_to_blob/libupload_to_blob.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/upload_to_blob/libupload_to_blob.a:
 
 upload_to_blob_block.o:     file format elf32-xtensa-le
 
@@ -34,15 +34,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  14 .debug_ranges 00000018  00000000  00000000  00000e42  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 15 .debug_line   000003e6  00000000  00000000  00000e5a  2**0
+ 15 .debug_line   000003f6  00000000  00000000  00000e5a  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 16 .debug_str    0000076a  00000000  00000000  00001240  2**0
+ 16 .debug_str    00000772  00000000  00000000  00001250  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .comment      0000003b  00000000  00000000  000019aa  2**0
+ 17 .comment      0000003b  00000000  00000000  000019c2  2**0
                   CONTENTS, READONLY
- 18 .xtensa.info  00000038  00000000  00000000  000019e5  2**0
+ 18 .xtensa.info  00000038  00000000  00000000  000019fd  2**0
                   CONTENTS, READONLY
- 19 .xt.lit       00000010  00000000  00000000  00001a1d  2**0
+ 19 .xt.lit       00000010  00000000  00000000  00001a35  2**0
                   CONTENTS, RELOC, READONLY
- 20 .xt.prop      000000fc  00000000  00000000  00001a2d  2**0
+ 20 .xt.prop      000000fc  00000000  00000000  00001a45  2**0
                   CONTENTS, RELOC, READONLY

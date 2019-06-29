@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/MAX30101/libMAX30101.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/MAX30101/libMAX30101.a:
 
 MAX30101.o:     file format elf32-xtensa-le
 
@@ -246,17 +246,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
 120 .debug_ranges 000001d0  00000000  00000000  00006fd7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-121 .debug_line   00001182  00000000  00000000  000071a7  2**0
+121 .debug_line   0000118a  00000000  00000000  000071a7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-122 .debug_str    000029e6  00000000  00000000  00008329  2**0
+122 .debug_str    000029ee  00000000  00000000  00008331  2**0
                   CONTENTS, READONLY, DEBUGGING
-123 .comment      0000003b  00000000  00000000  0000ad0f  2**0
+123 .comment      0000003b  00000000  00000000  0000ad1f  2**0
                   CONTENTS, READONLY
-124 .xtensa.info  00000038  00000000  00000000  0000ad4a  2**0
+124 .xtensa.info  00000038  00000000  00000000  0000ad5a  2**0
                   CONTENTS, READONLY
-125 .xt.lit       000001a0  00000000  00000000  0000ad82  2**0
+125 .xt.lit       000001a0  00000000  00000000  0000ad92  2**0
                   CONTENTS, RELOC, READONLY
-126 .xt.prop      00000d68  00000000  00000000  0000af22  2**0
+126 .xt.prop      00000d68  00000000  00000000  0000af32  2**0
                   CONTENTS, RELOC, READONLY
 
 heart_rate.o:     file format elf32-xtensa-le
@@ -317,15 +317,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  26 .debug_ranges 00000048  00000000  00000000  00003d5b  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 27 .debug_line   000008ba  00000000  00000000  00003da3  2**0
+ 27 .debug_line   000008c2  00000000  00000000  00003da3  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 28 .debug_str    0000290c  00000000  00000000  0000465d  2**0
+ 28 .debug_str    00002914  00000000  00000000  00004665  2**0
                   CONTENTS, READONLY, DEBUGGING
- 29 .comment      0000003b  00000000  00000000  00006f69  2**0
+ 29 .comment      0000003b  00000000  00000000  00006f79  2**0
                   CONTENTS, READONLY
- 30 .xtensa.info  00000038  00000000  00000000  00006fa4  2**0
+ 30 .xtensa.info  00000038  00000000  00000000  00006fb4  2**0
                   CONTENTS, READONLY
- 31 .xt.lit       00000038  00000000  00000000  00006fdc  2**0
+ 31 .xt.lit       00000038  00000000  00000000  00006fec  2**0
                   CONTENTS, RELOC, READONLY
- 32 .xt.prop      00000210  00000000  00000000  00007014  2**0
+ 32 .xt.prop      00000210  00000000  00000000  00007024  2**0
                   CONTENTS, RELOC, READONLY

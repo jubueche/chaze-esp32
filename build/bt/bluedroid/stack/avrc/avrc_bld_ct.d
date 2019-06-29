@@ -16,7 +16,7 @@ bluedroid/stack/avrc/avrc_bld_ct.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_target.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/bt_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -80,7 +80,7 @@ bluedroid/stack/avrc/avrc_bld_ct.o: \
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_target.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/bt_types.h:
 

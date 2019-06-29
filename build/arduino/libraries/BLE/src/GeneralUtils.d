@@ -1,6 +1,6 @@
 libraries/BLE/src//GeneralUtils.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
@@ -9,7 +9,7 @@ libraries/BLE/src//GeneralUtils.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
@@ -47,7 +47,7 @@ libraries/BLE/src//GeneralUtils.o: \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
@@ -111,7 +111,7 @@ libraries/BLE/src//GeneralUtils.o: \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
 
@@ -129,7 +129,7 @@ libraries/BLE/src//GeneralUtils.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 
@@ -205,7 +205,7 @@ libraries/BLE/src//GeneralUtils.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -330,4 +330,4 @@ libraries/BLE/src//GeneralUtils.o: \
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src//GeneralUtils.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src//GeneralUtils.cpp:

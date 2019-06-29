@@ -22,7 +22,7 @@ bluedroid/stack/rfcomm/rfc_mx_fsm.o: \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/l2cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/port_api.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_target.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/dyn_mem.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_trace.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
@@ -148,7 +148,7 @@ bluedroid/stack/rfcomm/rfc_mx_fsm.o: \
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_target.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/include/stack/dyn_mem.h:
 

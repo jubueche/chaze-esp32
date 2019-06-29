@@ -20,7 +20,7 @@ clk.o: /home/julian/Documents/esp/esp-idf/components/esp32/clk.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/syslimits.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/param.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
@@ -118,7 +118,7 @@ clk.o: /home/julian/Documents/esp/esp-idf/components/esp32/clk.c \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/param.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h:
 

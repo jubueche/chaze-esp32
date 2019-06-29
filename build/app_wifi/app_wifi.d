@@ -1,5 +1,5 @@
 app_wifi.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/app_wifi.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/app_wifi/app_wifi.c \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -15,7 +15,7 @@ app_wifi.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/hal.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
@@ -136,7 +136,7 @@ app_wifi.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -168,7 +168,7 @@ app_wifi.o: \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 
@@ -410,5 +410,5 @@ app_wifi.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/./app_wifi.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/app_wifi/./app_wifi.c:

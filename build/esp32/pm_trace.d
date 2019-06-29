@@ -1,7 +1,7 @@
 pm_trace.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/pm_trace.c \
  /home/julian/Documents/esp/esp-idf/components/esp32/pm_trace.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/driver/include/driver/gpio.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
@@ -45,7 +45,7 @@ pm_trace.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/pm_trace.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/driver/include/driver/gpio.h:
 

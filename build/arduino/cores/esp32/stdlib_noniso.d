@@ -1,5 +1,5 @@
 cores/esp32/stdlib_noniso.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -21,7 +21,7 @@ cores/esp32/stdlib_noniso.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 
@@ -65,5 +65,5 @@ cores/esp32/stdlib_noniso.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.c:

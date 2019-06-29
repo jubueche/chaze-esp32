@@ -1,6 +1,6 @@
 src/secure_boot_signatures.o: \
  /home/julian/Documents/esp/esp-idf/components/bootloader_support/src/secure_boot_signatures.c \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/bootloader_support/include_bootloader/bootloader_flash.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
@@ -46,7 +46,7 @@ src/secure_boot_signatures.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/sha.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/bootloader_support/include_bootloader/bootloader_flash.h:
 

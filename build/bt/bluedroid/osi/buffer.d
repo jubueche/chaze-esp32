@@ -5,7 +5,7 @@ bluedroid/osi/buffer.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/features.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_trace.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -51,7 +51,7 @@ bluedroid/osi/buffer.o: \
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_trace.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 

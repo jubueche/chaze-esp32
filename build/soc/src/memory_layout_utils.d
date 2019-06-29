@@ -18,7 +18,7 @@ src//memory_layout_utils.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_assert.h \
@@ -67,7 +67,7 @@ src//memory_layout_utils.o: \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
 

@@ -18,7 +18,7 @@ random.o: /home/julian/Documents/esp/esp-idf/components/newlib/random.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/param.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h \
@@ -109,7 +109,7 @@ random.o: /home/julian/Documents/esp/esp-idf/components/newlib/random.c \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 

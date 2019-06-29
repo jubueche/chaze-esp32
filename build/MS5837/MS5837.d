@@ -1,6 +1,6 @@
 MS5837.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/MS5837/MS5837.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/components/MS5837/include/MS5837.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/MS5837/MS5837.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/MS5837/include/MS5837.h \
  /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
@@ -25,7 +25,7 @@ MS5837.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
@@ -87,13 +87,13 @@ MS5837.o: \
  /home/julian/Documents/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/MS5837/include/MS5837.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/MS5837/include/MS5837.h:
 
 /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h:
 
@@ -143,7 +143,7 @@ MS5837.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 
@@ -267,7 +267,7 @@ MS5837.o: \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/time.h:
 
@@ -276,4 +276,4 @@ MS5837.o: \
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/time.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/math.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/MS5837/./MS5837.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/MS5837/./MS5837.cpp:

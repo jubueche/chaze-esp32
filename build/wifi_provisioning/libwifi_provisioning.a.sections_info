@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/wifi_provisioning/libwifi_provisioning.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/wifi_provisioning/libwifi_provisioning.a:
 
 wifi_config.o:     file format elf32-xtensa-le
 
@@ -56,15 +56,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  25 .debug_line   00000862  00000000  00000000  000027a2  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 26 .debug_str    00001354  00000000  00000000  00003004  2**0
+ 26 .debug_str    00001358  00000000  00000000  00003004  2**0
                   CONTENTS, READONLY, DEBUGGING
- 27 .comment      0000003b  00000000  00000000  00004358  2**0
+ 27 .comment      0000003b  00000000  00000000  0000435c  2**0
                   CONTENTS, READONLY
- 28 .xtensa.info  00000038  00000000  00000000  00004393  2**0
+ 28 .xtensa.info  00000038  00000000  00000000  00004397  2**0
                   CONTENTS, READONLY
- 29 .xt.lit       00000038  00000000  00000000  000043cb  2**0
+ 29 .xt.lit       00000038  00000000  00000000  000043cf  2**0
                   CONTENTS, RELOC, READONLY
- 30 .xt.prop      00000414  00000000  00000000  00004403  2**0
+ 30 .xt.prop      00000414  00000000  00000000  00004407  2**0
                   CONTENTS, RELOC, READONLY
 
 wifi_constants.pb-c.o:     file format elf32-xtensa-le

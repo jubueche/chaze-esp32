@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/iothub_client_sample_mqtt/libiothub_client_sample_mqtt.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/iothub_client_sample_mqtt/libiothub_client_sample_mqtt.a:
 
 iothub_client_sample_mqtt.o:     file format elf32-xtensa-le
 
@@ -48,15 +48,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  21 .debug_ranges 00000028  00000000  00000000  00001e90  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 22 .debug_line   000006d9  00000000  00000000  00001eb8  2**0
+ 22 .debug_line   000006e9  00000000  00000000  00001eb8  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 23 .debug_str    00000dc1  00000000  00000000  00002591  2**0
+ 23 .debug_str    00000dc9  00000000  00000000  000025a1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 24 .comment      0000003b  00000000  00000000  00003352  2**0
+ 24 .comment      0000003b  00000000  00000000  0000336a  2**0
                   CONTENTS, READONLY
- 25 .xtensa.info  00000038  00000000  00000000  0000338d  2**0
+ 25 .xtensa.info  00000038  00000000  00000000  000033a5  2**0
                   CONTENTS, READONLY
- 26 .xt.lit       00000020  00000000  00000000  000033c5  2**0
+ 26 .xt.lit       00000020  00000000  00000000  000033dd  2**0
                   CONTENTS, RELOC, READONLY
- 27 .xt.prop      00000234  00000000  00000000  000033e5  2**0
+ 27 .xt.prop      00000234  00000000  00000000  000033fd  2**0
                   CONTENTS, RELOC, READONLY

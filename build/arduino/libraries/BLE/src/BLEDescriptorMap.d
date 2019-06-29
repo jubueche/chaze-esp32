@@ -1,8 +1,8 @@
 libraries/BLE/src//BLEDescriptorMap.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptorMap.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptorMap.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h \
@@ -16,8 +16,8 @@ libraries/BLE/src//BLEDescriptorMap.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
@@ -74,16 +74,16 @@ libraries/BLE/src//BLEDescriptorMap.o: \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
 
@@ -111,9 +111,9 @@ libraries/BLE/src//BLEDescriptorMap.o: \
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -227,11 +227,11 @@ libraries/BLE/src//BLEDescriptorMap.o: \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src//BLEDescriptorMap.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src//BLEDescriptorMap.cpp:

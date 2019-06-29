@@ -1,7 +1,7 @@
 mbedtls/library/pkwrite.o: \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/mbedtls/library/pkwrite.c \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/esp_mem.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
@@ -54,7 +54,7 @@ mbedtls/library/pkwrite.o: \
 
 /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/mbedtls/esp_config.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/mbedtls/port/include/esp_mem.h:
 

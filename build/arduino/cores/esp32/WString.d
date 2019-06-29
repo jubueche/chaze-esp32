@@ -1,6 +1,6 @@
 cores/esp32/WString.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -20,10 +20,10 @@ cores/esp32/WString.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/ctype.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/pgmspace.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/pgmspace.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -34,7 +34,7 @@ cores/esp32/WString.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h:
 
@@ -74,13 +74,13 @@ cores/esp32/WString.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/ctype.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/pgmspace.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/pgmspace.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 
@@ -99,4 +99,4 @@ cores/esp32/WString.o: \
 /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WString.cpp:

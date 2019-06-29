@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/log/liblog.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/log/liblog.a:
 
 log.o:     file format elf32-xtensa-le
 
@@ -10,11 +10,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
   2 .literal.esp_log_level_set 00000048  00000000  00000000  0000004c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .iram1.11.literal 00000034  00000000  00000000  00000094  2**2
+  3 .iram1.12.literal 00000034  00000000  00000000  00000094  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .iram1.12.literal 00000008  00000000  00000000  000000c8  2**2
+  4 .iram1.13.literal 00000008  00000000  00000000  000000c8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .iram1.13.literal 00000014  00000000  00000000  000000d0  2**2
+  5 .iram1.14.literal 00000014  00000000  00000000  000000d0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
   6 .literal.esp_log_buffer_hex_internal 00000050  00000000  00000000  000000e4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
@@ -36,11 +36,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  15 .text.esp_log_level_set 0000011e  00000000  00000000  0000033c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .iram1.11     00000136  00000000  00000000  0000045c  2**2
+ 16 .iram1.12     00000136  00000000  00000000  0000045c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .iram1.12     0000001f  00000000  00000000  00000594  2**2
+ 17 .iram1.13     0000001f  00000000  00000000  00000594  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .iram1.13     00000047  00000000  00000000  000005b4  2**2
+ 18 .iram1.14     00000047  00000000  00000000  000005b4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  19 .text.esp_log_buffer_hex_internal 0000011a  00000000  00000000  000005fc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
@@ -48,7 +48,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  21 .text.esp_log_buffer_hexdump_internal 000001da  00000000  00000000  00000824  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .bss.base$5521 00000004  00000000  00000000  00000a00  2**2
+ 22 .bss.base$5548 00000004  00000000  00000000  00000a00  2**2
                   ALLOC
  23 .bss.s_log_mutex 00000004  00000000  00000000  00000a00  2**2
                   ALLOC
@@ -78,13 +78,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  36 .debug_line   000008b1  00000000  00000000  00002985  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 37 .debug_str    00000693  00000000  00000000  00003236  2**0
+ 37 .debug_str    00000697  00000000  00000000  00003236  2**0
                   CONTENTS, READONLY, DEBUGGING
- 38 .comment      0000003b  00000000  00000000  000038c9  2**0
+ 38 .comment      0000003b  00000000  00000000  000038cd  2**0
                   CONTENTS, READONLY
- 39 .xtensa.info  00000038  00000000  00000000  00003904  2**0
+ 39 .xtensa.info  00000038  00000000  00000000  00003908  2**0
                   CONTENTS, READONLY
- 40 .xt.lit       00000048  00000000  00000000  0000393c  2**0
+ 40 .xt.lit       00000048  00000000  00000000  00003940  2**0
                   CONTENTS, RELOC, READONLY
- 41 .xt.prop      00000654  00000000  00000000  00003984  2**0
+ 41 .xt.prop      00000654  00000000  00000000  00003988  2**0
                   CONTENTS, RELOC, READONLY

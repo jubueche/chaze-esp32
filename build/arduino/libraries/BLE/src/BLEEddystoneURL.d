@@ -1,6 +1,6 @@
 libraries/BLE/src//BLEEddystoneURL.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEEddystoneURL.cpp \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEEddystoneURL.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -28,12 +28,12 @@ libraries/BLE/src//BLEEddystoneURL.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEEddystoneURL.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEEddystoneURL.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 
@@ -89,11 +89,11 @@ libraries/BLE/src//BLEEddystoneURL.o: \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEEddystoneURL.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEEddystoneURL.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src//BLEEddystoneURL.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src//BLEEddystoneURL.cpp:

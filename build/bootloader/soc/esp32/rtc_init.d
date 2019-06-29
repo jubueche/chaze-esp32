@@ -8,7 +8,7 @@ esp32/rtc_init.o: \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/dport_reg.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/dport_access.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_dport_access.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/uart_reg.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/xtruntime.h \
@@ -40,7 +40,7 @@ esp32/rtc_init.o: \
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_attr.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/bootloader/../include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_dport_access.h:
 

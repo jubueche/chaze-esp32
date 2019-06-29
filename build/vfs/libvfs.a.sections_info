@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/vfs/libvfs.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/vfs/libvfs.a:
 
 vfs_uart.o:     file format elf32-xtensa-le
 
@@ -118,23 +118,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  56 .text.esp_vfs_dev_uart_use_driver 00000047  00000000  00000000  0000158c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 57 .rodata.__func__$7219 0000000b  00000000  00000000  000015d4  2**2
+ 57 .rodata.__func__$7246 0000000b  00000000  00000000  000015d4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 58 .rodata.__func__$7235 00000011  00000000  00000000  000015e0  2**2
+ 58 .rodata.__func__$7262 00000011  00000000  00000000  000015e0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 59 .rodata.__func__$7241 0000000a  00000000  00000000  000015f4  2**2
+ 59 .rodata.__func__$7268 0000000a  00000000  00000000  000015f4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 60 .rodata.__func__$7257 0000000b  00000000  00000000  00001600  2**2
+ 60 .rodata.__func__$7284 0000000b  00000000  00000000  00001600  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 61 .rodata.__func__$7253 0000000b  00000000  00000000  0000160c  2**2
+ 61 .rodata.__func__$7280 0000000b  00000000  00000000  0000160c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 62 .rodata.__func__$7263 0000000b  00000000  00000000  00001618  2**2
+ 62 .rodata.__func__$7290 0000000b  00000000  00000000  00001618  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 63 .rodata.__func__$7117 00000012  00000000  00000000  00001624  2**2
+ 63 .rodata.__func__$7144 00000012  00000000  00000000  00001624  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 64 .rodata.__func__$7274 0000000b  00000000  00000000  00001638  2**2
+ 64 .rodata.__func__$7301 0000000b  00000000  00000000  00001638  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 65 .rodata.__func__$7442 0000001a  00000000  00000000  00001644  2**2
+ 65 .rodata.__func__$7469 0000001a  00000000  00000000  00001644  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  66 .data.s_uart_rx_func 0000000c  00000000  00000000  00001660  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
@@ -184,15 +184,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  89 .debug_line   000012af  00000000  00000000  000066b9  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 90 .debug_str    000014db  00000000  00000000  00007968  2**0
+ 90 .debug_str    000014df  00000000  00000000  00007968  2**0
                   CONTENTS, READONLY, DEBUGGING
- 91 .comment      0000003b  00000000  00000000  00008e43  2**0
+ 91 .comment      0000003b  00000000  00000000  00008e47  2**0
                   CONTENTS, READONLY
- 92 .xtensa.info  00000038  00000000  00000000  00008e7e  2**0
+ 92 .xtensa.info  00000038  00000000  00000000  00008e82  2**0
                   CONTENTS, READONLY
- 93 .xt.lit       000000d0  00000000  00000000  00008eb6  2**0
+ 93 .xt.lit       000000d0  00000000  00000000  00008eba  2**0
                   CONTENTS, RELOC, READONLY
- 94 .xt.prop      000015c0  00000000  00000000  00008f86  2**0
+ 94 .xt.prop      000015c0  00000000  00000000  00008f8a  2**0
                   CONTENTS, RELOC, READONLY
 
 vfs.o:     file format elf32-xtensa-le
@@ -397,7 +397,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  98 .text.esp_vfs_utime 00000055  00000000  00000000  00001a98  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 99 .rodata.__func__$6118 0000000f  00000000  00000000  00001af0  2**2
+ 99 .rodata.__func__$6127 0000000f  00000000  00000000  00001af0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
 100 .bss.s_fd_table_lock 00000004  00000000  00000000  00001b00  2**2
                   ALLOC
@@ -421,13 +421,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
 110 .debug_line   00001d2e  00000000  00000000  00009686  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-111 .debug_str    00001018  00000000  00000000  0000b3b4  2**0
+111 .debug_str    0000101c  00000000  00000000  0000b3b4  2**0
                   CONTENTS, READONLY, DEBUGGING
-112 .comment      0000003b  00000000  00000000  0000c3cc  2**0
+112 .comment      0000003b  00000000  00000000  0000c3d0  2**0
                   CONTENTS, READONLY
-113 .xtensa.info  00000038  00000000  00000000  0000c407  2**0
+113 .xtensa.info  00000038  00000000  00000000  0000c40b  2**0
                   CONTENTS, READONLY
-114 .xt.lit       00000178  00000000  00000000  0000c43f  2**0
+114 .xt.lit       00000178  00000000  00000000  0000c443  2**0
                   CONTENTS, RELOC, READONLY
-115 .xt.prop      00001eb4  00000000  00000000  0000c5b7  2**0
+115 .xt.prop      00001eb4  00000000  00000000  0000c5bb  2**0
                   CONTENTS, RELOC, READONLY

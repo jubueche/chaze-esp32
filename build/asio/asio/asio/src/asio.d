@@ -3,7 +3,7 @@ asio/asio/src/asio.o: \
  /home/julian/Documents/esp/esp-idf/components/asio/asio/asio/include/asio/impl/src.hpp \
  /home/julian/Documents/esp/esp-idf/components/asio/asio/asio/include/asio/detail/config.hpp \
  /home/julian/Documents/esp/esp-idf/components/asio/port/include/esp_asio_config.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/asio/asio/asio/include/asio/impl/error.ipp \
  /home/julian/Documents/esp/esp-idf/components/asio/asio/asio/include/asio/error.hpp \
  /home/julian/Documents/esp/esp-idf/components/asio/asio/asio/include/asio/error_code.hpp \
@@ -325,7 +325,7 @@ asio/asio/src/asio.o: \
 
 /home/julian/Documents/esp/esp-idf/components/asio/port/include/esp_asio_config.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/asio/asio/asio/include/asio/impl/error.ipp:
 

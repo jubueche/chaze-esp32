@@ -30,7 +30,7 @@ spiffs/src/spiffs_cache.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/unistd.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/sys/unistd.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/unistd.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
@@ -100,7 +100,7 @@ spiffs/src/spiffs_cache.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/unistd.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h:
 

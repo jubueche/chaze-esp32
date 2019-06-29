@@ -1,5 +1,5 @@
 WiFiOTA.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/WiFiOTA/WiFiOTA.c \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/WiFiOTA/WiFiOTA.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -22,7 +22,7 @@ WiFiOTA.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/hal.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
@@ -87,7 +87,7 @@ WiFiOTA.o: \
  /home/julian/Documents/esp/esp-idf/components/nvs_flash/include/nvs.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_partition.h \
  /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/queue.h \
@@ -186,7 +186,7 @@ WiFiOTA.o: \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 
@@ -316,7 +316,7 @@ WiFiOTA.o: \
 
 /home/julian/Documents/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/app_wifi/include/app_wifi.h:
 
 /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_wifi.h:
 
@@ -423,4 +423,4 @@ WiFiOTA.o: \
 /home/julian/Documents/esp/esp-idf/components/esp_http_client/include/esp_http_client.h:
 
 /home/julian/Documents/esp/esp-idf/components/nghttp/port/include/http_parser.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/WiFiOTA/./WiFiOTA.c:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/WiFiOTA/./WiFiOTA.c:

@@ -1,5 +1,5 @@
 heart_rate.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/heart_rate.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/MAX30101/heart_rate.cpp \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -18,12 +18,12 @@ heart_rate.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/hal.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core.h \
@@ -86,10 +86,10 @@ heart_rate.o: \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/heart_rate.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/MAX30101/include/heart_rate.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h \
  /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h \
- /home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -127,7 +127,7 @@ heart_rate.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h:
 
@@ -137,7 +137,7 @@ heart_rate.o: \
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/xtensa_config.h:
 
@@ -263,11 +263,11 @@ heart_rate.o: \
 
 /home/julian/Documents/esp/esp-idf/components/log/include/esp_log_internal.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/heart_rate.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/MAX30101/include/heart_rate.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/MAX30101/include/MAX30101.h:
 
 /home/julian/Documents/esp/esp-idf/components/driver/include/driver/i2c.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/MAX30101/./heart_rate.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/Configuration/include/Configuration.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/MAX30101/./heart_rate.cpp:

@@ -1,5 +1,5 @@
 cores/esp32/WMath.o: \
- /home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WMath.cpp \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WMath.cpp \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -26,7 +26,7 @@ cores/esp32/WMath.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_sleep.h \
  /home/julian/Documents/esp/esp-idf/components/driver/include/driver/gpio.h \
@@ -111,7 +111,7 @@ cores/esp32/WMath.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/assert.h:
 
@@ -174,4 +174,4 @@ cores/esp32/WMath.o: \
 /home/julian/Documents/esp/esp-idf/components/esp32/include/xtensa/config/core-matmap.h:
 
 /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/touch_channel.h:
-/home/julian/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WMath.cpp:
+/home/julian/esp/eclipse-workspace/chaze-esp32/components/arduino/cores/esp32/WMath.cpp:

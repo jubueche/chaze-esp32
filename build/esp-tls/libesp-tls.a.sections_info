@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/esp-tls/libesp-tls.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/esp-tls/libesp-tls.a:
 
 esp_tls.o:     file format elf32-xtensa-le
 
@@ -112,13 +112,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  53 .debug_line   00000e49  00000000  00000000  00006143  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 54 .debug_str    0000192b  00000000  00000000  00006f8c  2**0
+ 54 .debug_str    0000192f  00000000  00000000  00006f8c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 55 .comment      0000003b  00000000  00000000  000088b7  2**0
+ 55 .comment      0000003b  00000000  00000000  000088bb  2**0
                   CONTENTS, READONLY
- 56 .xtensa.info  00000038  00000000  00000000  000088f2  2**0
+ 56 .xtensa.info  00000038  00000000  00000000  000088f6  2**0
                   CONTENTS, READONLY
- 57 .xt.lit       000000a8  00000000  00000000  0000892a  2**0
+ 57 .xt.lit       000000a8  00000000  00000000  0000892e  2**0
                   CONTENTS, RELOC, READONLY
- 58 .xt.prop      0000093c  00000000  00000000  000089d2  2**0
+ 58 .xt.prop      0000093c  00000000  00000000  000089d6  2**0
                   CONTENTS, RELOC, READONLY

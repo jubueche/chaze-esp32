@@ -1,4 +1,4 @@
-In archive /home/julian/eclipse-workspace/chaze-esp32/build/expat/libexpat.a:
+In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/expat/libexpat.a:
 
 xmltok.o:     file format elf32-xtensa-le
 
@@ -1311,15 +1311,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
 271 .debug_line   00006a82  00000000  00000000  0001c30c  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-272 .debug_str    000033eb  00000000  00000000  00022d8e  2**0
+272 .debug_str    000033ef  00000000  00000000  00022d8e  2**0
                   CONTENTS, READONLY, DEBUGGING
-273 .comment      0000003b  00000000  00000000  00026179  2**0
+273 .comment      0000003b  00000000  00000000  0002617d  2**0
                   CONTENTS, READONLY
-274 .xtensa.info  00000038  00000000  00000000  000261b4  2**0
+274 .xtensa.info  00000038  00000000  00000000  000261b8  2**0
                   CONTENTS, READONLY
-275 .xt.lit       00000280  00000000  00000000  000261ec  2**0
+275 .xt.lit       00000280  00000000  00000000  000261f0  2**0
                   CONTENTS, RELOC, READONLY
-276 .xt.prop      000078b4  00000000  00000000  0002646c  2**0
+276 .xt.prop      000078b4  00000000  00000000  00026470  2**0
                   CONTENTS, RELOC, READONLY
 
 xmlrole.o:     file format elf32-xtensa-le

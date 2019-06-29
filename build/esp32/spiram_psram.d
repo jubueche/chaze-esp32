@@ -1,6 +1,6 @@
 spiram_psram.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/spiram_psram.c \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -76,7 +76,7 @@ spiram_psram.o: \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/spi_struct.h \
  /home/julian/Documents/esp/esp-idf/components/driver/include/driver/periph_ctrl.h
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
 

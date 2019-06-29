@@ -1,7 +1,7 @@
 bluedroid/stack/avrc/avrc_api.o: \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/stack/avrc/avrc_api.c \
  /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_trace.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
@@ -50,7 +50,7 @@ bluedroid/stack/avrc/avrc_api.o: \
 
 /home/julian/Documents/esp/esp-idf/components/bt/bluedroid/common/include/common/bt_trace.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 

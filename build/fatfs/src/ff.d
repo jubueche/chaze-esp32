@@ -10,7 +10,7 @@ src/ff.o: /home/julian/Documents/esp/esp-idf/components/fatfs/src/ff.c \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/syslimits.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/endian.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/param.h \
- /home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
  /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/reent.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
@@ -112,7 +112,7 @@ src/ff.o: /home/julian/Documents/esp/esp-idf/components/fatfs/src/ff.c \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/param.h:
 
-/home/julian/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
+/home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h:
 
 /home/julian/Documents/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
