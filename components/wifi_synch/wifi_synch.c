@@ -38,7 +38,7 @@
  */
 static char ssid[32] = "EatOrBeEaten";
 static char password[32] = "Fussball08";
-static char deviceId[32] = "chaze-1";
+static char deviceId[32] = "chaze-2";
 
 
 const char * TAG = "Chaze-WIFI-Synch";
@@ -46,7 +46,7 @@ const char * TAG = "Chaze-WIFI-Synch";
 /**
  * TODO: Must be saved in non-erasable memory
  */
-static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-1;SharedAccessKey=RKzQxxE6WZRRn4jzmEB155l/jGioRBnziQHvQvfZzZ8=";
+static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=device-2;SharedAccessKey=lMPIGSbbyrWlMUDDi0wPgOL+NaM8ATwB3rkUiQp4xH8=";
 
 //This semaphore is used so that the synch_via_wifi task waits for the azure task to end.
 SemaphoreHandle_t xSemaphore = NULL;

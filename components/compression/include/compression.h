@@ -125,6 +125,9 @@ extern "C" void app_main()
 }
 
 
+//Second working main.cpp example compressing one large file. Will more likely use glog for the
+ * case we have a FatFS.
+ */
 /*
 extern "C" void app_main()
 {
@@ -280,4 +283,3 @@ extern "C" void app_main()
 }
 */
 
- */
