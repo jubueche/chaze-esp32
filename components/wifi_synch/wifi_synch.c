@@ -255,7 +255,7 @@ void synch_with_azure(void *pvParameter)
 	}
 	else
 	{
-		IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
+		//IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
 
 		time_t now;
 		time_t tmp;
