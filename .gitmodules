@@ -3,7 +3,7 @@
 	url = https://github.com/espressif/arduino-esp32
 [submodule "components/esp-azure"]
 	path = components/esp-azure
-	url = https://github.com/espressif/esp-azure
+	url = https://github.com/jubueche/esp-azure
 [submodule "components/esp-idf"]
 	path = components/esp-idf
 	url = https://github.com/espressif/esp-idf
