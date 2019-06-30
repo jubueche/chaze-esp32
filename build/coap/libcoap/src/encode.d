@@ -121,12 +121,7 @@ libcoap/src/encode.o: \
  /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/inet.h \
  /home/julian/Documents/esp/esp-idf/components/lwip/lwip/src/include/lwip/errno.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/encode.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/strings.h
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -370,15 +365,5 @@ libcoap/src/encode.o: \
 
 /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/encode.h:
 
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/strings.h:
 /home/julian/Documents/esp/esp-idf/components/coap/libcoap/src/encode.c:

@@ -1,9 +1,6 @@
 src/flash_encrypt.o: \
  /home/julian/Documents/esp/esp-idf/components/bootloader_support/src/flash_encrypt.c \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/string.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/strings.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/newlib.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/config.h \
@@ -16,17 +13,15 @@ src/flash_encrypt.o: \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
  /home/julian/Documents/esp/esp-idf/components/bootloader_support/include_bootloader/bootloader_flash.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/esp_err.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h \
- /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/Documents/esp/esp-idf/components/newlib/platform_include/assert.h \
  /home/julian/esp/eclipse-workspace/chaze-esp32/build/include/sdkconfig.h \
@@ -70,13 +65,7 @@ src/flash_encrypt.o: \
  /home/julian/Documents/esp/esp-idf/components/esp32/include/rom/spi_flash.h \
  /home/julian/Documents/esp/esp-idf/components/soc/esp32/include/soc/spi_reg.h
 
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/string.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/strings.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/_ansi.h:
 
@@ -102,11 +91,11 @@ src/flash_encrypt.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/lock.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/string.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h:
 
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h:
 
 /home/julian/Documents/esp/esp-idf/components/bootloader_support/include_bootloader/bootloader_flash.h:
 
@@ -118,11 +107,7 @@ src/flash_encrypt.o: \
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/stdio.h:
 
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/types.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/machine/types.h:
-
-/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/sched.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/sys/cdefs.h:
 
 /home/julian/Documents/esp/esp-idf/components/newlib/include/sys/stdio.h:
 

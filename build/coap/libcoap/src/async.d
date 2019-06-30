@@ -142,10 +142,7 @@ libcoap/src/async.o: \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/bits.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/block.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/encode.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
- /home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
+ /home/julian/Documents/esp/esp-idf/components/newlib/include/strings.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/coap_io.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/coap_time.h \
  /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/debug.h \
@@ -449,13 +446,7 @@ libcoap/src/async.o: \
 
 /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/encode.h:
 
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
-
-/home/julian/esp/eclipse-workspace/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
+/home/julian/Documents/esp/esp-idf/components/newlib/include/strings.h:
 
 /home/julian/Documents/esp/esp-idf/components/coap/libcoap/include/coap/coap_io.h:
 
