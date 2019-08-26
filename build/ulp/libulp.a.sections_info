@@ -1,54 +1,52 @@
-In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/ulp/libulp.a:
+In archive /home/julian/Documents/chaze-esp32/build/ulp/libulp.a:
 
 ulp.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.ulp_run 00000030  00000000  00000000  00000034  2**2
+  0 .literal.ulp_run 00000034  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.ulp_load_binary 00000024  00000000  00000000  00000064  2**2
+  1 .literal.ulp_set_wakeup_period 00000038  00000000  00000000  00000068  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.ulp_set_wakeup_period 00000048  00000000  00000000  00000088  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .text         00000000  00000000  00000000  000000d0  2**0
+  2 .text         00000000  00000000  00000000  000000a0  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  4 .data         00000000  00000000  00000000  000000d0  2**0
+  3 .data         00000000  00000000  00000000  000000a0  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .bss          00000000  00000000  00000000  000000d0  2**0
+  4 .bss          00000000  00000000  00000000  000000a0  2**0
                   ALLOC
-  6 .text.ulp_run 000000ac  00000000  00000000  000000d0  2**2
+  5 .text.ulp_run 000000af  00000000  00000000  000000a0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .rodata.str1.4 00000394  00000000  00000000  0000017c  2**2
+  6 .text.ulp_load_binary 00000025  00000000  00000000  00000150  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  7 .rodata.ulp_set_wakeup_period.str1.4 00000162  00000000  00000000  00000178  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .text.ulp_load_binary 000000bd  00000000  00000000  00000510  2**2
+  8 .text.ulp_set_wakeup_period 00000099  00000000  00000000  000002dc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .text.ulp_set_wakeup_period 000000c9  00000000  00000000  000005d0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .rodata.__func__$3657 00000016  00000000  00000000  0000069c  2**2
+  9 .rodata.__func__$3660 00000016  00000000  00000000  00000378  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 11 .debug_frame  00000058  00000000  00000000  000006b4  2**2
+ 10 .debug_frame  00000058  00000000  00000000  00000390  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_info   000004e3  00000000  00000000  0000070c  2**0
+ 11 .debug_info   00000cb8  00000000  00000000  000003e8  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 13 .debug_abbrev 00000186  00000000  00000000  00000bef  2**0
+ 12 .debug_abbrev 0000028a  00000000  00000000  000010a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_loc    0000024a  00000000  00000000  00000d75  2**0
+ 13 .debug_loc    000001dc  00000000  00000000  0000132a  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 15 .debug_aranges 00000030  00000000  00000000  00000fbf  2**0
+ 14 .debug_aranges 00000030  00000000  00000000  00001506  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 16 .debug_ranges 00000020  00000000  00000000  00000fef  2**0
+ 15 .debug_ranges 00000020  00000000  00000000  00001536  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 17 .debug_line   000003bb  00000000  00000000  0000100f  2**0
+ 16 .debug_line   00000804  00000000  00000000  00001556  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 18 .debug_str    000003d6  00000000  00000000  000013ca  2**0
+ 17 .debug_str    000007cb  00000000  00000000  00001d5a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000003b  00000000  00000000  000017a0  2**0
+ 18 .comment      00000028  00000000  00000000  00002525  2**0
                   CONTENTS, READONLY
- 20 .xtensa.info  00000038  00000000  00000000  000017db  2**0
+ 19 .xtensa.info  00000038  00000000  00000000  0000254d  2**0
                   CONTENTS, READONLY
- 21 .xt.lit       00000018  00000000  00000000  00001813  2**0
+ 20 .xt.lit       00000010  00000000  00000000  00002585  2**0
                   CONTENTS, RELOC, READONLY
- 22 .xt.prop      00000150  00000000  00000000  0000182b  2**0
+ 21 .xt.prop      000000f0  00000000  00000000  00002595  2**0
                   CONTENTS, RELOC, READONLY
 
 ulp_macro.o:     file format elf32-xtensa-le
@@ -65,39 +63,41 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   4 .bss          00000000  00000000  00000000  0000011c  2**0
                   ALLOC
-  5 .text.reloc_sort_func 00000034  00000000  00000000  0000011c  2**2
+  5 .text.reloc_sort_func 00000038  00000000  00000000  0000011c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .rodata.str1.4 000002d1  00000000  00000000  00000150  2**2
+  6 .rodata.do_single_reloc.str1.4 00000145  00000000  00000000  00000154  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .text.do_single_reloc 000000d6  00000000  00000000  00000424  2**2
+  7 .text.do_single_reloc 000000dd  00000000  00000000  0000029c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .text.ulp_process_macros_and_load 00000239  00000000  00000000  000004fc  2**2
+  8 .rodata.ulp_process_macros_and_load.str1.4 0000017d  00000000  00000000  0000037c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  9 .text.ulp_process_macros_and_load 0000024a  00000000  00000000  000004fc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .rodata.__func__$3447 00000010  00000000  00000000  00000738  2**2
+ 10 .rodata.__func__$3450 00000010  00000000  00000000  00000748  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 10 .rodata.__func__$3481 0000001c  00000000  00000000  00000748  2**2
+ 11 .rodata.__func__$3484 0000001c  00000000  00000000  00000758  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 11 .debug_frame  00000058  00000000  00000000  00000764  2**2
+ 12 .debug_frame  00000058  00000000  00000000  00000774  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_info   00000e03  00000000  00000000  000007bc  2**0
+ 13 .debug_info   000017c5  00000000  00000000  000007cc  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 13 .debug_abbrev 0000021b  00000000  00000000  000015bf  2**0
+ 14 .debug_abbrev 0000031c  00000000  00000000  00001f91  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_loc    000005a5  00000000  00000000  000017da  2**0
+ 15 .debug_loc    0000060c  00000000  00000000  000022ad  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 15 .debug_aranges 00000030  00000000  00000000  00001d7f  2**0
+ 16 .debug_aranges 00000030  00000000  00000000  000028b9  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 16 .debug_ranges 00000038  00000000  00000000  00001daf  2**0
+ 17 .debug_ranges 00000038  00000000  00000000  000028e9  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 17 .debug_line   0000053e  00000000  00000000  00001de7  2**0
+ 18 .debug_line   00000b72  00000000  00000000  00002921  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 18 .debug_str    00000479  00000000  00000000  00002325  2**0
+ 19 .debug_str    0000088d  00000000  00000000  00003493  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000003b  00000000  00000000  0000279e  2**0
+ 20 .comment      00000028  00000000  00000000  00003d20  2**0
                   CONTENTS, READONLY
- 20 .xtensa.info  00000038  00000000  00000000  000027d9  2**0
+ 21 .xtensa.info  00000038  00000000  00000000  00003d48  2**0
                   CONTENTS, READONLY
- 21 .xt.lit       00000010  00000000  00000000  00002811  2**0
+ 22 .xt.lit       00000010  00000000  00000000  00003d80  2**0
                   CONTENTS, RELOC, READONLY
- 22 .xt.prop      000002dc  00000000  00000000  00002821  2**0
+ 23 .xt.prop      000002e8  00000000  00000000  00003d90  2**0
                   CONTENTS, RELOC, READONLY

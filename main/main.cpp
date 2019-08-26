@@ -1,9 +1,13 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "Configuration.h"
+#include "esp_log.h"
 
 extern "C"{
 #include "wifi_synch.h"
 }
+
+esp_err_t err = turn_on_main_circuit();
 
 extern "C" void app_main()
 {

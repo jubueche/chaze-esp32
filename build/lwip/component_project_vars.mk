@@ -4,5 +4,5 @@ COMPONENT_LDFLAGS += -L$(BUILD_DIR_BASE)/lwip -llwip
 COMPONENT_LINKER_DEPS += 
 COMPONENT_SUBMODULES += $(IDF_PATH)/components/lwip/lwip
 COMPONENT_LIBRARIES += lwip
-COMPONENT_LDFRAGMENTS += 
+COMPONENT_LDFRAGMENTS += $(IDF_PATH)/components/lwip/linker.lf
 component-lwip-build: 

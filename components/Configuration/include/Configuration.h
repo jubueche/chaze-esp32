@@ -2,6 +2,14 @@
 #define _CONFIGURATION_H
 
 #include "time.h"
+
+/*
+ * Section: GPIO
+ */
+
+#define GPIO_MAIN_CIRCUIT 26
+#define GPIO_OUTPUT_MC  (1ULL<<GPIO_MAIN_CIRCUIT)
+
 /*
  * Section: I2C
  */
@@ -18,6 +26,23 @@
 
 #define B(x) S_to_binary_(#x)
 #define I2B(x) to_bin_string(x)
+
+
+
+static esp_err_t turn_on_main_circuit(void)
+{
+	gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = GPIO_OUTPUT_MC;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_ENABLE;
+    gpio_config(&io_conf);
+
+	esp_err_t err = gpio_set_level(GPIO_NUM_26,1);
+	return err;
+}
+
 /*
 static inline unsigned long long S_to_binary_(const char *s)
 {

@@ -1,44 +1,62 @@
-In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/main/libmain.a:
+In archive /home/julian/Documents/chaze-esp32/build/main/libmain.a:
 
 main.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.app_main 00000020  00000000  00000000  00000034  2**2
+  0 .literal._ZL20turn_on_main_circuitv 00000010  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .text         00000000  00000000  00000000  00000054  2**0
+  1 .literal._Z41__static_initialization_and_destruction_0ii 0000000c  00000000  00000000  00000044  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  2 .literal.app_main 00000020  00000000  00000000  00000050  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  3 .literal._GLOBAL__sub_I_err 00000008  00000000  00000000  00000070  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  4 .text         00000000  00000000  00000000  00000078  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .data         00000000  00000000  00000000  00000054  2**0
+  5 .data         00000000  00000000  00000000  00000078  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  3 .bss          00000000  00000000  00000000  00000054  2**0
+  6 .bss          00000000  00000000  00000000  00000078  2**0
                   ALLOC
-  4 .rodata.str1.4 0000002a  00000000  00000000  00000054  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .text.app_main 00000035  00000000  00000000  00000080  2**2
+  7 .text._ZL20turn_on_main_circuitv 00000032  00000000  00000000  00000078  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .debug_frame  00000028  00000000  00000000  000000b8  2**2
+  8 .text._Z41__static_initialization_and_destruction_0ii 0000001a  00000000  00000000  000000ac  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  9 .rodata.app_main.str1.4 0000002a  00000000  00000000  000000c8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 10 .text.app_main 00000035  00000000  00000000  000000f4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 11 .text._GLOBAL__sub_I_err 00000010  00000000  00000000  0000012c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 12 .ctors        00000004  00000000  00000000  0000013c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, DATA
+ 13 .bss.err      00000004  00000000  00000000  00000140  2**2
+                  ALLOC
+ 14 .debug_frame  00000070  00000000  00000000  00000140  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  7 .eh_frame     00000028  00000000  00000000  000000e0  2**2
+ 15 .eh_frame     00000040  00000000  00000000  000001b0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
-  8 .debug_info   00000725  00000000  00000000  00000108  2**0
+ 16 .debug_info   00002085  00000000  00000000  000001f0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  9 .debug_abbrev 00000135  00000000  00000000  0000082d  2**0
+ 17 .debug_abbrev 00000351  00000000  00000000  00002275  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_aranges 00000020  00000000  00000000  00000962  2**0
+ 18 .debug_loc    00000098  00000000  00000000  000025c6  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 11 .debug_ranges 00000010  00000000  00000000  00000982  2**0
+ 19 .debug_aranges 00000038  00000000  00000000  0000265e  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_line   000002e8  00000000  00000000  00000992  2**0
+ 20 .debug_ranges 00000028  00000000  00000000  00002696  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 13 .debug_str    00000b24  00000000  00000000  00000c7a  2**0
+ 21 .debug_line   000005e5  00000000  00000000  000026be  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 22 .debug_str    00001a08  00000000  00000000  00002ca3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .comment      0000003b  00000000  00000000  0000179e  2**0
+ 23 .comment      00000028  00000000  00000000  000046ab  2**0
                   CONTENTS, READONLY
- 15 .xtensa.info  00000038  00000000  00000000  000017d9  2**0
+ 24 .xtensa.info  00000038  00000000  00000000  000046d3  2**0
                   CONTENTS, READONLY
- 16 .xt.lit       00000008  00000000  00000000  00001811  2**0
+ 25 .xt.lit       00000020  00000000  00000000  0000470b  2**0
                   CONTENTS, RELOC, READONLY
- 17 .xt.prop      0000003c  00000000  00000000  00001819  2**0
+ 26 .xt.prop      000000f0  00000000  00000000  0000472b  2**0
                   CONTENTS, RELOC, READONLY
 
 msft_ssl_cert.pem.txt.o:     file format elf32-xtensa-le

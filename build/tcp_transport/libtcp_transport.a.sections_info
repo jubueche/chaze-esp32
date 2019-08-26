@@ -1,4 +1,4 @@
-In archive /home/julian/esp/eclipse-workspace/chaze-esp32/build/tcp_transport/libtcp_transport.a:
+In archive /home/julian/Documents/chaze-esp32/build/tcp_transport/libtcp_transport.a:
 
 transport_ws.o:     file format elf32-xtensa-le
 
@@ -18,73 +18,81 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
   6 .literal.ws_write 00000024  00000000  00000000  00000068  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal.ws_read 00000038  00000000  00000000  0000008c  2**2
+  7 .literal.ws_read 0000005c  00000000  00000000  0000008c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal.get_http_header 00000014  00000000  00000000  000000c4  2**2
+  8 .literal.get_http_header 00000014  00000000  00000000  000000e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .literal.ws_connect 000000ac  00000000  00000000  000000d8  2**2
+  9 .literal.ws_connect 000000ac  00000000  00000000  000000fc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .literal.esp_transport_ws_set_path 00000010  00000000  00000000  00000184  2**2
+ 10 .literal.esp_transport_ws_set_path 00000010  00000000  00000000  000001a8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .literal.esp_transport_ws_init 00000074  00000000  00000000  00000194  2**2
+ 11 .literal.esp_transport_ws_init 00000074  00000000  00000000  000001b8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .text         00000000  00000000  00000000  00000208  2**0
+ 12 .text         00000000  00000000  00000000  0000022c  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 13 .data         00000000  00000000  00000000  00000208  2**0
+ 13 .data         00000000  00000000  00000000  0000022c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 14 .bss          00000000  00000000  00000000  00000208  2**0
+ 14 .bss          00000000  00000000  00000000  0000022c  2**0
                   ALLOC
- 15 .text.ws_get_payload_transport_handle 00000010  00000000  00000000  00000208  2**2
+ 15 .text.ws_get_payload_transport_handle 00000010  00000000  00000000  0000022c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .text.trimwhitespace 00000040  00000000  00000000  00000218  2**2
+ 16 .text.trimwhitespace 00000040  00000000  00000000  0000023c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .text.ws_destroy 0000002a  00000000  00000000  00000258  2**2
+ 17 .text.ws_destroy 0000002a  00000000  00000000  0000027c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .text.ws_poll_write 0000001a  00000000  00000000  00000284  2**2
+ 18 .text.ws_poll_write 0000001a  00000000  00000000  000002a8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .text.ws_poll_read 0000001a  00000000  00000000  000002a0  2**2
+ 19 .text.ws_poll_read 0000001a  00000000  00000000  000002c4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .text.ws_close 00000018  00000000  00000000  000002bc  2**2
+ 20 .text.ws_close 00000018  00000000  00000000  000002e0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .rodata.str1.4 0000042e  00000000  00000000  000002d4  2**2
+ 21 .rodata.ws_write.str1.4 0000003a  00000000  00000000  000002f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 22 .text.ws_write 000000c6  00000000  00000000  00000704  2**2
+ 22 .text.ws_write 000000c4  00000000  00000000  00000334  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .text.ws_read 00000156  00000000  00000000  000007cc  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 24 .text.get_http_header 00000041  00000000  00000000  00000924  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .text.ws_connect 0000021a  00000000  00000000  00000968  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 26 .text.esp_transport_ws_set_path 0000002e  00000000  00000000  00000b84  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .text.esp_transport_ws_init 0000010e  00000000  00000000  00000bb4  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 28 .rodata.__FUNCTION__$3617 00000016  00000000  00000000  00000cc4  2**2
+ 23 .rodata.ws_read.str1.4 000000a3  00000000  00000000  000003f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 29 .debug_frame  00000130  00000000  00000000  00000cdc  2**2
+ 24 .text.ws_read 000001ec  00000000  00000000  0000049c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 25 .rodata.get_http_header.str1.4 00000003  00000000  00000000  00000688  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 26 .text.get_http_header 0000003c  00000000  00000000  0000068c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 27 .rodata.ws_connect.str1.4 000002bd  00000000  00000000  000006c8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 28 .text.ws_connect 00000222  00000000  00000000  00000988  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 29 .text.esp_transport_ws_set_path 0000002e  00000000  00000000  00000bac  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 30 .rodata.esp_transport_ws_init.str1.4 00000082  00000000  00000000  00000bdc  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 31 .text.esp_transport_ws_init 00000114  00000000  00000000  00000c60  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 32 .rodata.__FUNCTION__$3624 00000016  00000000  00000000  00000d74  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 33 .debug_frame  00000130  00000000  00000000  00000d8c  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 30 .debug_info   000010fd  00000000  00000000  00000e0c  2**0
+ 34 .debug_info   00001c2d  00000000  00000000  00000ebc  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 31 .debug_abbrev 00000262  00000000  00000000  00001f09  2**0
+ 35 .debug_abbrev 00000378  00000000  00000000  00002ae9  2**0
                   CONTENTS, READONLY, DEBUGGING
- 32 .debug_loc    0000069a  00000000  00000000  0000216b  2**0
+ 36 .debug_loc    000007a8  00000000  00000000  00002e61  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 33 .debug_aranges 00000078  00000000  00000000  00002805  2**0
+ 37 .debug_aranges 00000078  00000000  00000000  00003609  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 34 .debug_ranges 00000080  00000000  00000000  0000287d  2**0
+ 38 .debug_ranges 00000068  00000000  00000000  00003681  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 35 .debug_line   000007fb  00000000  00000000  000028fd  2**0
+ 39 .debug_line   000014c8  00000000  00000000  000036e9  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 36 .debug_str    00000620  00000000  00000000  000030f8  2**0
+ 40 .debug_str    00000a58  00000000  00000000  00004bb1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 37 .comment      0000003b  00000000  00000000  00003718  2**0
+ 41 .comment      00000028  00000000  00000000  00005609  2**0
                   CONTENTS, READONLY
- 38 .xtensa.info  00000038  00000000  00000000  00003753  2**0
+ 42 .xtensa.info  00000038  00000000  00000000  00005631  2**0
                   CONTENTS, READONLY
- 39 .xt.lit       00000060  00000000  00000000  0000378b  2**0
+ 43 .xt.lit       00000060  00000000  00000000  00005669  2**0
                   CONTENTS, RELOC, READONLY
- 40 .xt.prop      000004ec  00000000  00000000  000037eb  2**0
+ 44 .xt.prop      000004ec  00000000  00000000  000056c9  2**0
                   CONTENTS, RELOC, READONLY
 
 transport_ssl.o:     file format elf32-xtensa-le
@@ -107,71 +115,81 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
   7 .literal.ssl_connect 0000001c  00000000  00000000  000000c8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal.esp_transport_ssl_set_cert_data 00000004  00000000  00000000  000000e4  2**2
+  8 .literal.esp_transport_ssl_enable_global_ca_store 00000004  00000000  00000000  000000e4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .literal.esp_transport_ssl_set_client_cert_data 00000004  00000000  00000000  000000e8  2**2
+  9 .literal.esp_transport_ssl_set_cert_data 00000004  00000000  00000000  000000e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .literal.esp_transport_ssl_set_client_key_data 00000004  00000000  00000000  000000ec  2**2
+ 10 .literal.esp_transport_ssl_set_client_cert_data 00000004  00000000  00000000  000000ec  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .literal.esp_transport_ssl_init 00000050  00000000  00000000  000000f0  2**2
+ 11 .literal.esp_transport_ssl_set_client_key_data 00000004  00000000  00000000  000000f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .text         00000000  00000000  00000000  00000140  2**0
+ 12 .literal.esp_transport_ssl_init 00000050  00000000  00000000  000000f4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 13 .text         00000000  00000000  00000000  00000144  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 13 .data         00000000  00000000  00000000  00000140  2**0
+ 14 .data         00000000  00000000  00000000  00000144  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 14 .bss          00000000  00000000  00000000  00000140  2**0
+ 15 .bss          00000000  00000000  00000000  00000144  2**0
                   ALLOC
- 15 .text.ssl_connect_async 00000059  00000000  00000000  00000140  2**2
+ 16 .text.ssl_connect_async 0000005c  00000000  00000000  00000144  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .text.ssl_destroy 00000022  00000000  00000000  0000019c  2**2
+ 17 .text.ssl_destroy 00000022  00000000  00000000  000001a0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .text.ssl_poll_write 00000064  00000000  00000000  000001c0  2**2
+ 18 .text.ssl_poll_write 00000066  00000000  00000000  000001c4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .text.ssl_poll_read 00000064  00000000  00000000  00000224  2**2
+ 19 .text.ssl_poll_read 00000066  00000000  00000000  0000022c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .text.ssl_close 00000025  00000000  00000000  00000288  2**2
+ 20 .text.ssl_close 00000025  00000000  00000000  00000294  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .rodata.str1.4 00000191  00000000  00000000  000002b0  2**2
+ 21 .rodata.ssl_write.str1.4 00000096  00000000  00000000  000002bc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 21 .text.ssl_write 00000096  00000000  00000000  00000444  2**2
+ 22 .text.ssl_write 0000009a  00000000  00000000  00000354  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .text.ssl_read 0000006e  00000000  00000000  000004dc  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .text.ssl_connect 00000052  00000000  00000000  0000054c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 24 .text.esp_transport_ssl_set_cert_data 00000026  00000000  00000000  000005a0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .text.esp_transport_ssl_set_client_cert_data 00000026  00000000  00000000  000005c8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 26 .text.esp_transport_ssl_set_client_key_data 00000026  00000000  00000000  000005f0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .text.esp_transport_ssl_init 0000007e  00000000  00000000  00000618  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 28 .rodata.__FUNCTION__$9433 00000017  00000000  00000000  00000698  2**2
+ 23 .rodata.ssl_read.str1.4 00000039  00000000  00000000  000003f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 29 .debug_frame  00000130  00000000  00000000  000006b0  2**2
+ 24 .text.ssl_read 0000006e  00000000  00000000  0000042c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 25 .rodata.ssl_connect.str1.4 00000037  00000000  00000000  0000049c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 26 .text.ssl_connect 00000054  00000000  00000000  000004d4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 27 .text.esp_transport_ssl_enable_global_ca_store 00000026  00000000  00000000  00000528  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 28 .text.esp_transport_ssl_set_cert_data 00000026  00000000  00000000  00000550  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 29 .text.esp_transport_ssl_set_client_cert_data 00000026  00000000  00000000  00000578  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 30 .text.esp_transport_ssl_set_client_key_data 00000026  00000000  00000000  000005a0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 31 .rodata.esp_transport_ssl_init.str1.4 0000007d  00000000  00000000  000005c8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 32 .text.esp_transport_ssl_init 0000007e  00000000  00000000  00000648  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 33 .rodata.__FUNCTION__$9679 00000017  00000000  00000000  000006c8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 34 .debug_frame  00000148  00000000  00000000  000006e0  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 30 .debug_info   00002037  00000000  00000000  000007e0  2**0
+ 35 .debug_info   00004694  00000000  00000000  00000828  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 31 .debug_abbrev 0000030f  00000000  00000000  00002817  2**0
+ 36 .debug_abbrev 000003fb  00000000  00000000  00004ebc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 32 .debug_loc    000004ee  00000000  00000000  00002b26  2**0
+ 37 .debug_loc    00000640  00000000  00000000  000052b7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 33 .debug_aranges 00000078  00000000  00000000  00003014  2**0
+ 38 .debug_aranges 00000080  00000000  00000000  000058f7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 34 .debug_ranges 00000068  00000000  00000000  0000308c  2**0
+ 39 .debug_ranges 00000070  00000000  00000000  00005977  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 35 .debug_line   0000073f  00000000  00000000  000030f4  2**0
+ 40 .debug_line   00001006  00000000  00000000  000059e7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 36 .debug_str    00001457  00000000  00000000  00003833  2**0
+ 41 .debug_str    0000383a  00000000  00000000  000069ed  2**0
                   CONTENTS, READONLY, DEBUGGING
- 37 .comment      0000003b  00000000  00000000  00004c8a  2**0
+ 42 .comment      00000028  00000000  00000000  0000a227  2**0
                   CONTENTS, READONLY
- 38 .xtensa.info  00000038  00000000  00000000  00004cc5  2**0
+ 43 .xtensa.info  00000038  00000000  00000000  0000a24f  2**0
                   CONTENTS, READONLY
- 39 .xt.lit       00000060  00000000  00000000  00004cfd  2**0
+ 44 .xt.lit       00000068  00000000  00000000  0000a287  2**0
                   CONTENTS, RELOC, READONLY
- 40 .xt.prop      0000036c  00000000  00000000  00004d5d  2**0
+ 45 .xt.prop      0000039c  00000000  00000000  0000a2ef  2**0
                   CONTENTS, RELOC, READONLY
 
 transport.o:     file format elf32-xtensa-le
@@ -202,81 +220,81 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .text.esp_transport_get_default_parent 00000005  00000000  00000000  000000b8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 12 .rodata.str1.4 0000008d  00000000  00000000  000000c0  2**2
+ 12 .rodata.esp_transport_list_init.str1.4 00000085  00000000  00000000  000000c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 13 .text.esp_transport_list_init 00000046  00000000  00000000  00000150  2**2
+ 13 .text.esp_transport_list_init 00000048  00000000  00000000  00000148  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 14 .text.esp_transport_list_add 0000007d  00000000  00000000  00000198  2**2
+ 14 .text.esp_transport_list_add 00000085  00000000  00000000  00000190  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
  15 .text.esp_transport_list_get_transport 0000002a  00000000  00000000  00000218  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .text.esp_transport_init 00000041  00000000  00000000  00000244  2**2
+ 16 .text.esp_transport_init 0000003e  00000000  00000000  00000244  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .text.esp_transport_get_payload_transport_handle 0000001c  00000000  00000000  00000288  2**2
+ 17 .text.esp_transport_get_payload_transport_handle 0000001a  00000000  00000000  00000284  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .text.esp_transport_destroy 00000019  00000000  00000000  000002a4  2**2
+ 18 .text.esp_transport_destroy 00000019  00000000  00000000  000002a0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .text.esp_transport_list_clean 00000029  00000000  00000000  000002c0  2**2
+ 19 .text.esp_transport_list_clean 00000029  00000000  00000000  000002bc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .text.esp_transport_list_destroy 00000018  00000000  00000000  000002ec  2**2
+ 20 .text.esp_transport_list_destroy 00000018  00000000  00000000  000002e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .text.esp_transport_connect 00000020  00000000  00000000  00000304  2**2
+ 21 .text.esp_transport_connect 00000022  00000000  00000000  00000300  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .text.esp_transport_connect_async 00000020  00000000  00000000  00000324  2**2
+ 22 .text.esp_transport_connect_async 00000022  00000000  00000000  00000324  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .text.esp_transport_read 00000020  00000000  00000000  00000344  2**2
+ 23 .text.esp_transport_read 00000022  00000000  00000000  00000348  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 24 .text.esp_transport_write 00000020  00000000  00000000  00000364  2**2
+ 24 .text.esp_transport_write 00000022  00000000  00000000  0000036c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .text.esp_transport_poll_read 0000001c  00000000  00000000  00000384  2**2
+ 25 .text.esp_transport_poll_read 0000001e  00000000  00000000  00000390  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 26 .text.esp_transport_poll_write 0000001c  00000000  00000000  000003a0  2**2
+ 26 .text.esp_transport_poll_write 0000001e  00000000  00000000  000003b0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .text.esp_transport_close 0000001a  00000000  00000000  000003bc  2**2
+ 27 .text.esp_transport_close 0000001d  00000000  00000000  000003d0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 28 .text.esp_transport_get_context_data 0000000d  00000000  00000000  000003d8  2**2
+ 28 .text.esp_transport_get_context_data 0000000e  00000000  00000000  000003f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 29 .text.esp_transport_set_context_data 00000010  00000000  00000000  000003e8  2**2
+ 29 .text.esp_transport_set_context_data 00000010  00000000  00000000  00000400  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 30 .text.esp_transport_set_func 00000028  00000000  00000000  000003f8  2**2
+ 30 .text.esp_transport_set_func 00000029  00000000  00000000  00000410  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 31 .text.esp_transport_get_default_port 0000000d  00000000  00000000  00000420  2**2
+ 31 .text.esp_transport_get_default_port 0000000e  00000000  00000000  0000043c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .text.esp_transport_set_default_port 00000010  00000000  00000000  00000430  2**2
+ 32 .text.esp_transport_set_default_port 00000010  00000000  00000000  0000044c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 33 .text.esp_transport_set_async_connect_func 00000010  00000000  00000000  00000440  2**2
+ 33 .text.esp_transport_set_async_connect_func 00000010  00000000  00000000  0000045c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .text.esp_transport_set_parent_transport_func 00000010  00000000  00000000  00000450  2**2
+ 34 .text.esp_transport_set_parent_transport_func 00000010  00000000  00000000  0000046c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 35 .rodata.__FUNCTION__$3456 00000013  00000000  00000000  00000460  2**2
+ 35 .rodata.__FUNCTION__$3459 00000013  00000000  00000000  0000047c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 36 .rodata.__FUNCTION__$3433 00000017  00000000  00000000  00000474  2**2
+ 36 .rodata.__FUNCTION__$3436 00000017  00000000  00000000  00000490  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 37 .rodata.__FUNCTION__$3427 00000018  00000000  00000000  0000048c  2**2
+ 37 .rodata.__FUNCTION__$3430 00000018  00000000  00000000  000004a8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 38 .debug_frame  00000238  00000000  00000000  000004a4  2**2
+ 38 .debug_frame  00000238  00000000  00000000  000004c0  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 39 .debug_info   00000b83  00000000  00000000  000006dc  2**0
+ 39 .debug_info   00001507  00000000  00000000  000006f8  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 40 .debug_abbrev 00000218  00000000  00000000  0000125f  2**0
+ 40 .debug_abbrev 00000318  00000000  00000000  00001bff  2**0
                   CONTENTS, READONLY, DEBUGGING
- 41 .debug_loc    0000065e  00000000  00000000  00001477  2**0
+ 41 .debug_loc    0000073b  00000000  00000000  00001f17  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 42 .debug_aranges 000000d0  00000000  00000000  00001ad5  2**0
+ 42 .debug_aranges 000000d0  00000000  00000000  00002652  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 43 .debug_ranges 000000c0  00000000  00000000  00001ba5  2**0
+ 43 .debug_ranges 000000c0  00000000  00000000  00002722  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 44 .debug_line   000006da  00000000  00000000  00001c65  2**0
+ 44 .debug_line   00000e55  00000000  00000000  000027e2  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 45 .debug_str    00000669  00000000  00000000  0000233f  2**0
+ 45 .debug_str    00000a58  00000000  00000000  00003637  2**0
                   CONTENTS, READONLY, DEBUGGING
- 46 .comment      0000003b  00000000  00000000  000029a8  2**0
+ 46 .comment      00000028  00000000  00000000  0000408f  2**0
                   CONTENTS, READONLY
- 47 .xtensa.info  00000038  00000000  00000000  000029e3  2**0
+ 47 .xtensa.info  00000038  00000000  00000000  000040b7  2**0
                   CONTENTS, READONLY
- 48 .xt.lit       00000040  00000000  00000000  00002a1b  2**0
+ 48 .xt.lit       00000040  00000000  00000000  000040ef  2**0
                   CONTENTS, RELOC, READONLY
- 49 .xt.prop      000006cc  00000000  00000000  00002a5b  2**0
+ 49 .xt.prop      000006b4  00000000  00000000  0000412f  2**0
                   CONTENTS, RELOC, READONLY
 
 transport_tcp.o:     file format elf32-xtensa-le
@@ -309,49 +327,51 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  12 .text.tcp_destroy 00000022  00000000  00000000  00000114  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .text.tcp_poll_write 00000058  00000000  00000000  00000138  2**2
+ 13 .text.tcp_poll_write 0000005a  00000000  00000000  00000138  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 14 .text.tcp_poll_read 00000058  00000000  00000000  00000190  2**2
+ 14 .text.tcp_poll_read 0000005a  00000000  00000000  00000194  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .text.tcp_close 00000025  00000000  00000000  000001e8  2**2
+ 15 .text.tcp_close 00000026  00000000  00000000  000001f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .text.tcp_write 00000030  00000000  00000000  00000210  2**2
+ 16 .text.tcp_write 0000002c  00000000  00000000  00000218  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .text.tcp_read 00000036  00000000  00000000  00000240  2**2
+ 17 .text.tcp_read 00000030  00000000  00000000  00000244  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .text.resolve_dns 00000041  00000000  00000000  00000278  2**2
+ 18 .text.resolve_dns 00000043  00000000  00000000  00000274  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .rodata.str1.4 000000fd  00000000  00000000  000002bc  2**2
+ 19 .rodata.tcp_connect.str1.4 00000078  00000000  00000000  000002b8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 20 .text.tcp_connect 000000f6  00000000  00000000  000003bc  2**2
+ 20 .text.tcp_connect 000000fd  00000000  00000000  00000330  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .text.esp_transport_tcp_init 0000007a  00000000  00000000  000004b4  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .rodata.__FUNCTION__$6609 00000017  00000000  00000000  00000530  2**2
+ 21 .rodata.esp_transport_tcp_init.str1.4 0000007d  00000000  00000000  00000430  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 23 .debug_frame  000000e8  00000000  00000000  00000548  2**2
+ 22 .text.esp_transport_tcp_init 0000007a  00000000  00000000  000004b0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 23 .rodata.__FUNCTION__$6634 00000017  00000000  00000000  0000052c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 24 .debug_frame  000000e8  00000000  00000000  00000544  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 24 .debug_info   00000e06  00000000  00000000  00000630  2**0
+ 25 .debug_info   00002b4f  00000000  00000000  0000062c  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 25 .debug_abbrev 0000023e  00000000  00000000  00001436  2**0
+ 26 .debug_abbrev 000003ab  00000000  00000000  0000317b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 26 .debug_loc    00000501  00000000  00000000  00001674  2**0
+ 27 .debug_loc    000005ca  00000000  00000000  00003526  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 27 .debug_aranges 00000060  00000000  00000000  00001b75  2**0
+ 28 .debug_aranges 00000060  00000000  00000000  00003af0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 28 .debug_ranges 00000050  00000000  00000000  00001bd5  2**0
+ 29 .debug_ranges 00000050  00000000  00000000  00003b50  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 29 .debug_line   00000691  00000000  00000000  00001c25  2**0
+ 30 .debug_line   00000d08  00000000  00000000  00003ba0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 30 .debug_str    000006df  00000000  00000000  000022b6  2**0
+ 31 .debug_str    00001a6a  00000000  00000000  000048a8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 31 .comment      0000003b  00000000  00000000  00002995  2**0
+ 32 .comment      00000028  00000000  00000000  00006312  2**0
                   CONTENTS, READONLY
- 32 .xtensa.info  00000038  00000000  00000000  000029d0  2**0
+ 33 .xtensa.info  00000038  00000000  00000000  0000633a  2**0
                   CONTENTS, READONLY
- 33 .xt.lit       00000048  00000000  00000000  00002a08  2**0
+ 34 .xt.lit       00000048  00000000  00000000  00006372  2**0
                   CONTENTS, RELOC, READONLY
- 34 .xt.prop      000002f4  00000000  00000000  00002a50  2**0
+ 35 .xt.prop      000002c4  00000000  00000000  000063ba  2**0
                   CONTENTS, RELOC, READONLY
 
 transport_utils.o:     file format elf32-xtensa-le
@@ -366,29 +386,68 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, DATA
   3 .bss          00000000  00000000  00000000  00000038  2**0
                   ALLOC
-  4 .text.esp_transport_utils_ms_to_timeval 0000002e  00000000  00000000  00000038  2**2
+  4 .text.esp_transport_utils_ms_to_timeval 00000030  00000000  00000000  00000038  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
   5 .debug_frame  00000028  00000000  00000000  00000068  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  6 .debug_info   000000ed  00000000  00000000  00000090  2**0
+  6 .debug_info   000009b9  00000000  00000000  00000090  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  7 .debug_abbrev 000000a3  00000000  00000000  0000017d  2**0
+  7 .debug_abbrev 000001b4  00000000  00000000  00000a49  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_loc    00000021  00000000  00000000  00000220  2**0
+  8 .debug_loc    00000025  00000000  00000000  00000bfd  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  9 .debug_aranges 00000020  00000000  00000000  00000241  2**0
+  9 .debug_aranges 00000020  00000000  00000000  00000c22  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 10 .debug_ranges 00000010  00000000  00000000  00000261  2**0
+ 10 .debug_ranges 00000010  00000000  00000000  00000c42  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 11 .debug_line   000000e0  00000000  00000000  00000271  2**0
+ 11 .debug_line   000001d5  00000000  00000000  00000c52  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_str    000001e9  00000000  00000000  00000351  2**0
+ 12 .debug_str    000005f2  00000000  00000000  00000e27  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .comment      0000003b  00000000  00000000  0000053a  2**0
+ 13 .comment      00000028  00000000  00000000  00001419  2**0
                   CONTENTS, READONLY
- 14 .xtensa.info  00000038  00000000  00000000  00000575  2**0
+ 14 .xtensa.info  00000038  00000000  00000000  00001441  2**0
                   CONTENTS, READONLY
- 15 .xt.lit       00000008  00000000  00000000  000005ad  2**0
+ 15 .xt.lit       00000008  00000000  00000000  00001479  2**0
                   CONTENTS, RELOC, READONLY
- 16 .xt.prop      00000030  00000000  00000000  000005b5  2**0
+ 16 .xt.prop      00000030  00000000  00000000  00001481  2**0
+                  CONTENTS, RELOC, READONLY
+
+transport_strcasestr.o:     file format elf32-xtensa-le
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .literal.transport_strcasestr 0000000c  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .text         00000000  00000000  00000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .data         00000000  00000000  00000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  3 .bss          00000000  00000000  00000000  00000040  2**0
+                  ALLOC
+  4 .text.transport_strcasestr 00000066  00000000  00000000  00000040  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  5 .debug_frame  00000028  00000000  00000000  000000a8  2**2
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  6 .debug_info   00000a42  00000000  00000000  000000d0  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  7 .debug_abbrev 0000020f  00000000  00000000  00000b12  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    00000102  00000000  00000000  00000d21  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+  9 .debug_aranges 00000020  00000000  00000000  00000e23  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 10 .debug_ranges 00000010  00000000  00000000  00000e43  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 11 .debug_line   00000295  00000000  00000000  00000e53  2**0
+                  CONTENTS, RELOC, READONLY, DEBUGGING
+ 12 .debug_str    000005cc  00000000  00000000  000010e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .comment      00000028  00000000  00000000  000016b4  2**0
+                  CONTENTS, READONLY
+ 14 .xtensa.info  00000038  00000000  00000000  000016dc  2**0
+                  CONTENTS, READONLY
+ 15 .xt.lit       00000008  00000000  00000000  00001714  2**0
+                  CONTENTS, RELOC, READONLY
+ 16 .xt.prop      0000006c  00000000  00000000  0000171c  2**0
                   CONTENTS, RELOC, READONLY
