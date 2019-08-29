@@ -3,12 +3,16 @@
 
 /*
 #include "BNO055.h"
-
+#include "Configuration.h"
+#include "esp_log.h"
 
 extern "C" void app_main()
 {
-
+	//turn_on_main_circuit();
+	turn_on_main_circuit();
 	BNO055 bno = BNO055();
+
+	do_i2cdetect_cmd();
 
 	if (!bno.begin())
 	  {
@@ -28,6 +32,7 @@ extern "C" void app_main()
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 	}
 }
+
 
  */
 
@@ -74,11 +79,13 @@ bool BNO055::begin(bno055_opmode_t mode)
 
   /* Make sure we have the right device */
   uint8_t id = read8(BNO055_CHIP_ID_ADDR);
+  printf("ID is %d  ", id);
   if(id != BNO055_ID)
   {
     vTaskDelay(1000 / portTICK_PERIOD_MS); // hold on for boot
     id = read8(BNO055_CHIP_ID_ADDR);
     if(id != BNO055_ID) {
+      ESP_LOGE(TAG, "Failed to read correct sensor ID.");
       return false;  // still not? ok bail
     }
   }
@@ -867,7 +874,7 @@ uint8_t BNO055::read8(bno055_reg_t reg )
 {
   uint8_t data[1];
   if(readLen(reg, data, 1)){
-	  return data[1];
+	  return data[0];
   }else return 0;
 }
 

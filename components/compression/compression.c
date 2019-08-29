@@ -8,7 +8,12 @@
 #include "stdlib.h"
 #include "esp_log.h"
 
+
+#include "ChazeFlashtrainingWrapper.h"
+
 const char * TAG = "Chaze-Compression";
+
+#define DEBUG_COMPRESSION 1
 
 /**
  * @brief When recording sensor data, multiple tasks need to acquire a mutex in order to read from the bus and
@@ -17,7 +22,7 @@ const char * TAG = "Chaze-Compression";
  * data is compressed and saved to the flash.
  * @param Buffer number to read from and compress. Either 0 or 1.
  */
-void compress_and_save(uint8_t buff_num)
+void compress_and_save(FlashtrainingWrapper_t *ft, uint8_t buff_num)
 {
 	ESP_LOGI(TAG, "Using buffer number %d", buff_num);
 	//Get the pointer to the current buffer
@@ -25,7 +30,7 @@ void compress_and_save(uint8_t buff_num)
 	assert(current_buffer->counter == BUFFER_SIZE); //The buffer must be filled completely.
 
 	//Data written to flash.
-	char * out = (char *) malloc(BUFFER_SIZE * sizeof(char));
+	uint8_t * out = (uint8_t *) malloc(BUFFER_SIZE * sizeof(uint8_t));
 
 	if(out == NULL){
 		ESP_LOGE(TAG, "Could not allocate enough space");
@@ -38,7 +43,7 @@ void compress_and_save(uint8_t buff_num)
 		uint32_t written = def(current_buffer->data, out, DEFAULT_COMPRESSION_LEVEL);
 
 		//Write data to flash
-		write_data_to_flash(out, written);
+		write_data_to_flash(ft, out, written);
 		free(out);
 	}
 }
@@ -50,14 +55,14 @@ void compress_and_save(uint8_t buff_num)
  * @param level Level of compression.
  * @return Number of written bytes to dest
  */
-uint32_t def(char * source, char * dest, uint8_t level)
+uint32_t def(uint8_t * source, uint8_t * dest, uint8_t level)
 {
 	int ret, flush;
 	unsigned have;
 	z_stream strm;
 
-	unsigned char * in = (unsigned char *) malloc(CHUNK * sizeof(char));
-	unsigned char * out = (unsigned char *) malloc(CHUNK * sizeof(char));
+	uint8_t * in = (uint8_t *) malloc(CHUNK * sizeof(uint8_t));
+	uint8_t * out = (uint8_t *) malloc(CHUNK * sizeof(uint8_t));
 
 	strm.zalloc = Z_NULL;
 	strm.zfree = Z_NULL;
@@ -80,8 +85,10 @@ uint32_t def(char * source, char * dest, uint8_t level)
             zerr(ret);
             have = CHUNK - strm.avail_out;
             ESP_LOGI(TAG, "Have: %d", have);
-            for(int i=0;i<have;i++)
-            	printf("%c", out[i]);
+			if(DEBUG_COMPRESSION){ //Prints the compressed uint8_t array
+				for(int i=0;i<have;i++)
+            		printf("%c", out[i]);
+			}
 
             memcpy(dest+dest_offset, out, have);
             dest_offset += have;
@@ -97,64 +104,82 @@ uint32_t def(char * source, char * dest, uint8_t level)
     return dest_offset;
 }
 
-//For now just inflates data to check if was deflated correctly
-void write_data_to_flash(char * data, uint32_t n)
+/*
+* @brief Takes pointer to char array of data to be written to the flash and the number of chars to be written.
+		 If DEBUG_COMPRESSION is defined, will also decompress the data and print it.
+*/
+void write_data_to_flash(FlashtrainingWrapper_t * ft, uint8_t * data, uint32_t n)
 {
-	int ret;
-	unsigned have;
-	z_stream strm;
 
-	unsigned char * in = (unsigned char *) malloc(CHUNK * sizeof(char));
-	unsigned char * out = (unsigned char *) malloc(CHUNK * sizeof(char));
+	ESP_LOGI(TAG, "Writing data to flash.");
 
-
-	char * to_print = (char *) malloc(CHUNK*sizeof(char));
-
-	if(to_print == NULL || in == NULL || out == NULL)
-	{
-		ESP_LOGE(TAG, "Could not allocate enough space");
-		return;
+	bool err = !FlashtrainingWrapper_write_compressed_chunk(ft, data, n);
+	
+	if(err){
+		ESP_LOGE(TAG, "Error ocurred while writing to flash.");
+	} else {
+		ESP_LOGI(TAG, "Written to flash.");
 	}
 
-	strm.zalloc = Z_NULL;
-	strm.zfree = Z_NULL;
-	strm.opaque = Z_NULL;
-	strm.avail_in = 0;
-	strm.next_in = Z_NULL;
+	if(DEBUG_COMPRESSION)
+	{
+		int ret;
+		unsigned have;
+		z_stream strm;
 
-	ret = inflateInit2(&strm,0); //Use window size in compressed stream
-	zerr(ret);
-	uint32_t to_print_offset = 0;
+		unsigned char * in = (unsigned char *) malloc(CHUNK * sizeof(char));
+		unsigned char * out = (unsigned char *) malloc(CHUNK * sizeof(char));
 
-	do {
-			memcpy(in, data, n);
-			strm.avail_in = n;
 
-			if (strm.avail_in == 0)
-				break;
-			strm.next_in = in;
+		uint8_t * to_print = (uint8_t *) malloc(CHUNK*sizeof(uint8_t));
 
-			do {
-				strm.avail_out = CHUNK;
-				strm.next_out = out;
+		if(to_print == NULL || in == NULL || out == NULL)
+		{
+			ESP_LOGE(TAG, "Could not allocate enough space");
+			return;
+		}
 
-				ret = inflate(&strm, Z_NO_FLUSH);
-				assert(ret != Z_STREAM_ERROR);
-				zerr(ret);
+		strm.zalloc = Z_NULL;
+		strm.zfree = Z_NULL;
+		strm.opaque = Z_NULL;
+		strm.avail_in = 0;
+		strm.next_in = Z_NULL;
 
-				have = CHUNK - strm.avail_out;
-				memcpy(to_print+to_print_offset, out, have);
-				to_print_offset+=have;
+		ret = inflateInit2(&strm,0); //Use window size in compressed stream
+		zerr(ret);
+		uint32_t to_print_offset = 0;
 
-			} while (strm.avail_out == 0);
-		} while (ret != Z_STREAM_END);
+		do {
+				memcpy(in, data, n);
+				strm.avail_in = n;
 
-	(void)inflateEnd(&strm);
-	free(in);
-	free(out);
+				if (strm.avail_in == 0)
+					break;
+				strm.next_in = in;
 
-	for(int i=0;i<CHUNK;i++)
-		printf("%c", to_print[i]);
+				do {
+					strm.avail_out = CHUNK;
+					strm.next_out = out;
+
+					ret = inflate(&strm, Z_NO_FLUSH);
+					assert(ret != Z_STREAM_ERROR);
+					zerr(ret);
+
+					have = CHUNK - strm.avail_out;
+					memcpy(to_print+to_print_offset, out, have);
+					to_print_offset+=have;
+
+				} while (strm.avail_out == 0);
+			} while (ret != Z_STREAM_END);
+
+		(void)inflateEnd(&strm);
+		free(in);
+		free(out);
+
+		for(int i=0;i<CHUNK;i++)
+			printf("%c", to_print[i]);
+		}
+	
 }
 
 

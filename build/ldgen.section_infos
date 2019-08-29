@@ -1,4 +1,6 @@
 /home/julian/Documents/chaze-esp32/build/BNO055/libBNO055.a.sections_info
+ /home/julian/Documents/chaze-esp32/build/Chaze_Flashtraining/libChaze_Flashtraining.a.sections_info
+ /home/julian/Documents/chaze-esp32/build/Chaze_SPIFlash/libChaze_SPIFlash.a.sections_info
  /home/julian/Documents/chaze-esp32/build/Chaze_ble/libChaze_ble.a.sections_info
  /home/julian/Documents/chaze-esp32/build/Configuration/libConfiguration.a.sections_info
  /home/julian/Documents/chaze-esp32/build/MAX30101/libMAX30101.a.sections_info

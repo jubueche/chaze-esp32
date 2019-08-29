@@ -2,7 +2,7 @@
 #define COMPRESSION_H
 
 #include "stdint.h"
-
+#include "ChazeFlashtrainingWrapper.h"
 
 #define BUFFER_SIZE /*16384*/ 8192
 #define CHUNK 8192 /*Must be same size as BUFFER_SIZE*/
@@ -14,14 +14,14 @@
 
 typedef struct {
 	int32_t counter;
-	char * data;
+	uint8_t * data;
 }buffer_t;
 
 buffer_t * buffers[2];
 
-void compress_and_save(uint8_t);
-void write_data_to_flash(char *, uint32_t);
-uint32_t def(char *, char *, uint8_t);
+void compress_and_save(FlashtrainingWrapper_t *, uint8_t);
+void write_data_to_flash(FlashtrainingWrapper_t *, uint8_t *, uint32_t);
+uint32_t def(uint8_t *, uint8_t *, uint8_t);
 void zerr(int32_t);
 
 

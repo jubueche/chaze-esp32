@@ -78,13 +78,21 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/task.h \
  /home/julian/esp/esp-idf/components/newlib/include/limits.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/list.h \
+ /home/julian/esp/esp-idf/components/newlib/include/string.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/Documents/chaze-esp32/components/compression/include/compression.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/esp/esp-idf/components/freertos/include/freertos/semphr.h \
+ /home/julian/esp/esp-idf/components/freertos/include/freertos/queue.h \
+ /home/julian/esp/esp-idf/components/log/include/esp_log.h \
+ /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h \
  /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h \
  /home/julian/esp/esp-idf/components/newlib/platform_include/time.h \
  /home/julian/esp/esp-idf/components/newlib/include/time.h \
  /home/julian/esp/esp-idf/components/newlib/include/machine/time.h \
- /home/julian/esp/esp-idf/components/log/include/esp_log.h \
- /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h \
- /home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h
+ /home/julian/esp/esp-idf/components/driver/include/driver/i2c.h \
+ /home/julian/esp/esp-idf/components/freertos/include/freertos/queue.h \
+ /home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h
 
 /home/julian/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h:
 
@@ -244,6 +252,22 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/esp/esp-idf/components/freertos/include/freertos/list.h:
 
+/home/julian/esp/esp-idf/components/newlib/include/string.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/string.h:
+
+/home/julian/Documents/chaze-esp32/components/compression/include/compression.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/esp/esp-idf/components/freertos/include/freertos/semphr.h:
+
+/home/julian/esp/esp-idf/components/freertos/include/freertos/queue.h:
+
+/home/julian/esp/esp-idf/components/log/include/esp_log.h:
+
+/home/julian/esp/esp-idf/components/log/include/esp_log_internal.h:
+
 /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h:
 
 /home/julian/esp/esp-idf/components/newlib/platform_include/time.h:
@@ -252,9 +276,9 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/esp/esp-idf/components/newlib/include/machine/time.h:
 
-/home/julian/esp/esp-idf/components/log/include/esp_log.h:
+/home/julian/esp/esp-idf/components/driver/include/driver/i2c.h:
 
-/home/julian/esp/esp-idf/components/log/include/esp_log_internal.h:
+/home/julian/esp/esp-idf/components/freertos/include/freertos/queue.h:
 
-/home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
+/home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h:
 /home/julian/Documents/chaze-esp32/main/./main.cpp:
