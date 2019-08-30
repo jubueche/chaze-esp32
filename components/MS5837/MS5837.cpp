@@ -4,6 +4,8 @@
 
 extern "C" void app_main()
 {
+	turn_on_main_circuit();
+
 	MS5837 ms5837 = MS5837();
 	ms5837.init();
 	ms5837.setModel(MS5837::MS5837_02BA);
@@ -12,11 +14,12 @@ extern "C" void app_main()
 	while(1){
 		ms5837.read_vals();
 		vTaskDelay(20 / portTICK_PERIOD_MS);
-		printf("Pressure: %.2f", ms5837.pressure());
+		printf("Pressure: %.2f\n", ms5837.pressure());
 		vTaskDelay(1000 / portTICK_PERIOD_MS);
 	}
 
 }
+
 */
 
 #include "MS5837.h"
@@ -48,7 +51,7 @@ bool MS5837::init() {
 	// Reset the MS5837, per datasheet
 	port_num = I2C_NUM_0;
 
-	esp_err_t err = (this->i2c_master_init_IDF());
+	esp_err_t err = (i2c_master_init_IDF(port_num));
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to initialize I2C connection.");
 	}
@@ -234,25 +237,6 @@ uint8_t MS5837::crc4(uint16_t n_prom[]) {
 	n_rem = ((n_rem >> 12) & 0x000F);
 
 	return n_rem ^ 0x00;
-}
-
-/**
- * @brief Initialize I2C.
- * @return Error message or ESP_OK.
- */
-esp_err_t MS5837::i2c_master_init_IDF(void)
-{
-    i2c_config_t conf;
-    conf.mode = I2C_MODE_MASTER;
-    conf.sda_io_num = I2C_MASTER_SDA_IO;
-    conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
-    conf.scl_io_num = I2C_MASTER_SCL_IO;
-    conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
-    conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
-    i2c_param_config(port_num, &conf);
-    return i2c_driver_install(port_num, conf.mode,
-                              I2C_MASTER_RX_BUF_DISABLE,
-                              I2C_MASTER_TX_BUF_DISABLE, 0);
 }
 
 
