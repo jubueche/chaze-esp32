@@ -5,8 +5,6 @@
 #include "esp_log.h"
 #include "Configuration.h"
 
-static const char * TAG  = "Chaze-MS5837";
-
 class MS5837 {
 public:
 	static const float Pa;
@@ -20,7 +18,6 @@ public:
 
 	MS5837();
 
-	esp_err_t i2c_master_init_IDF(void);
 	void writeReg_IDF(uint8_t, uint8_t *, size_t);
 	void readReg_IDF(uint8_t, uint8_t *, size_t);
 	esp_err_t read(uint8_t *, size_t);
@@ -60,6 +57,7 @@ public:
 	float altitude();
 
 private:
+	const char * TAG  = "Chaze-MS5837";
 	uint16_t C[8];
 	uint32_t D1, D2;
 	int32_t TEMP;

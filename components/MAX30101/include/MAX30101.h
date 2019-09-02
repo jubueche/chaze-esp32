@@ -238,6 +238,9 @@ public:
 	uint32_t getIR(void);
 	uint32_t getRed(void);
 
+private:
+	const char * TAG = "Chaze-MAX30101";
+
 };
 
 #endif /* _MAX30101_H_ */

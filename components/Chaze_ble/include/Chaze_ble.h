@@ -30,6 +30,8 @@ public:
     void write(std::string);
     void write(uint8_t*,size_t);
     void advertise(void);
+private:
+    const char * TAG = "Chaze-Ble";
 };
 
 #endif

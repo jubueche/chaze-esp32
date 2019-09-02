@@ -59,7 +59,6 @@ typedef struct
     uint16_t mag_radius;
 } bno055_offsets_t;
 
-static const char * TAG = "Chaze-BNO055";
 
 class BNO055 : public Sensor
 {
@@ -372,6 +371,8 @@ public:
 
 private:
 
+    const char * TAG = "Chaze-BNO055";
+
     /* Acceleration Interrupt management methods */
     void setInterruptEnableAccelNM(uint8_t enable);
     void setInterruptMaskAccelNM(uint8_t enable);
@@ -388,7 +389,6 @@ private:
 	i2c_port_t port_num;
 	esp_err_t read(uint8_t * data_rd, size_t size);
 	esp_err_t write(uint8_t * data_wr, size_t size);
-	esp_err_t i2c_master_init_IDF(void);
 
     /* Set bitwise values in the registers */
     uint8_t sliceValueIntoRegister(uint8_t value, uint8_t reg, uint8_t mask, uint8_t position);

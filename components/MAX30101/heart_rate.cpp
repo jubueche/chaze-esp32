@@ -8,7 +8,6 @@
 
 #include "heart_rate.h"
 
-static const char * TAG = "Chaze-HeartRate";
 
 /**
  * @brief Constructor for heart rate class. Default settings apply when initializing this way.

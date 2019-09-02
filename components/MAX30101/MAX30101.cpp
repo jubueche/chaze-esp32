@@ -64,7 +64,6 @@
 #define SHUTDOWN 0x80 //B(10000000)
 #define RESUME	 0x00
 
-const char * TAG = "Chaze-MAX30101";
 
 /**
  * @brief Default constructor.

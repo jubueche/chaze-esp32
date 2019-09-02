@@ -53,6 +53,9 @@ public:
 	void lowPassButterworthFilter(float, butterworthFilter_t *);
 	int32_t get_heart_rate(void);
 
+private:
+	const char * TAG = "Chaze-HeartRate";
+
 };
 
 

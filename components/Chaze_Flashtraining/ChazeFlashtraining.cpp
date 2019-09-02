@@ -336,7 +336,7 @@ bool Flashtraining::_Check_or_Initialize() {
 	if (_STATE == 0 || _STATE == 5) {
 		if (_STATE == 0) {
 			
-			esp_err_t err = initialize_spi();
+			esp_err_t err = config.initialize_spi();
 
 			if (!myflash.begin(SPIFlash_CS)) return false;
 
