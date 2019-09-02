@@ -2,8 +2,6 @@
 
 ## Bluetooth connection
 
-Requirements:
-
 - **Battery:** The app should be able to query the battery level of the device. ```Input: b``` followed by ```Output: 0-100``` which is the percentage.
 
 - **Name:** User should be able to change the advertised name of the device. The name should not be too long and should not contain any characters apart from numbers and upper/lower case letters. Command to request a change of name: ```Input: n``` followed by the name, followed by ```-1```. Returns ```1``` if successful and ```0``` otherwise. Returns to menu.
@@ -32,7 +30,12 @@ Requirements:
 
 - **Write compressed chunk:** Function that receives a pointer to an array that is holding a variable amount of data. Second argument is the amount of data ```n```. Returns ```ESP_OK``` if successfully written to memory or any error otherwise. Signature: ```esp_err_t write_compressed_chunk(uint8_t *buf, uint32_t n)```.
 
-
+- **Store device meta data:** Functions in ```Configuration.cpp``` that make it possible to retrieve the following device meta data:
+    - Device ID
+    - Azure Connection String
+    - WiFi SSID
+    - WiFi password
+One example would be ```char * get_device_id(void)```, which will be used like this: ```char * d_id = config.get_device_id();```. This function will internally make a call to a function in the flash library, which returns the deviceID.
 
 ## TODO
 
