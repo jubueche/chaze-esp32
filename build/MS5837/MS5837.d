@@ -90,7 +90,55 @@ MS5837.o: /home/julian/Documents/chaze-esp32/components/MS5837/MS5837.cpp \
  /home/julian/esp/esp-idf/components/newlib/platform_include/time.h \
  /home/julian/esp/esp-idf/components/newlib/include/time.h \
  /home/julian/esp/esp-idf/components/newlib/include/machine/time.h \
- /home/julian/esp/esp-idf/components/newlib/include/math.h
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
+ /home/julian/esp/esp-idf/components/newlib/include/inttypes.h \
+ /home/julian/esp/esp-idf/components/newlib/include/string.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/esp/esp-idf/components/newlib/include/math.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h \
+ /home/julian/esp/esp-idf/components/freertos/include/freertos/event_groups.h \
+ /home/julian/esp/esp-idf/components/freertos/include/freertos/timers.h \
+ /home/julian/esp/esp-idf/components/freertos/include/freertos/task.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Print.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h \
+ /home/julian/esp/esp-idf/components/newlib/include/ctype.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/pgmspace.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Arduino.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp8266-compat.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/binary.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WCharacter.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Client.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Server.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Udp.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h
 
 /home/julian/Documents/chaze-esp32/components/MS5837/include/MS5837.h:
 
@@ -274,5 +322,101 @@ MS5837.o: /home/julian/Documents/chaze-esp32/components/MS5837/MS5837.cpp \
 
 /home/julian/esp/esp-idf/components/newlib/include/machine/time.h:
 
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/inttypes.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/string.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/string.h:
+
 /home/julian/esp/esp-idf/components/newlib/include/math.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h:
+
+/home/julian/esp/esp-idf/components/freertos/include/freertos/event_groups.h:
+
+/home/julian/esp/esp-idf/components/freertos/include/freertos/timers.h:
+
+/home/julian/esp/esp-idf/components/freertos/include/freertos/task.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Print.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/ctype.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/pgmspace.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Arduino.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp8266-compat.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/binary.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WCharacter.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Client.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Server.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Udp.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
 /home/julian/Documents/chaze-esp32/components/MS5837/./MS5837.cpp:

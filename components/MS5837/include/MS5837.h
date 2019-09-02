@@ -5,8 +5,6 @@
 #include "esp_log.h"
 #include "Configuration.h"
 
-static const char * TAG  = "Chaze-MS5837";
-
 class MS5837 {
 public:
 	static const float Pa;
@@ -59,6 +57,7 @@ public:
 	float altitude();
 
 private:
+	const char * TAG  = "Chaze-MS5837";
 	uint16_t C[8];
 	uint32_t D1, D2;
 	int32_t TEMP;

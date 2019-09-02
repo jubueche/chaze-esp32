@@ -70,7 +70,7 @@ bool BNO055::begin(bno055_opmode_t mode)
   // Enable I2C
 	port_num = I2C_NUM_1;
 
-	esp_err_t err = (i2c_master_init_IDF(port_num));
+	esp_err_t err = (config.i2c_master_init_IDF(port_num));
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to initialize I2C connection.");
 	}

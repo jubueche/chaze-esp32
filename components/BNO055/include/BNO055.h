@@ -59,7 +59,6 @@ typedef struct
     uint16_t mag_radius;
 } bno055_offsets_t;
 
-static const char * TAG = "Chaze-BNO055";
 
 class BNO055 : public Sensor
 {
@@ -371,6 +370,8 @@ public:
     void disableAnyMotion();
 
 private:
+
+    const char * TAG = "Chaze-BNO055";
 
     /* Acceleration Interrupt management methods */
     void setInterruptEnableAccelNM(uint8_t enable);

@@ -1,8 +1,19 @@
 /******************************************************************************
-Chaze_Realtime.h
+RV-3028-C7.h
+RV-3028-C7 Arduino Library
 Constantin Koch
 July 25, 2019
+https://github.com/constiko/RV-3028_C7-Arduino_Library
+
+Development environment specifics:
+Arduino IDE 1.8.9
+
+This code is released under the [MIT License](http://opensource.org/licenses/MIT).
+Please review the LICENSE.md file included with this example. If you have any questions
+or concerns with licensing, please contact constantinkoch@outlook.com.
+Distributed as-is; no warranty is given.
 ******************************************************************************/
+
 #include "Chaze_Realtime.h"
 
 //****************************************************************************//
@@ -53,15 +64,20 @@ BUILD_MONTH_OCT | BUILD_MONTH_NOV | BUILD_MONTH_DEC
 #define BUILD_SECOND_1 (__TIME__[7] - 0x30)
 #define BUILD_SECOND ((BUILD_SECOND_0 * 10) + BUILD_SECOND_1)
 
+RV3028 rtc;
 
 RV3028::RV3028(void)
 {
 
 }
 
-boolean RV3028::begin(i2c_port_t port)
+boolean RV3028::begin(TwoWire &wirePort)
 {
-	port_num = port;
+	//We require caller to begin their I2C port, with the speed of their choice
+	//external to the library
+	//_i2cPort->begin();
+	_i2cPort = &wirePort;
+
 	set24Hour(); delay(1);
 	disableTrickleCharge(); delay(1);
 
@@ -403,7 +419,7 @@ Set the alarm mode in the following way:
 4: When hours and minutes match (once per day)
 5: When hours match (once per day)
 6: When minutes match (once per hour)
-7: All disabled Default value
+7: All disabled � Default value
 If you want to set a weekday alarm (setWeekdayAlarm_not_Date = true), set 'date_or_weekday' from 0 (Sunday) to 6 (Saturday)
 ********************************/
 void RV3028::enableAlarmInterrupt(uint8_t min, uint8_t hour, uint8_t date_or_weekday, bool setWeekdayAlarm_not_Date, uint8_t mode)
@@ -542,101 +558,64 @@ uint8_t RV3028::DECtoBCD(uint8_t val)
 	return ((val / 10) * 0x10) + (val % 10);
 }
 
-/*
- * Added by J. Buechel
- */
-/**
- * @brief Write a package to the I2C bus.
- * @param data_wr Payload to write.
- * @param size Size of the payload.
- * @return
- */
-//! Note that this code snippet is repeated and can be included in Configuration.h
-esp_err_t RV3028::write(uint8_t * data_wr, size_t size){
-	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-	i2c_master_start(cmd);
-	i2c_master_write_byte(cmd, (RV3028_ADDR << 1) | WRITE_BIT, ACK_CHECK_EN);
-	i2c_master_write(cmd, data_wr, size, ACK_CHECK_EN);
-	i2c_master_stop(cmd);
-	esp_err_t err = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
-	i2c_cmd_link_delete(cmd);
-	return err;
+uint8_t RV3028::readRegister(uint8_t addr)
+{
+	_i2cPort->beginTransmission(RV3028_ADDR);
+	_i2cPort->write(addr);
+	_i2cPort->endTransmission();
+
+	_i2cPort->requestFrom(RV3028_ADDR, (uint8_t)1);
+	if (_i2cPort->available()) {
+		uint8_t zws = _i2cPort->read();
+
+		//clear status register when it was read
+		if (addr == RV3028_STATUS) writeRegister(addr, 0);
+
+		return zws;
+	}
+	else {
+		return (0xFF); //Error
+	}
 }
 
-/**
- * @brief Reads from the RV3028.
- * @param data_rd Pointer to array to be filled.
- * @param size Number of uint8_t's to read.
- * @return Error or ESP_OK.
- */
-esp_err_t RV3028::read(uint8_t * data_rd, size_t size){
-	if (size == 0) {
-	        return ESP_OK;
+bool RV3028::writeRegister(uint8_t addr, uint8_t val)
+{
+	_i2cPort->beginTransmission(RV3028_ADDR);
+	_i2cPort->write(addr);
+	_i2cPort->write(val);
+	if (_i2cPort->endTransmission() != 0)
+		return (false); //Error: Sensor did not ack
+	return(true);
+}
+
+bool RV3028::readMultipleRegisters(uint8_t addr, uint8_t * dest, uint8_t len)
+{
+	_i2cPort->beginTransmission(RV3028_ADDR);
+	_i2cPort->write(addr);
+	if (_i2cPort->endTransmission() != 0)
+		return (false); //Error: Sensor did not ack
+
+	_i2cPort->requestFrom(RV3028_ADDR, len);
+	for (uint8_t i = 0; i < len; i++)
+	{
+		dest[i] = _i2cPort->read();
 	}
-	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-	i2c_master_start(cmd);
-	i2c_master_write_byte(cmd, (RV3028_ADDR << 1) | READ_BIT, ACK_CHECK_EN);
-	if (size > 1) {
-		i2c_master_read(cmd, data_rd, size - 1, ACK_VAL);
-	}
-	i2c_master_read_byte(cmd, data_rd + size - 1, NACK_VAL);
-	i2c_master_stop(cmd);
-	esp_err_t ret = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
-	i2c_cmd_link_delete(cmd);
-	return ret;
+
+	return(true);
 }
 
 bool RV3028::writeMultipleRegisters(uint8_t addr, uint8_t * values, uint8_t len)
 {
-	uint8_t t[1+len];
-	for(int i=1;i<=len;i++)
-		t[i]=values[i];
-	esp_err_t err = write(t, 1+len); //Write reg+data -> 1+size
-	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to write to I2C.");
-		return false;
-	} else return true;
-
-}
-
-bool RV3028::writeRegister(uint8_t reg, uint8_t data){
-
-	uint8_t t[2];
-
-	t[0] = reg; //Jump to REG and write from there on. If we want to write only one register, data has only one entry.
-	t[1] = data;
-	esp_err_t err = write(t, 2); //Write reg+data -> 1+size
-	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to write to I2C.");
-		return false;
-	} else return true;
-}
-
-uint8_t RV3028::readRegister(uint8_t reg )
-{
-  uint8_t data[1];
-  if(readMultipleRegisters(reg, data, 1)){
-	  return data[0];
-  }else return 0;
-}
-
-bool RV3028::readMultipleRegisters(uint8_t reg, uint8_t * data, uint8_t size){
-	if(size < 1){
-		return true;
+	_i2cPort->beginTransmission(RV3028_ADDR);
+	_i2cPort->write(addr);
+	for (uint8_t i = 0; i < len; i++)
+	{
+		_i2cPort->write(values[i]);
 	}
-	uint8_t t[1] = {reg};
-	esp_err_t err = write(t, 1);
-	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to write to I2C");
-		return false;
-	}
-	vTaskDelay(30 / portTICK_RATE_MS);
-	err = read(data,size);
-	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to read from I2C");
-		return false;
 
-	} else return true;
+	if (_i2cPort->endTransmission() != 0)
+		return (false); //Error: Sensor did not ack
+	return(true);
 }
 
 bool RV3028::writeConfigEEPROM_RAMmirror(uint8_t eepromaddr, uint8_t val)

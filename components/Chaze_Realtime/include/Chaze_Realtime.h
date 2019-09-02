@@ -1,11 +1,53 @@
 /******************************************************************************
-Chaze_Realtime.h
+RV-3028-C7.h
+RV-3028-C7 Arduino Library
 Constantin Koch
 July 25, 2019
+https://github.com/constiko/RV-3028_C7-Arduino_Library
 
 Resources:
 Uses Wire.h for I2C operation
+
+Development environment specifics:
+Arduino IDE 1.8.9
+
+This code is released under the [MIT License](http://opensource.org/licenses/MIT).
+Please review the LICENSE.md file included with this example. If you have any questions
+or concerns with licensing, please contact constantinkoch@outlook.com.
+Distributed as-is; no warranty is given.
 ******************************************************************************/
+
+/* Working main.cpp file
+
+#include "stdlib.h"
+#include "stdio.h"
+#include "string.h"
+
+#include "esp_log.h"
+#include "Configuration.h"
+
+extern "C" void app_main()
+{
+	config.turn_on_main_circuit();
+
+	config.initialize_rtc();
+
+	if (rtc.updateTime() == false) //Updates the time variables from RTC
+  	{
+    	printf("RTC failed to update\n");
+  	} else {
+    	char * currentTime = rtc.stringTimeStamp();
+		printf("Current time: %s\n", currentTime);
+  }
+
+  while(1){
+	  vTaskDelay(1000);
+  }
+
+}
+
+*/
+
 
 #pragma once
 
@@ -15,8 +57,8 @@ Uses Wire.h for I2C operation
 #include "WProgram.h"
 #endif
 
-#include "driver/i2c.h"
-#include "Configuration.h"
+#include <Wire.h>
+
 
 
 //The 7-bit I2C ADDRESS of the RV3028
@@ -167,10 +209,9 @@ class RV3028
 {
 public:
 
-	const char * TAG = "Realtime";
 	RV3028(void);
 
-	boolean begin(i2c_port_t);
+	boolean begin(TwoWire &wirePort = Wire);
 
 	bool setTime(uint8_t sec, uint8_t min, uint8_t hour, uint8_t weekday, uint8_t date, uint8_t month, uint16_t year);
 	bool setTime(uint8_t * time, uint8_t len);
@@ -228,17 +269,18 @@ public:
 	bool writeRegister(uint8_t addr, uint8_t val);
 	bool readMultipleRegisters(uint8_t addr, uint8_t * dest, uint8_t len);
 	bool writeMultipleRegisters(uint8_t addr, uint8_t * values, uint8_t len);
-	esp_err_t write(uint8_t *, size_t );
-	esp_err_t read(uint8_t *, size_t);
 
 	bool writeConfigEEPROM_RAMmirror(uint8_t eepromaddr, uint8_t val);
 	uint8_t readConfigEEPROM_RAMmirror(uint8_t eepromaddr);
 	bool waitforEEPROM();
 
 private:	
-	i2c_port_t port_num;
+	const char * TAG = "Chaze-RTC";
 	uint8_t _time[TIME_ARRAY_LENGTH];
+	TwoWire *_i2cPort;
 };
+
+extern RV3028 rtc;
 
 //POSSIBLE ENHANCEMENTS :
 //ENHANCEMENT: Countdown Timer / Countdown Interrupt

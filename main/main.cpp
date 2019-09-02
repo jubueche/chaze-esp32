@@ -1,12 +1,9 @@
 
-
-/*
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "stdlib.h"
 #include "stdio.h"
 
-#include <stdio.h>
 #include <string.h>
 
 extern "C" {
@@ -85,7 +82,7 @@ extern "C" void app_main()
 {
 
 
-	turn_on_main_circuit();
+	config.turn_on_main_circuit();
 	xSemaphore = xSemaphoreCreateMutex();
 
 	//Create a training struct of type wrapper
@@ -120,44 +117,3 @@ extern "C" void app_main()
 
 }
 
-*/
-
-/*
-#include "ChazeFlashtraining.h"
-#include "Configuration.h"
-
-extern "C" void app_main()
-{
-
-	turn_on_main_circuit();
-
-	Flashtraining ft = Flashtraining();
-	printf("Start new training successful?: %d\n",ft.start_new_training());
-
-	int i =0;
-	while(i < 100){
-		ft.write_training_cycle_IMU(10000, 0.23, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55);
-		vTaskDelay(100 / portTICK_PERIOD_MS);
-		//ft.please_call_every_loop();
-		//printf("Iteration: is %d\n", i);
-		i++;
-	}
-	ft.stop_training();
-
-	ft.start_reading_data();
-
-	uint8_t buf[512];
-	ft.get_all_data_bufferwise(buf);
-
-	for(int i=0; i<512;i=i+4){
-		//printf("Data is %d\n", buf[i]);
-		long l_regenerated = 16777216 * buf[i+0] + 65536 * buf[i+1] + 256 * buf[i+2] + buf[i+3];
-  		float floaty_regenerated = *(float*) &l_regenerated;
-		printf("Regen.: %f\n", floaty_regenerated);
-	}
-
-	while(1) {
-		vTaskDelay(100 / portTICK_PERIOD_MS);
-	}
-
-}*/

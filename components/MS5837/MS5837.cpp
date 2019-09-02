@@ -51,7 +51,7 @@ bool MS5837::init() {
 	// Reset the MS5837, per datasheet
 	port_num = I2C_NUM_0;
 
-	esp_err_t err = (i2c_master_init_IDF(port_num));
+	esp_err_t err = (config.i2c_master_init_IDF(port_num));
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to initialize I2C connection.");
 	}
