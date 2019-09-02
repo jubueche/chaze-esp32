@@ -4,87 +4,111 @@ Configuration.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal._Z41__static_initialization_and_destruction_0ii 0000000c  00000000  00000000  00000034  2**2
+  0 .literal._Z41__static_initialization_and_destruction_0ii 00000014  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal._ZN13Configuration14initialize_rtcEv 00000020  00000000  00000000  00000040  2**2
+  1 .literal._ZN13Configuration14attach_bno_intEPFvPvES2_ 00000034  00000000  00000000  00000048  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal._ZN13Configuration14initialize_spiEv 00000018  00000000  00000000  00000060  2**2
+  2 .literal._ZN13Configuration14detach_bno_intEv 00000004  00000000  00000000  0000007c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal._ZN13Configuration20turn_on_main_circuitEv 00000010  00000000  00000000  00000078  2**2
+  3 .literal._ZN13Configuration14initialize_vibEv 00000018  00000000  00000000  00000080  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal._ZN13Configuration19i2c_master_init_IDFE10i2c_port_t 0000000c  00000000  00000000  00000088  2**2
+  4 .literal._ZN13Configuration22vibration_signal_sleepEv 00000030  00000000  00000000  00000098  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal._ZN13Configuration28i2c_master_driver_initializeEv 0000000c  00000000  00000000  00000094  2**2
+  5 .literal._ZN13Configuration14initialize_rtcEv 00000020  00000000  00000000  000000c8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal._ZN13Configuration16do_i2cdetect_cmdEv 0000005c  00000000  00000000  000000a0  2**2
+  6 .literal._ZN13Configuration14initialize_spiEv 00000018  00000000  00000000  000000e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal._GLOBAL__sub_I_config 00000008  00000000  00000000  000000fc  2**2
+  7 .literal._ZN13Configuration21turn_off_main_circuitEv 00000010  00000000  00000000  00000100  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal._GLOBAL__sub_D_config 00000008  00000000  00000000  00000104  2**2
+  8 .literal._ZN13Configuration20turn_on_main_circuitEv 00000010  00000000  00000000  00000110  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .text         00000000  00000000  00000000  0000010c  2**0
+  9 .literal._ZN13Configuration19i2c_master_init_IDFE10i2c_port_t 0000000c  00000000  00000000  00000120  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 10 .literal._ZN13Configuration28i2c_master_driver_initializeEv 0000000c  00000000  00000000  0000012c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 11 .literal._ZN13Configuration16do_i2cdetect_cmdEv 0000005c  00000000  00000000  00000138  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 12 .literal._GLOBAL__sub_I_config 00000008  00000000  00000000  00000194  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 13 .literal._GLOBAL__sub_D_config 00000008  00000000  00000000  0000019c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 14 .text         00000000  00000000  00000000  000001a4  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 10 .data         00000000  00000000  00000000  0000010c  2**0
+ 15 .data         00000000  00000000  00000000  000001a4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 11 .bss          00000000  00000000  00000000  0000010c  2**0
+ 16 .bss          00000000  00000000  00000000  000001a4  2**0
                   ALLOC
- 12 .text._Z41__static_initialization_and_destruction_0ii 0000001f  00000000  00000000  0000010c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .rodata._ZN13Configuration14initialize_rtcEv.str1.4 00000034  00000000  00000000  0000012c  2**2
+ 17 .rodata._Z41__static_initialization_and_destruction_0ii.str1.4 0000000e  00000000  00000000  000001a4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 14 .text._ZN13Configuration14initialize_rtcEv 00000045  00000000  00000000  00000160  2**2
+ 18 .text._Z41__static_initialization_and_destruction_0ii 00000027  00000000  00000000  000001b4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .text._ZN13Configuration14initialize_spiEv 00000046  00000000  00000000  000001a8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .text._ZN13Configuration20turn_on_main_circuitEv 00000032  00000000  00000000  000001f0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .text._ZN13Configuration19i2c_master_init_IDFE10i2c_port_t 00000036  00000000  00000000  00000224  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .rodata       00000018  00000000  00000000  0000025c  2**2
+ 19 .rodata._ZN13Configuration14attach_bno_intEPFvPvES2_.str1.4 0000004d  00000000  00000000  000001dc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 19 .text._ZN13Configuration28i2c_master_driver_initializeEv 0000001e  00000000  00000000  00000274  2**2
+ 20 .text._ZN13Configuration14attach_bno_intEPFvPvES2_ 0000007b  00000000  00000000  0000022c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .rodata._ZN13Configuration16do_i2cdetect_cmdEv.str1.4 00000052  00000000  00000000  00000294  2**2
+ 21 .text._ZN13Configuration14detach_bno_intEv 0000000e  00000000  00000000  000002a8  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 22 .rodata._ZN13Configuration14initialize_vibEv.str1.4 0000000d  00000000  00000000  000002b8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 21 .text._ZN13Configuration16do_i2cdetect_cmdEv 000000ec  00000000  00000000  000002e8  2**2
+ 23 .text._ZN13Configuration14initialize_vibEv 00000037  00000000  00000000  000002c8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .text._GLOBAL__sub_I_config 00000010  00000000  00000000  000003d4  2**2
+ 24 .text._ZN13Configuration22vibration_signal_sleepEv 00000078  00000000  00000000  00000300  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .ctors        00000004  00000000  00000000  000003e4  2**2
+ 25 .rodata._ZN13Configuration14initialize_rtcEv.str1.4 00000034  00000000  00000000  00000378  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 26 .text._ZN13Configuration14initialize_rtcEv 00000045  00000000  00000000  000003ac  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 27 .text._ZN13Configuration14initialize_spiEv 00000046  00000000  00000000  000003f4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 28 .text._ZN13Configuration21turn_off_main_circuitEv 00000030  00000000  00000000  0000043c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 29 .text._ZN13Configuration20turn_on_main_circuitEv 00000032  00000000  00000000  0000046c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 30 .text._ZN13Configuration19i2c_master_init_IDFE10i2c_port_t 00000036  00000000  00000000  000004a0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 31 .rodata       00000018  00000000  00000000  000004d8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 32 .text._ZN13Configuration28i2c_master_driver_initializeEv 0000001e  00000000  00000000  000004f0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 33 .rodata._ZN13Configuration16do_i2cdetect_cmdEv.str1.4 00000052  00000000  00000000  00000510  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 34 .text._ZN13Configuration16do_i2cdetect_cmdEv 000000ec  00000000  00000000  00000564  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 35 .text._GLOBAL__sub_I_config 00000010  00000000  00000000  00000650  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 36 .ctors        00000004  00000000  00000000  00000660  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 24 .text._GLOBAL__sub_D_config 00000010  00000000  00000000  000003e8  2**2
+ 37 .text._GLOBAL__sub_D_config 00000010  00000000  00000000  00000664  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .dtors        00000004  00000000  00000000  000003f8  2**2
+ 38 .dtors        00000004  00000000  00000000  00000674  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 26 .rodata.str1.4 0000000e  00000000  00000000  000003fc  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 27 .data.config  00000004  00000000  00000000  0000040c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, DATA
- 28 .bss._ZL11INADDR_NONE 00000008  00000000  00000000  00000410  2**2
+ 39 .bss.config   0000000c  00000000  00000000  00000678  2**2
                   ALLOC
- 29 .debug_frame  000000e8  00000000  00000000  00000410  2**2
+ 40 .bss._ZL11INADDR_NONE 00000008  00000000  00000000  00000678  2**2
+                  ALLOC
+ 41 .debug_frame  00000160  00000000  00000000  00000678  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 30 .eh_frame     000000a0  00000000  00000000  000004f8  2**2
+ 42 .eh_frame     00000118  00000000  00000000  000007d8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
- 31 .debug_info   000050a7  00000000  00000000  00000598  2**0
+ 43 .debug_info   000056fb  00000000  00000000  000008f0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 32 .debug_abbrev 00000828  00000000  00000000  0000563f  2**0
+ 44 .debug_abbrev 000008d1  00000000  00000000  00005feb  2**0
                   CONTENTS, READONLY, DEBUGGING
- 33 .debug_loc    000001c2  00000000  00000000  00005e67  2**0
+ 45 .debug_loc    0000035c  00000000  00000000  000068bc  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 34 .debug_aranges 00000060  00000000  00000000  00006029  2**0
+ 46 .debug_aranges 00000088  00000000  00000000  00006c18  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 35 .debug_ranges 00000050  00000000  00000000  00006089  2**0
+ 47 .debug_ranges 00000078  00000000  00000000  00006ca0  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 36 .debug_line   00000e76  00000000  00000000  000060d9  2**0
+ 48 .debug_line   000012bb  00000000  00000000  00006d18  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 37 .debug_str    00003ff4  00000000  00000000  00006f4f  2**0
+ 49 .debug_str    0000428d  00000000  00000000  00007fd3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 38 .comment      00000028  00000000  00000000  0000af43  2**0
+ 50 .comment      00000028  00000000  00000000  0000c260  2**0
                   CONTENTS, READONLY
- 39 .xtensa.info  00000038  00000000  00000000  0000af6b  2**0
+ 51 .xtensa.info  00000038  00000000  00000000  0000c288  2**0
                   CONTENTS, READONLY
- 40 .xt.lit       00000048  00000000  00000000  0000afa3  2**0
+ 52 .xt.lit       00000070  00000000  00000000  0000c2c0  2**0
                   CONTENTS, RELOC, READONLY
- 41 .xt.prop      00000270  00000000  00000000  0000afeb  2**0
+ 53 .xt.prop      0000036c  00000000  00000000  0000c330  2**0
                   CONTENTS, RELOC, READONLY

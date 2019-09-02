@@ -3,6 +3,72 @@
 
 Configuration config;
 
+void Configuration::attach_bno_int( void (*handlerTask)(void *), void (*gpio_isr_handler)(void *) )
+{
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_POSEDGE;
+    io_conf.mode = GPIO_MODE_INPUT;
+    io_conf.pin_bit_mask = GPIO_BNO_INT_MASK;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    esp_err_t err = gpio_config(&io_conf);
+    if(err != ESP_OK) {
+        ESP_LOGE(TAG, "Error setting GPIO config.");
+    }
+
+    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+    //start gpio task
+    xTaskCreate(*handlerTask, "BNO055-interrupt handler", 2048, NULL, 10, NULL);
+
+    //install gpio isr service
+    gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
+    //hook isr handler for specific gpio pin
+    gpio_isr_handler_add(GPIO_BNO_INT, *gpio_isr_handler, (void*) GPIO_BNO_INT);
+
+        
+}
+
+void Configuration::detach_bno_int()
+{
+    gpio_isr_handler_remove(GPIO_BNO_INT);
+}
+
+esp_err_t Configuration::initialize_vib(void)
+{
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = GPIO_VIB_MASK;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    esp_err_t err =  gpio_config(&io_conf);
+    printf("Done initing\n");
+    vTaskDelay(100);
+    return err;
+}
+
+esp_err_t Configuration::vibration_signal_sleep(void)
+{
+    esp_err_t err = initialize_vib();
+
+    if(err != ESP_OK)
+        return err;
+    
+    gpio_set_level(GPIO_VIB, 1);
+    vTaskDelay(400 / portTICK_PERIOD_MS);
+    gpio_set_level(GPIO_VIB, 0);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    gpio_set_level(GPIO_VIB, 1);
+    vTaskDelay(300 / portTICK_PERIOD_MS);
+    gpio_set_level(GPIO_VIB, 0);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+    gpio_set_level(GPIO_VIB, 1);
+    vTaskDelay(200 / portTICK_PERIOD_MS);
+    gpio_set_level(GPIO_VIB, 0);
+
+    return err;
+}
+
 esp_err_t Configuration::initialize_rtc(void)
 {
     Wire.begin(I2C_MASTER_SDA_IO,I2C_MASTER_SCL_IO,I2C_MASTER_FREQ_HZ);
@@ -31,16 +97,29 @@ esp_err_t Configuration::initialize_spi(void)
   return err;
 }
 
+esp_err_t Configuration::turn_off_main_circuit(void)
+{
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = GPIO_OUTPUT_MC;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    gpio_config(&io_conf);
+
+	esp_err_t err = gpio_set_level(GPIO_NUM_26,0);
+	return err;
+}
 
 esp_err_t Configuration::turn_on_main_circuit(void)
 {
-	gpio_config_t io_conf;
-  io_conf.intr_type = GPIO_INTR_DISABLE;
-  io_conf.mode = GPIO_MODE_OUTPUT;
-  io_conf.pin_bit_mask = GPIO_OUTPUT_MC;
-  io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
-  io_conf.pull_up_en = GPIO_PULLUP_ENABLE;
-  gpio_config(&io_conf);
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = GPIO_OUTPUT_MC;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_ENABLE;
+    gpio_config(&io_conf);
 
 	esp_err_t err = gpio_set_level(GPIO_NUM_26,1);
 	return err;

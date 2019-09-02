@@ -36,7 +36,7 @@ void sample_hr(void * pvParams)
 		//Try to aquire the mutex for a given amount of time then back-off
 		//For real life, need priorites in low sample rate sensors, random back-off time etc.
 
-		buffer_t * curr_buff = buffers[buff_idx];
+		buffer_t * curr_buff = buffers[buff_idx];ADVERTISING
 
 		if(xSemaphore != NULL)
 		{

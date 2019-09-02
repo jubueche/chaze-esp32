@@ -5,13 +5,23 @@
 #include "driver/i2c.h"
 #include "Wire.h"
 #include "Chaze_Realtime.h"
+#include "freertos/queue.h"
+
 
 /*
  * Section: GPIO
  */
 
+// Main circuit
 #define GPIO_MAIN_CIRCUIT 26
 #define GPIO_OUTPUT_MC  (1ULL<<GPIO_MAIN_CIRCUIT)
+// Vibration motor
+#define GPIO_VIB GPIO_NUM_25
+#define GPIO_VIB_MASK (1ULL<<25)
+//BNO055 interrupt
+#define GPIO_BNO_INT GPIO_NUM_36
+#define GPIO_BNO_INT_NUM 36
+#define GPIO_BNO_INT_MASK (1ULL<<GPIO_BNO_INT_NUM)
 
 /*
  * Section SPI
@@ -41,14 +51,44 @@
 #define I2C_MASTER_TX_BUF_DISABLE 0
 #define I2C_MASTER_RX_BUF_DISABLE 0
 
+/*
+ * Section: General settings.
+ */
+#define TIMEOUT_AFTER_ACK 3000 /*3.0s*/
+#define TIMEOUT_AFTER_SEND 20000
+#define TIMEOUT_AFTER_ADVERTISING 30000
+#define TIMEOUT_BUTTON_PUSHED_TO_SLEEP 1200
+#define TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING 1200
+#define LED_RED_TIMEOUT 5000
+#define LED_BLUE_TIMEOUT 1000
+
+#define NO_MOTION_DURATION 50
+#define NO_MOTION_THRESHOLD 5
+#define ANY_MOTION_THRESHOLD 244
+#define ANY_MOTION_DURATION 10
+
+/*
+ * Main state machine variables.
+ */
+enum {DEEPSLEEP, RECORD, ADVERTISING, CONNECTED, CONNECTED_WIFI, CONNECTED_BLE};
+
+
 class Configuration {
   public:
+    void attach_bno_int(void (*)(void *), void (*)(void *));
+    void detach_bno_int(void);
     esp_err_t initialize_spi(void);
     esp_err_t turn_on_main_circuit(void);
+    esp_err_t turn_off_main_circuit(void);
     esp_err_t i2c_master_init_IDF(i2c_port_t port_num);
     esp_err_t i2c_master_driver_initialize(void);
     int do_i2cdetect_cmd(void);
     esp_err_t initialize_rtc(void);
+    esp_err_t vibration_signal_sleep(void);
+    esp_err_t initialize_vib(void);
+    volatile uint8_t STATE;
+    // Queue used to handle interrupts
+    xQueueHandle gpio_evt_queue;
   private:
     const char * TAG = "Configuration";
 };
