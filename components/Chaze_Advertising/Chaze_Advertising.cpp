@@ -16,7 +16,6 @@ void gpio_bno_task(void* arg)
     uint32_t io_num;
     for(;;) {
         if(xQueueReceive(config.gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            uint8_t level = gpio_get_level((gpio_num_t) io_num);
             am_interrupt = true;
         }
     }
@@ -38,9 +37,9 @@ void advertise()
             printf("Interrupt.\n");
             am_interrupt = false;
             bno_adv.resetInterrupts();
-            //gpio_reset_pin(GPIO_BNO_INT);
-            //config.STATE = RECORD;
-            //break;
+            gpio_reset_pin(GPIO_BNO_INT);
+            config.STATE = RECORD;
+            break;
         }
     }
 

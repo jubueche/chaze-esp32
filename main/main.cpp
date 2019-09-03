@@ -1,15 +1,14 @@
-#include "Configuration.h"
 #include "Chaze_Record.h"
 #include "Chaze_Advertising.h"
 
-const char * TAG = "Chaze-Main";
+const char * TAG_MAIN = "Chaze-Main";
 
 extern "C" void app_main()
 {
 	config.turn_on_main_circuit();
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	//! Change to ADVERTISING
-	config.STATE = ADVERTISING;
+	config.STATE = RECORD;
 
 	while(1)
 	{
@@ -17,7 +16,7 @@ extern "C" void app_main()
 		switch(config.STATE) {
 		case DEEPSLEEP:
 			{
-				ESP_LOGI(TAG, "Entering deep sleep now.");
+				ESP_LOGI(TAG_MAIN, "Entering deep sleep now.");
 				config.vibration_signal_sleep();
 				config.turn_off_main_circuit();
 				vTaskDelay(3000 / portTICK_PERIOD_MS); //Wait for capacitor to discharge.
@@ -25,19 +24,19 @@ extern "C" void app_main()
 			}
 		case ADVERTISING:
 			{
-				ESP_LOGI(TAG, "Advertising...");
+				ESP_LOGI(TAG_MAIN, "Advertising...");
 				advertise();
-				
 				break;
 			}
 		case RECORD:
 			{
-				printf("Recoring...\n");
+				ESP_LOGI(TAG_MAIN, "Recording...");
+				record();
 				break;
 			}
 		case CONNECTED:
 			{
-				printf("Recoring...\n");
+				ESP_LOGI(TAG_MAIN, "Connected...");
 				break;
 			}
 		default:

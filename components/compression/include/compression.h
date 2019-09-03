@@ -17,7 +17,7 @@ typedef struct {
 	uint8_t * data;
 }buffer_t;
 
-buffer_t * buffers[2];
+static buffer_t * buffers[2];
 
 void compress_and_save(FlashtrainingWrapper_t *, uint8_t);
 void write_data_to_flash(FlashtrainingWrapper_t *, uint8_t *, uint32_t);

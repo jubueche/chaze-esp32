@@ -1,6 +1,7 @@
 #include "Chaze_Record.h"
 
-const char * TAG = "Chaze Record";
+
+const char * TAG_RECORD = "Chaze Record";
 
 //! Check exits (quick return statements and free objects there)
 
@@ -20,7 +21,7 @@ void sample_hr(void * pvParams)
 			//uint32_t heart_rate = hr.get_heart_rate();
 			uint32_t heart_rate = 170; // Simulate slow heart rate sampling
 			vTaskDelay(8000 / portTICK_PERIOD_MS);
-			ESP_LOGI(TAG, "Heart rate sampled.");
+			ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
 
 			// Get time of sample
 			unsigned long sample_time = millis();
@@ -28,8 +29,8 @@ void sample_hr(void * pvParams)
 			// Populate uint8_t array.
 			uint8_t bytes[9] = {};
 			config.populate_heart_rate(bytes, heart_rate, sample_time);
-
-			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes));
+			char const * name = "HR";
+			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
 
 			vTaskDelay(100 / portTICK_PERIOD_MS); //Back off a little longer
 		}
@@ -54,10 +55,11 @@ void sample_pressure(void * pvParams)
 			float value = pressure.pressure();
 			// Get time of sample
 			unsigned long sample_time = millis();
+			ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
 			uint8_t bytes[9] = {};
 			config.populate_pressure(bytes, value, sample_time);
-
-			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes));
+			char const * name = "Pressure";
+			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
 			
 			vTaskDelay(100 / portTICK_PERIOD_MS); //Back off a little longer
 		}
@@ -85,11 +87,13 @@ void sample_bno(void * pvParams)
 			for(int i=0;i<7;i++){
 				values[i] = (float) values_d[i];
 			}
+			ESP_LOGI(TAG_RECORD, "BNO: Time: %lu  AccX: %f, AccY: %f, AccZ: %f, QuatW: %f, QuatY: %f, QuatX: %f, QuatZ: %f, ", sample_time, values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
 			std::copy(values_d, values_d+7, values);
 			uint8_t bytes[33] = {};
 			config.populate_bno(bytes, values, sample_time);
 
-			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes));
+			char const * name = "BNO055";
+			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
 			
 			vTaskDelay(100 / portTICK_PERIOD_MS); //Back off a little longer
 		}
@@ -106,7 +110,7 @@ void record()
 	// Start a new training
 	if(!FlashtrainingWrapper_start_new_training(ft))
 	{
-		ESP_LOGE(TAG, "Error creating training.");
+		ESP_LOGE(TAG_RECORD, "Error creating training.");
 		config.STATE = DEEPSLEEP;
 		return;
 	}
@@ -127,7 +131,7 @@ void record()
 	if(setup_bno(ft) == ESP_OK){
 		if(setup_pressure() == ESP_OK){
 			setup_hr();
-			ESP_LOGI(TAG, "Setup complete.");
+			ESP_LOGI(TAG_RECORD, "Setup complete.");
 		} else {
 			return;
 		}
@@ -143,7 +147,7 @@ void record()
 	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 8, ft, 10, &bno_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 8, ft, 8, &pressure_task_handle);
 	if(!success){
-		ESP_LOGE(TAG, "Failed to create tasks. Going to sleep.");
+		ESP_LOGE(TAG_RECORD, "Failed to create tasks. Going to sleep.");
 		config.STATE = DEEPSLEEP;
 		return;
 	}
@@ -172,7 +176,7 @@ esp_err_t setup_pressure()
 	if(!pressure.init())
 	{
 		config.STATE = DEEPSLEEP;
-		ESP_LOGE(TAG, "Error initializing pressure.");
+		ESP_LOGE(TAG_RECORD, "Error initializing pressure.");
 		return ESP_FAIL;
 	}
 	pressure.setModel(MS5837::MS5837_30BA);
@@ -187,7 +191,7 @@ esp_err_t setup_bno(FlashtrainingWrapper_t * ft)
 	bno = BNO055();
 	if(!bno.begin()){
 		config.STATE = DEEPSLEEP;
-		ESP_LOGE(TAG, "Error starting BNO055.");
+		ESP_LOGE(TAG_RECORD, "Error starting BNO055.");
 		return ESP_FAIL;
 	}
 
@@ -203,32 +207,32 @@ esp_err_t setup_bno(FlashtrainingWrapper_t * ft)
 }
 
 
-void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, uint8_t length, FlashtrainingWrapper_t *ft)
+void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, FlashtrainingWrapper_t *ft, uint8_t length, char const * name)
 {
 	if(xSemaphoreTake(sensor_semaphore,(TickType_t) 100) == pdTRUE)
 	{
-		ESP_LOGI(TAG, "Acquired the lock");
+		ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
 		if(BUFFER_SIZE-curr_buff->counter >= length){
-			ESP_LOGI(TAG, "Enough space to write");
+			ESP_LOGI(TAG_RECORD, "Enough space to write");
 			//Enough space, we can write
 			memcpy(curr_buff->data+(curr_buff->counter), bytes, length);
 			curr_buff->counter += length;
 		} else{
 			//Fill up the buffer with 'f' and set the buff_idx to buff_idx XOR 1
-			ESP_LOGI(TAG, "Buffer almost full, fill up");
+			ESP_LOGI(TAG_RECORD, "Buffer almost full, fill up");
 			for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
 				curr_buff->data[i] = 'f';
 			curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
-			ESP_LOGI(TAG, "Counter is %d", curr_buff->counter);
+			ESP_LOGI(TAG_RECORD, "Counter is %d", curr_buff->counter);
 
 			if(buff_idx==0)
 				buff_idx=1;
 			else buff_idx=0;
 
-			ESP_LOGI(TAG, "Call compress");
+			ESP_LOGI(TAG_RECORD, "Call compress");
 			//Call compress. Switch the bit back since we want to compress the buffer that is full
 			if(ft == NULL){
-				ESP_LOGE(TAG, "FlashtrainingWrapper is NULL");
+				ESP_LOGE(TAG_RECORD, "FlashtrainingWrapper is NULL");
 				xSemaphoreGive(sensor_semaphore);
 			} else {
 				printf("State is %d\n", FlashtrainingWrapper_get_STATE(ft));
@@ -237,7 +241,7 @@ void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, uint
 			}
 		}
 
-		ESP_LOGI(TAG, "Release mutex");
+		ESP_LOGI(TAG_RECORD, "Release mutex");
 		//Release mutex
 		xSemaphoreGive(sensor_semaphore);
 

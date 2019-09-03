@@ -3,7 +3,6 @@
 
 #include "Configuration.h"
 #include "esp_log.h"
-#include "compression.h"
 #include "heart_rate.h"
 #include "BNO055.h"
 #include "MAX30101.h"
@@ -38,7 +37,7 @@ void setup_hr(void);
 esp_err_t setup_bno(FlashtrainingWrapper_t *ft);
 esp_err_t setup_pressure(void);
 
-void aquire_lock_and_write_to_buffer(buffer_t *, uint8_t *, FlashtrainingWrapper_t *, uint8_t);
+void aquire_lock_and_write_to_buffer(buffer_t *, uint8_t *, FlashtrainingWrapper_t *, uint8_t, char const *);
 
 //Tasks
 void sample_hr(void *);
