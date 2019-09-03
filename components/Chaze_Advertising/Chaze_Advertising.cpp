@@ -37,9 +37,10 @@ void advertise()
         if(am_interrupt){
             printf("Interrupt.\n");
             am_interrupt = false;
-            gpio_reset_pin(GPIO_BNO_INT);
-            config.STATE = RECORD;
-            break;
+            bno_adv.resetInterrupts();
+            //gpio_reset_pin(GPIO_BNO_INT);
+            //config.STATE = RECORD;
+            //break;
         }
     }
 

@@ -38,6 +38,7 @@ class HeartRate {
 public:
 	HeartRate(uint8_t); //Constructor
 	HeartRate(uint8_t, maxim_config_t *);
+	HeartRate();
 
 	uint8_t sampling_time; //in sec
 	MAX30101 max30101;

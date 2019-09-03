@@ -3,6 +3,57 @@
 
 Configuration config;
 
+void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned long sample_time)
+{
+    long tmp = *(long*)&pressure;
+
+    bytes[0] = 5;
+    bytes[1] = sample_time >> 24;
+    bytes[2] = sample_time >> 16;
+    bytes[3] = sample_time >> 8;
+    bytes[4] = sample_time;
+    
+    bytes[6] = tmp >> 24;
+    bytes[7] = tmp >> 16;
+    bytes[8] = tmp >> 8;
+    bytes[9] = tmp;
+}
+
+void Configuration::populate_heart_rate(uint8_t * bytes, uint32_t heart_rate, unsigned long sample_time)
+{
+    long tmp = *(long*)&heart_rate;
+
+    bytes[0] = 5;
+    bytes[1] = sample_time >> 24;
+    bytes[2] = sample_time >> 16;
+    bytes[3] = sample_time >> 8;
+    bytes[4] = sample_time;
+    
+    bytes[6] = tmp >> 24;
+    bytes[7] = tmp >> 16;
+    bytes[8] = tmp >> 8;
+    bytes[9] = tmp;
+}
+
+void Configuration::populate_bno(uint8_t * bytes, float * values, unsigned long sample_time)
+{
+    bytes[0] = 4;
+    bytes[1] = sample_time >> 24;
+    bytes[2] = sample_time >> 16;
+    bytes[3] = sample_time >> 8;
+    bytes[4] = sample_time;
+
+    for(int i=5;i<33;i=i+4)
+    {
+        long tmp = *(long*)&values[i];
+        bytes[i] = tmp >> 24;
+		bytes[i+1] = tmp >> 16;
+		bytes[i+2] = tmp >> 8;
+		bytes[i+3] = tmp;
+    }
+
+}
+
 void Configuration::attach_bno_int( void (*handlerTask)(void *), void (*gpio_isr_handler)(void *) )
 {
     gpio_config_t io_conf;

@@ -67,6 +67,13 @@
 #define ANY_MOTION_THRESHOLD 244
 #define ANY_MOTION_DURATION 10
 
+#define FLUID_DENSITY 970
+
+/*
+ * Offset in memory at which the 22 calibration offsets of the BNO are stored.
+ */
+#define SENSOR_CALIBRATION_OFFSET 20
+
 /*
  * Main state machine variables.
  */
@@ -75,6 +82,9 @@ enum {DEEPSLEEP, RECORD, ADVERTISING, CONNECTED, CONNECTED_WIFI, CONNECTED_BLE};
 
 class Configuration {
   public:
+    void populate_pressure(uint8_t *, float, unsigned long);
+    void populate_bno(uint8_t *, float *, unsigned long);
+    void populate_heart_rate(uint8_t *, uint32_t, unsigned long);
     void attach_bno_int(void (*)(void *), void (*)(void *));
     void detach_bno_int(void);
     esp_err_t initialize_spi(void);

@@ -9,7 +9,7 @@ extern "C" void app_main()
 	config.turn_on_main_circuit();
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	//! Change to ADVERTISING
-	config.STATE = RECORD;
+	config.STATE = ADVERTISING;
 
 	while(1)
 	{

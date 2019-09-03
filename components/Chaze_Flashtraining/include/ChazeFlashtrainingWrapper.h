@@ -19,7 +19,7 @@ bool FlashtrainingWrapper_write_compressed_chunk(FlashtrainingWrapper_t *, uint8
 bool FlashtrainingWrapper_start_new_training(FlashtrainingWrapper_t *);																							
 bool FlashtrainingWrapper_stop_training(FlashtrainingWrapper_t *);
 int FlashtrainingWrapper_get_STATE(FlashtrainingWrapper_t *);
-
+float FlashtrainingWrapper_readCalibration(FlashtrainingWrapper_t *, uint8_t);
 
 #ifdef __cplusplus
 }

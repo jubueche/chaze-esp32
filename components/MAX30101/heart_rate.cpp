@@ -10,6 +10,14 @@
 
 
 /**
+ * @brief Empty constructor for heart rate class.
+ */
+HeartRate::HeartRate(void)
+{ 
+	
+}
+
+/**
  * @brief Constructor for heart rate class. Default settings apply when initializing this way.
  * @param sample_time Length of the sampling window in seconds.
  */

@@ -141,13 +141,17 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/Chaze_Record/include/Chaze_Record.h \
  /home/julian/Documents/chaze-esp32/components/compression/include/compression.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h \
+ /home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h \
+ /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/BNO055.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/Sensor.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/imumaths.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/vector.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/matrix.h \
- /home/julian/Documents/chaze-esp32/components/BNO055/include/quaternion.h
+ /home/julian/Documents/chaze-esp32/components/BNO055/include/quaternion.h \
+ /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h \
+ /home/julian/Documents/chaze-esp32/components/MS5837/include/MS5837.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h
 
 /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h:
 
@@ -433,7 +437,9 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
 
-/home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h:
+/home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h:
+
+/home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h:
 
 /home/julian/Documents/chaze-esp32/components/BNO055/include/BNO055.h:
 
@@ -446,4 +452,10 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 /home/julian/Documents/chaze-esp32/components/BNO055/include/matrix.h:
 
 /home/julian/Documents/chaze-esp32/components/BNO055/include/quaternion.h:
+
+/home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h:
+
+/home/julian/Documents/chaze-esp32/components/MS5837/include/MS5837.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h:
 /home/julian/Documents/chaze-esp32/main/./main.cpp:

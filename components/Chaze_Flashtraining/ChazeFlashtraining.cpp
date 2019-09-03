@@ -5,7 +5,6 @@
 
 SPIFlash Flashtraining::myflash;
 
-
 //! Needs to be checked
 Flashtraining::Flashtraining()
 {
