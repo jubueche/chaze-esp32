@@ -3,6 +3,7 @@
 
 Configuration config;
 
+
 void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned long sample_time)
 {
     long tmp = *(long*)&pressure;
@@ -54,6 +55,29 @@ void Configuration::populate_bno(uint8_t * bytes, float * values, unsigned long 
 
 }
 
+void Configuration::attach_btn_int( void (*handlerTask)(void *), void (*gpio_isr_handler)(void *) )
+{
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_POSEDGE;
+    io_conf.mode = GPIO_MODE_INPUT;
+    io_conf.pin_bit_mask = GPIO_BUTTON_MASK;
+    io_conf.pull_down_en = GPIO_PULLDOWN_ENABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    esp_err_t err = gpio_config(&io_conf);
+    if(err != ESP_OK) {
+        ESP_LOGE(TAG, "Error setting GPIO config.");
+    }
+
+    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+    //start gpio task
+    xTaskCreate(*handlerTask, "Button-interrupt handler", 2048, NULL, 10, NULL);
+
+    //install gpio isr service
+    gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
+    //hook isr handler for specific gpio pin
+    gpio_isr_handler_add(GPIO_BUTTON, *gpio_isr_handler, (void*) GPIO_BUTTON);
+}
+
 void Configuration::attach_bno_int( void (*handlerTask)(void *), void (*gpio_isr_handler)(void *) )
 {
     gpio_config_t io_conf;
@@ -79,6 +103,11 @@ void Configuration::attach_bno_int( void (*handlerTask)(void *), void (*gpio_isr
         
 }
 
+void Configuration::detach_btn_int()
+{
+    gpio_isr_handler_remove(GPIO_BUTTON);
+}
+
 void Configuration::detach_bno_int()
 {
     gpio_isr_handler_remove(GPIO_BNO_INT);
@@ -93,8 +122,18 @@ esp_err_t Configuration::initialize_vib(void)
     io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
     esp_err_t err =  gpio_config(&io_conf);
-    printf("Done initing\n");
-    vTaskDelay(100);
+    return err;
+}
+
+esp_err_t Configuration::initialize_leds(void)
+{
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = GPIO_LED_MASK;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
+    esp_err_t err =  gpio_config(&io_conf);
     return err;
 }
 

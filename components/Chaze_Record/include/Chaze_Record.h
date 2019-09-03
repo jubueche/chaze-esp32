@@ -32,7 +32,11 @@ static HeartRate hr;
 static BNO055 bno;
 static volatile uint8_t buff_idx = 0;
 
+static volatile bool nm_interrupt;
+static volatile bool rising_interrupt;
+
 void setup_hr(void);
+void clean_up(void);
 esp_err_t setup_bno(FlashtrainingWrapper_t *ft);
 esp_err_t setup_pressure(void);
 

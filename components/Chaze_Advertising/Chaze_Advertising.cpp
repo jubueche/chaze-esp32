@@ -2,9 +2,9 @@
 #include "Configuration.h"
 #include "esp_log.h"
 
-//! Maybe convert to class? and create object globally or at beginning of main.cpp
 const char * TAG_Adv = "Chaze-Advertising";
 
+//! Maybe make reusable in config
 void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;

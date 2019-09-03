@@ -3,6 +3,7 @@
 
 const char * TAG_RECORD = "Chaze Record";
 
+// TODO Emergency training stop when eg buffer can not be written anymore
 //! Check exits (quick return statements and free objects there)
 
 void sample_hr(void * pvParams)
@@ -14,24 +15,28 @@ void sample_hr(void * pvParams)
 		//Try to aquire the mutex for a given amount of time then back-off
 		buffer_t * curr_buff = buffers[buff_idx];
 
-		
-		// Sample heart rate
-		//! Uncomment if heart rate sensor attached, need I2C mux?
-		//uint32_t heart_rate = hr.get_heart_rate();
-		uint32_t heart_rate = 170; // Simulate slow heart rate sampling
-		vTaskDelay(8000 / portTICK_PERIOD_MS);
-		ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
+		if(xSemaphoreTakeRecursive(config.i2c_semaphore, 20) == pdPASS)
+		{
+			// Sample heart rate
+			//! Uncomment if heart rate sensor attached, need I2C mux?
+			//uint32_t heart_rate = hr.get_heart_rate();
+			uint32_t heart_rate = 170;
+			//ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
+			vTaskDelay(20);
 
-		// Get time of sample
-		unsigned long sample_time = millis();
+			// Get time of sample
+			unsigned long sample_time = millis();
 
-		// Populate uint8_t array.
-		uint8_t bytes[9] = {};
-		config.populate_heart_rate(bytes, heart_rate, sample_time);
-		char const * name = "HR";
-		aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
+			// Populate uint8_t array.
+			uint8_t bytes[9] = {};
+			config.populate_heart_rate(bytes, heart_rate, sample_time);
+			char const * name = "HR";
+			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
 
-		vTaskDelay(100 / portTICK_PERIOD_MS); //Back off a little longer
+			xSemaphoreGiveRecursive(config.i2c_semaphore);
+		}
+
+		vTaskDelay(210);
 	}
 	
 }
@@ -63,7 +68,7 @@ void sample_pressure(void * pvParams)
 			xSemaphoreGiveRecursive(config.i2c_semaphore);
 		}
 		
-		//vTaskDelay(100 / portTICK_PERIOD_MS); //Back off a little longer
+		//! Delay here?
 	}
 }
 
@@ -97,15 +102,39 @@ void sample_bno(void * pvParams)
 
 			xSemaphoreGiveRecursive(config.i2c_semaphore);
 		}
-		//vTaskDelay(100 / portTICK_PERIOD_MS); //Back off a little longer
+		//! Delay here?
 		
 	}
 }
 
+// Interrupts
+void IRAM_ATTR record_gpio_isr_handler(void* arg)
+{
+    uint32_t gpio_num = (uint32_t) arg;
+    xQueueSendFromISR(config.gpio_evt_queue, &gpio_num, NULL);
+}
 
+void gpio_interrupt_handler_task(void* arg)
+{
+    uint32_t io_num;
+    for(;;) {
+        if(xQueueReceive(config.gpio_evt_queue, &io_num, portMAX_DELAY)) {
+            if(io_num == GPIO_BNO_INT_NUM){
+				nm_interrupt = true;
+			} else{
+				if(io_num == GPIO_BUTTON_NUM){
+					rising_interrupt = true;
+				}
+			}
+        }
+    }
+}
 
 void record()
 {
+	nm_interrupt = false;
+	rising_interrupt = false;
+
 	// Create wrapper struct for Flashtraining
 	FlashtrainingWrapper_t *ft = FlashtrainingWrapper_create();
 	// Start a new training
@@ -132,39 +161,131 @@ void record()
 	if(setup_bno(ft) == ESP_OK){
 		if(setup_pressure() == ESP_OK){
 			//setup_hr();
-			ESP_LOGI(TAG_RECORD, "Setup complete.");
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Setup complete.");
 		} else {
 			return;
 		}
 	} else {
 		return;
 	}
+
+	// Attach interrupts
+	config.attach_btn_int(&gpio_interrupt_handler_task, &record_gpio_isr_handler);
+	config.attach_bno_int(&gpio_interrupt_handler_task, &record_gpio_isr_handler);
+
+	//Enable no-motion interrupts on BNO
+	bno.enableSlowNoMotion(NO_MOTION_THRESHOLD, NO_MOTION_DURATION, NO_MOTION);
+ 	bno.enableInterruptsOnXYZ(ENABLE, ENABLE, ENABLE);
+  	bno.setExtCrystalUse(true);
+	
+	bool timeout_before = false;
+
+
 	TaskHandle_t hr_task_handle = NULL;
 	TaskHandle_t bno_task_handle = NULL;
 	TaskHandle_t pressure_task_handle = NULL;
 
-	// Start all tasks. Heart rate has the highest priority followed by pressure and then BNO.
-	//bool success = (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 8, ft, 30, &hr_task_handle);
-	bool success = (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 8, ft, 10, &bno_task_handle);
+	// Start all tasks. Heart rate has the highest priority followed by pressure and BNO.
+	bool success = (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 8, ft, 10, &hr_task_handle);
+	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 8, ft, 10, &bno_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 8, ft, 10, &pressure_task_handle);
 	if(!success){
 		ESP_LOGE(TAG_RECORD, "Failed to create tasks. Going to sleep.");
 		config.STATE = DEEPSLEEP;
 		return;
 	}
-	
 
-	// Attach button interrupt
 
 	// Loop and check if the state is still record.
 	while(config.STATE == RECORD)
 	{
-		vTaskDelay(1000 /portTICK_PERIOD_MS);
+		if(nm_interrupt){
+			ESP_LOGE(TAG_RECORD, "No motion interrupt");
+			bno.resetInterrupts();
+			nm_interrupt = false;
+
+			clean_up();
+			return;
+		}
+
+		if(rising_interrupt){
+			ESP_LOGE(TAG_RECORD, "Interrupt");
+			rising_interrupt = false;
+			long timer = millis();
+
+			while(gpio_get_level(GPIO_BUTTON))
+			{
+				if(DEBUG) ESP_LOGI(TAG_RECORD, "Waiting for release...");
+				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && !timeout_before)
+				{
+					timeout_before = true;
+					clean_up();
+					return;
+				}
+			}
+			if(timeout_before)
+			{
+				gpio_set_level(GPIO_LED_RED, 0);
+			}
+		}
+
+		vTaskDelay(100 /portTICK_PERIOD_MS);
 	}
 
+	//! Absolute timeout where the swimmer is swimming for more than 6h
 	// Free all resources
 
 }
+
+void clean_up()
+{
+	config.STATE = DEEPSLEEP;
+	gpio_set_level(GPIO_VIB, 1);
+	vTaskDelay(80 / portTICK_PERIOD_MS);
+	gpio_set_level(GPIO_VIB, 0);
+	
+	config.detach_bno_int();
+	config.detach_btn_int();
+
+	// Delete the tasks
+	vTaskDelete(hr_task_handle);
+	vTaskDelete(bno_task_handle);
+	vTaskDelete(pressure_task_handle);
+
+	// Write last buffer and stop training
+	buffer_t * curr_buff = buffers[buff_idx];
+	for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
+		curr_buff->data[i] = 'f';
+	curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
+	
+	compress_and_save(ft, buff_idx);
+	curr_buff->counter = 0;
+
+	// Stop training
+	if(FlashtrainingWrapper_stop_training(ft))
+	{
+		for(int i=0;i<15;i++){
+			gpio_set_level(GPIO_LED_GREEN, 1);
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+			gpio_set_level(GPIO_LED_GREEN, 0);
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+		}
+	} else {
+		for(int i=0;i<15;i++){
+			gpio_set_level(GPIO_LED_RED, 1);
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+			gpio_set_level(GPIO_LED_RED, 0);
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+		}
+	}
+	
+
+	//TODO Clean up resources
+
+
+	vTaskDelay(500 /portTICK_PERIOD_MS);
+}
+
 
 void setup_hr()
 {
@@ -212,37 +333,38 @@ void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, Flas
 {
 	if(xSemaphoreTakeRecursive(config.i2c_semaphore,(TickType_t) 100) == pdTRUE)
 	{
-		ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
 		if(BUFFER_SIZE-curr_buff->counter >= length){
-			ESP_LOGI(TAG_RECORD, "Enough space to write");
+			ESP_LOGE(TAG_RECORD, "Space left: %d", BUFFER_SIZE-curr_buff->counter);
+			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Enough space to write");
 			//Enough space, we can write
 			memcpy(curr_buff->data+(curr_buff->counter), bytes, length);
 			curr_buff->counter += length;
 		} else{
 			//Fill up the buffer with 'f' and set the buff_idx to buff_idx XOR 1
-			ESP_LOGI(TAG_RECORD, "Buffer almost full, fill up");
+			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Buffer almost full, fill up");
 			for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
 				curr_buff->data[i] = 'f';
 			curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
-			ESP_LOGI(TAG_RECORD, "Counter is %d", curr_buff->counter);
+			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Counter is %d", curr_buff->counter);
 
 			if(buff_idx==0)
 				buff_idx=1;
 			else buff_idx=0;
 
-			ESP_LOGI(TAG_RECORD, "Call compress");
+			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Call compress");
 			//Call compress. Switch the bit back since we want to compress the buffer that is full
 			if(ft == NULL){
-				ESP_LOGE(TAG_RECORD, "FlashtrainingWrapper is NULL");
+				if(DEBUG)  ESP_LOGE(TAG_RECORD, "FlashtrainingWrapper is NULL");
 				xSemaphoreGiveRecursive(config.i2c_semaphore);
 			} else {
-				printf("State is %d\n", FlashtrainingWrapper_get_STATE(ft));
+				if(DEBUG) printf("State is %d\n", FlashtrainingWrapper_get_STATE(ft));
 				compress_and_save(ft, !buff_idx);
 				curr_buff->counter = 0; //Reset the compressed buffer
 			}
 		}
 
-		ESP_LOGI(TAG_RECORD, "Release mutex");
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "Release mutex");
 		//Release mutex
 		xSemaphoreGiveRecursive(config.i2c_semaphore);
 

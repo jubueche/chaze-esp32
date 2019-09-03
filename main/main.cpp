@@ -6,6 +6,9 @@ const char * TAG_MAIN = "Chaze-Main";
 extern "C" void app_main()
 {
 	config.turn_on_main_circuit();
+	config.initialize_vib();
+	config.initialize_leds();
+
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	//! Change to ADVERTISING
 	config.STATE = RECORD;

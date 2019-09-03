@@ -7,6 +7,8 @@
 #include "Chaze_Realtime.h"
 #include "freertos/queue.h"
 
+#define DEBUG 0
+
 
 /*
  * Section: GPIO
@@ -18,10 +20,19 @@
 // Vibration motor
 #define GPIO_VIB GPIO_NUM_25
 #define GPIO_VIB_MASK (1ULL<<25)
-//BNO055 interrupt
+// BNO055 interrupt
 #define GPIO_BNO_INT GPIO_NUM_36
 #define GPIO_BNO_INT_NUM 36
 #define GPIO_BNO_INT_MASK (1ULL<<GPIO_BNO_INT_NUM)
+// Button interrupt
+#define GPIO_BUTTON_NUM 39
+#define GPIO_BUTTON GPIO_NUM_39 
+#define GPIO_BUTTON_MASK (1ULL<<GPIO_BUTTON_NUM)
+// LEDs
+#define GPIO_LED_RED GPIO_NUM_12
+#define GPIO_LED_GREEN GPIO_NUM_27
+#define GPIO_BLUE GPIO_NUM_33
+#define GPIO_LED_MASK ((1ULL<<12) | (1ULL<<27) | (1ULL<<33))
 
 /*
  * Section SPI
@@ -85,23 +96,32 @@ class Configuration {
     void populate_pressure(uint8_t *, float, unsigned long);
     void populate_bno(uint8_t *, float *, unsigned long);
     void populate_heart_rate(uint8_t *, uint32_t, unsigned long);
+    
     void attach_bno_int(void (*)(void *), void (*)(void *));
+    void attach_btn_int(void (*)(void *), void (*)(void *));
     void detach_bno_int(void);
+    void detach_btn_int(void);
+    
     esp_err_t initialize_spi(void);
     esp_err_t turn_on_main_circuit(void);
     esp_err_t turn_off_main_circuit(void);
+    
     esp_err_t i2c_master_init_IDF(i2c_port_t port_num);
     esp_err_t i2c_master_driver_initialize(void);
     esp_err_t write(uint8_t *, size_t, uint8_t, i2c_port_t);
     esp_err_t read(uint8_t *, size_t, uint8_t, i2c_port_t);
     int do_i2cdetect_cmd(void);
+    
     esp_err_t initialize_rtc(void);
     esp_err_t vibration_signal_sleep(void);
     esp_err_t initialize_vib(void);
+    esp_err_t initialize_leds(void);
+    
     volatile uint8_t STATE;
-    // Queue used to handle interrupts
+
     xQueueHandle gpio_evt_queue;
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
+
     bool initialized_port0 = false;
     bool initialized_port1 = false;
   private:

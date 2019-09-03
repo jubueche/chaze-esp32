@@ -24,6 +24,7 @@ const char * TAG = "Chaze-Compression";
  */
 void compress_and_save(FlashtrainingWrapper_t *ft, uint8_t buff_num)
 {
+	return; //!!!
 	ESP_LOGI(TAG, "Using buffer number %d", buff_num);
 	//Get the pointer to the current buffer
 	buffer_t * current_buffer = buffers[buff_num];
