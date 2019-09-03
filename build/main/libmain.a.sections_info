@@ -52,25 +52,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, RELOC, READONLY, DEBUGGING
  23 .eh_frame     00000028  00000000  00000000  00000350  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
- 24 .debug_info   00006040  00000000  00000000  00000378  2**0
+ 24 .debug_info   00006052  00000000  00000000  00000378  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 25 .debug_abbrev 0000094f  00000000  00000000  000063b8  2**0
+ 25 .debug_abbrev 0000094f  00000000  00000000  000063ca  2**0
                   CONTENTS, READONLY, DEBUGGING
- 26 .debug_aranges 00000038  00000000  00000000  00006d07  2**0
+ 26 .debug_aranges 00000038  00000000  00000000  00006d19  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 27 .debug_ranges 00000028  00000000  00000000  00006d3f  2**0
+ 27 .debug_ranges 00000028  00000000  00000000  00006d51  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 28 .debug_line   00000e22  00000000  00000000  00006d67  2**0
+ 28 .debug_line   00000e22  00000000  00000000  00006d79  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 29 .debug_str    00004eae  00000000  00000000  00007b89  2**0
+ 29 .debug_str    00004ed5  00000000  00000000  00007b9b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 30 .comment      00000028  00000000  00000000  0000ca37  2**0
+ 30 .comment      00000028  00000000  00000000  0000ca70  2**0
                   CONTENTS, READONLY
- 31 .xtensa.info  00000038  00000000  00000000  0000ca5f  2**0
+ 31 .xtensa.info  00000038  00000000  00000000  0000ca98  2**0
                   CONTENTS, READONLY
- 32 .xt.lit       00000020  00000000  00000000  0000ca97  2**0
+ 32 .xt.lit       00000020  00000000  00000000  0000cad0  2**0
                   CONTENTS, RELOC, READONLY
- 33 .xt.prop      000001a4  00000000  00000000  0000cab7  2**0
+ 33 .xt.prop      000001a4  00000000  00000000  0000caf0  2**0
                   CONTENTS, RELOC, READONLY
 
 msft_ssl_cert.pem.txt.o:     file format elf32-xtensa-le

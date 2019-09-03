@@ -30,7 +30,6 @@ extern "C" {
 static MS5837 pressure;
 static HeartRate hr;
 static BNO055 bno;
-static SemaphoreHandle_t sensor_semaphore = NULL;
 static volatile uint8_t buff_idx = 0;
 
 void setup_hr(void);

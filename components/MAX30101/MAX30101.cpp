@@ -78,7 +78,7 @@ MAX30101::MAX30101(maxim_config_t * args) {
 
 	this->port_num = I2C_NUM_1;
 
-	esp_err_t err = (this->i2c_master_init_IDF());
+	esp_err_t err = (config.i2c_master_init_IDF(I2C_NUM_1));
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to initialize I2C connection.");
 	}
@@ -355,24 +355,6 @@ void MAX30101::set_slots(void){
 	} else{
 		this->setSLOT(MULTI_SLOT_CONFIG);
 	}
-}
-/**
- * @brief Initialize I2C.
- * @return Error message or ESP_OK.
- */
-esp_err_t MAX30101::i2c_master_init_IDF(void)
-{
-    i2c_config_t conf;
-    conf.mode = I2C_MODE_MASTER;
-    conf.sda_io_num = I2C_MASTER_SDA_IO;
-    conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
-    conf.scl_io_num = I2C_MASTER_SCL_IO;
-    conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
-    conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
-    i2c_param_config(port_num, &conf);
-    return i2c_driver_install(port_num, conf.mode,
-                              I2C_MASTER_RX_BUF_DISABLE,
-                              I2C_MASTER_TX_BUF_DISABLE, 0);
 }
 
 /**

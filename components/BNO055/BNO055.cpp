@@ -68,25 +68,29 @@ BNO055::BNO055(int32_t sensorID, uint8_t address)
 bool BNO055::begin(bno055_opmode_t mode)
 {
   // Enable I2C
-	port_num = I2C_NUM_1;
+	port_num = I2C_NUM_0;
 
 	esp_err_t err = (config.i2c_master_init_IDF(port_num));
 	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to initialize I2C connection.");
+		ESP_LOGE(TAG, "Failed to initialize I2C connection. Error: %s", esp_err_to_name(err));
 	}
 
   // BNO055 clock stretches for 500us or more!
 
+  vTaskDelay(100 /portTICK_PERIOD_MS);
+
   /* Make sure we have the right device */
   uint8_t id = read8(BNO055_CHIP_ID_ADDR);
-  printf("ID is %d  ", id);
+
   if(id != BNO055_ID)
   {
     vTaskDelay(1000 / portTICK_PERIOD_MS); // hold on for boot
     id = read8(BNO055_CHIP_ID_ADDR);
+
     if(id != BNO055_ID) {
-      ESP_LOGE(TAG, "Failed to read correct sensor ID.");
-      return false;  // still not? ok bail
+      ESP_LOGE(TAG, "Failed to read correct sensor ID. l88");
+      config.STATE = DEEPSLEEP;
+      return false;
     }
   }
 
@@ -100,6 +104,8 @@ bool BNO055::begin(bno055_opmode_t mode)
     vTaskDelay(10 / portTICK_PERIOD_MS);
   }
   vTaskDelay(50 / portTICK_PERIOD_MS);
+
+  ESP_LOGI(TAG, "Done");
 
   /* Set to normal power mode */
   write8(BNO055_PWR_MODE_ADDR, POWER_MODE_NORMAL);
@@ -818,15 +824,15 @@ bool BNO055::readLen(bno055_reg_t reg, uint8_t * data, uint8_t size){
 		return true;
 	}
 	uint8_t t[1] = {(uint8_t)reg};
-	esp_err_t err = write(t, 1);
+	esp_err_t err = config.write(t, 1, _address, port_num);
 	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to write to I2C");
+		ESP_LOGE(TAG, "Failed to write to I2C, l823, Error is %s", esp_err_to_name(err));
 		return false;
 	}
 	vTaskDelay(30 / portTICK_RATE_MS);
-	err = read(data,size);
+	err = config.read(data,size, _address, port_num);
 	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to read from I2C");
+		ESP_LOGE(TAG, "Failed to read from I2C, l829");
 		return false;
 
 	} else return true;
@@ -844,9 +850,9 @@ bool BNO055::write8(bno055_reg_t reg, uint8_t data){
 
 	t[0] = reg; //Jump to REG and write from there on. If we want to write only one register, data has only one entry.
 	t[1] = data;
-	esp_err_t err = write(t, 2); //Write reg+data -> 1+size
+	esp_err_t err = config.write(t, 2, _address, port_num); //Write reg+data -> 1+size
 	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to write to I2C.");
+		ESP_LOGE(TAG, "Failed to write to I2C, l849");
 		return false;
 	} else return true;
 }
@@ -857,47 +863,6 @@ uint8_t BNO055::read8(bno055_reg_t reg )
   if(readLen(reg, data, 1)){
 	  return data[0];
   }else return 0;
-}
-
-
-/**
- * @brief Write a package to the I2C bus.
- * @param data_wr Payload to write.
- * @param size Size of the payload.
- * @return
- */
-esp_err_t BNO055::write(uint8_t * data_wr, size_t size){
-	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-	i2c_master_start(cmd);
-	i2c_master_write_byte(cmd, (_address << 1) | WRITE_BIT, ACK_CHECK_EN);
-	i2c_master_write(cmd, data_wr, size, ACK_CHECK_EN);
-	i2c_master_stop(cmd);
-	esp_err_t err = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
-	i2c_cmd_link_delete(cmd);
-	return err;
-}
-
-/**
- * @brief Reads from the BNO055.
- * @param data_rd Pointer to array to be filled.
- * @param size Number of uint8_t's to read.
- * @return Error or ESP_OK.
- */
-esp_err_t BNO055::read(uint8_t * data_rd, size_t size){
-	if (size == 0) {
-	        return ESP_OK;
-	}
-	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-	i2c_master_start(cmd);
-	i2c_master_write_byte(cmd, (_address << 1) | READ_BIT, ACK_CHECK_EN);
-	if (size > 1) {
-		i2c_master_read(cmd, data_rd, size - 1, ACK_VAL);
-	}
-	i2c_master_read_byte(cmd, data_rd + size - 1, NACK_VAL);
-	i2c_master_stop(cmd);
-	esp_err_t ret = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
-	i2c_cmd_link_delete(cmd);
-	return ret;
 }
 
 

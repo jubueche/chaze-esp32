@@ -182,6 +182,16 @@ esp_err_t Configuration::turn_on_main_circuit(void)
  */
 esp_err_t Configuration::i2c_master_init_IDF(i2c_port_t port_num)
 {
+    if(port_num == I2C_NUM_0){
+        if(initialized_port0)
+            return ESP_OK;
+    } else{
+        if(initialized_port1){
+            return ESP_OK;
+        }
+    }
+    port_num == I2C_NUM_0 ? initialized_port0 = true : initialized_port1 = true;
+
     i2c_config_t conf;
     conf.mode = I2C_MODE_MASTER;
     conf.sda_io_num = I2C_MASTER_SDA_IO;
@@ -195,6 +205,80 @@ esp_err_t Configuration::i2c_master_init_IDF(i2c_port_t port_num)
                               I2C_MASTER_TX_BUF_DISABLE, 0);
 }
 
+
+/**
+ * @brief Write a package to the I2C bus.
+ * @param data_wr Payload to write.
+ * @param size Size of the payload.
+ * @param uint8_t address to the sensor.
+ * @param i2c_port_t Either port 0 or 1.
+ * @return
+ */
+esp_err_t Configuration::write(uint8_t * data_wr, size_t size, uint8_t addr, i2c_port_t port_num){
+	
+	esp_err_t err = ESP_OK;
+	if(xSemaphoreTakeRecursive(i2c_semaphore, pdMS_TO_TICKS(300)) == pdPASS)
+	{
+		i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+		i2c_master_start(cmd);
+		i2c_master_write_byte(cmd, (addr << 1) | WRITE_BIT, ACK_CHECK_EN);
+		i2c_master_write(cmd, data_wr, size, ACK_CHECK_EN);
+		i2c_master_stop(cmd);
+		err = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
+		i2c_cmd_link_delete(cmd);
+		xSemaphoreGiveRecursive(i2c_semaphore);
+        if(addr == 0x28 && err == ESP_FAIL){
+            err = ESP_OK; // BNO does not ack. if he is booting up.
+        }
+	} else {
+        ESP_LOGE(TAG, "Did not acquire i2c lock.");
+        return ESP_FAIL;
+    }
+	
+	return err;
+}
+
+
+/**
+ * @brief Reads from the I2C.
+ * @param data_rd Pointer to array to be filled.
+ * @param size Number of uint8_t's to read.
+ * @param uint8_t address to the sensor.
+ * @param i2c_port_t Either port 0 or 1.
+ * @return Error or ESP_OK.
+ */
+esp_err_t Configuration::read(uint8_t * data_rd, size_t size, uint8_t addr, i2c_port_t port_num){
+  
+    if (size == 0) {
+            return ESP_OK;
+    }
+    esp_err_t ret = ESP_OK;
+
+    if(xSemaphoreTakeRecursive(i2c_semaphore, pdMS_TO_TICKS(300)) == pdPASS)
+    {
+        i2c_cmd_handle_t cmd = i2c_cmd_link_create();
+        i2c_master_start(cmd);
+        i2c_master_write_byte(cmd, (addr << 1) | READ_BIT, ACK_CHECK_EN);
+        if (size > 1) {
+        i2c_master_read(cmd, data_rd, size - 1, ACK_VAL);
+        }
+        i2c_master_read_byte(cmd, data_rd + size - 1, NACK_VAL);
+        i2c_master_stop(cmd);
+        ret = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
+        if(addr == 0x28 && ret == ESP_FAIL){
+            ret = ESP_OK; // BNO does not ack. if he is booting up.
+        }
+        i2c_cmd_link_delete(cmd);
+
+        xSemaphoreGiveRecursive(i2c_semaphore);
+    } else {
+        ESP_LOGE(TAG, "Did not acqire i2c lock.");
+    }
+  
+	return ret;
+}
+
+//Only used by do_i2cdetect_cmd()
 esp_err_t Configuration::i2c_master_driver_initialize()
 {
     i2c_config_t conf = {

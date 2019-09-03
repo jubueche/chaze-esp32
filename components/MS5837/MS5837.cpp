@@ -59,7 +59,7 @@ bool MS5837::init() {
 
 	uint8_t t[1];
 	t[0] = MS5837_RESET;
-	err = write(t, 1);
+	err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C.");
 	}
@@ -98,7 +98,7 @@ void MS5837::read_vals() {
 	// Request D1 conversion
 	uint8_t t[1];
 	t[0] = MS5837_CONVERT_D1_8192;
-	esp_err_t err = write(t, 1);
+	esp_err_t err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C.");
 	}
@@ -115,7 +115,7 @@ void MS5837::read_vals() {
 
 	// Request D2 conversion
 	t[0] = MS5837_CONVERT_D2_8192;
-	err = write(t, 1);
+	err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C.");
 	}
@@ -239,47 +239,6 @@ uint8_t MS5837::crc4(uint16_t n_prom[]) {
 	return n_rem ^ 0x00;
 }
 
-
-/**
- * @brief Write a package to the I2C bus.
- * @param data_wr Payload to write.
- * @param size Size of the payload.
- * @return
- */
-esp_err_t MS5837::write(uint8_t * data_wr, size_t size){
-	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-	i2c_master_start(cmd);
-	i2c_master_write_byte(cmd, (MS5837_ADDR << 1) | WRITE_BIT, ACK_CHECK_EN);
-	i2c_master_write(cmd, data_wr, size, ACK_CHECK_EN);
-	i2c_master_stop(cmd);
-	esp_err_t err = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
-	i2c_cmd_link_delete(cmd);
-	return err;
-}
-
-/**
- * @brief Reads from the MAX30101.
- * @param data_rd Pointer to array to be filled.
- * @param size Number of uint8_t's to read.
- * @return Error or ESP_OK.
- */
-esp_err_t MS5837::read(uint8_t * data_rd, size_t size){
-	if (size == 0) {
-	        return ESP_OK;
-	}
-	i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-	i2c_master_start(cmd);
-	i2c_master_write_byte(cmd, (MS5837_ADDR << 1) | READ_BIT, ACK_CHECK_EN);
-	if (size > 1) {
-		i2c_master_read(cmd, data_rd, size - 1, ACK_VAL);
-	}
-	i2c_master_read_byte(cmd, data_rd + size - 1, NACK_VAL);
-	i2c_master_stop(cmd);
-	esp_err_t ret = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
-	i2c_cmd_link_delete(cmd);
-	return ret;
-}
-
 /**
  * @brief Read certain register from the MAX30101.
  * @param reg Register address.
@@ -291,12 +250,12 @@ void MS5837::readReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 		return;
 	}
 	uint8_t t[1] = {reg};
-	esp_err_t err = write(t, 1);
+	esp_err_t err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C");
 	}
 	vTaskDelay(30 / portTICK_RATE_MS);
-	err = read(data,size);
+	err = config.read(data,size, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to read from I2C");
 	}
@@ -318,7 +277,7 @@ void MS5837::writeReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 	for(int i = 0;i<size;i++){
 		t[i+1] = data[i];
 	}
-	esp_err_t err = write(t, size+1); //Write reg+data -> 1+size
+	esp_err_t err = config.write(t, size+1, MS5837_ADDR, port_num); //Write reg+data -> 1+size
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C.");
 	}

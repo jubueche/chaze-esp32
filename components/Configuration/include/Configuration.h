@@ -92,6 +92,8 @@ class Configuration {
     esp_err_t turn_off_main_circuit(void);
     esp_err_t i2c_master_init_IDF(i2c_port_t port_num);
     esp_err_t i2c_master_driver_initialize(void);
+    esp_err_t write(uint8_t *, size_t, uint8_t, i2c_port_t);
+    esp_err_t read(uint8_t *, size_t, uint8_t, i2c_port_t);
     int do_i2cdetect_cmd(void);
     esp_err_t initialize_rtc(void);
     esp_err_t vibration_signal_sleep(void);
@@ -99,6 +101,9 @@ class Configuration {
     volatile uint8_t STATE;
     // Queue used to handle interrupts
     xQueueHandle gpio_evt_queue;
+    SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
+    bool initialized_port0 = false;
+    bool initialized_port1 = false;
   private:
     const char * TAG = "Configuration";
 };

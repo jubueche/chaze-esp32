@@ -20,8 +20,6 @@ public:
 
 	void writeReg_IDF(uint8_t, uint8_t *, size_t);
 	void readReg_IDF(uint8_t, uint8_t *, size_t);
-	esp_err_t read(uint8_t *, size_t);
-	esp_err_t write(uint8_t *, size_t);
 
 	bool init();
 
