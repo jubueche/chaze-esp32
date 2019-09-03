@@ -272,7 +272,7 @@ esp_err_t Configuration::read(uint8_t * data_rd, size_t size, uint8_t addr, i2c_
 
         xSemaphoreGiveRecursive(i2c_semaphore);
     } else {
-        ESP_LOGE(TAG, "Did not acqire i2c lock.");
+        ESP_LOGE(TAG, "Did not acquire i2c lock.");
     }
   
 	return ret;

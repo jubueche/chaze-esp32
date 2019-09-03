@@ -250,14 +250,15 @@ void MS5837::readReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 		return;
 	}
 	uint8_t t[1] = {reg};
+	vTaskDelay(20 / portTICK_PERIOD_MS);
 	esp_err_t err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to write to I2C");
+		ESP_LOGE(TAG, "Failed to write to I2C, Error was %s", esp_err_to_name(err));
 	}
-	vTaskDelay(30 / portTICK_RATE_MS);
+	//vTaskDelay(30 / portTICK_RATE_MS);
 	err = config.read(data,size, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to read from I2C");
+		ESP_LOGE(TAG, "Failed to read from I2C, l260, Error was %s", esp_err_to_name(err));
 	}
 }
 
@@ -279,6 +280,6 @@ void MS5837::writeReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 	}
 	esp_err_t err = config.write(t, size+1, MS5837_ADDR, port_num); //Write reg+data -> 1+size
 	if(err != ESP_OK){
-		ESP_LOGE(TAG, "Failed to write to I2C.");
+		ESP_LOGE(TAG, "Failed to write to I2C.Error was %s", esp_err_to_name(err));
 	}
 }
