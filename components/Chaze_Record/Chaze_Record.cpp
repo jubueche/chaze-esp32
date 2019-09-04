@@ -25,7 +25,7 @@ void sample_hr(void * pvParams)
 			vTaskDelay(20);
 
 			// Get time of sample
-			unsigned long sample_time = millis();
+			unsigned long sample_time = millis() - base_time;
 
 			// Populate uint8_t array.
 			uint8_t bytes[9] = {};
@@ -58,7 +58,7 @@ void sample_pressure(void * pvParams)
 			vTaskDelay(30 / portTICK_PERIOD_MS);
 			float value = pressure.pressure();
 			// Get time of sample
-			unsigned long sample_time = millis();
+			unsigned long sample_time = millis() - base_time;
 			ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
 			uint8_t bytes[9] = {};
 			config.populate_pressure(bytes, value, sample_time);
@@ -85,7 +85,7 @@ void sample_bno(void * pvParams)
 		if(xSemaphoreTakeRecursive(config.i2c_semaphore, 20) == pdPASS)
 		{
 			// Get time of sample
-			unsigned long sample_time = millis();
+			unsigned long sample_time = millis() - base_time;
 			imu::Quaternion quat = bno.getQuat();
 			imu::Vector<3> acc = bno.getVector(BNO055::VECTOR_LINEARACCEL);
 			double values_d[7] = {acc.x(),acc.y(),acc.z(),quat.w(),quat.y(),quat.x(),quat.z()};
@@ -134,6 +134,7 @@ void record()
 {
 	nm_interrupt = false;
 	rising_interrupt = false;
+	base_time = millis();
 
 	// Create wrapper struct for Flashtraining
 	FlashtrainingWrapper_t *ft = FlashtrainingWrapper_create();
@@ -145,17 +146,40 @@ void record()
 		return;
 	}
 
+	buffers = (buffer_t **) malloc(2*sizeof(buffer_t *));
+	buffer_t * buffer0;
+	buffer_t * buffer1;
 	//Initialize buffers 1 and 2
-	buffer_t buffer0 = {};
-	buffer_t buffer1 = {};
+	if(buffers != NULL)
+	{
+		buffer0 = (buffer_t *) malloc(sizeof(buffer_t));
+		buffer1 = (buffer_t *) malloc(sizeof(buffer_t));
 
-	buffer0.data = (uint8_t *) malloc(BUFFER_SIZE);
-	buffer0.counter = 0;
-	buffer1.data = (uint8_t *) malloc(BUFFER_SIZE);
-	buffer1.counter = 0;
+		if(buffer0 != NULL && buffer1 != NULL)
+		{
+			buffer0->data = (uint8_t *) malloc(BUFFER_SIZE);
+			buffer0->counter = 0;
+			buffer1->data = (uint8_t *) malloc(BUFFER_SIZE);
+			buffer1->counter = 0;
 
-	buffers[0] = &buffer0;
-	buffers[1] = &buffer1;
+			buffers[0] = buffer0;
+			buffers[1] = buffer1;
+
+			if(buffer0->data == NULL || buffer1->data == NULL){
+				ESP_LOGE(TAG_RECORD, "Error allocating heap space for buffers->data");
+				config.STATE = DEEPSLEEP;
+				return;
+			}
+		} else {
+			ESP_LOGE(TAG_RECORD, "Error allocating heap space for buffer0 or buffer1.");
+			config.STATE = DEEPSLEEP;
+			return;
+		}
+	} else {
+		ESP_LOGE(TAG_RECORD, "Error allocating heap space for buffers");
+		config.STATE = DEEPSLEEP;
+		return;
+	}
 
 	// Initialize all sensors (+ Calibration)
 	if(setup_bno(ft) == ESP_OK){
@@ -200,16 +224,16 @@ void record()
 	while(config.STATE == RECORD)
 	{
 		if(nm_interrupt){
-			ESP_LOGE(TAG_RECORD, "No motion interrupt");
+			ESP_LOGI(TAG_RECORD, "No motion interrupt");
 			bno.resetInterrupts();
 			nm_interrupt = false;
 
-			clean_up();
+			clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, ft);
 			return;
 		}
 
 		if(rising_interrupt){
-			ESP_LOGE(TAG_RECORD, "Interrupt");
+			ESP_LOGI(TAG_RECORD, "Interrupt");
 			rising_interrupt = false;
 			long timer = millis();
 
@@ -219,7 +243,7 @@ void record()
 				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && !timeout_before)
 				{
 					timeout_before = true;
-					clean_up();
+					clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, ft);
 					return;
 				}
 			}
@@ -233,11 +257,10 @@ void record()
 	}
 
 	//! Absolute timeout where the swimmer is swimming for more than 6h
-	// Free all resources
 
 }
 
-void clean_up()
+void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHandle_t pressure_task_handle, FlashtrainingWrapper_t *ft)
 {
 	config.STATE = DEEPSLEEP;
 	gpio_set_level(GPIO_VIB, 1);
@@ -254,11 +277,14 @@ void clean_up()
 
 	// Write last buffer and stop training
 	buffer_t * curr_buff = buffers[buff_idx];
-	for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
+	ESP_LOGI(TAG_RECORD, "Filling up %d many bytes", BUFFER_SIZE-curr_buff->counter);
+	for(int i=curr_buff->counter;i<BUFFER_SIZE/*-curr_buff->counter*/;i++)
 		curr_buff->data[i] = 'f';
 	curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
+	ESP_LOGI(TAG_RECORD, "Curr buffer counter is %d", curr_buff->counter);
+	ESP_LOGI(TAG_RECORD, "Buffers pointer is %p", buffers);
 	
-	compress_and_save(ft, buff_idx);
+	compress_and_save(ft, buff_idx, buffers);
 	curr_buff->counter = 0;
 
 	// Stop training
@@ -281,6 +307,31 @@ void clean_up()
 	
 
 	//TODO Clean up resources
+	if(buffers != NULL)
+	{
+		// Free buffers 0 and 1 if they are not null.
+		if(buffers[0] != NULL) {
+			// Free buffer 1 if not NULL
+			if(buffers[1] != NULL) {
+				// Free buffer0.data and buffer1.data if they are not NULL
+				if(buffers[1]->data != NULL){
+					// Free buffer0->data
+					if(buffers[0]->data != NULL){
+						free(buffers[0]->data);
+					}
+					free(buffers[1]->data);
+				}
+				free(buffers[1]);
+			}
+			free(buffers[0]);
+		}
+		free(buffers);
+	}
+	pressure.~MS5837();
+	bno.~BNO055();
+	hr.~HeartRate();
+
+	ESP_LOGI(TAG_RECORD, "Cleaned up");
 
 
 	vTaskDelay(500 /portTICK_PERIOD_MS);
@@ -335,7 +386,7 @@ void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, Flas
 	{
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
 		if(BUFFER_SIZE-curr_buff->counter >= length){
-			ESP_LOGE(TAG_RECORD, "Space left: %d", BUFFER_SIZE-curr_buff->counter);
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Space left: %d", BUFFER_SIZE-curr_buff->counter);
 			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Enough space to write");
 			//Enough space, we can write
 			memcpy(curr_buff->data+(curr_buff->counter), bytes, length);
@@ -359,7 +410,7 @@ void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, Flas
 				xSemaphoreGiveRecursive(config.i2c_semaphore);
 			} else {
 				if(DEBUG) printf("State is %d\n", FlashtrainingWrapper_get_STATE(ft));
-				compress_and_save(ft, !buff_idx);
+				compress_and_save(ft, !buff_idx, buffers);
 				curr_buff->counter = 0; //Reset the compressed buffer
 			}
 		}

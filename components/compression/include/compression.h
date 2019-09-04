@@ -13,13 +13,13 @@
 
 
 typedef struct {
-	int32_t counter;
+	uint32_t counter;
 	uint8_t * data;
 }buffer_t;
 
-static buffer_t * buffers[2];
+static buffer_t ** buffers;
 
-void compress_and_save(FlashtrainingWrapper_t *, uint8_t);
+void compress_and_save(FlashtrainingWrapper_t *, uint8_t, buffer_t **);
 void write_data_to_flash(FlashtrainingWrapper_t *, uint8_t *, uint32_t);
 uint32_t def(uint8_t *, uint8_t *, uint8_t);
 void zerr(int32_t);

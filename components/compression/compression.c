@@ -22,14 +22,11 @@ const char * TAG = "Chaze-Compression";
  * data is compressed and saved to the flash.
  * @param Buffer number to read from and compress. Either 0 or 1.
  */
-void compress_and_save(FlashtrainingWrapper_t *ft, uint8_t buff_num)
+void compress_and_save(FlashtrainingWrapper_t *ft, uint8_t buff_num, buffer_t ** buffers)
 {
-	return; //!!!
-	ESP_LOGI(TAG, "Using buffer number %d", buff_num);
-	//Get the pointer to the current buffer
+	
 	buffer_t * current_buffer = buffers[buff_num];
-	assert(current_buffer->counter == BUFFER_SIZE); //The buffer must be filled completely.
-
+	
 	//Data written to flash.
 	uint8_t * out = (uint8_t *) malloc(BUFFER_SIZE * sizeof(uint8_t));
 
@@ -178,7 +175,7 @@ void write_data_to_flash(FlashtrainingWrapper_t * ft, uint8_t * data, uint32_t n
 		free(out);
 
 		for(int i=0;i<CHUNK;i++)
-			printf("%c", to_print[i]);
+			printf("%d ", to_print[i]);
 		}
 	
 }

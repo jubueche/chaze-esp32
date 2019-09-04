@@ -34,9 +34,10 @@ static volatile uint8_t buff_idx = 0;
 
 static volatile bool nm_interrupt;
 static volatile bool rising_interrupt;
+static unsigned long base_time;
 
 void setup_hr(void);
-void clean_up(void);
+void clean_up(TaskHandle_t, TaskHandle_t, TaskHandle_t, FlashtrainingWrapper_t *);
 esp_err_t setup_bno(FlashtrainingWrapper_t *ft);
 esp_err_t setup_pressure(void);
 
