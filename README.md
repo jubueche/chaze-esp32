@@ -39,8 +39,8 @@ One example would be ```char * get_device_id(void)```, which will be used like t
 
 ## TODO
 
-- Priority queue for sampling on same I2C bus between BNO055 and MS587
 - Make config class immutable
+- Add watchdog
 
 ## Bugs when setting up
 

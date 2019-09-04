@@ -13,7 +13,7 @@
 
 const char * TAG = "Chaze-Compression";
 
-#define DEBUG_COMPRESSION 1
+#define DEBUG_COMPRESSION 0
 
 /**
  * @brief When recording sensor data, multiple tasks need to acquire a mutex in order to read from the bus and
@@ -36,7 +36,7 @@ void compress_and_save(FlashtrainingWrapper_t *ft, uint8_t buff_num, buffer_t **
 		return;
 	} else{
 
-		ESP_LOGI(TAG, "Start compressing.");
+		if(DEBUG_COMPRESSION) ESP_LOGI(TAG, "Start compressing.");
 		//Writes 'written' many chars to the out buffer previously allocated
 		uint32_t written = def(current_buffer->data, out, DEFAULT_COMPRESSION_LEVEL);
 
@@ -82,7 +82,7 @@ uint32_t def(uint8_t * source, uint8_t * dest, uint8_t level)
             assert(ret != Z_STREAM_ERROR);
             zerr(ret);
             have = CHUNK - strm.avail_out;
-            ESP_LOGI(TAG, "Have: %d", have);
+            if(DEBUG_COMPRESSION) ESP_LOGI(TAG, "Have: %d", have);
 			if(DEBUG_COMPRESSION){ //Prints the compressed uint8_t array
 				for(int i=0;i<have;i++)
             		printf("%c", out[i]);
@@ -109,14 +109,14 @@ uint32_t def(uint8_t * source, uint8_t * dest, uint8_t level)
 void write_data_to_flash(FlashtrainingWrapper_t * ft, uint8_t * data, uint32_t n)
 {
 
-	ESP_LOGI(TAG, "Writing data to flash.");
+	if(DEBUG_COMPRESSION) ESP_LOGI(TAG, "Writing data to flash.");
 
 	bool err = !FlashtrainingWrapper_write_compressed_chunk(ft, data, n);
 	
 	if(err){
 		ESP_LOGE(TAG, "Error ocurred while writing to flash.");
 	} else {
-		ESP_LOGI(TAG, "Written to flash.");
+		if(DEBUG_COMPRESSION) ESP_LOGI(TAG, "Written to flash.");
 	}
 
 	if(DEBUG_COMPRESSION)

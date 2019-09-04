@@ -59,7 +59,7 @@ void sample_pressure(void * pvParams)
 			float value = pressure.pressure();
 			// Get time of sample
 			unsigned long sample_time = millis() - base_time;
-			ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
 			uint8_t bytes[9] = {};
 			config.populate_pressure(bytes, value, sample_time);
 			char const * name = "Pressure";
@@ -93,7 +93,7 @@ void sample_bno(void * pvParams)
 			for(int i=0;i<7;i++){
 				values[i] = (float) values_d[i];
 			}
-			ESP_LOGI(TAG_RECORD, "BNO: Time: %lu  AccX: %f, AccY: %f, AccZ: %f, QuatW: %f, QuatY: %f, QuatX: %f, QuatZ: %f, ", sample_time, values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "BNO: Time: %lu  AccX: %f, AccY: %f, AccZ: %f, QuatW: %f, QuatY: %f, QuatX: %f, QuatZ: %f, ", sample_time, values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
 			uint8_t bytes[33] = {};
 			config.populate_bno(bytes, values, sample_time);
 
@@ -135,6 +135,7 @@ void record()
 	nm_interrupt = false;
 	rising_interrupt = false;
 	base_time = millis();
+	unsigned long red_led_timer = millis();
 
 	// Create wrapper struct for Flashtraining
 	FlashtrainingWrapper_t *ft = FlashtrainingWrapper_create();
@@ -142,8 +143,11 @@ void record()
 	if(!FlashtrainingWrapper_start_new_training(ft))
 	{
 		ESP_LOGE(TAG_RECORD, "Error creating training.");
+		config.flicker_led(GPIO_LED_RED);
 		config.STATE = DEEPSLEEP;
 		return;
+	} else {
+		config.flicker_led(GPIO_LED_GREEN);
 	}
 
 	buffers = (buffer_t **) malloc(2*sizeof(buffer_t *));
@@ -224,7 +228,7 @@ void record()
 	while(config.STATE == RECORD)
 	{
 		if(nm_interrupt){
-			ESP_LOGI(TAG_RECORD, "No motion interrupt");
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "No motion interrupt");
 			bno.resetInterrupts();
 			nm_interrupt = false;
 
@@ -233,7 +237,7 @@ void record()
 		}
 
 		if(rising_interrupt){
-			ESP_LOGI(TAG_RECORD, "Interrupt");
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Interrupt");
 			rising_interrupt = false;
 			long timer = millis();
 
@@ -251,6 +255,14 @@ void record()
 			{
 				gpio_set_level(GPIO_LED_RED, 0);
 			}
+		}
+
+		if(millis() - red_led_timer > LED_RED_TIMEOUT)
+		{
+			red_led_timer = millis();
+			gpio_set_level(GPIO_LED_RED, 1);
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+			gpio_set_level(GPIO_LED_RED, 0);
 		}
 
 		vTaskDelay(100 /portTICK_PERIOD_MS);
@@ -277,12 +289,12 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 
 	// Write last buffer and stop training
 	buffer_t * curr_buff = buffers[buff_idx];
-	ESP_LOGI(TAG_RECORD, "Filling up %d many bytes", BUFFER_SIZE-curr_buff->counter);
+	if(DEBUG) ESP_LOGI(TAG_RECORD, "Filling up %d many bytes", BUFFER_SIZE-curr_buff->counter);
 	for(int i=curr_buff->counter;i<BUFFER_SIZE/*-curr_buff->counter*/;i++)
 		curr_buff->data[i] = 'f';
 	curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
-	ESP_LOGI(TAG_RECORD, "Curr buffer counter is %d", curr_buff->counter);
-	ESP_LOGI(TAG_RECORD, "Buffers pointer is %p", buffers);
+	if(DEBUG) ESP_LOGI(TAG_RECORD, "Curr buffer counter is %d", curr_buff->counter);
+	if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffers pointer is %p", buffers);
 	
 	compress_and_save(ft, buff_idx, buffers);
 	curr_buff->counter = 0;
@@ -290,23 +302,11 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	// Stop training
 	if(FlashtrainingWrapper_stop_training(ft))
 	{
-		for(int i=0;i<15;i++){
-			gpio_set_level(GPIO_LED_GREEN, 1);
-			vTaskDelay(80 / portTICK_PERIOD_MS);
-			gpio_set_level(GPIO_LED_GREEN, 0);
-			vTaskDelay(80 / portTICK_PERIOD_MS);
-		}
+		config.flicker_led(GPIO_LED_GREEN);
 	} else {
-		for(int i=0;i<15;i++){
-			gpio_set_level(GPIO_LED_RED, 1);
-			vTaskDelay(80 / portTICK_PERIOD_MS);
-			gpio_set_level(GPIO_LED_RED, 0);
-			vTaskDelay(80 / portTICK_PERIOD_MS);
-		}
+		config.flicker_led(GPIO_LED_RED);
 	}
 	
-
-	//TODO Clean up resources
 	if(buffers != NULL)
 	{
 		// Free buffers 0 and 1 if they are not null.
@@ -331,7 +331,7 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	bno.~BNO055();
 	hr.~HeartRate();
 
-	ESP_LOGI(TAG_RECORD, "Cleaned up");
+	if(DEBUG) ESP_LOGI(TAG_RECORD, "Cleaned up");
 
 
 	vTaskDelay(500 /portTICK_PERIOD_MS);

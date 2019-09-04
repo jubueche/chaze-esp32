@@ -116,6 +116,7 @@ class Configuration {
     esp_err_t vibration_signal_sleep(void);
     esp_err_t initialize_vib(void);
     esp_err_t initialize_leds(void);
+    void flicker_led(gpio_num_t);
     
     volatile uint8_t STATE;
 

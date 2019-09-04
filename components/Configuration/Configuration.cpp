@@ -137,6 +137,16 @@ esp_err_t Configuration::initialize_leds(void)
     return err;
 }
 
+void Configuration::flicker_led(gpio_num_t led)
+{
+    for(int i=0;i<15;i++){
+			gpio_set_level(led, 1);
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+			gpio_set_level(led, 0);
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+	}
+}
+
 esp_err_t Configuration::vibration_signal_sleep(void)
 {
     esp_err_t err = initialize_vib();
