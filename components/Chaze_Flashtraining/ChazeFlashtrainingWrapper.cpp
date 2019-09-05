@@ -87,3 +87,14 @@ float FlashtrainingWrapper_readCalibration(FlashtrainingWrapper_t * ft, uint8_t 
     obj = static_cast<Flashtraining *>(ft->obj);
     return obj->readCalibration(storage_address);
 }
+
+uint32_t FlashtrainingWrapper_get_number_of_unsynched_trainings(FlashtrainingWrapper_t * ft)
+{
+    Flashtraining *obj;
+
+    if(ft==NULL)
+        return -1;
+
+    obj = static_cast<Flashtraining *>(ft->obj);
+    return obj->get_number_of_unsynched_trainings();
+}

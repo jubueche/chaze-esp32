@@ -69,6 +69,11 @@ bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
 
 }
 
+// TODO: Needs implementation
+uint32_t Flashtraining::get_number_of_unsynched_trainings(){
+	return 2;
+}
+
 bool Flashtraining::write_training_cycle_pressure(long Time, float Pressure) {
 	if (!_Check_or_Initialize()) return false;
 	if (_STATE == 2) {

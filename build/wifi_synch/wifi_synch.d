@@ -1,5 +1,6 @@
 wifi_synch.o: \
- /home/julian/Documents/chaze-esp32/components/wifi_synch/wifi_synch.c \
+ /home/julian/Documents/chaze-esp32/components/wifi_synch/wifi_synch.cpp \
+ /home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/esp/esp-idf/components/newlib/include/machine/_default_types.h \
@@ -50,9 +51,6 @@ wifi_synch.o: \
  /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
  /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
  /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h \
- /home/julian/esp/esp-idf/components/newlib/platform_include/errno.h \
- /home/julian/esp/esp-idf/components/newlib/include/errno.h \
- /home/julian/esp/esp-idf/components/newlib/include/sys/errno.h \
  /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
  /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h \
  /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h \
@@ -152,11 +150,56 @@ wifi_synch.o: \
  /home/julian/esp/esp-idf/components/esp32/include/esp_wifi.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h \
- /home/julian/esp/esp-idf/components/nvs_flash/include/nvs_flash.h \
- /home/julian/esp/esp-idf/components/nvs_flash/include/nvs.h \
- /home/julian/esp/esp-idf/components/spi_flash/include/esp_partition.h \
- /home/julian/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
- /home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h
+ /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h \
+ /home/julian/esp/esp-idf/components/driver/include/driver/i2c.h \
+ /home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
+ /home/julian/esp/esp-idf/components/newlib/include/math.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Print.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h \
+ /home/julian/esp/esp-idf/components/newlib/include/ctype.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/pgmspace.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Arduino.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp8266-compat.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/binary.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WCharacter.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Client.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Server.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Udp.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h
+
+/home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 
@@ -257,12 +300,6 @@ wifi_synch.o: \
 /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
 
 /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h:
-
-/home/julian/esp/esp-idf/components/newlib/platform_include/errno.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/errno.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/sys/errno.h:
 
 /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h:
 
@@ -462,13 +499,99 @@ wifi_synch.o: \
 
 /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h:
 
-/home/julian/esp/esp-idf/components/nvs_flash/include/nvs_flash.h:
+/home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h:
 
-/home/julian/esp/esp-idf/components/nvs_flash/include/nvs.h:
+/home/julian/esp/esp-idf/components/driver/include/driver/i2c.h:
 
-/home/julian/esp/esp-idf/components/spi_flash/include/esp_partition.h:
+/home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h:
 
-/home/julian/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h:
 
-/home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
-/home/julian/Documents/chaze-esp32/components/wifi_synch/./wifi_synch.c:
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/math.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-touch.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-dac.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-adc.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-i2c.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-ledc.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-rmt.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-sigmadelta.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-timer.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-bt.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-psram.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-cpu.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Print.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/ctype.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/pgmspace.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Arduino.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp8266-compat.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/stdlib_noniso.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/binary.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WCharacter.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Stream.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/WString.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Printable.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Client.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Server.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Udp.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
+/home/julian/Documents/chaze-esp32/components/wifi_synch/./wifi_synch.cpp:

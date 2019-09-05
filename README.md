@@ -18,6 +18,8 @@
 
 ## Flashtraining library further requirements
 
+- **Get number of unsynched trainings:** Upon call to ```uint32_t get_number_of_unsynched_trainings(void)``` should return the number of unsynched trainings. This function is already implemented and always returns 2. TODO: Implement correctly.
+
 - **New training:** Upon call to ```start_new_training()``` create a new training instance and populate fields such as starting write-index and date. Furthermore, switch states and check if enough space is available. Return ```ESP_OK``` on success or an error of type ```esp_err_t```.
 
 - **No lost training data:** After writing a block of a certain size, update the training object/struct to hold the current write index in case the device dies (then the data is not lost).
@@ -26,7 +28,7 @@
 
 - **Store training meta data in memory:** Upon creating a new training, store the object in memory and update regularly during recording.
 
-- **Get training data:** Function that takes a pointer to a training struct and a pointer to a 512 byte buffer that fills the buffer perfectly and returns ```true``` if there is more to come and ```false``` if this was the last package. Signature: ```bool get_training_data(training_t * current_training, uint8_t *buf)```.
+- **Get training data:** Function that takes a pointer to a training struct and a pointer to a 512 byte buffer that fills the buffer perfectly and returns ```int32_t```. If there is more to come, returns -1, else: the number of bytes written.  Signature: ```int32_t get_training_data(training_t * current_training, uint8_t *buf)```.
 
 - **Write compressed chunk:** Function that receives a pointer to an array that is holding a variable amount of data. Second argument is the amount of data ```n```. Returns ```ESP_OK``` if successfully written to memory or any error otherwise. Signature: ```esp_err_t write_compressed_chunk(uint8_t *buf, uint32_t n)```.
 
@@ -41,6 +43,7 @@ One example would be ```char * get_device_id(void)```, which will be used like t
 
 - Make config class immutable
 - Add watchdog
+- Add documentation for record.
 
 ## Bugs when setting up
 
@@ -53,3 +56,5 @@ One example would be ```char * get_device_id(void)```, which will be used like t
 4) Delete AzureIoT from Arduino libraries and Camera library.
 
 5) Fix I2C bug, which can be found [here](https://github.com/espressif/esp-idf/issues/680) (see arsinios answer)
+
+6) Not a bug, but avoids redefinition warning: Uncomment ```#define DEC(x) C2(DEC,x)``` in ```esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h```.

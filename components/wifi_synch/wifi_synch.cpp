@@ -1,29 +1,3 @@
-#include "esp_log.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "string.h"
-
-#include "azure_c_shared_utility/shared_util_options.h"
-#include "iothub.h"
-#include "iothub_device_client_ll.h"
-#include "iothub_message.h"
-#include "iothubtransporthttp.h"
-#include "azure_c_shared_utility/agenttime.h"
-
-
-#include "certs.h"
-
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/event_groups.h"
-#include "freertos/semphr.h"
-#include "freertos/task.h"
-#include "esp_event_loop.h"
-#include "esp_wifi.h"
-#include "esp_log.h"
-#include "nvs_flash.h"
-
 #include "wifi_synch.h"
 
 
@@ -41,7 +15,7 @@ static char password[32] = "Fussball08";
 static char deviceId[32] = "chaze-2";
 
 
-const char * TAG = "Chaze-WIFI-Synch";
+const char * TAG_WiFi = "Chaze-WIFI-Synch";
 
 /**
  * TODO: Must be saved in non-erasable memory
@@ -71,19 +45,19 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
 switch(event->event_id) {
 case SYSTEM_EVENT_STA_START:
-ESP_LOGI(TAG, "SYSTEM_EVENT_STA_START");
+ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_START");
 if(allow_to_connect){
 	ESP_ERROR_CHECK(esp_wifi_connect());
 }
 break;
 case SYSTEM_EVENT_STA_GOT_IP:
-ESP_LOGI(TAG, "SYSTEM_EVENT_STA_GOT_IP");
-ESP_LOGI(TAG, "got ip:%s\n",
+ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_GOT_IP");
+ESP_LOGI(TAG_WiFi, "got ip:%s\n",
 	ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
 	break;
 case SYSTEM_EVENT_STA_DISCONNECTED:
-ESP_LOGI(TAG, "SYSTEM_EVENT_STA_DISCONNECTED");
+ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_DISCONNECTED");
 //ESP_ERROR_CHECK(esp_wifi_connect());
 xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
 break;
@@ -101,70 +75,79 @@ return ESP_OK;
  */
 void synch_via_wifi(void *pvParameter)
 {
-	esp_err_t ret = nvs_flash_init();
-	if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-		if(nvs_flash_erase() == ESP_OK){
-			if(nvs_flash_init() != ESP_OK){
-				ESP_LOGE(TAG, "Failed to init NVS flash.");
-				vTaskDelete(NULL);
-			}
-		} else{
-			ESP_LOGE(TAG, "Failed to erase flash.");
-			vTaskDelete(NULL);
+	config.wifi_connected = false;
+	config.wifi_synch_semaphore = xSemaphoreCreateBinary();
+	xSemaphoreGive(config.wifi_synch_semaphore);
+
+	for(;;)
+	{
+		if(xSemaphoreTake(config.wifi_synch_semaphore, LONG_TIME) == pdTRUE){
+			ESP_LOGI(TAG_WiFi, "Acquired wifi_synch_semaphore.");
+			break;
 		}
-
+		vTaskDelay(80 / portTICK_PERIOD_MS);
 	}
+	
+	xSemaphore = xSemaphoreCreateBinary();
+	xSemaphoreGive(xSemaphore);
 
-	bool connected = false;
-	/**
-	 * TODO: Change this to while(STATE == ADVERTISING)
-	 */
-	while(1){
-		connected = poll_wifi();
-		if(connected){
-			ESP_LOGI(TAG, "Connected to WiFi, syncing data now...");
-			xSemaphore = xSemaphoreCreateBinary();
+	// Continue to try and synch even if we are connected with the phone.
+	// We will stay in Adv. mode max. 10min. This should be more than enough time to try & synch. We continue to
+	// Synch in connected mode.
+	while(config.STATE == ADVERTISING || config.STATE == CONNECTED ){
 
-			if (xTaskCreate(&synch_with_azure, "synch_with_azure", 1024 * 8, NULL, 5, NULL) != pdPASS )
+		// TODO Check if there are any trainings that need to be synched. If yes, continue else clean up and return.
+
+		config.wifi_connected = poll_wifi();
+		if(config.wifi_connected){
+			ESP_LOGI(TAG_WiFi, "Connected to WiFi, syncing data now...");
+
+			if (xTaskCreate(&synch_with_azure, "synch_with_azure", 1024 * 8, NULL, 5, &synch_with_azure_task_handle) != pdPASS )
 			{
-				ESP_LOGE(TAG, "Creating synch_azure task failed.");
+				ESP_LOGE(TAG_WiFi, "Creating synch_azure task failed.");
 				break; //Shall exit the while loop and clean up resources
 			}
+
+			// Let the azure-task acquire the lock first.
+			vTaskDelay(1000 / portTICK_PERIOD_MS);
 
 			for(;;){
 				 if( xSemaphoreTake( xSemaphore, LONG_TIME ) == pdTRUE )
 				 {
-					ESP_LOGI(TAG, "Azure is done and acquired the semaphore. Returning...");
+					ESP_LOGI(TAG_WiFi, "Azure is done and acquired the semaphore. Returning...");
 					break; //Shall exit for(;;) loop
 				 }
+				 vTaskDelay(200 / portTICK_PERIOD_MS);
+				 ESP_LOGI(TAG_WiFi, "Waiting for lock...");
 			}
 			break; //Shall exit while loop
 
 		} else{
-			ESP_LOGI(TAG, "Not connected. Going back to sleep...");
-			const int wakeup_time_sec = SCAN_INTERVAL; // in sec
-			ESP_LOGI(TAG, "Enabling timer wakeup, %ds", wakeup_time_sec);
-			if(esp_sleep_enable_timer_wakeup(wakeup_time_sec * 1000000) == ESP_OK){
-				if(esp_light_sleep_start() != ESP_OK){
-					ESP_LOGE(TAG, "Failed to enter light sleep.");
+			unsigned long tmp_timer = millis();
+			bool tmp_state_switched = false;
+			while(millis() - tmp_timer < SCAN_INTERVAL*1000)
+			{
+				if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
+				{
+					tmp_state_switched = true;
 					break;
 				}
-			} else{
-				ESP_LOGE(TAG, "Failed to enable on timer out wake up.");
-				break;
+				vTaskDelay(100 / portTICK_PERIOD_MS);
 			}
-			ESP_LOGI(TAG,"Woke up.");
+			if(tmp_state_switched)
+				break;
 		}
 	}
-	ESP_LOGI(TAG, "Done. Stopping WiFi");
+	ESP_LOGI(TAG_WiFi, "Done. Stopping WiFi");
 	allow_to_connect = false;
 	if(esp_wifi_stop() == ESP_OK){
 		if(esp_wifi_deinit() != ESP_OK){
-			ESP_LOGE(TAG, "Failed to deinit WiFi");
+			ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
 		}
 	} else {
-		ESP_LOGE(TAG, "Could not stop WiFi");
+		ESP_LOGE(TAG_WiFi, "Could not stop WiFi");
 	}
+	xSemaphoreGive(config.wifi_synch_semaphore);
 	vTaskDelete(NULL);
 }
 
@@ -185,7 +168,7 @@ void get_data(unsigned char * data, int n)
 			nums[0], nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7], nums[8], nums[9], nums[10], nums[11],nums[12]);
 	free(nums);
 	if(n < 4*13+13+2){
-		ESP_LOGE(TAG, "Need more memory.");
+		ESP_LOGE(TAG_WiFi, "Need more memory.");
 	}
 	memcpy(data, fl, strlen(fl));
 
@@ -219,24 +202,29 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
             	//This indicates the last block has been written.
                 *data = NULL;
                 *size = 0;
-                ESP_LOGI(TAG, "Indicating upload is complete (%d blocks uploaded)", block_count);
+                ESP_LOGI(TAG_WiFi, "Indicating upload is complete (%d blocks uploaded)", block_count);
             }
         }
         else
         {
             // The last call to this callback is to indicate the result of uploading the previous data block provided.
             // Note: In this last call, data and size pointers are NULL.
-            ESP_LOGI(TAG, "Last call to getDataCallback (result for %dth block uploaded: %s)", block_count, ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
+            ESP_LOGI(TAG_WiFi, "Last call to getDataCallback (result for %dth block uploaded: %s)", block_count, ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
         }
     }
     else
     {
-        ESP_LOGE(TAG, "Received unexpected result %s", ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
+        ESP_LOGE(TAG_WiFi, "Received unexpected result %s", ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
     }
 
     // This callback returns IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_OK to indicate that the upload shall continue.
     // To abort the upload, it should return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_ABORT
-    return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_OK;
+	if(config.STATE == ADVERTISING || config.STATE == CONNECTED){
+		return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_OK;
+	} else {
+		// Abort if we are suddently in RECORD or DEEPSLEEP state.
+		return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_ABORT;
+	}
 }
 
 /**
@@ -245,54 +233,72 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
  */
 void synch_with_azure(void *pvParameter)
 {
-	IOTHUB_DEVICE_CLIENT_LL_HANDLE device_ll_handle;
+
+	for(;;){
+		if( xSemaphoreTake( xSemaphore, LONG_TIME ) == pdTRUE )
+		{
+			ESP_LOGI(TAG_WiFi, "Azure task got the lock...");
+			break; //Shall exit for(;;) loop
+		}
+		vTaskDelay(100 / portTICK_PERIOD_MS);
+		ESP_LOGI(TAG_WiFi, "Azure task waiting for lock...");
+	}
+
 	(void)IoTHub_Init();
 	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(connectionString, HTTP_Protocol);
 
 	if (device_ll_handle == NULL)
 	{
-		ESP_LOGE(TAG, "Failure creating Iothub device. Check conn string.");
+		ESP_LOGE(TAG_WiFi, "Failure creating Iothub device. Check conn string.");
 	}
 	else
 	{
+
 		//IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
+		if(config.STATE == ADVERTISING || config.STATE == CONNECTED)
+		{
 
-		time_t now;
-		time_t tmp;
-		now = get_time(&tmp);
+			time_t now;
+			time_t tmp;
+			now = get_time(&tmp);
 
-		char strftime_buf[64];
-		struct tm timeinfo;
+			// TODO Set RTC time here
 
-		localtime_r(&now, &timeinfo);
-		strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
+			char strftime_buf[64];
+			struct tm timeinfo;
 
-		for(int i=0;i<strlen(strftime_buf);i++){
-			if(strftime_buf[i] == ' '){
-				strftime_buf[i] = '_';
+			localtime_r(&now, &timeinfo);
+			strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
+
+			for(int i=0;i<strlen(strftime_buf);i++){
+				if(strftime_buf[i] == ' '){
+					strftime_buf[i] = '_';
+				}
+			}
+			char file_name[128]; //64+32+puffer
+			strcpy(file_name, deviceId);
+			strcat(file_name, "_");
+			strcat(file_name, strftime_buf);
+			strcat(file_name, ".txt");
+
+			if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
+			{
+				ESP_LOGE(TAG_WiFi, "Failed to upload");
+			}
+			else
+			{
+				ESP_LOGI(TAG_WiFi, "Successful upload.");
 			}
 		}
-		char file_name[128]; //64+32+puffer
-		strcpy(file_name, deviceId);
-		strcat(file_name, "_");
-		strcat(file_name, strftime_buf);
-		strcat(file_name, ".txt");
 
-		if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
-		{
-			ESP_LOGE(TAG, "Failed to upload");
-		}
-		else
-		{
-			ESP_LOGI(TAG, "Successful upload.");
-		}
 		IoTHubDeviceClient_LL_Destroy(device_ll_handle);
 	}
 	IoTHub_Deinit();
 	if(xSemaphoreGive(xSemaphore) != pdTRUE)
 	{
-		ESP_LOGE(TAG, "Failed to release the semaphore.");
+		ESP_LOGE(TAG_WiFi, "Failed to release the semaphore.");
 	}
+	ESP_LOGI(TAG_WiFi, "Delete this task.");
 	vTaskDelete(NULL);
 }
 
@@ -310,15 +316,15 @@ bool scan_for_ssid(void)
 		if(esp_wifi_set_mode(WIFI_MODE_STA) == ESP_OK){
 			if(esp_wifi_start() != ESP_OK){
 				//No need to clean up
-				ESP_LOGE(TAG, "Failed to start WiFi");
+				ESP_LOGE(TAG_WiFi, "Failed to start WiFi");
 				return false;
 			}
 		} else{
-			ESP_LOGE(TAG, "Failed to set WiFi mode.");
+			ESP_LOGE(TAG_WiFi, "Failed to set WiFi mode.");
 			return false;
 		}
 	} else{
-		ESP_LOGE(TAG, "Failed to initialize WiFi");
+		ESP_LOGE(TAG_WiFi, "Failed to initialize WiFi");
 		return false;
 	}
 
@@ -330,27 +336,31 @@ bool scan_for_ssid(void)
 		.show_hidden = true
 	};
 	if(esp_wifi_scan_start(&scan_config, true) != ESP_OK){
-		ESP_LOGE(TAG, "Failed to start scanning.");
+		ESP_LOGE(TAG_WiFi, "Failed to start scanning.");
 		return false;
 	}
 
 	uint16_t ap_num = MAX_APs;
 	wifi_ap_record_t ap_records[MAX_APs];
 	if(esp_wifi_scan_get_ap_records(&ap_num, ap_records) != ESP_OK){
-		ESP_LOGE(TAG, "Failed to get AP records.");
+		ESP_LOGE(TAG_WiFi, "Failed to get AP records.");
 		return false;
 	}
 
 	for(int i = 0; i < ap_num; i++){
-		ESP_LOGI(TAG, "Network found: %s\n", (char *)ap_records[i].ssid);
+		ESP_LOGI(TAG_WiFi, "Network found: %s\n", (char *)ap_records[i].ssid);
 		if(strcmp((char *)ap_records[i].ssid, ssid) == 0){
 			if(esp_wifi_stop() == ESP_OK){
 				if(esp_wifi_deinit() != ESP_OK){
-					ESP_LOGE(TAG, "Failed to deinit WiFi.");
+					ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi.");
 					return false;
-				} else return true;
+				} else {
+					if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
+						return false;
+					return true;
+				}
 			} else{
-				ESP_LOGE(TAG, "Failed to stop WiFi");
+				ESP_LOGE(TAG_WiFi, "Failed to stop WiFi");
 				return false;
 			}
 		}
@@ -358,10 +368,10 @@ bool scan_for_ssid(void)
 	esp_wifi_scan_stop();
 	if(esp_wifi_stop() == ESP_OK){
 		if(esp_wifi_deinit() != ESP_OK){
-			ESP_LOGE(TAG, "Failed to deinit WiFi.");
+			ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi.");
 		}
 	} else{
-			ESP_LOGE(TAG, "Failed to stop WiFi");
+			ESP_LOGE(TAG_WiFi, "Failed to stop WiFi");
 	}
 	return false;
 }
@@ -373,6 +383,9 @@ bool scan_for_ssid(void)
  */
 bool poll_wifi(void){
 
+	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
+		return false;
+
 	//First, scan to see if there is one ssid that matches ours.
 	bool tmp;
 	uint64_t start = (uint64_t) esp_timer_get_time();
@@ -380,26 +393,29 @@ bool poll_wifi(void){
 	printf("%lld\n", (uint64_t) esp_timer_get_time()-start);
 
 	allow_to_connect = true; //Enable connect on event STA_READY
-	ESP_LOGI(TAG, "Enabled allow_to_connect");
+	ESP_LOGI(TAG_WiFi, "Enabled allow_to_connect");
 
 	if(!tmp){
-		ESP_LOGI(TAG, "WiFi SSID not found.");
+		ESP_LOGI(TAG_WiFi, "WiFi SSID not found.");
 		allow_to_connect = false;
 		return false;
 	}
 
+	ESP_LOGI(TAG_WiFi, "Abort");
+	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
+		return false;
 
 	wifi_event_group = xEventGroupCreate();
 
 	tcpip_adapter_init();
 	esp_err_t ret = esp_event_loop_init(event_handler, NULL);
 	if(ret == ESP_FAIL){
-		ESP_LOGI(TAG, "Event handler already initialized. That is ok. Continue.\n");
+		ESP_LOGI(TAG_WiFi, "Event handler already initialized. That is ok. Continue.\n");
 	}
 
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
 	if(esp_wifi_init(&cfg) != ESP_OK){
-		ESP_LOGE(TAG, "Could not initialize WiFi.");
+		ESP_LOGE(TAG_WiFi, "Could not initialize WiFi.");
 		allow_to_connect = false;
 		return false;
 	}
@@ -410,18 +426,18 @@ bool poll_wifi(void){
 
 	wifi_config_t wifi_config = { .sta = sta_cnfg };
 	if(esp_wifi_set_mode(WIFI_MODE_STA) != ESP_OK){
-		ESP_LOGE(TAG, "Could not set WiFi mode.");
+		ESP_LOGE(TAG_WiFi, "Could not set WiFi mode.");
 		allow_to_connect = false;
 		return false;
 	}
 	if(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) != ESP_OK){
-		ESP_LOGE(TAG, "Could not set WiFi config.");
+		ESP_LOGE(TAG_WiFi, "Could not set WiFi config.");
 		allow_to_connect = false;
 		return false;
 	}
 
 	if(esp_wifi_start() != ESP_OK){
-		ESP_LOGE(TAG, "WiFi start error.");
+		ESP_LOGE(TAG_WiFi, "WiFi start error.");
 		allow_to_connect = false;
 		return false;
 	}
@@ -436,14 +452,14 @@ bool poll_wifi(void){
 	} else{
 		if(esp_wifi_stop() == ESP_OK){
 			if(esp_wifi_deinit() != ESP_OK){
-				ESP_LOGE(TAG, "Failed to deinit WiFi");
+				ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
 			}
 		} else {
-			ESP_LOGE(TAG, "Could not stop WiFi");
+			ESP_LOGE(TAG_WiFi, "Could not stop WiFi");
 		}
-		ESP_LOGE(TAG, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
+		ESP_LOGE(TAG_WiFi, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
 		allow_to_connect = false;
-		ESP_LOGI(TAG, "Disabled connect on STA mode.");
+		ESP_LOGI(TAG_WiFi, "Disabled connect on STA mode.");
 		return false;
 	}
 }
@@ -456,3 +472,4 @@ char * get_password(void)
 {
 	return password;
 }
+

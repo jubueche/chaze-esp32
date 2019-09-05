@@ -4,6 +4,14 @@
 Configuration config;
 
 
+uint32_t Configuration::get_number_of_unsynched_trainings(void)
+{
+    FlashtrainingWrapper *ft = FlashtrainingWrapper_create();
+    uint32_t num_unsynched_trainings = FlashtrainingWrapper_get_number_of_unsynched_trainings(ft);
+    FlashtrainingWrapper_destroy(ft);
+    return num_unsynched_trainings;
+}
+
 void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned long sample_time)
 {
     long tmp = *(long*)&pressure;
@@ -135,6 +143,11 @@ esp_err_t Configuration::initialize_leds(void)
     io_conf.pull_up_en = GPIO_PULLUP_DISABLE;
     esp_err_t err =  gpio_config(&io_conf);
     return err;
+}
+
+int Configuration::random_between(int l, int u)
+{
+    return (rand() % (u-l)) + l; 
 }
 
 void Configuration::flicker_led(gpio_num_t led)

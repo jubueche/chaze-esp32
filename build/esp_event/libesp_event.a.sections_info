@@ -65,149 +65,143 @@ esp_event.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.handler_execute 00000010  00000000  00000000  00000034  2**2
+  0 .literal.handler_instances_add 00000014  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.handler_instances_add 00000014  00000000  00000000  00000044  2**2
+  1 .literal.base_node_add_handler 00000020  00000000  00000000  00000048  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.base_node_add_handler 00000020  00000000  00000000  00000058  2**2
+  2 .literal.loop_node_add_handler 00000024  00000000  00000000  00000068  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.loop_node_add_handler 00000024  00000000  00000000  00000078  2**2
+  3 .literal.post_instance_delete 00000004  00000000  00000000  0000008c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.post_instance_delete 00000004  00000000  00000000  0000009c  2**2
+  4 .literal.handler_instances_remove_all 00000004  00000000  00000000  00000090  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.handler_instances_remove_all 00000004  00000000  00000000  000000a0  2**2
+  5 .literal.base_node_remove_all_handler 0000000c  00000000  00000000  00000094  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.base_node_remove_all_handler 0000000c  00000000  00000000  000000a4  2**2
+  6 .literal.loop_node_remove_all_handler 0000000c  00000000  00000000  000000a0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal.loop_node_remove_all_handler 0000000c  00000000  00000000  000000b0  2**2
+  7 .literal.handler_instances_remove 00000004  00000000  00000000  000000ac  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal.handler_instances_remove 00000004  00000000  00000000  000000bc  2**2
+  8 .literal.base_node_remove_handler 0000000c  00000000  00000000  000000b0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .literal.base_node_remove_handler 0000000c  00000000  00000000  000000c0  2**2
+  9 .literal.loop_node_remove_handler 00000010  00000000  00000000  000000bc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .literal.loop_node_remove_handler 00000010  00000000  00000000  000000cc  2**2
+ 10 .literal.post_instance_create 00000018  00000000  00000000  000000cc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .literal.post_instance_create 00000024  00000000  00000000  000000dc  2**2
+ 11 .literal.esp_event_loop_create 00000068  00000000  00000000  000000e4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .literal.esp_event_loop_create 00000080  00000000  00000000  00000100  2**2
+ 12 .literal.esp_event_loop_run 0000004c  00000000  00000000  0000014c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .literal.esp_event_loop_run 0000004c  00000000  00000000  00000180  2**2
+ 13 .literal.esp_event_loop_run_task 00000018  00000000  00000000  00000198  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 14 .literal.esp_event_loop_run_task 00000024  00000000  00000000  000001cc  2**2
+ 14 .literal.esp_event_loop_delete 00000038  00000000  00000000  000001b0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .literal.esp_event_loop_delete 00000048  00000000  00000000  000001f0  2**2
+ 15 .literal.esp_event_handler_register_with 0000004c  00000000  00000000  000001e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .literal.esp_event_handler_register_with 0000004c  00000000  00000000  00000238  2**2
+ 16 .literal.esp_event_handler_unregister_with 0000003c  00000000  00000000  00000234  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .literal.esp_event_handler_unregister_with 0000003c  00000000  00000000  00000284  2**2
+ 17 .literal.esp_event_post_to 0000004c  00000000  00000000  00000270  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .literal.esp_event_post_to 00000058  00000000  00000000  000002c0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .text         00000000  00000000  00000000  00000318  2**0
+ 18 .text         00000000  00000000  00000000  000002bc  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 20 .data         00000000  00000000  00000000  00000318  2**0
+ 19 .data         00000000  00000000  00000000  000002bc  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 21 .bss          00000000  00000000  00000000  00000318  2**0
+ 20 .bss          00000000  00000000  00000000  000002bc  2**0
                   ALLOC
- 22 .rodata.handler_execute.str1.4 00000046  00000000  00000000  00000318  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 23 .text.handler_execute 0000003f  00000000  00000000  00000360  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 24 .rodata.handler_instances_add.str1.4 0000003f  00000000  00000000  000003a0  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 25 .text.handler_instances_add 00000061  00000000  00000000  000003e0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 26 .rodata.base_node_add_handler.str1.4 00000034  00000000  00000000  00000444  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 27 .text.base_node_add_handler 000000b1  00000000  00000000  00000478  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 28 .rodata.loop_node_add_handler.str1.4 0000003e  00000000  00000000  0000052c  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 29 .text.loop_node_add_handler 000000d9  00000000  00000000  0000056c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 30 .text.post_instance_delete 0000000e  00000000  00000000  00000648  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 31 .text.handler_instances_remove_all 00000031  00000000  00000000  00000658  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .text.base_node_remove_all_handler 00000046  00000000  00000000  0000068c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 33 .text.loop_node_remove_all_handler 00000046  00000000  00000000  000006d4  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .text.handler_instances_remove 00000041  00000000  00000000  0000071c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 35 .text.base_node_remove_handler 00000067  00000000  00000000  00000760  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 36 .text.loop_node_remove_handler 00000079  00000000  00000000  000007c8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 37 .rodata.post_instance_create.str1.4 00000071  00000000  00000000  00000844  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 38 .text.post_instance_create 00000082  00000000  00000000  000008b8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 39 .rodata.esp_event_loop_create.str1.4 0000017a  00000000  00000000  0000093c  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 40 .text.esp_event_loop_create 0000014e  00000000  00000000  00000ab8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 41 .rodata.esp_event_loop_run.str1.4 00000066  00000000  00000000  00000c08  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 42 .text.esp_event_loop_run 00000152  00000000  00000000  00000c70  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 43 .rodata.esp_event_loop_run_task.str1.4 0000005e  00000000  00000000  00000dc4  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 44 .text.esp_event_loop_run_task 0000004f  00000000  00000000  00000e24  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 45 .rodata.esp_event_loop_delete.str1.4 00000020  00000000  00000000  00000e74  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 46 .text.esp_event_loop_delete 000000c2  00000000  00000000  00000e94  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 47 .rodata.esp_event_handler_register_with.str1.4 0000009a  00000000  00000000  00000f58  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 48 .text.esp_event_handler_register_with 00000120  00000000  00000000  00000ff4  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 49 .rodata.esp_event_handler_unregister_with.str1.4 00000054  00000000  00000000  00001114  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 50 .text.esp_event_handler_unregister_with 000000cd  00000000  00000000  00001168  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 51 .rodata.esp_event_post_to.str1.4 00000070  00000000  00000000  00001238  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 52 .text.esp_event_post_to 00000124  00000000  00000000  000012a8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 53 .text.esp_event_dump 00000007  00000000  00000000  000013cc  2**2
+ 21 .text.handler_execute 00000012  00000000  00000000  000002bc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 54 .rodata.__func__$7028 00000012  00000000  00000000  000013d4  2**2
+ 22 .rodata.handler_instances_add.str1.4 00000047  00000000  00000000  000002d0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 55 .rodata.__func__$7008 00000022  00000000  00000000  000013e8  2**2
+ 23 .text.handler_instances_add 00000061  00000000  00000000  00000318  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 24 .rodata.base_node_add_handler.str1.4 00000034  00000000  00000000  0000037c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 56 .rodata.__func__$6992 00000020  00000000  00000000  0000140c  2**2
+ 25 .text.base_node_add_handler 000000b1  00000000  00000000  000003b0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 26 .rodata.loop_node_add_handler.str1.4 0000003e  00000000  00000000  00000464  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 57 .rodata.__func__$6969 00000016  00000000  00000000  0000142c  2**2
+ 27 .text.loop_node_add_handler 000000d9  00000000  00000000  000004a4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 28 .text.post_instance_delete 0000000e  00000000  00000000  00000580  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 29 .text.handler_instances_remove_all 00000031  00000000  00000000  00000590  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 30 .text.base_node_remove_all_handler 00000046  00000000  00000000  000005c4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 31 .text.loop_node_remove_all_handler 00000046  00000000  00000000  0000060c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 32 .text.handler_instances_remove 00000041  00000000  00000000  00000654  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 33 .text.base_node_remove_handler 00000067  00000000  00000000  00000698  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 34 .text.loop_node_remove_handler 00000079  00000000  00000000  00000700  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 35 .rodata.post_instance_create.str1.4 00000041  00000000  00000000  0000077c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 58 .rodata.__func__$6934 00000013  00000000  00000000  00001444  2**2
+ 36 .text.post_instance_create 00000064  00000000  00000000  000007c0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 37 .rodata.esp_event_loop_create.str1.4 00000125  00000000  00000000  00000824  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 59 .rodata.__func__$6925 00000016  00000000  00000000  00001458  2**2
+ 38 .text.esp_event_loop_create 00000118  00000000  00000000  0000094c  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 39 .rodata.esp_event_loop_run.str1.4 00000066  00000000  00000000  00000a64  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 60 .debug_frame  000001f0  00000000  00000000  00001470  2**2
+ 40 .text.esp_event_loop_run 00000152  00000000  00000000  00000acc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 41 .rodata.esp_event_loop_run_task.str1.4 00000032  00000000  00000000  00000c20  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 42 .text.esp_event_loop_run_task 00000034  00000000  00000000  00000c54  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 43 .text.esp_event_loop_delete 000000a8  00000000  00000000  00000c88  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 44 .rodata.esp_event_handler_register_with.str1.4 0000009a  00000000  00000000  00000d30  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 45 .text.esp_event_handler_register_with 00000120  00000000  00000000  00000dcc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 46 .rodata.esp_event_handler_unregister_with.str1.4 00000054  00000000  00000000  00000eec  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 47 .text.esp_event_handler_unregister_with 000000cd  00000000  00000000  00000f40  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 48 .rodata.esp_event_post_to.str1.4 00000048  00000000  00000000  00001010  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 49 .text.esp_event_post_to 00000100  00000000  00000000  00001058  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 50 .text.esp_event_dump 00000007  00000000  00000000  00001158  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 51 .rodata.__func__$7028 00000012  00000000  00000000  00001160  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 52 .rodata.__func__$7008 00000022  00000000  00000000  00001174  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 53 .rodata.__func__$6992 00000020  00000000  00000000  00001198  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 54 .rodata.__func__$6969 00000016  00000000  00000000  000011b8  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 55 .rodata.__func__$6934 00000013  00000000  00000000  000011d0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 56 .rodata.__func__$6925 00000016  00000000  00000000  000011e4  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 57 .debug_frame  000001f0  00000000  00000000  000011fc  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 61 .debug_info   00003c11  00000000  00000000  00001660  2**0
+ 58 .debug_info   00003a34  00000000  00000000  000013ec  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 62 .debug_abbrev 00000420  00000000  00000000  00005271  2**0
+ 59 .debug_abbrev 0000041d  00000000  00000000  00004e20  2**0
                   CONTENTS, READONLY, DEBUGGING
- 63 .debug_loc    00001216  00000000  00000000  00005691  2**0
+ 60 .debug_loc    0000119d  00000000  00000000  0000523d  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 64 .debug_aranges 000000b8  00000000  00000000  000068a7  2**0
+ 61 .debug_aranges 000000b8  00000000  00000000  000063da  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 65 .debug_ranges 000000f0  00000000  00000000  0000695f  2**0
+ 62 .debug_ranges 000000f0  00000000  00000000  00006492  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 66 .debug_line   00002667  00000000  00000000  00006a4f  2**0
+ 63 .debug_line   0000251b  00000000  00000000  00006582  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 67 .debug_str    00001d80  00000000  00000000  000090b6  2**0
+ 64 .debug_str    00001d80  00000000  00000000  00008a9d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 68 .comment      00000028  00000000  00000000  0000ae36  2**0
+ 65 .comment      00000028  00000000  00000000  0000a81d  2**0
                   CONTENTS, READONLY
- 69 .xtensa.info  00000038  00000000  00000000  0000ae5e  2**0
+ 66 .xtensa.info  00000038  00000000  00000000  0000a845  2**0
                   CONTENTS, READONLY
- 70 .xt.lit       00000098  00000000  00000000  0000ae96  2**0
+ 67 .xt.lit       00000090  00000000  00000000  0000a87d  2**0
                   CONTENTS, RELOC, READONLY
- 71 .xt.prop      00000c78  00000000  00000000  0000af2e  2**0
+ 68 .xt.prop      00000c54  00000000  00000000  0000a90d  2**0
                   CONTENTS, RELOC, READONLY
 
 esp_event_private.o:     file format elf32-xtensa-le

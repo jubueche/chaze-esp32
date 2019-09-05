@@ -134,7 +134,9 @@ MAX30101.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
- /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h
+ /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h
 
 /home/julian/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -405,4 +407,8 @@ MAX30101.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
 /home/julian/Documents/chaze-esp32/components/MAX30101/./MAX30101.cpp:

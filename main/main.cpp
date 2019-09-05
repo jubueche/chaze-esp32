@@ -11,7 +11,7 @@ extern "C" void app_main()
 
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
 	//! Change to ADVERTISING
-	config.STATE = RECORD;
+	config.STATE = ADVERTISING;
 
 	while(1)
 	{

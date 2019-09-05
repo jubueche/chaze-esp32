@@ -27,6 +27,7 @@ class Flashtraining
     Flashtraining(void);
 
     //WRITE TRAINING
+    uint32_t get_number_of_unsynched_trainings(void);
     bool start_new_training();
     bool stop_training();
     bool write_training_cycle_pressure(long Time, float Pressure);

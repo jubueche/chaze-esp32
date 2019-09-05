@@ -161,7 +161,14 @@ Chaze_ble.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
- /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h
+ /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
+ /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h \
+ /home/julian/esp/esp-idf/components/driver/include/driver/i2c.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h
 
 /home/julian/Documents/chaze-esp32/components/Chaze_ble/include/Chaze_ble.h:
 
@@ -486,4 +493,18 @@ Chaze_ble.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
+
+/home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h:
+
+/home/julian/esp/esp-idf/components/driver/include/driver/i2c.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/Wire/src/Wire.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
 /home/julian/Documents/chaze-esp32/components/Chaze_ble/./Chaze_ble.cpp:

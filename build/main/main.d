@@ -139,6 +139,8 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h \
  /home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h \
  /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/BNO055.h \
@@ -150,8 +152,94 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h \
  /home/julian/Documents/chaze-esp32/components/MS5837/include/MS5837.h \
  /home/julian/Documents/chaze-esp32/components/compression/include/compression.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h
+ /home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_ble/include/Chaze_ble.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDevice.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gattc_api.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/include/esp_bt.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_task.h \
+ /home/julian/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEServer.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAdvertising.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEService.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLESecurity.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteCharacteristic.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteDescriptor.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAdvertisedDevice.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEScan.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUtils.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEServer.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUtils.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLE2902.h \
+ /home/julian/esp/esp-idf/components/nvs_flash/include/nvs_flash.h \
+ /home/julian/esp/esp-idf/components/nvs_flash/include/nvs.h \
+ /home/julian/esp/esp-idf/components/spi_flash/include/esp_partition.h \
+ /home/julian/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h \
+ /home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/shared_util_options.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_device_client_ll.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_transport_ll.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_ll.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_common.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h \
+ /home/julian/Documents/chaze-esp32/components/esp-azure/port/inc/certs.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_event_loop.h \
+ /home/julian/esp/esp-idf/components/esp_event/include/esp_event.h \
+ /home/julian/esp/esp-idf/components/esp_event/include/esp_event_base.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_event_legacy.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_types.h \
+ /home/julian/esp/esp-idf/components/esp32/include/rom/queue.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_interface.h \
+ /home/julian/esp/esp-idf/components/tcpip_adapter/include/tcpip_adapter.h \
+ /home/julian/esp/esp-idf/components/esp32/include/rom/queue.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_types.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip_addr.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/opt.h \
+ /home/julian/esp/esp-idf/components/lwip/port/esp32/include/lwipopts.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/fcntl.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/_default_fcntl.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/stat.h \
+ /home/julian/esp/esp-idf/components/vfs/include/sys/ioctl.h \
+ /home/julian/esp/esp-idf/components/newlib/platform_include/sys/select.h \
+ /home/julian/esp/esp-idf/components/lwip/port/esp32/include/netif/dhcp_state.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/debug.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/arch.h \
+ /home/julian/esp/esp-idf/components/lwip/port/esp32/include/arch/cc.h \
+ /home/julian/esp/esp-idf/components/lwip/port/esp32/include/arch/sys_arch.h \
+ /home/julian/esp/esp-idf/components/lwip/port/esp32/include/arch/vfs_lwip.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip4_addr.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip6_addr.h \
+ /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h \
+ /home/julian/esp/esp-idf/components/lwip/include/apps/dhcpserver/dhcpserver.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_wifi.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Record/include/Chaze_Record.h:
 
@@ -433,6 +521,10 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
 
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
+
 /home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h:
 
 /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h:
@@ -455,7 +547,179 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/compression/include/compression.h:
 
-/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
-
 /home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_ble/include/Chaze_ble.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDevice.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gattc_api.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/include/esp_bt.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_task.h:
+
+/home/julian/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEServer.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAdvertising.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEService.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLESecurity.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteCharacteristic.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteDescriptor.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAdvertisedDevice.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEScan.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUtils.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEServer.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUtils.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLE2902.h:
+
+/home/julian/esp/esp-idf/components/nvs_flash/include/nvs_flash.h:
+
+/home/julian/esp/esp-idf/components/nvs_flash/include/nvs.h:
+
+/home/julian/esp/esp-idf/components/spi_flash/include/esp_partition.h:
+
+/home/julian/esp/esp-idf/components/spi_flash/include/esp_spi_flash.h:
+
+/home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/shared_util_options.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/const_defines.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/umock_c_prod.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_device_client_ll.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_transport_ll.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_ll.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_client_core_common.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/map.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/strings_types.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/crt_abstractions.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothub_message.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/iothub_client/inc/iothubtransporthttp.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/agenttime.h:
+
+/home/julian/Documents/chaze-esp32/components/esp-azure/port/inc/certs.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_event_loop.h:
+
+/home/julian/esp/esp-idf/components/esp_event/include/esp_event.h:
+
+/home/julian/esp/esp-idf/components/esp_event/include/esp_event_base.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_event_legacy.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_wifi_types.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/rom/queue.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_interface.h:
+
+/home/julian/esp/esp-idf/components/tcpip_adapter/include/tcpip_adapter.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/rom/queue.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_wifi_types.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip_addr.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/opt.h:
+
+/home/julian/esp/esp-idf/components/lwip/port/esp32/include/lwipopts.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/fcntl.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/_default_fcntl.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/stat.h:
+
+/home/julian/esp/esp-idf/components/vfs/include/sys/ioctl.h:
+
+/home/julian/esp/esp-idf/components/newlib/platform_include/sys/select.h:
+
+/home/julian/esp/esp-idf/components/lwip/port/esp32/include/netif/dhcp_state.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/debug.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/arch.h:
+
+/home/julian/esp/esp-idf/components/lwip/port/esp32/include/arch/cc.h:
+
+/home/julian/esp/esp-idf/components/lwip/port/esp32/include/arch/sys_arch.h:
+
+/home/julian/esp/esp-idf/components/lwip/port/esp32/include/arch/vfs_lwip.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip4_addr.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/ip6_addr.h:
+
+/home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h:
+
+/home/julian/esp/esp-idf/components/lwip/include/apps/dhcpserver/dhcpserver.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_wifi.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h:
 /home/julian/Documents/chaze-esp32/main/./main.cpp:

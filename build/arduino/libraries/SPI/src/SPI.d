@@ -140,7 +140,9 @@ libraries/SPI/src//SPI.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Udp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/IPAddress.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
- /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 
@@ -423,4 +425,8 @@ libraries/SPI/src//SPI.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/SPI/src//SPI.cpp:
