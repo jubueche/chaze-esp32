@@ -98,6 +98,19 @@ class Configuration {
   public:
 
     uint32_t get_number_of_unsynched_trainings(void);
+    /*
+    Training * get_current_to_be_synched_training(void); // Returns pointer to training object that is currently being synched.
+    int32_t get_next_buffer_of_training(Training *, uint8_t *); // Takes pointer to current training object to be synched and a buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
+    void completed_synch_of_training(Training *, bool); // Passes a boolean indicating whether the training that is passed as 1st argument was successfully synched.
+    uint32_t get_device_id(void); //Returns device ID
+    const char * get_azure_connection_string(void); // Returns connection string for Azure.
+    const char * get_wifi_ssid(void);
+    const char * get_wifi_password(void);
+    bool set_device_id(uint32_t); //Sets device ID
+    bool set_azure_connection_string(const char *); // Sets connection string for Azure.
+    bool set_wifi_ssid(const char *);
+    bool set_wifi_password(const char *);
+    */
 
     void populate_pressure(uint8_t *, float, unsigned long);
     void populate_bno(uint8_t *, float *, unsigned long);

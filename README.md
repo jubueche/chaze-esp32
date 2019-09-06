@@ -24,11 +24,11 @@
 
 - **No lost training data:** After writing a block of a certain size, update the training object/struct to hold the current write index in case the device dies (then the data is not lost).
 
-- **Training meta data:** Supply functions that let the caller query trainings by different indicators. ```get_unsynched_trainings()``` should return an array of trainings that have not been synched yet. ```get_all_trainings()``` should return an array of all the trainings available. If there are not trainings, return ```NULL```.
+- **Training meta data: [Optional]** Supply functions that let the caller query trainings by different indicators. ```get_unsynched_trainings()``` should return an array of trainings that have not been synched yet. ```get_all_trainings()``` should return an array of all the trainings available. If there are not trainings, return ```NULL```.
 
 - **Store training meta data in memory:** Upon creating a new training, store the object in memory and update regularly during recording.
 
-- **Get training data:** Function that takes a pointer to a training struct and a pointer to a 512 byte buffer that fills the buffer perfectly and returns ```int32_t```. If there is more to come, returns -1, else: the number of bytes written.  Signature: ```int32_t get_training_data(training_t * current_training, uint8_t *buf)```.
+- **Get training data:** Function that takes a pointer to a training struct and a pointer to a 512 byte buffer that fills the buffer perfectly and returns ```int32_t```. If there is more to come, returns -1, else: the number of bytes written.  Signature: ```int32_t get_training_data(Training * current_training, uint8_t *buf)```.
 
 - **Write compressed chunk:** Function that receives a pointer to an array that is holding a variable amount of data. Second argument is the amount of data ```n```. Returns ```ESP_OK``` if successfully written to memory or any error otherwise. Signature: ```esp_err_t write_compressed_chunk(uint8_t *buf, uint32_t n)```.
 
@@ -38,6 +38,21 @@
     - WiFi SSID
     - WiFi password
 One example would be ```char * get_device_id(void)```, which will be used like this: ```char * d_id = config.get_device_id();```. This function will internally make a call to a function in the flash library, which returns the deviceID.
+
+- **Functions:**
+```
+    Training * get_current_to_be_synched_training(void); // Returns pointer to training object that is currently being synched.
+    int32_t get_next_buffer_of_training(Training *, uint8_t *); // Takes pointer to current training object to be synched and a buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
+    void completed_synch_of_training(Training *, bool); // Passes a boolean indicating whether the training that is passed as 1st argument was successfully synched.
+    uint32_t get_device_id(void); //Returns device ID
+    const char * get_azure_connection_string(void); // Returns connection string for Azure.
+    const char * get_wifi_ssid(void);
+    const char * get_wifi_password(void);
+    bool set_device_id(uint32_t); //Sets device ID
+    bool set_azure_connection_string(const char *); // Sets connection string for Azure.
+    bool set_wifi_ssid(const char *);
+    bool set_wifi_password(const char *);
+```
 
 ## TODO
 

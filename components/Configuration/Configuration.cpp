@@ -12,6 +12,7 @@ uint32_t Configuration::get_number_of_unsynched_trainings(void)
     return num_unsynched_trainings;
 }
 
+
 void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned long sample_time)
 {
     long tmp = *(long*)&pressure;
