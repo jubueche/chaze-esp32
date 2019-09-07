@@ -29,16 +29,15 @@ extern "C" {
 #include "esp_wifi.h"
 #include "esp_log.h"
 #include "Configuration.h"
-
+#include "ChazeFlashtraining.h"
 
 void synch_via_wifi(void *);
 void synch_with_azure(void *);
 bool poll_wifi(void);
-char * get_ssid(void);
-char * get_password(void);
 
 static IOTHUB_DEVICE_CLIENT_LL_HANDLE device_ll_handle = NULL;
 static TaskHandle_t synch_with_azure_task_handle = NULL;
+static Flashtraining ft;
 
 #endif
 

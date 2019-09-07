@@ -197,7 +197,11 @@ wifi_synch.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtraining.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/SPIFlash.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/defines.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/SPI/src/SPI.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h
 
 /home/julian/Documents/chaze-esp32/components/wifi_synch/include/wifi_synch.h:
 
@@ -593,5 +597,13 @@ wifi_synch.o: \
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
 
-/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtraining.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/SPIFlash.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/defines.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/SPI/src/SPI.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
 /home/julian/Documents/chaze-esp32/components/wifi_synch/./wifi_synch.cpp:

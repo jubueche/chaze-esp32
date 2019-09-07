@@ -140,7 +140,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h \
  /home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h \
  /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/BNO055.h \
@@ -239,7 +238,12 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/esp/esp-idf/components/lwip/include/apps/dhcpserver/dhcpserver.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_wifi.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h \
- /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h
+ /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtraining.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/SPIFlash.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/defines.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/SPI/src/SPI.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Record/include/Chaze_Record.h:
 
@@ -523,8 +527,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
 
-/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
-
 /home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h:
 
 /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h:
@@ -722,4 +724,14 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_crypto_types.h:
 
 /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtraining.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/SPIFlash.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/defines.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/SPI/src/SPI.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
 /home/julian/Documents/chaze-esp32/main/./main.cpp:

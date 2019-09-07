@@ -5,6 +5,7 @@
 #include "Chaze_ble.h"
 #include "nvs_flash.h"
 #include "wifi_synch.h"
+#include "ChazeFlashtraining.h"
 
 static BNO055 bno_adv;
 static bool am_interrupt;

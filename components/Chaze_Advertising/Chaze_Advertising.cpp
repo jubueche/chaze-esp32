@@ -32,11 +32,13 @@ void advertise()
 			if(nvs_flash_init() != ESP_OK){
 				ESP_LOGE(TAG_Adv, "Failed to init NVS flash.");
 				config.STATE = DEEPSLEEP;
+                bno_adv.~BNO055();
                 return;
 			}
 		} else{
 			ESP_LOGE(TAG_Adv, "Failed to erase flash.");
             config.STATE = DEEPSLEEP;
+            bno_adv.~BNO055();
             return;
 		}
 

@@ -139,8 +139,7 @@ MS5837.o: /home/julian/Documents/chaze-esp32/components/MS5837/MS5837.cpp \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h
 
 /home/julian/Documents/chaze-esp32/components/MS5837/include/MS5837.h:
 
@@ -423,6 +422,4 @@ MS5837.o: /home/julian/Documents/chaze-esp32/components/MS5837/MS5837.cpp \
 /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
-
-/home/julian/Documents/chaze-esp32/components/Chaze_Training/include/Chaze_Training.h:
 /home/julian/Documents/chaze-esp32/components/MS5837/./MS5837.cpp:

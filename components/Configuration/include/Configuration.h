@@ -6,9 +6,7 @@
 #include "Wire.h"
 #include "Chaze_Realtime.h"
 #include "freertos/queue.h"
-//#include "ChazeFlashtraining.h"
 #include "ChazeFlashtrainingWrapper.h"
-#include "Chaze_Training.h"
 
 #define DEBUG 1
 

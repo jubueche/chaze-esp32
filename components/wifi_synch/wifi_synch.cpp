@@ -7,20 +7,9 @@
 #define SCAN_INTERVAL 20 //Scan every X seconds, then go to light sleep and resume
 #define LONG_TIME 0xffff
 
-/**
- * TODO: Must be saved in non-erasable memory
- */
-static char ssid[32] = "EatOrBeEaten";
-static char password[32] = "Fussball08";
-static char deviceId[32] = "chaze-2";
-
 
 const char * TAG_WiFi = "Chaze-WIFI-Synch";
 
-/**
- * TODO: Must be saved in non-erasable memory
- */
-static const char* connectionString = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=device-2;SharedAccessKey=lMPIGSbbyrWlMUDDi0wPgOL+NaM8ATwB3rkUiQp4xH8=";
 
 //This semaphore is used so that the synch_via_wifi task waits for the azure task to end.
 SemaphoreHandle_t xSemaphore = NULL;
@@ -70,11 +59,13 @@ return ESP_OK;
 /**
  * @brief Task to synch the data via WiFi. This task iteratively checks if the SSID router is available. If not, goes to light sleep
  * else connects to WiFi and synchs all the trainings in flash with Azure.
+ * Must be first task to be spawned in Advertising to initialize object. 
  * TODO: Maybe disable event handler
  * @param pvParameter
  */
 void synch_via_wifi(void *pvParameter)
 {
+	ft = Flashtraining();
 	config.wifi_connected = false;
 	config.wifi_synch_semaphore = xSemaphoreCreateBinary();
 	xSemaphoreGive(config.wifi_synch_semaphore);
@@ -96,7 +87,16 @@ void synch_via_wifi(void *pvParameter)
 	// Synch in connected mode.
 	while(config.STATE == ADVERTISING || config.STATE == CONNECTED ){
 
-		// TODO Check if there are any trainings that need to be synched. If yes, continue else clean up and return.
+		uint16_t number_of_unsynched_trainings = ft.get_number_of_unsynched_trainings();
+		// TODO Test that case
+		if(number_of_unsynched_trainings == 0)
+		{
+			xSemaphoreGive(config.wifi_synch_semaphore);
+			ft.~Flashtraining();
+			vSemaphoreDelete(xSemaphore);
+			vSemaphoreDelete(config.wifi_synch_semaphore);
+			vTaskDelete(NULL);
+		}
 
 		config.wifi_connected = poll_wifi();
 		if(config.wifi_connected){
@@ -238,14 +238,14 @@ void synch_with_azure(void *pvParameter)
 		if( xSemaphoreTake( xSemaphore, LONG_TIME ) == pdTRUE )
 		{
 			ESP_LOGI(TAG_WiFi, "Azure task got the lock...");
-			break; //Shall exit for(;;) loop
+			break;
 		}
 		vTaskDelay(100 / portTICK_PERIOD_MS);
 		ESP_LOGI(TAG_WiFi, "Azure task waiting for lock...");
 	}
 
 	(void)IoTHub_Init();
-	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(connectionString, HTTP_Protocol);
+	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(ft.get_azure_connection_string(), HTTP_Protocol);
 
 	if (device_ll_handle == NULL)
 	{
@@ -262,13 +262,16 @@ void synch_with_azure(void *pvParameter)
 			time_t tmp;
 			now = get_time(&tmp);
 
-			// TODO Set RTC time here
-
 			char strftime_buf[64];
 			struct tm timeinfo;
 
 			localtime_r(&now, &timeinfo);
 			strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
+
+			/*config.initialize_rtc(); 
+			rtc.set24Hour();
+			rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);
+			ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());*/
 
 			for(int i=0;i<strlen(strftime_buf);i++){
 				if(strftime_buf[i] == ' '){
@@ -276,7 +279,7 @@ void synch_with_azure(void *pvParameter)
 				}
 			}
 			char file_name[128]; //64+32+puffer
-			strcpy(file_name, deviceId);
+			strcpy(file_name, ft.get_device_id());
 			strcat(file_name, "_");
 			strcat(file_name, strftime_buf);
 			strcat(file_name, ".txt");
@@ -330,7 +333,7 @@ bool scan_for_ssid(void)
 
 	// configure and run the scan process in blocking mode
 	wifi_scan_config_t scan_config = {
-		.ssid = (uint8_t *) ssid,
+		.ssid = (uint8_t *) ft.get_wifi_ssid(),
 		.bssid = 0,
 		.channel = 0,
 		.show_hidden = true
@@ -347,9 +350,10 @@ bool scan_for_ssid(void)
 		return false;
 	}
 
+	const char * tmp_ssid = ft.get_wifi_ssid();
 	for(int i = 0; i < ap_num; i++){
 		ESP_LOGI(TAG_WiFi, "Network found: %s\n", (char *)ap_records[i].ssid);
-		if(strcmp((char *)ap_records[i].ssid, ssid) == 0){
+		if(strcmp((char *)ap_records[i].ssid, tmp_ssid) == 0){
 			if(esp_wifi_stop() == ESP_OK){
 				if(esp_wifi_deinit() != ESP_OK){
 					ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi.");
@@ -421,8 +425,8 @@ bool poll_wifi(void){
 	}
 
 	wifi_sta_config_t sta_cnfg = {};
-	strcpy((char *) sta_cnfg.ssid, ssid);
-	strcpy((char *) sta_cnfg.password, password);
+	strcpy((char *) sta_cnfg.ssid, ft.get_wifi_ssid());
+	strcpy((char *) sta_cnfg.password, ft.get_wifi_password());
 
 	wifi_config_t wifi_config = { .sta = sta_cnfg };
 	if(esp_wifi_set_mode(WIFI_MODE_STA) != ESP_OK){
@@ -463,13 +467,3 @@ bool poll_wifi(void){
 		return false;
 	}
 }
-
-char * get_ssid(void){
-	return ssid;
-}
-
-char * get_password(void)
-{
-	return password;
-}
-

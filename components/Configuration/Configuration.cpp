@@ -185,7 +185,11 @@ esp_err_t Configuration::vibration_signal_sleep(void)
 
 esp_err_t Configuration::initialize_rtc(void)
 {
-    Wire.begin(I2C_MASTER_SDA_IO,I2C_MASTER_SCL_IO,I2C_MASTER_FREQ_HZ);
+    if(! Wire.begin(I2C_MASTER_SDA_IO,I2C_MASTER_SCL_IO,I2C_MASTER_FREQ_HZ))
+    {
+        ESP_LOGE(TAG, "RTC: Failed to start I2C.");
+        return ESP_FAIL;
+    }
     if (rtc.begin() == false) {
         ESP_LOGE(TAG, "Error initializing RT-Clock.");
         return ESP_FAIL;
