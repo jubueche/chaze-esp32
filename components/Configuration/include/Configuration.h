@@ -3,7 +3,6 @@
 
 #include "time.h"
 #include "driver/i2c.h"
-#include "Wire.h"
 #include "Chaze_Realtime.h"
 #include "freertos/queue.h"
 #include "ChazeFlashtrainingWrapper.h"
@@ -129,7 +128,6 @@ class Configuration {
     esp_err_t read(uint8_t *, size_t, uint8_t, i2c_port_t);
     int do_i2cdetect_cmd(void);
     
-    esp_err_t initialize_rtc(void);
     esp_err_t vibration_signal_sleep(void);
     esp_err_t initialize_vib(void);
     esp_err_t initialize_leds(void);

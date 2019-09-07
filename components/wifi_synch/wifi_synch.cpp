@@ -268,10 +268,10 @@ void synch_with_azure(void *pvParameter)
 			localtime_r(&now, &timeinfo);
 			strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
 
-			/*config.initialize_rtc(); 
+			rtc.begin();
 			rtc.set24Hour();
 			rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);
-			ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());*/
+			ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
 
 			for(int i=0;i<strlen(strftime_buf);i++){
 				if(strftime_buf[i] == ' '){
