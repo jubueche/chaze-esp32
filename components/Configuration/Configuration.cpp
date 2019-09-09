@@ -4,6 +4,12 @@
 Configuration config;
 
 
+// TODO Needs implementation
+uint8_t Configuration::get_battery_level(void)
+{
+    return 97;
+}
+
 uint32_t Configuration::get_number_of_unsynched_trainings(void)
 {
     FlashtrainingWrapper *ft = FlashtrainingWrapper_create();
@@ -277,12 +283,9 @@ esp_err_t Configuration::write(uint8_t * data_wr, size_t size, uint8_t addr, i2c
 		i2c_master_write_byte(cmd, (addr << 1) | WRITE_BIT, ACK_CHECK_EN);
 		i2c_master_write(cmd, data_wr, size, ACK_CHECK_EN);
 		i2c_master_stop(cmd);
-		err = i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
+		i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
 		i2c_cmd_link_delete(cmd);
 		xSemaphoreGiveRecursive(i2c_semaphore);
-        if(addr == 0x28 && err == ESP_FAIL){
-            err = ESP_OK; // BNO does not ack. if he is booting up.
-        }
 	} else {
         ESP_LOGE(TAG, "Did not acquire i2c lock.");
         return ESP_FAIL;

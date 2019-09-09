@@ -1,5 +1,6 @@
 #include "Chaze_Record.h"
 #include "Chaze_Advertising.h"
+#include "Chaze_Connected.h"
 
 const char * TAG_MAIN = "Chaze-Main";
 
@@ -40,6 +41,7 @@ extern "C" void app_main()
 		case CONNECTED:
 			{
 				ESP_LOGI(TAG_MAIN, "Connected...");
+				connected();
 				break;
 			}
 		default:

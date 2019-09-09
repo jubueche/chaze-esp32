@@ -12,7 +12,7 @@
 
 - **Execute OTA-Update:** The device should be able to perform an OTA-update to update the running firmware on the device. Command: ```Input: f```, ```Output successful ? s (success) :  n (no internet) : e else```. Return to menu. When performing the OTA, the device must check if an internet connection is available. If there is an internet connection, call ```check_and_update()``` to perform the update. TODO: Change signature to return a boolean to indicate success. Afterwards, return to menu.
 
-- **Synchronize trainings:** Synch all the trainings that are currently in the memory that have not been synched. Command: ```Input: s```. ```Output: Number of trainings to be synched.``` followed by ```600 byte packages```, followed by ```training synched indicator```. After a single training has been synched, wait for the phone to send an indicator that it received the training so we can mark it as synched. We the continue with ```more trainings```, followed by ```all trainings synched indicator```. After that, the device starts the deletion process and goes into deep sleep after it is done deleting. The deletion is postponed if the user chooses an immediate action after the synching process. In general, deletion should always happen before going into deep sleep mode. TODO: What will be the indicators? Note we are sending compressed data so no special chracters are distinguishable.
+- **Synchronize trainings:** Synch all the trainings that are currently in the memory that have not been synched. Command: ```Input: s```. ```Output: Number of trainings to be synched.``` followed by ```512 byte packages```, followed by ```EOF```. After a single training has been synched, wait for the phone to send an indicator that it received the training so we can mark it as synched. Indicator: success: "1" else: "0". We then repeat this for the remaining trainings. At the end, the device sends one final ```EOF``` indicating that all trainings have been (tried) synched. After that, the device starts the deletion process and goes into deep sleep after it is done deleting. The deletion is postponed if the user chooses an immediate action after the synching process. In general, deletion should always happen before going into deep sleep mode.
 
 - [Not so important for now] **Alarms:** Alarms are used to signal the swimmer when she/he is swimming too slow, too inefficient or with too much/less power.
 
@@ -48,8 +48,10 @@ One example would be ```char * get_device_id(void)```, which will be used like t
     const char * get_wifi_password(void);
     bool set_device_id(uint32_t); //Sets device ID
     bool set_azure_connection_string(const char *); // Sets connection string for Azure.
-    bool set_wifi_ssid(const char *);
-    bool set_wifi_password(const char *);
+    bool set_wifi_ssid(char *, uint8_t ); // Second param is the size.
+    bool set_wifi_password(char *, uint8_t);
+    uint8_t get_version(char *);
+    bool set_version(char *, uint8_t);
 ```
 
 ## TODO

@@ -31,7 +31,7 @@ class Flashtraining
     bool stop_training();
 
     // Added by Julian Buechel; Writes n chars to the flash.
-    //! Needs to be tested
+    //! Needs to be tested and implemented
     bool write_compressed_chunk(uint8_t * data, uint32_t n);
     uint16_t get_number_of_unsynched_trainings(void);
     int32_t get_next_buffer_of_training(uint8_t *); // Takes pointer to buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
@@ -42,8 +42,13 @@ class Flashtraining
     const char * get_wifi_password(void);
     bool set_device_id(char *); //Sets device ID
     bool set_azure_connection_string(const char *); // Sets connection string for Azure.
-    bool set_wifi_ssid(const char *);
-    bool set_wifi_password(const char *);
+    bool set_wifi_ssid(char *, uint8_t);
+    bool set_wifi_password(char *, uint8_t);
+    bool set_name(char *, uint8_t);
+    const char * get_name(void);
+    uint8_t get_version(char *);
+    bool set_version(char *, uint8_t);
+
 
 
     //READING TRAINING DATA

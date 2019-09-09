@@ -14,7 +14,7 @@ const char * TAG_WiFi = "Chaze-WIFI-Synch";
 //This semaphore is used so that the synch_via_wifi task waits for the azure task to end.
 SemaphoreHandle_t xSemaphore = NULL;
 
-static int block_count = 0;
+static bool last_block = false;
 
 //Used for the interrupt generated when we have connected
 const int CONNECTED_BIT = BIT0;
@@ -60,7 +60,6 @@ return ESP_OK;
  * @brief Task to synch the data via WiFi. This task iteratively checks if the SSID router is available. If not, goes to light sleep
  * else connects to WiFi and synchs all the trainings in flash with Azure.
  * Must be first task to be spawned in Advertising to initialize object. 
- * TODO: Maybe disable event handler
  * @param pvParameter
  */
 void synch_via_wifi(void *pvParameter)
@@ -151,28 +150,6 @@ void synch_via_wifi(void *pvParameter)
 	vTaskDelete(NULL);
 }
 
-/**
- * @brief Fills up char array data with n bytes. For now just dummy data.
- * TODO: Connect to flash and call function for passing the data.
- * @param data
- * @param n
- */
-void get_data(unsigned char * data, int n)
-{
-	float * nums = (float *) malloc(13*sizeof(float));
-	for(int i= 0;i< 13;i++){
-		nums[i] = (float)rand()/(float)(RAND_MAX/1);
-	}
-	char fl[4*13+13+2];
-	snprintf(fl, sizeof fl, "%.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f %.02f\n",
-			nums[0], nums[1], nums[2], nums[3], nums[4], nums[5], nums[6], nums[7], nums[8], nums[9], nums[10], nums[11],nums[12]);
-	free(nums);
-	if(n < 4*13+13+2){
-		ESP_LOGE(TAG_WiFi, "Need more memory.");
-	}
-	memcpy(data, fl, strlen(fl));
-
-}
 
 /**
  * @brief Callback used to upload blocks to the blob storage. *data will be passed to a function filling it with data from the flash.
@@ -189,27 +166,30 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
     {
         if (data != NULL && size != NULL)
         {
-            if (block_count < 100)
-            {
-            	unsigned char * tmp = (unsigned char *) malloc(4*13+13+2*sizeof(char));
-                get_data(tmp,4*13+13+2);
-                *data = (const unsigned char*) tmp;
-                *size = 4*13+13+2;
-                block_count++;
-            }
-            else
-            {
-            	//This indicates the last block has been written.
-                *data = NULL;
+
+			if(!last_block)
+			{
+				uint8_t * tmp = (uint8_t *) malloc(UPLOAD_BLOCK_SIZE);
+				int32_t bytes_read = ft.get_next_buffer_of_training(tmp);
+				
+				*data = (const uint8_t *) tmp;
+				if(bytes_read == -1){
+					*size = UPLOAD_BLOCK_SIZE;
+				} else {
+					last_block = true;
+					*size = bytes_read;
+				}
+			} else {
+				*data = NULL;
                 *size = 0;
-                ESP_LOGI(TAG_WiFi, "Indicating upload is complete (%d blocks uploaded)", block_count);
-            }
+                ESP_LOGI(TAG_WiFi, "Indicating upload is complete.");
+			}
         }
         else
         {
             // The last call to this callback is to indicate the result of uploading the previous data block provided.
             // Note: In this last call, data and size pointers are NULL.
-            ESP_LOGI(TAG_WiFi, "Last call to getDataCallback (result for %dth block uploaded: %s)", block_count, ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
+            ESP_LOGI(TAG_WiFi, "Last call to getDataCallback (result: %s)", ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
         }
     }
     else
@@ -254,7 +234,7 @@ void synch_with_azure(void *pvParameter)
 	else
 	{
 
-		//IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
+		IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
 		if(config.STATE == ADVERTISING || config.STATE == CONNECTED)
 		{
 
@@ -268,10 +248,13 @@ void synch_with_azure(void *pvParameter)
 			localtime_r(&now, &timeinfo);
 			strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
 
-			rtc.begin();
-			rtc.set24Hour();
-			rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);
-			ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
+			if(rtc.begin()) {
+				rtc.set24Hour();
+				rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);	
+				ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
+			} else {
+				ESP_LOGE(TAG_WiFi, "Error setting time.");
+			}
 
 			for(int i=0;i<strlen(strftime_buf);i++){
 				if(strftime_buf[i] == ' '){
@@ -283,6 +266,8 @@ void synch_with_azure(void *pvParameter)
 			strcat(file_name, "_");
 			strcat(file_name, strftime_buf);
 			strcat(file_name, ".txt");
+
+			ft.start_reading_data();
 
 			if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
 			{
@@ -391,10 +376,7 @@ bool poll_wifi(void){
 		return false;
 
 	//First, scan to see if there is one ssid that matches ours.
-	bool tmp;
-	uint64_t start = (uint64_t) esp_timer_get_time();
-	tmp = scan_for_ssid();
-	printf("%lld\n", (uint64_t) esp_timer_get_time()-start);
+	bool tmp = scan_for_ssid();
 
 	allow_to_connect = true; //Enable connect on event STA_READY
 	ESP_LOGI(TAG_WiFi, "Enabled allow_to_connect");

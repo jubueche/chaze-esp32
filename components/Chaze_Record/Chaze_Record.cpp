@@ -18,7 +18,7 @@ void sample_hr(void * pvParams)
 		if(xSemaphoreTakeRecursive(config.i2c_semaphore, 20) == pdPASS)
 		{
 			// Sample heart rate
-			//! Uncomment if heart rate sensor attached, need I2C mux?
+			//! Uncomment if heart rate sensor attached, use config.I2C methods for thread safety
 			//uint32_t heart_rate = hr.get_heart_rate();
 			uint32_t heart_rate = 170;
 			//ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
