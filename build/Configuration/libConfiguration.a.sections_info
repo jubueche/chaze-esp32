@@ -56,93 +56,95 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
  25 .text._Z41__static_initialization_and_destruction_0ii 0000005a  00000000  00000000  00000258  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 26 .text._ZN13Configuration33get_number_of_unsynched_trainingsEv 0000001e  00000000  00000000  000002b4  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .text._ZN13Configuration17populate_pressureEPhfm 00000036  00000000  00000000  000002d4  2**2
+ 26 .text._ZN13Configuration17get_battery_levelEv 00000008  00000000  00000000  000002b4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 28 .text._ZN13Configuration19populate_heart_rateEPhjm 00000034  00000000  00000000  0000030c  2**2
+ 27 .text._ZN13Configuration33get_number_of_unsynched_trainingsEv 0000001e  00000000  00000000  000002bc  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 28 .text._ZN13Configuration17populate_pressureEPhfm 00000036  00000000  00000000  000002dc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 29 .text._ZN13Configuration12populate_bnoEPhPfm 00000056  00000000  00000000  00000340  2**2
+ 29 .text._ZN13Configuration19populate_heart_rateEPhjm 00000034  00000000  00000000  00000314  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 30 .text._ZN13Configuration12populate_bnoEPhPfm 00000056  00000000  00000000  00000348  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 30 .rodata._ZN13Configuration14attach_btn_intEPFvPvES2_.str1.4 0000004d  00000000  00000000  00000398  2**2
+ 31 .rodata._ZN13Configuration14attach_btn_intEPFvPvES2_.str1.4 0000004d  00000000  00000000  000003a0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 31 .text._ZN13Configuration14attach_btn_intEPFvPvES2_ 0000007b  00000000  00000000  000003e8  2**2
+ 32 .text._ZN13Configuration14attach_btn_intEPFvPvES2_ 0000007b  00000000  00000000  000003f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .rodata._ZN13Configuration14attach_bno_intEPFvPvES2_.str1.4 00000019  00000000  00000000  00000464  2**2
+ 33 .rodata._ZN13Configuration14attach_bno_intEPFvPvES2_.str1.4 00000019  00000000  00000000  0000046c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 33 .text._ZN13Configuration14attach_bno_intEPFvPvES2_ 0000007b  00000000  00000000  00000480  2**2
+ 34 .text._ZN13Configuration14attach_bno_intEPFvPvES2_ 0000007b  00000000  00000000  00000488  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .text._ZN13Configuration14detach_btn_intEv 0000000e  00000000  00000000  000004fc  2**2
+ 35 .text._ZN13Configuration14detach_btn_intEv 0000000e  00000000  00000000  00000504  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 35 .text._ZN13Configuration14detach_bno_intEv 0000000e  00000000  00000000  0000050c  2**2
+ 36 .text._ZN13Configuration14detach_bno_intEv 0000000e  00000000  00000000  00000514  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 36 .text._ZN13Configuration14initialize_vibEv 00000025  00000000  00000000  0000051c  2**2
+ 37 .text._ZN13Configuration14initialize_vibEv 00000025  00000000  00000000  00000524  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 37 .text._ZN13Configuration15initialize_ledsEv 00000025  00000000  00000000  00000544  2**2
+ 38 .text._ZN13Configuration15initialize_ledsEv 00000025  00000000  00000000  0000054c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 38 .text._ZN13Configuration14random_betweenEii 00000013  00000000  00000000  0000056c  2**2
+ 39 .text._ZN13Configuration14random_betweenEii 00000013  00000000  00000000  00000574  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 39 .text._ZN13Configuration11flicker_ledE10gpio_num_t 00000036  00000000  00000000  00000580  2**2
+ 40 .text._ZN13Configuration11flicker_ledE10gpio_num_t 00000036  00000000  00000000  00000588  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 40 .text._ZN13Configuration22vibration_signal_sleepEv 00000078  00000000  00000000  000005b8  2**2
+ 41 .text._ZN13Configuration22vibration_signal_sleepEv 00000078  00000000  00000000  000005c0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 41 .text._ZN13Configuration14initialize_spiEv 00000046  00000000  00000000  00000630  2**2
+ 42 .text._ZN13Configuration14initialize_spiEv 00000046  00000000  00000000  00000638  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 42 .text._ZN13Configuration21turn_off_main_circuitEv 00000030  00000000  00000000  00000678  2**2
+ 43 .text._ZN13Configuration21turn_off_main_circuitEv 00000030  00000000  00000000  00000680  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 43 .text._ZN13Configuration20turn_on_main_circuitEv 00000032  00000000  00000000  000006a8  2**2
+ 44 .text._ZN13Configuration20turn_on_main_circuitEv 00000032  00000000  00000000  000006b0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 44 .text._ZN13Configuration19i2c_master_init_IDFE10i2c_port_t 00000060  00000000  00000000  000006dc  2**2
+ 45 .text._ZN13Configuration19i2c_master_init_IDFE10i2c_port_t 00000060  00000000  00000000  000006e4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 45 .rodata._ZN13Configuration5writeEPhjh10i2c_port_t.str1.4 00000031  00000000  00000000  0000073c  2**2
+ 46 .rodata._ZN13Configuration5writeEPhjh10i2c_port_t.str1.4 00000031  00000000  00000000  00000744  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 46 .text._ZN13Configuration5writeEPhjh10i2c_port_t 000000aa  00000000  00000000  00000770  2**2
+ 47 .text._ZN13Configuration5writeEPhjh10i2c_port_t 00000088  00000000  00000000  00000778  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 47 .text._ZN13Configuration4readEPhjh10i2c_port_t 000000c8  00000000  00000000  0000081c  2**2
+ 48 .text._ZN13Configuration4readEPhjh10i2c_port_t 000000c8  00000000  00000000  00000800  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 48 .rodata       00000018  00000000  00000000  000008e4  2**2
+ 49 .rodata       00000018  00000000  00000000  000008c8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 49 .text._ZN13Configuration28i2c_master_driver_initializeEv 0000001e  00000000  00000000  000008fc  2**2
+ 50 .text._ZN13Configuration28i2c_master_driver_initializeEv 0000001e  00000000  00000000  000008e0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 50 .rodata._ZN13Configuration16do_i2cdetect_cmdEv.str1.4 00000052  00000000  00000000  0000091c  2**2
+ 51 .rodata._ZN13Configuration16do_i2cdetect_cmdEv.str1.4 00000052  00000000  00000000  00000900  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 51 .text._ZN13Configuration16do_i2cdetect_cmdEv 000000e8  00000000  00000000  00000970  2**2
+ 52 .text._ZN13Configuration16do_i2cdetect_cmdEv 000000e8  00000000  00000000  00000954  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 52 .text._GLOBAL__sub_I_config 00000010  00000000  00000000  00000a58  2**2
+ 53 .text._GLOBAL__sub_I_config 00000010  00000000  00000000  00000a3c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 53 .ctors        00000004  00000000  00000000  00000a68  2**2
+ 54 .ctors        00000004  00000000  00000000  00000a4c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 54 .text._GLOBAL__sub_D_config 00000010  00000000  00000000  00000a6c  2**2
+ 55 .text._GLOBAL__sub_D_config 00000010  00000000  00000000  00000a50  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 55 .dtors        00000004  00000000  00000000  00000a7c  2**2
+ 56 .dtors        00000004  00000000  00000000  00000a60  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 56 .bss.config   00000018  00000000  00000000  00000a80  2**2
+ 57 .bss.config   00000018  00000000  00000000  00000a64  2**2
                   ALLOC
- 57 .bss._ZL11INADDR_NONE 00000008  00000000  00000000  00000a80  2**2
+ 58 .bss._ZL11INADDR_NONE 00000008  00000000  00000000  00000a64  2**2
                   ALLOC
- 58 .debug_frame  00000250  00000000  00000000  00000a80  2**2
+ 59 .debug_frame  00000268  00000000  00000000  00000a64  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 59 .eh_frame     000001a8  00000000  00000000  00000cd0  2**2
+ 60 .eh_frame     000001a8  00000000  00000000  00000ccc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
- 60 .debug_info   00006171  00000000  00000000  00000e78  2**0
+ 61 .debug_info   000061ac  00000000  00000000  00000e74  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 61 .debug_abbrev 00000978  00000000  00000000  00006fe9  2**0
+ 62 .debug_abbrev 00000992  00000000  00000000  00007020  2**0
                   CONTENTS, READONLY, DEBUGGING
- 62 .debug_loc    00000957  00000000  00000000  00007961  2**0
+ 63 .debug_loc    00000881  00000000  00000000  000079b2  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 63 .debug_aranges 000000d8  00000000  00000000  000082b8  2**0
+ 64 .debug_aranges 000000e0  00000000  00000000  00008233  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 64 .debug_ranges 000000e0  00000000  00000000  00008390  2**0
+ 65 .debug_ranges 000000d0  00000000  00000000  00008313  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 65 .debug_line   00001cf9  00000000  00000000  00008470  2**0
+ 66 .debug_line   00001d04  00000000  00000000  000083e3  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 66 .debug_str    000046ec  00000000  00000000  0000a169  2**0
+ 67 .debug_str    00004726  00000000  00000000  0000a0e7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 67 .comment      00000028  00000000  00000000  0000e855  2**0
+ 68 .comment      00000028  00000000  00000000  0000e80d  2**0
                   CONTENTS, READONLY
- 68 .xtensa.info  00000038  00000000  00000000  0000e87d  2**0
+ 69 .xtensa.info  00000038  00000000  00000000  0000e835  2**0
                   CONTENTS, READONLY
- 69 .xt.lit       000000a8  00000000  00000000  0000e8b5  2**0
+ 70 .xt.lit       000000a8  00000000  00000000  0000e86d  2**0
                   CONTENTS, RELOC, READONLY
- 70 .xt.prop      00000630  00000000  00000000  0000e95d  2**0
+ 71 .xt.prop      0000063c  00000000  00000000  0000e915  2**0
                   CONTENTS, RELOC, READONLY

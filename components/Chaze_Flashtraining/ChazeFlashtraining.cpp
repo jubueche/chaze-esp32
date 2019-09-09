@@ -15,6 +15,7 @@ Flashtraining::Flashtraining()
 	_current_sector_eraseposition = 0;
 }
 
+
 bool Flashtraining::start_new_training()
 {
 	if (!_Check_or_Initialize()) return false;
@@ -76,6 +77,16 @@ bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
 
 }
 
+bool Flashtraining::set_name(char * name, uint8_t size)
+{
+	return true;
+}
+
+const char * Flashtraining::get_name()
+{
+	return "Julian'sChazeBand";
+}
+
 uint16_t Flashtraining::get_number_of_unsynched_trainings(){
 	return 2;
 }
@@ -106,12 +117,14 @@ void Flashtraining::completed_synch_of_training(bool b)
 
 const char * Flashtraining::get_device_id(void)
 {
-	return "chaze-2";
+	return "chaze-3";
 }
 const char * Flashtraining::get_azure_connection_string(void)
 {
-	return "HostName=chaze-iot-hub.azure-devices.net;DeviceId=device-2;SharedAccessKey=lMPIGSbbyrWlMUDDi0wPgOL+NaM8ATwB3rkUiQp4xH8=";
+	//return "HostName=chaze-iot-hub.azure-devices.net;DeviceId=device-2;SharedAccessKey=lMPIGSbbyrWlMUDDi0wPgOL+NaM8ATwB3rkUiQp4xH8=";
+	return "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-3;SharedAccessKey=9vhufTtWrFy9vtucS1rzc4eKt9eIyfk6XnCoYIfI/7Y=";
 }
+
 
 const char * Flashtraining::get_wifi_ssid(void)
 {
@@ -135,12 +148,25 @@ bool Flashtraining::set_azure_connection_string(const char * conn_string)
 	return true;
 }
 
-bool Flashtraining::set_wifi_ssid(const char * ssid)
+bool Flashtraining::set_wifi_ssid(char * ssid, uint8_t size)
 {
 	return true;
 }
 
-bool Flashtraining::set_wifi_password(const char * pass)
+bool Flashtraining::set_wifi_password(char * pass, uint8_t size)
+{
+	return true;
+}
+
+uint8_t Flashtraining::get_version(char * version_buffer)
+{
+	const char * v = "v1.3";
+	for(int i=0;i<4; i++)
+		version_buffer[i] = v[i];
+	return 4;
+}
+
+bool Flashtraining::set_version(char * version, uint8_t size)
 {
 	return true;
 }

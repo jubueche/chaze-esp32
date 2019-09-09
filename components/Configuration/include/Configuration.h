@@ -73,6 +73,9 @@
 #define LED_RED_TIMEOUT 5000
 #define LED_BLUE_TIMEOUT 3000
 
+#define UPLOAD_BLOCK_SIZE 512
+#define UPLOAD_BLOCK_SIZE_BLE 512 /*Smaller than 600 and multiple of 2. 512 is ideal.*/
+
 #define NO_MOTION_DURATION 50
 #define NO_MOTION_THRESHOLD 5
 #define ANY_MOTION_THRESHOLD 244
@@ -133,7 +136,9 @@ class Configuration {
     esp_err_t initialize_leds(void);
     void flicker_led(gpio_num_t);
     int random_between(int, int);
-    
+    uint8_t get_battery_level(void);
+
+
     volatile uint8_t STATE;
     volatile bool ble_connected = false;
     volatile bool wifi_connected = false;

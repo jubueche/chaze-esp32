@@ -19,22 +19,6 @@ class MyServerCallbacks: public BLEServerCallbacks {
   }
 };
 
-class MyCallbacks: public BLECharacteristicCallbacks {
-    void onWrite(BLECharacteristic *pCharacteristic) {
-      std::string rxValue = pCharacteristic->getValue();
-
-      if (rxValue.length() > 0) {
-        ESP_LOGI(TAG_BLE, "*********");
-        ESP_LOGI(TAG_BLE, "Received Value: ");
-        for (int i = 0; i < rxValue.length(); i++)
-          ESP_LOGI(TAG_BLE, "%c", rxValue[i]);
-
-        ESP_LOGI(TAG_BLE, "\n");
-        ESP_LOGI(TAG_BLE, "*********");
-      }
-    }
-};
-
 
 void Chaze_ble::initialize_connection(){
 
@@ -59,21 +43,16 @@ void Chaze_ble::initialize_connection(){
                       
   pTxCharacteristic->addDescriptor(new BLE2902());
 
-  BLECharacteristic * pRxCharacteristic = pService->createCharacteristic(
+  pRxCharacteristic = pService->createCharacteristic(
 											 CHARACTERISTIC_UUID_RX,
 											BLECharacteristic::PROPERTY_WRITE
 										);
 
-  pRxCharacteristic->setCallbacks(new MyCallbacks());
 
   // Start the service
   pService->start();
 
-  // Start advertising
-  /*
-  pServer->getAdvertising()->start();
-  ESP_LOGI(TAG_BLE, "Waiting a client connection to notify...");
-  */
+
 }
 
 void Chaze_ble::write(uint8_t to_write){
@@ -95,6 +74,14 @@ void Chaze_ble::write(std::string to_write){
 void Chaze_ble::write(uint8_t* data,size_t length){
     if (config.ble_connected){
         pTxCharacteristic->setValue(data, length);
+        pTxCharacteristic->notify();
+        vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
+    }
+}
+
+void Chaze_ble::write(char* data,size_t length){
+    if (config.ble_connected){
+        pTxCharacteristic->setValue((uint8_t *) data, length);
         pTxCharacteristic->notify();
         vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
     }

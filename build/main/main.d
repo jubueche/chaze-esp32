@@ -241,7 +241,8 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/SPIFlash.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_SPIFlash/include/defines.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/SPI/src/SPI.h \
- /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h \
+ /home/julian/Documents/chaze-esp32/components/Chaze_Connected/include/Chaze_Connected.h
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Record/include/Chaze_Record.h:
 
@@ -728,4 +729,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/SPI/src/SPI.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-spi.h:
+
+/home/julian/Documents/chaze-esp32/components/Chaze_Connected/include/Chaze_Connected.h:
 /home/julian/Documents/chaze-esp32/main/./main.cpp:

@@ -71,7 +71,7 @@ RV3028::RV3028(void)
 
 }
 
-boolean RV3028::begin()
+bool RV3028::begin()
 {
 	port_num = I2C_NUM_0;
 	//We require caller to begin their I2C port, with the speed of their choice
@@ -582,6 +582,7 @@ bool RV3028::writeRegister(uint8_t addr, uint8_t val)
 	if(config.write(payload, 2, RV3028_ADDR, port_num) == ESP_OK) {
 		return true;
 	}
+	ESP_LOGE(TAG, "Error writing to register.");
 	return false;
 
 }
@@ -592,9 +593,10 @@ bool RV3028::readMultipleRegisters(uint8_t addr, uint8_t * dest, uint8_t len)
 	if(config.write(t, 1, RV3028_ADDR, port_num) != ESP_OK)
 		return false;
 
-	if(config.read(dest, len, RV3028_ADDR, port_num) != ESP_OK)
-		return false;
-	return true;
+	if(config.read(dest, len, RV3028_ADDR, port_num) == ESP_OK)
+		return true;
+	ESP_LOGE(TAG, "Error reading from register.");
+	return false;
 
 }
 

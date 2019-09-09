@@ -10,185 +10,153 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
   2 .group        00000038  00000000  00000000  0000007c  2**2
                   CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
-  3 .group        00000028  00000000  00000000  000000b4  2**2
+  3 .group        00000024  00000000  00000000  000000b4  2**2
                   CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
-  4 .group        0000003c  00000000  00000000  000000dc  2**2
+  4 .group        00000024  00000000  00000000  000000d8  2**2
                   CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
-  5 .group        00000024  00000000  00000000  00000118  2**2
+  5 .group        00000014  00000000  00000000  000000fc  2**2
                   CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
-  6 .group        00000024  00000000  00000000  0000013c  2**2
-                  CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
-  7 .group        00000014  00000000  00000000  00000160  2**2
-                  CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
-  8 .group        00000014  00000000  00000000  00000174  2**2
-                  CONTENTS, READONLY, GROUP, LINK_ONCE_DISCARD
-  9 .literal._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000004  00000000  00000000  00000188  2**2
+  6 .literal._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000004  00000000  00000000  00000110  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .literal._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000004  00000000  00000000  0000018c  2**2
+  7 .literal._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000004  00000000  00000000  00000114  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .literal._ZN17MyServerCallbacksD5Ev 00000004  00000000  00000000  00000190  2**2
+  8 .literal._ZN17MyServerCallbacksD5Ev 00000004  00000000  00000000  00000118  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .literal._ZN11MyCallbacks7onWriteEP17BLECharacteristic 0000004c  00000000  00000000  00000194  2**2
+  9 .literal._Z41__static_initialization_and_destruction_0ii 0000000c  00000000  00000000  0000011c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .literal._ZN11MyCallbacksD5Ev 00000014  00000000  00000000  000001e0  2**2
+ 10 .literal._ZN9Chaze_bleC2Ev 00000004  00000000  00000000  00000128  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 14 .literal._Z41__static_initialization_and_destruction_0ii 0000000c  00000000  00000000  000001f4  2**2
+ 11 .literal._ZN9Chaze_ble5writeEh 00000010  00000000  00000000  0000012c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .literal._ZN9Chaze_bleC2Ev 00000004  00000000  00000000  00000200  2**2
+ 12 .literal._ZN9Chaze_ble5writeEPhj 00000010  00000000  00000000  0000013c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .literal._ZN9Chaze_ble5writeEh 00000010  00000000  00000000  00000204  2**2
+ 13 .literal._ZN9Chaze_ble5writeEPcj 00000010  00000000  00000000  0000014c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .literal._ZN9Chaze_ble5writeEPhj 00000010  00000000  00000000  00000214  2**2
+ 14 .literal._ZN9Chaze_ble9advertiseEv 0000001c  00000000  00000000  0000015c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .literal._ZN9Chaze_ble9advertiseEv 0000001c  00000000  00000000  00000224  2**2
+ 15 .literal._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000010  00000000  00000000  00000178  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .literal._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000010  00000000  00000000  00000240  2**2
+ 16 .literal._ZN9Chaze_ble21initialize_connectionEv 00000060  00000000  00000000  00000188  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .literal._ZN9Chaze_ble21initialize_connectionEv 0000006c  00000000  00000000  00000250  2**2
+ 17 .literal._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000010  00000000  00000000  000001e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .literal._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000010  00000000  00000000  000002bc  2**2
+ 18 .literal._ZN9Chaze_ble5writeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE 00000020  00000000  00000000  000001f8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .literal._ZN9Chaze_ble5writeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE 00000020  00000000  00000000  000002cc  2**2
+ 19 .literal._GLOBAL__sub_I_TAG_BLE 00000008  00000000  00000000  00000218  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .literal._GLOBAL__sub_I_TAG_BLE 00000008  00000000  00000000  000002ec  2**2
+ 20 .literal._GLOBAL__sub_D_TAG_BLE 00000008  00000000  00000000  00000220  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 24 .literal._GLOBAL__sub_D_TAG_BLE 00000008  00000000  00000000  000002f4  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .text         00000000  00000000  00000000  000002fc  2**0
+ 21 .text         00000000  00000000  00000000  00000228  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 26 .data         00000000  00000000  00000000  000002fc  2**0
+ 22 .data         00000000  00000000  00000000  00000228  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 27 .bss          00000000  00000000  00000000  000002fc  2**0
+ 23 .bss          00000000  00000000  00000000  00000228  2**0
                   ALLOC
- 28 .text._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000010  00000000  00000000  000002fc  2**2
+ 24 .text._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000010  00000000  00000000  00000228  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 29 .text._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000010  00000000  00000000  0000030c  2**2
+ 25 .text._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000010  00000000  00000000  00000238  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 30 .text._ZN17MyServerCallbacksD2Ev 00000005  00000000  00000000  0000031c  2**2
+ 26 .text._ZN17MyServerCallbacksD2Ev 00000005  00000000  00000000  00000248  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 31 .text._ZN17MyServerCallbacksD0Ev 0000000e  00000000  00000000  00000324  2**2
+ 27 .text._ZN17MyServerCallbacksD0Ev 0000000e  00000000  00000000  00000250  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .rodata._ZN11MyCallbacks7onWriteEP17BLECharacteristic.str1.4 00000081  00000000  00000000  00000334  2**2
+ 28 .text._Z41__static_initialization_and_destruction_0ii 0000001f  00000000  00000000  00000260  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 29 .rodata._ZN9Chaze_bleC2Ev.str1.4 0000000a  00000000  00000000  00000280  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 33 .text._ZN11MyCallbacks7onWriteEP17BLECharacteristic 000000eb  00000000  00000000  000003b8  2**2
+ 30 .text._ZN9Chaze_bleC2Ev 00000013  00000000  00000000  0000028c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .gcc_except_table._ZN11MyCallbacks7onWriteEP17BLECharacteristic 00000013  00000000  00000000  000004a3  2**0
+ 31 .text._ZN9Chaze_ble5writeEh 00000032  00000000  00000000  000002a0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 32 .text._ZN9Chaze_ble5writeEPhj 0000002e  00000000  00000000  000002d4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 33 .text._ZN9Chaze_ble5writeEPcj 0000002e  00000000  00000000  00000304  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 34 .rodata._ZN9Chaze_ble9advertiseEv.str1.4 00000029  00000000  00000000  00000334  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 35 .text._ZN11MyCallbacksD2Ev 00000012  00000000  00000000  000004b8  2**2
+ 35 .text._ZN9Chaze_ble9advertiseEv 00000042  00000000  00000000  00000360  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 36 .text._ZN11MyCallbacksD0Ev 0000001a  00000000  00000000  000004cc  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 37 .text._Z41__static_initialization_and_destruction_0ii 0000001f  00000000  00000000  000004e8  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 38 .rodata._ZN9Chaze_bleC2Ev.str1.4 0000000a  00000000  00000000  00000508  2**2
+ 36 .rodata._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag.str1.4 0000002a  00000000  00000000  000003a4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 39 .text._ZN9Chaze_bleC2Ev 00000013  00000000  00000000  00000514  2**2
+ 37 .text._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000057  00000000  00000000  000003d0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 40 .text._ZN9Chaze_ble5writeEh 00000032  00000000  00000000  00000528  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 41 .text._ZN9Chaze_ble5writeEPhj 0000002e  00000000  00000000  0000055c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 42 .rodata._ZN9Chaze_ble9advertiseEv.str1.4 00000029  00000000  00000000  0000058c  2**2
+ 38 .rodata._ZN9Chaze_ble21initialize_connectionEv.str1.4 00000085  00000000  00000000  00000428  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 43 .text._ZN9Chaze_ble9advertiseEv 00000042  00000000  00000000  000005b8  2**2
+ 39 .text._ZN9Chaze_ble21initialize_connectionEv 000000d0  00000000  00000000  000004b0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 44 .rodata._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag.str1.4 0000002a  00000000  00000000  000005fc  2**2
+ 40 .gcc_except_table._ZN9Chaze_ble21initialize_connectionEv 0000001c  00000000  00000000  00000580  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 45 .text._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000057  00000000  00000000  00000628  2**2
+ 41 .text._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000057  00000000  00000000  0000059c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 46 .rodata._ZN9Chaze_ble21initialize_connectionEv.str1.4 00000085  00000000  00000000  00000680  2**2
+ 42 .text._ZN9Chaze_ble5writeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE 0000006a  00000000  00000000  000005f4  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 43 .gcc_except_table._ZN9Chaze_ble5writeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE 00000010  00000000  00000000  0000065e  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 47 .text._ZN9Chaze_ble21initialize_connectionEv 000000e8  00000000  00000000  00000708  2**2
+ 44 .text._GLOBAL__sub_I_TAG_BLE 00000010  00000000  00000000  00000670  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 48 .gcc_except_table._ZN9Chaze_ble21initialize_connectionEv 0000001c  00000000  00000000  000007f0  2**0
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 49 .text._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000057  00000000  00000000  0000080c  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 50 .text._ZN9Chaze_ble5writeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE 0000006a  00000000  00000000  00000864  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 51 .gcc_except_table._ZN9Chaze_ble5writeENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE 00000010  00000000  00000000  000008ce  2**0
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 52 .text._GLOBAL__sub_I_TAG_BLE 00000010  00000000  00000000  000008e0  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 53 .ctors        00000004  00000000  00000000  000008f0  2**2
+ 45 .ctors        00000004  00000000  00000000  00000680  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 54 .text._GLOBAL__sub_D_TAG_BLE 00000010  00000000  00000000  000008f4  2**2
+ 46 .text._GLOBAL__sub_D_TAG_BLE 00000010  00000000  00000000  00000684  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 55 .dtors        00000004  00000000  00000000  00000904  2**2
+ 47 .dtors        00000004  00000000  00000000  00000694  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 56 .rodata._ZTV17MyServerCallbacks 0000001c  00000000  00000000  00000908  2**2
+ 48 .rodata._ZTV17MyServerCallbacks 0000001c  00000000  00000000  00000698  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
- 57 .rodata._ZTV11MyCallbacks 00000018  00000000  00000000  00000924  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
- 58 .rodata.str1.4 0000000a  00000000  00000000  0000093c  2**2
+ 49 .rodata.str1.4 0000000a  00000000  00000000  000006b4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 59 .data.TAG_BLE 00000004  00000000  00000000  00000948  2**2
+ 50 .data.TAG_BLE 00000004  00000000  00000000  000006c0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, DATA
- 60 .bss._ZL11INADDR_NONE 00000008  00000000  00000000  0000094c  2**2
+ 51 .bss._ZL11INADDR_NONE 00000008  00000000  00000000  000006c4  2**2
                   ALLOC
- 61 .debug_frame  000001c0  00000000  00000000  0000094c  2**2
+ 52 .debug_frame  00000190  00000000  00000000  000006c4  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 62 .eh_frame     000000fc  00000000  00000000  00000b0c  2**2
+ 53 .eh_frame     000000fc  00000000  00000000  00000854  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
- 63 .debug_info   000206bc  00000000  00000000  00000c08  2**0
+ 54 .debug_info   0001fee6  00000000  00000000  00000950  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 64 .debug_abbrev 00000f2d  00000000  00000000  000212c4  2**0
+ 55 .debug_abbrev 00000ef8  00000000  00000000  00020836  2**0
                   CONTENTS, READONLY, DEBUGGING
- 65 .debug_loc    00001576  00000000  00000000  000221f1  2**0
+ 56 .debug_loc    0000113e  00000000  00000000  0002172e  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 66 .debug_aranges 000000a8  00000000  00000000  00023767  2**0
+ 57 .debug_aranges 00000098  00000000  00000000  0002286c  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 67 .debug_ranges 000000b0  00000000  00000000  0002380f  2**0
+ 58 .debug_ranges 000000a0  00000000  00000000  00022904  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 68 .debug_line   00001daf  00000000  00000000  000238bf  2**0
+ 59 .debug_line   000019a4  00000000  00000000  000229a4  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 69 .debug_str    0004408c  00000000  00000000  0002566e  2**0
+ 60 .debug_str    00043f0a  00000000  00000000  00024348  2**0
                   CONTENTS, READONLY, DEBUGGING
- 70 .comment      00000028  00000000  00000000  000696fa  2**0
+ 61 .comment      00000028  00000000  00000000  00068252  2**0
                   CONTENTS, READONLY
- 71 .xtensa.info  00000038  00000000  00000000  00069722  2**0
+ 62 .xtensa.info  00000038  00000000  00000000  0006827a  2**0
                   CONTENTS, READONLY
- 72 .xt.lit._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000008  00000000  00000000  0006975a  2**0
+ 63 .xt.lit._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000008  00000000  00000000  000682b2  2**0
                   CONTENTS, RELOC, READONLY
- 73 .xt.lit._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000008  00000000  00000000  00069762  2**0
+ 64 .xt.lit._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000008  00000000  00000000  000682ba  2**0
                   CONTENTS, RELOC, READONLY
- 74 .xt.lit._ZN17MyServerCallbacksD5Ev 00000008  00000000  00000000  0006976a  2**0
+ 65 .xt.lit._ZN17MyServerCallbacksD5Ev 00000008  00000000  00000000  000682c2  2**0
                   CONTENTS, RELOC, READONLY
- 75 .xt.lit._ZN11MyCallbacks7onWriteEP17BLECharacteristic 00000008  00000000  00000000  00069772  2**0
+ 66 .xt.lit       00000050  00000000  00000000  000682ca  2**0
                   CONTENTS, RELOC, READONLY
- 76 .xt.lit._ZN11MyCallbacksD5Ev 00000008  00000000  00000000  0006977a  2**0
+ 67 .xt.lit._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000008  00000000  00000000  0006831a  2**0
                   CONTENTS, RELOC, READONLY
- 77 .xt.lit       00000048  00000000  00000000  00069782  2**0
+ 68 .xt.lit._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000008  00000000  00000000  00068322  2**0
                   CONTENTS, RELOC, READONLY
- 78 .xt.lit._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000008  00000000  00000000  000697ca  2**0
+ 69 .xt.prop._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000030  00000000  00000000  0006832a  2**0
                   CONTENTS, RELOC, READONLY
- 79 .xt.lit._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000008  00000000  00000000  000697d2  2**0
+ 70 .xt.prop._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000030  00000000  00000000  0006835a  2**0
                   CONTENTS, RELOC, READONLY
- 80 .xt.prop._ZN17MyServerCallbacks9onConnectEP9BLEServer 00000030  00000000  00000000  000697da  2**0
+ 71 .xt.prop._ZN17MyServerCallbacksD5Ev 0000000c  00000000  00000000  0006838a  2**0
                   CONTENTS, RELOC, READONLY
- 81 .xt.prop._ZN17MyServerCallbacks12onDisconnectEP9BLEServer 00000030  00000000  00000000  0006980a  2**0
+ 72 .xt.prop      00000288  00000000  00000000  00068396  2**0
                   CONTENTS, RELOC, READONLY
- 82 .xt.prop._ZN17MyServerCallbacksD5Ev 0000000c  00000000  00000000  0006983a  2**0
+ 73 .xt.prop._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000048  00000000  00000000  0006861e  2**0
                   CONTENTS, RELOC, READONLY
- 83 .xt.prop._ZN11MyCallbacks7onWriteEP17BLECharacteristic 00000078  00000000  00000000  00069846  2**0
+ 74 .xt.prop._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000048  00000000  00000000  00068666  2**0
                   CONTENTS, RELOC, READONLY
- 84 .xt.prop._ZN11MyCallbacksD5Ev 0000000c  00000000  00000000  000698be  2**0
+ 75 .xt.prop._ZN17MyServerCallbacksD2Ev 00000024  00000000  00000000  000686ae  2**0
                   CONTENTS, RELOC, READONLY
- 85 .xt.prop      0000024c  00000000  00000000  000698ca  2**0
+ 76 .xt.prop._ZN17MyServerCallbacksD0Ev 00000024  00000000  00000000  000686d2  2**0
                   CONTENTS, RELOC, READONLY
- 86 .xt.prop._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPKcEEvT_S8_St20forward_iterator_tag 00000048  00000000  00000000  00069b16  2**0
-                  CONTENTS, RELOC, READONLY
- 87 .xt.prop._ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE12_M_constructIPcEEvT_S7_St20forward_iterator_tag 00000048  00000000  00000000  00069b5e  2**0
-                  CONTENTS, RELOC, READONLY
- 88 .xt.prop._ZN17MyServerCallbacksD2Ev 00000024  00000000  00000000  00069ba6  2**0
-                  CONTENTS, RELOC, READONLY
- 89 .xt.prop._ZN17MyServerCallbacksD0Ev 00000024  00000000  00000000  00069bca  2**0
-                  CONTENTS, RELOC, READONLY
- 90 .xt.prop._ZN11MyCallbacksD2Ev 00000024  00000000  00000000  00069bee  2**0
-                  CONTENTS, RELOC, READONLY
- 91 .xt.prop._ZN11MyCallbacksD0Ev 00000024  00000000  00000000  00069c12  2**0
-                  CONTENTS, RELOC, READONLY
- 92 .xt.prop._ZTV17MyServerCallbacks 0000000c  00000000  00000000  00069c36  2**0
-                  CONTENTS, RELOC, READONLY
- 93 .xt.prop._ZTV11MyCallbacks 0000000c  00000000  00000000  00069c42  2**0
+ 77 .xt.prop._ZTV17MyServerCallbacks 0000000c  00000000  00000000  000686f6  2**0
                   CONTENTS, RELOC, READONLY
