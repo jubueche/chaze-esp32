@@ -1,5 +1,6 @@
 #include "Chaze_ble.h"
 
+const char * TAG_BLE = "Chaze-BLE";
 
 Chaze_ble::Chaze_ble(void){
     pServer = NULL;
@@ -7,17 +8,15 @@ Chaze_ble::Chaze_ble(void){
     txValue = 0;
 }
 
-extern bool connected;
-extern bool oldDeviceConnected;
-
 class MyServerCallbacks: public BLEServerCallbacks {
-    void onConnect(BLEServer* pServer) {
-      connected = true;
-    };
+  
+  void onConnect(BLEServer* pServer) {
+    config.ble_connected = true;
+  };
 
-    void onDisconnect(BLEServer* pServer) {
-      connected = false;
-    }
+  void onDisconnect(BLEServer* pServer) {
+    config.ble_connected = false;
+  }
 };
 
 class MyCallbacks: public BLECharacteristicCallbacks {
@@ -25,21 +24,19 @@ class MyCallbacks: public BLECharacteristicCallbacks {
       std::string rxValue = pCharacteristic->getValue();
 
       if (rxValue.length() > 0) {
-        Serial.println("*********");
-        Serial.print("Received Value: ");
+        ESP_LOGI(TAG_BLE, "*********");
+        ESP_LOGI(TAG_BLE, "Received Value: ");
         for (int i = 0; i < rxValue.length(); i++)
-          Serial.print(rxValue[i]);
+          ESP_LOGI(TAG_BLE, "%c", rxValue[i]);
 
-        Serial.println();
-        Serial.println("*********");
+        ESP_LOGI(TAG_BLE, "\n");
+        ESP_LOGI(TAG_BLE, "*********");
       }
     }
 };
 
 
 void Chaze_ble::initialize_connection(){
-
-  Serial.begin(115200);
 
   // Create the BLE Device
   BLEDevice::init("UART Service");
@@ -73,43 +70,44 @@ void Chaze_ble::initialize_connection(){
   pService->start();
 
   // Start advertising
+  /*
   pServer->getAdvertising()->start();
-  Serial.println("Waiting a client connection to notify...");
+  ESP_LOGI(TAG_BLE, "Waiting a client connection to notify...");
+  */
 }
 
 void Chaze_ble::write(uint8_t to_write){
-    if (connected){
+    if (config.ble_connected){
       pTxCharacteristic->setValue(&to_write, 1);
       pTxCharacteristic->notify();
-      delay(STACK_CONGESTION_TIMEOUT); // bluetooth stack will go into congestion, if too many packets are sent
+      vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS); // bluetooth stack will go into congestion, if too many packets are sent
 	  }
 }
 
 void Chaze_ble::write(std::string to_write){
-    if (connected){
+    if (config.ble_connected){
         pTxCharacteristic->setValue(to_write);
         pTxCharacteristic->notify();
-        delay(STACK_CONGESTION_TIMEOUT);
+        vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
     }
 }
 
 void Chaze_ble::write(uint8_t* data,size_t length){
-    if (connected){
+    if (config.ble_connected){
         pTxCharacteristic->setValue(data, length);
         pTxCharacteristic->notify();
-        delay(STACK_CONGESTION_TIMEOUT);
+        vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
     }
 }
 
 void Chaze_ble::advertise(void){
     delay(500); // give the bluetooth stack the chance to get things ready
     pServer->startAdvertising(); // restart advertising
-    Serial.println("Start advertising");
-    oldDeviceConnected = connected;
+    ESP_LOGI(TAG_BLE, "Start advertising");
+    config.ble_old_device_connected = config.ble_connected;
 }
 
 
-//Working example: main.cpp
 /*
 //This program measures the throughput of the BLE module. Achieves ~34s/1 MB
 #include "Chaze_ble.h"

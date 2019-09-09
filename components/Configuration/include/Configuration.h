@@ -3,11 +3,11 @@
 
 #include "time.h"
 #include "driver/i2c.h"
-#include "Wire.h"
 #include "Chaze_Realtime.h"
 #include "freertos/queue.h"
+#include "ChazeFlashtrainingWrapper.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 
 /*
@@ -67,11 +67,11 @@
  */
 #define TIMEOUT_AFTER_ACK 3000 /*3.0s*/
 #define TIMEOUT_AFTER_SEND 20000
-#define TIMEOUT_AFTER_ADVERTISING 30000
+#define TIMEOUT_AFTER_ADVERTISING 600000 // 10 min.
 #define TIMEOUT_BUTTON_PUSHED_TO_SLEEP 1200
 #define TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING 1200
 #define LED_RED_TIMEOUT 5000
-#define LED_BLUE_TIMEOUT 1000
+#define LED_BLUE_TIMEOUT 3000
 
 #define NO_MOTION_DURATION 50
 #define NO_MOTION_THRESHOLD 5
@@ -93,6 +93,22 @@ enum {DEEPSLEEP, RECORD, ADVERTISING, CONNECTED, CONNECTED_WIFI, CONNECTED_BLE};
 
 class Configuration {
   public:
+
+    uint32_t get_number_of_unsynched_trainings(void);
+    /*
+    Training * get_current_to_be_synched_training(void); // Returns pointer to training object that is currently being synched.
+    int32_t get_next_buffer_of_training(Training *, uint8_t *); // Takes pointer to current training object to be synched and a buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
+    void completed_synch_of_training(Training *, bool); // Passes a boolean indicating whether the training that is passed as 1st argument was successfully synched.
+    uint32_t get_device_id(void); //Returns device ID
+    const char * get_azure_connection_string(void); // Returns connection string for Azure.
+    const char * get_wifi_ssid(void);
+    const char * get_wifi_password(void);
+    bool set_device_id(uint32_t); //Sets device ID
+    bool set_azure_connection_string(const char *); // Sets connection string for Azure.
+    bool set_wifi_ssid(const char *);
+    bool set_wifi_password(const char *);
+    */
+
     void populate_pressure(uint8_t *, float, unsigned long);
     void populate_bno(uint8_t *, float *, unsigned long);
     void populate_heart_rate(uint8_t *, uint32_t, unsigned long);
@@ -112,16 +128,20 @@ class Configuration {
     esp_err_t read(uint8_t *, size_t, uint8_t, i2c_port_t);
     int do_i2cdetect_cmd(void);
     
-    esp_err_t initialize_rtc(void);
     esp_err_t vibration_signal_sleep(void);
     esp_err_t initialize_vib(void);
     esp_err_t initialize_leds(void);
     void flicker_led(gpio_num_t);
+    int random_between(int, int);
     
     volatile uint8_t STATE;
+    volatile bool ble_connected = false;
+    volatile bool wifi_connected = false;
+    volatile bool ble_old_device_connected = false;
 
     xQueueHandle gpio_evt_queue;
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
+    SemaphoreHandle_t wifi_synch_semaphore = xSemaphoreCreateBinary();
 
     bool initialized_port0 = false;
     bool initialized_port1 = false;

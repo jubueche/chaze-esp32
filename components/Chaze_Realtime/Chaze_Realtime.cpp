@@ -71,12 +71,15 @@ RV3028::RV3028(void)
 
 }
 
-boolean RV3028::begin(TwoWire &wirePort)
+boolean RV3028::begin()
 {
+	port_num = I2C_NUM_0;
 	//We require caller to begin their I2C port, with the speed of their choice
 	//external to the library
-	//_i2cPort->begin();
-	_i2cPort = &wirePort;
+	esp_err_t err = (config.i2c_master_init_IDF(port_num));
+	if(err != ESP_OK){
+		ESP_LOGE(TAG, "Failed to initialize I2C connection. Error: %s", esp_err_to_name(err));
+	}
 
 	set24Hour(); delay(1);
 	disableTrickleCharge(); delay(1);
@@ -560,62 +563,51 @@ uint8_t RV3028::DECtoBCD(uint8_t val)
 
 uint8_t RV3028::readRegister(uint8_t addr)
 {
-	_i2cPort->beginTransmission(RV3028_ADDR);
-	_i2cPort->write(addr);
-	_i2cPort->endTransmission();
+	uint8_t t[1] = {(uint8_t) addr};
+	config.write(t, 1, RV3028_ADDR, port_num);
+	uint8_t res[1];
+	config.read(res, 1, RV3028_ADDR, port_num);
 
-	_i2cPort->requestFrom(RV3028_ADDR, (uint8_t)1);
-	if (_i2cPort->available()) {
-		uint8_t zws = _i2cPort->read();
+	if (addr == RV3028_STATUS)
+		writeRegister(addr, 0);
+	return res[0];
 
-		//clear status register when it was read
-		if (addr == RV3028_STATUS) writeRegister(addr, 0);
-
-		return zws;
-	}
-	else {
-		return (0xFF); //Error
-	}
 }
 
 bool RV3028::writeRegister(uint8_t addr, uint8_t val)
 {
-	_i2cPort->beginTransmission(RV3028_ADDR);
-	_i2cPort->write(addr);
-	_i2cPort->write(val);
-	if (_i2cPort->endTransmission() != 0)
-		return (false); //Error: Sensor did not ack
-	return(true);
+	uint8_t payload[2];
+	payload[0] = addr;
+	payload[1] = val;
+	if(config.write(payload, 2, RV3028_ADDR, port_num) == ESP_OK) {
+		return true;
+	}
+	return false;
+
 }
 
 bool RV3028::readMultipleRegisters(uint8_t addr, uint8_t * dest, uint8_t len)
 {
-	_i2cPort->beginTransmission(RV3028_ADDR);
-	_i2cPort->write(addr);
-	if (_i2cPort->endTransmission() != 0)
-		return (false); //Error: Sensor did not ack
+	uint8_t t[1] = {(uint8_t) addr};
+	if(config.write(t, 1, RV3028_ADDR, port_num) != ESP_OK)
+		return false;
 
-	_i2cPort->requestFrom(RV3028_ADDR, len);
-	for (uint8_t i = 0; i < len; i++)
-	{
-		dest[i] = _i2cPort->read();
-	}
+	if(config.read(dest, len, RV3028_ADDR, port_num) != ESP_OK)
+		return false;
+	return true;
 
-	return(true);
 }
 
 bool RV3028::writeMultipleRegisters(uint8_t addr, uint8_t * values, uint8_t len)
 {
-	_i2cPort->beginTransmission(RV3028_ADDR);
-	_i2cPort->write(addr);
-	for (uint8_t i = 0; i < len; i++)
-	{
-		_i2cPort->write(values[i]);
-	}
+	uint8_t payload[len+1];
+	payload[0] = addr;
+	for(int i=1;i<=len;i++)
+		payload[i] = values[i-1];
+	if(config.write(payload, len+1, RV3028_ADDR, port_num) != ESP_OK)
+		return false;
+	return true;
 
-	if (_i2cPort->endTransmission() != 0)
-		return (false); //Error: Sensor did not ack
-	return(true);
 }
 
 bool RV3028::writeConfigEEPROM_RAMmirror(uint8_t eepromaddr, uint8_t val)
@@ -623,6 +615,7 @@ bool RV3028::writeConfigEEPROM_RAMmirror(uint8_t eepromaddr, uint8_t val)
 	bool success = waitforEEPROM();
 
 	//Disable auto refresh by writing 1 to EERD control bit in CTRL1 register
+	
 	uint8_t ctrl1 = readRegister(RV3028_CTRL1);
 	ctrl1 |= 1 << CTRL1_EERD;
 	if (!writeRegister(RV3028_CTRL1, ctrl1)) success = false;

@@ -56,6 +56,13 @@ bool Flashtraining::stop_training()
 	return false;
 }
 
+
+
+// TODO: Needs implementation
+
+//! Use a temporary buffer of size 511 bytes that holds the bytes that were left over.
+//! At the next call to write_compressed_chunk, preprend these bytes and repeat.
+//! On stop_training, write the bytes in the temporary buffer to the flash.
 bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
 {
 	// Abort if not initialized
@@ -69,93 +76,76 @@ bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
 
 }
 
-bool Flashtraining::write_training_cycle_pressure(long Time, float Pressure) {
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE == 2) {
-
-		uint8_t bytes[9];
-
-		bytes[0] = 3;
-
-		bytes[1] = Time >> 24;     //linkeste Bits
-		bytes[2] = Time >> 16;
-		bytes[3] = Time >> 8;
-		bytes[4] = Time;           //rechteste Bits
-
-		long zws = *(long*)&Pressure;
-		bytes[5] = zws >> 24;     //linkeste Bits
-		bytes[6] = zws >> 16;
-		bytes[7] = zws >> 8;
-		bytes[8] = zws;           //rechteste Bits
-
-
-		if (!_write_bytebuffer_toflash(bytes, sizeof(bytes)))return false;
-		return true;
-	}
-	return false;
+uint16_t Flashtraining::get_number_of_unsynched_trainings(){
+	return 2;
 }
 
-bool Flashtraining::write_training_cycle_IMU(long Time, float ax, float ay, float az, float q1, float q2, float q3, float q4) {
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE == 2) {
 
-		uint8_t bytes[33];
-
-		bytes[0] = 4;
-
-		bytes[1] = Time >> 24;     //linkeste Bits
-		bytes[2] = Time >> 16;
-		bytes[3] = Time >> 8;
-		bytes[4] = Time;           //rechteste Bits
-
-		long zws = *(long*)&ax;
-		bytes[5] = zws >> 24;     //linkeste Bits
-		bytes[6] = zws >> 16;
-		bytes[7] = zws >> 8;
-		bytes[8] = zws;           //rechteste Bits
-
-		zws = *(long*)&ay;
-		bytes[9] = zws >> 24;     //linkeste Bits
-		bytes[10] = zws >> 16;
-		bytes[11] = zws >> 8;
-		bytes[12] = zws;           //rechteste Bits
-
-		zws = *(long*)&az;
-		bytes[13] = zws >> 24;     //linkeste Bits
-		bytes[14] = zws >> 16;
-		bytes[15] = zws >> 8;
-		bytes[16] = zws;           //rechteste Bits
-
-		zws = *(long*)&q1;
-		bytes[17] = zws >> 24;     //linkeste Bits
-		bytes[18] = zws >> 16;
-		bytes[19] = zws >> 8;
-		bytes[20] = zws;           //rechteste Bits
-
-		zws = *(long*)&q2;
-		bytes[21] = zws >> 24;     //linkeste Bits
-		bytes[22] = zws >> 16;
-		bytes[23] = zws >> 8;
-		bytes[24] = zws;           //rechteste Bits
-
-		zws = *(long*)&q3;
-		bytes[25] = zws >> 24;     //linkeste Bits
-		bytes[26] = zws >> 16;
-		bytes[27] = zws >> 8;
-		bytes[28] = zws;           //rechteste Bits
-
-		zws = *(long*)&q4;
-		bytes[29] = zws >> 24;     //linkeste Bits
-		bytes[30] = zws >> 16;
-		bytes[31] = zws >> 8;
-		bytes[32] = zws;           //rechteste Bits
-
-
-		if (!_write_bytebuffer_toflash(bytes, sizeof(bytes)))return false;
-		return true;
+int32_t Flashtraining::get_next_buffer_of_training(uint8_t * buff)
+{
+	if(config.random_between(0,100) < 75)
+	{
+		for(int i=0;i<512;i++){
+			buff[i] = config.random_between(0,100);
+		} 
+		return -1;
+	} else {
+		uint32_t n = config.random_between(20,100);
+		for(int i =0; i<n; i++) {
+			buff[i] = config.random_between(0,100);
+		}
+		return n;
 	}
-	return false;
 }
+
+
+void Flashtraining::completed_synch_of_training(bool b)
+{
+	return;
+}
+
+const char * Flashtraining::get_device_id(void)
+{
+	return "chaze-2";
+}
+const char * Flashtraining::get_azure_connection_string(void)
+{
+	return "HostName=chaze-iot-hub.azure-devices.net;DeviceId=device-2;SharedAccessKey=lMPIGSbbyrWlMUDDi0wPgOL+NaM8ATwB3rkUiQp4xH8=";
+}
+
+const char * Flashtraining::get_wifi_ssid(void)
+{
+	return "EatOrBeEaten";
+}
+
+
+const char * Flashtraining::get_wifi_password(void)
+{
+	return "Fussball08";
+}
+
+
+bool Flashtraining::set_device_id(char * did)
+{
+	return true;
+}
+
+bool Flashtraining::set_azure_connection_string(const char * conn_string)
+{
+	return true;
+}
+
+bool Flashtraining::set_wifi_ssid(const char * ssid)
+{
+	return true;
+}
+
+bool Flashtraining::set_wifi_password(const char * pass)
+{
+	return true;
+}
+
+// TODO: End Needs implementation
 
 bool Flashtraining::start_delete_all_trainings()
 {

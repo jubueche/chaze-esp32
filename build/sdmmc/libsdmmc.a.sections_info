@@ -4,43 +4,39 @@ sdmmc_init.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.sdmmc_card_init 0000017c  00000000  00000000  00000034  2**2
+  0 .literal.sdmmc_card_init 0000005c  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .text         00000000  00000000  00000000  000001b0  2**0
+  1 .text         00000000  00000000  00000000  00000090  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .data         00000000  00000000  00000000  000001b0  2**0
+  2 .data         00000000  00000000  00000000  00000090  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  3 .bss          00000000  00000000  00000000  000001b0  2**0
+  3 .bss          00000000  00000000  00000000  00000090  2**0
                   ALLOC
-  4 .rodata.sdmmc_card_init.str1.4 00000248  00000000  00000000  000001b0  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .text.sdmmc_card_init 000004ce  00000000  00000000  000003f8  2**2
+  4 .text.sdmmc_card_init 00000158  00000000  00000000  00000090  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .rodata.__func__$5616 00000010  00000000  00000000  000008c8  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .debug_frame  00000028  00000000  00000000  000008d8  2**2
+  5 .debug_frame  00000028  00000000  00000000  000001e8  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  8 .debug_info   00002da1  00000000  00000000  00000900  2**0
+  6 .debug_info   000026cf  00000000  00000000  00000210  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
-  9 .debug_abbrev 0000031f  00000000  00000000  000036a1  2**0
+  7 .debug_abbrev 00000323  00000000  00000000  000028df  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    000004e0  00000000  00000000  000039c0  2**0
+  8 .debug_loc    00000269  00000000  00000000  00002c02  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 11 .debug_aranges 00000020  00000000  00000000  00003ea0  2**0
+  9 .debug_aranges 00000020  00000000  00000000  00002e6b  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 12 .debug_ranges 00000010  00000000  00000000  00003ec0  2**0
+ 10 .debug_ranges 00000010  00000000  00000000  00002e8b  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 13 .debug_line   000012b5  00000000  00000000  00003ed0  2**0
+ 11 .debug_line   00000abf  00000000  00000000  00002e9b  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 14 .debug_str    00001961  00000000  00000000  00005185  2**0
+ 12 .debug_str    00001941  00000000  00000000  0000395a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .comment      00000028  00000000  00000000  00006ae6  2**0
+ 13 .comment      00000028  00000000  00000000  0000529b  2**0
                   CONTENTS, READONLY
- 16 .xtensa.info  00000038  00000000  00000000  00006b0e  2**0
+ 14 .xtensa.info  00000038  00000000  00000000  000052c3  2**0
                   CONTENTS, READONLY
- 17 .xt.lit       00000008  00000000  00000000  00006b46  2**0
+ 15 .xt.lit       00000008  00000000  00000000  000052fb  2**0
                   CONTENTS, RELOC, READONLY
- 18 .xt.prop      0000027c  00000000  00000000  00006b4e  2**0
+ 16 .xt.prop      00000060  00000000  00000000  00005303  2**0
                   CONTENTS, RELOC, READONLY
 
 sdmmc_io.o:     file format elf32-xtensa-le
@@ -49,234 +45,220 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .literal.sdmmc_io_send_op_cond 0000000c  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.sdmmc_io_rw_direct 00000024  00000000  00000000  00000040  2**2
+  1 .literal.sdmmc_io_rw_direct 00000010  00000000  00000000  00000040  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.sdmmc_io_reset 00000028  00000000  00000000  00000064  2**2
+  2 .literal.sdmmc_io_reset 0000001c  00000000  00000000  00000050  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.sdmmc_init_io_bus_width 00000038  00000000  00000000  0000008c  2**2
+  3 .literal.sdmmc_init_io_bus_width 0000002c  00000000  00000000  0000006c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.sdmmc_io_enable_hs_mode 00000030  00000000  00000000  000000c4  2**2
+  4 .literal.sdmmc_io_enable_hs_mode 00000010  00000000  00000000  00000098  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.sdmmc_io_read_byte 00000018  00000000  00000000  000000f4  2**2
+  5 .literal.sdmmc_io_read_byte 00000018  00000000  00000000  000000a8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.sdmmc_io_write_byte 0000001c  00000000  00000000  0000010c  2**2
+  6 .literal.sdmmc_io_write_byte 0000001c  00000000  00000000  000000c0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal.sdmmc_io_rw_extended 00000028  00000000  00000000  00000128  2**2
+  7 .literal.sdmmc_io_rw_extended 00000028  00000000  00000000  000000dc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal.sdmmc_io_read_bytes 00000008  00000000  00000000  00000150  2**2
+  8 .literal.sdmmc_io_read_bytes 00000008  00000000  00000000  00000104  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .literal.sdmmc_io_write_bytes 00000008  00000000  00000000  00000158  2**2
+  9 .literal.sdmmc_io_write_bytes 00000008  00000000  00000000  0000010c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .literal.sdmmc_io_read_blocks 00000008  00000000  00000000  00000160  2**2
+ 10 .literal.sdmmc_io_read_blocks 00000008  00000000  00000000  00000114  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .literal.sdmmc_io_write_blocks 00000008  00000000  00000000  00000168  2**2
+ 11 .literal.sdmmc_io_write_blocks 00000008  00000000  00000000  0000011c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .literal.sdmmc_init_io 00000054  00000000  00000000  00000170  2**2
+ 12 .literal.sdmmc_init_io 00000024  00000000  00000000  00000124  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .text         00000000  00000000  00000000  000001c4  2**0
+ 13 .text         00000000  00000000  00000000  00000148  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 14 .data         00000000  00000000  00000000  000001c4  2**0
+ 14 .data         00000000  00000000  00000000  00000148  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 15 .bss          00000000  00000000  00000000  000001c4  2**0
+ 15 .bss          00000000  00000000  00000000  00000148  2**0
                   ALLOC
- 16 .text.sdmmc_io_send_op_cond 0000006d  00000000  00000000  000001c4  2**2
+ 16 .text.sdmmc_io_send_op_cond 0000006d  00000000  00000000  00000148  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .rodata.sdmmc_io_rw_direct.str1.4 0000003d  00000000  00000000  00000234  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 18 .text.sdmmc_io_rw_direct 0000007b  00000000  00000000  00000274  2**2
+ 17 .text.sdmmc_io_rw_direct 00000055  00000000  00000000  000001b8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .rodata.sdmmc_io_reset.str1.4 0000005b  00000000  00000000  000002f0  2**2
+ 18 .rodata.sdmmc_io_reset.str1.4 0000003f  00000000  00000000  00000210  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 20 .text.sdmmc_io_reset 00000082  00000000  00000000  0000034c  2**2
+ 19 .text.sdmmc_io_reset 00000062  00000000  00000000  00000250  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .rodata.sdmmc_init_io_bus_width.str1.4 000000e2  00000000  00000000  000003d0  2**2
+ 20 .rodata.sdmmc_init_io_bus_width.str1.4 000000b2  00000000  00000000  000002b4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 22 .text.sdmmc_init_io_bus_width 000000e1  00000000  00000000  000004b4  2**2
+ 21 .text.sdmmc_init_io_bus_width 000000c6  00000000  00000000  00000368  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .rodata.sdmmc_io_enable_hs_mode.str1.4 00000062  00000000  00000000  00000598  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 24 .text.sdmmc_io_enable_hs_mode 0000008f  00000000  00000000  000005fc  2**2
+ 22 .text.sdmmc_io_enable_hs_mode 00000048  00000000  00000000  00000430  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .rodata.sdmmc_io_read_byte.str1.4 00000048  00000000  00000000  0000068c  2**2
+ 23 .rodata.sdmmc_io_read_byte.str1.4 00000048  00000000  00000000  00000478  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 26 .text.sdmmc_io_read_byte 0000003b  00000000  00000000  000006d4  2**2
+ 24 .text.sdmmc_io_read_byte 0000003b  00000000  00000000  000004c0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .rodata.sdmmc_io_write_byte.str1.4 00000049  00000000  00000000  00000710  2**2
+ 25 .rodata.sdmmc_io_write_byte.str1.4 00000049  00000000  00000000  000004fc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 28 .text.sdmmc_io_write_byte 0000004a  00000000  00000000  0000075c  2**2
+ 26 .text.sdmmc_io_write_byte 0000004a  00000000  00000000  00000548  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 29 .rodata.sdmmc_io_rw_extended.str1.4 00000038  00000000  00000000  000007a8  2**2
+ 27 .rodata.sdmmc_io_rw_extended.str1.4 00000038  00000000  00000000  00000594  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 30 .text.sdmmc_io_rw_extended 000000ae  00000000  00000000  000007e0  2**2
+ 28 .text.sdmmc_io_rw_extended 000000b2  00000000  00000000  000005cc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 31 .text.sdmmc_io_read_bytes 00000036  00000000  00000000  00000890  2**2
+ 29 .text.sdmmc_io_read_bytes 00000036  00000000  00000000  00000680  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .text.sdmmc_io_write_bytes 00000036  00000000  00000000  000008c8  2**2
+ 30 .text.sdmmc_io_write_bytes 00000036  00000000  00000000  000006b8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 33 .text.sdmmc_io_read_blocks 00000026  00000000  00000000  00000900  2**2
+ 31 .text.sdmmc_io_read_blocks 00000026  00000000  00000000  000006f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .text.sdmmc_io_write_blocks 00000026  00000000  00000000  00000928  2**2
+ 32 .text.sdmmc_io_write_blocks 00000026  00000000  00000000  00000718  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 35 .text.sdmmc_io_enable_int 00000016  00000000  00000000  00000950  2**2
+ 33 .text.sdmmc_io_enable_int 00000016  00000000  00000000  00000740  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 36 .rodata.sdmmc_init_io.str1.4 0000010f  00000000  00000000  00000968  2**2
+ 34 .rodata.sdmmc_init_io.str1.4 00000043  00000000  00000000  00000758  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 37 .text.sdmmc_init_io 00000154  00000000  00000000  00000a78  2**2
+ 35 .text.sdmmc_init_io 000000c6  00000000  00000000  0000079c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 38 .text.sdmmc_io_wait_int 00000019  00000000  00000000  00000bcc  2**2
+ 36 .text.sdmmc_io_wait_int 00000019  00000000  00000000  00000864  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 39 .rodata.__func__$5685 00000015  00000000  00000000  00000be8  2**2
+ 37 .rodata.__func__$5685 00000015  00000000  00000000  00000880  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 40 .rodata.__func__$5672 00000014  00000000  00000000  00000c00  2**2
+ 38 .rodata.__func__$5672 00000014  00000000  00000000  00000898  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 41 .rodata.__func__$5662 00000013  00000000  00000000  00000c14  2**2
+ 39 .rodata.__func__$5662 00000013  00000000  00000000  000008ac  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 42 .rodata.__func__$5654 00000013  00000000  00000000  00000c28  2**2
+ 40 .rodata.__func__$5625 00000018  00000000  00000000  000008c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 43 .rodata.__func__$5632 00000018  00000000  00000000  00000c3c  2**2
+ 41 .rodata.__func__$5618 0000000e  00000000  00000000  000008d8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 44 .rodata.__func__$5625 00000018  00000000  00000000  00000c54  2**2
+ 42 .rodata.__func__$5613 0000000f  00000000  00000000  000008e8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 45 .rodata.__func__$5618 0000000e  00000000  00000000  00000c6c  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 46 .rodata.__func__$5613 0000000f  00000000  00000000  00000c7c  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 47 .debug_frame  00000178  00000000  00000000  00000c8c  2**2
+ 43 .debug_frame  00000178  00000000  00000000  000008f8  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 48 .debug_info   00003018  00000000  00000000  00000e04  2**0
+ 44 .debug_info   00002db9  00000000  00000000  00000a70  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 49 .debug_abbrev 00000436  00000000  00000000  00003e1c  2**0
+ 45 .debug_abbrev 00000441  00000000  00000000  00003829  2**0
                   CONTENTS, READONLY, DEBUGGING
- 50 .debug_loc    00000894  00000000  00000000  00004252  2**0
+ 46 .debug_loc    0000084d  00000000  00000000  00003c6a  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 51 .debug_aranges 00000090  00000000  00000000  00004ae6  2**0
+ 47 .debug_aranges 00000090  00000000  00000000  000044b7  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 52 .debug_ranges 00000098  00000000  00000000  00004b76  2**0
+ 48 .debug_ranges 00000098  00000000  00000000  00004547  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 53 .debug_line   000015b8  00000000  00000000  00004c0e  2**0
+ 49 .debug_line   000012c2  00000000  00000000  000045df  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 54 .debug_str    00001948  00000000  00000000  000061c6  2**0
+ 50 .debug_str    00001948  00000000  00000000  000058a1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 55 .comment      00000028  00000000  00000000  00007b0e  2**0
+ 51 .comment      00000028  00000000  00000000  000071e9  2**0
                   CONTENTS, READONLY
- 56 .xtensa.info  00000038  00000000  00000000  00007b36  2**0
+ 52 .xtensa.info  00000038  00000000  00000000  00007211  2**0
                   CONTENTS, READONLY
- 57 .xt.lit       00000068  00000000  00000000  00007b6e  2**0
+ 53 .xt.lit       00000068  00000000  00000000  00007249  2**0
                   CONTENTS, RELOC, READONLY
- 58 .xt.prop      00000600  00000000  00000000  00007bd6  2**0
+ 54 .xt.prop      000005ac  00000000  00000000  000072b1  2**0
                   CONTENTS, RELOC, READONLY
 
 sdmmc_common.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.sdmmc_init_ocr 0000005c  00000000  00000000  00000034  2**2
+  0 .literal.sdmmc_init_ocr 00000034  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.sdmmc_init_cid 0000005c  00000000  00000000  00000090  2**2
+  1 .literal.sdmmc_init_cid 0000005c  00000000  00000000  00000068  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.sdmmc_init_csd 00000030  00000000  00000000  000000ec  2**2
+  2 .literal.sdmmc_init_csd 00000030  00000000  00000000  000000c4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.sdmmc_init_select_card 00000024  00000000  00000000  0000011c  2**2
+  3 .literal.sdmmc_init_select_card 00000024  00000000  00000000  000000f4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.sdmmc_init_card_hs_mode 0000002c  00000000  00000000  00000140  2**2
+  4 .literal.sdmmc_init_card_hs_mode 00000018  00000000  00000000  00000118  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.sdmmc_init_host_bus_width 00000020  00000000  00000000  0000016c  2**2
+  5 .literal.sdmmc_init_host_bus_width 00000010  00000000  00000000  00000130  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.sdmmc_init_host_frequency 00000048  00000000  00000000  0000018c  2**2
+  6 .literal.sdmmc_init_host_frequency 0000003c  00000000  00000000  00000140  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal.sdmmc_flip_byte_order 0000001c  00000000  00000000  000001d4  2**2
+  7 .literal.sdmmc_flip_byte_order 0000001c  00000000  00000000  0000017c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal.sdmmc_card_print_info 00000054  00000000  00000000  000001f0  2**2
+  8 .literal.sdmmc_card_print_info 00000054  00000000  00000000  00000198  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .literal.sdmmc_fix_host_flags 00000010  00000000  00000000  00000244  2**2
+  9 .literal.sdmmc_fix_host_flags 00000010  00000000  00000000  000001ec  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .text         00000000  00000000  00000000  00000254  2**0
+ 10 .text         00000000  00000000  00000000  000001fc  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 11 .data         00000000  00000000  00000000  00000254  2**0
+ 11 .data         00000000  00000000  00000000  000001fc  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 12 .bss          00000000  00000000  00000000  00000254  2**0
+ 12 .bss          00000000  00000000  00000000  000001fc  2**0
                   ALLOC
- 13 .rodata.sdmmc_init_ocr.str1.4 0000011e  00000000  00000000  00000254  2**2
+ 13 .rodata.sdmmc_init_ocr.str1.4 0000007e  00000000  00000000  000001fc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 14 .text.sdmmc_init_ocr 0000010d  00000000  00000000  00000374  2**2
+ 14 .text.sdmmc_init_ocr 000000ae  00000000  00000000  0000027c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .rodata.sdmmc_init_cid.str1.4 00000112  00000000  00000000  00000484  2**2
+ 15 .rodata.sdmmc_init_cid.str1.4 00000112  00000000  00000000  0000032c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 16 .text.sdmmc_init_cid 0000012c  00000000  00000000  00000598  2**2
+ 16 .text.sdmmc_init_cid 0000012c  00000000  00000000  00000440  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .rodata.sdmmc_init_csd.str1.4 0000009a  00000000  00000000  000006c4  2**2
+ 17 .rodata.sdmmc_init_csd.str1.4 0000009a  00000000  00000000  0000056c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 18 .text.sdmmc_init_csd 0000008c  00000000  00000000  00000760  2**2
+ 18 .text.sdmmc_init_csd 0000008c  00000000  00000000  00000608  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .rodata.sdmmc_init_select_card.str1.4 00000049  00000000  00000000  000007ec  2**2
+ 19 .rodata.sdmmc_init_select_card.str1.4 00000049  00000000  00000000  00000694  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 20 .text.sdmmc_init_select_card 0000004a  00000000  00000000  00000838  2**2
+ 20 .text.sdmmc_init_select_card 0000004a  00000000  00000000  000006e0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .rodata.sdmmc_init_card_hs_mode.str1.4 0000003c  00000000  00000000  00000884  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 22 .text.sdmmc_init_card_hs_mode 00000069  00000000  00000000  000008c0  2**2
+ 21 .text.sdmmc_init_card_hs_mode 0000004e  00000000  00000000  0000072c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .rodata.sdmmc_init_host_bus_width.str1.4 00000060  00000000  00000000  0000092c  2**2
+ 22 .rodata.sdmmc_init_host_bus_width.str1.4 00000038  00000000  00000000  0000077c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 24 .text.sdmmc_init_host_bus_width 00000088  00000000  00000000  0000098c  2**2
+ 23 .text.sdmmc_init_host_bus_width 00000062  00000000  00000000  000007b4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .rodata.sdmmc_init_host_frequency.str1.4 0000012b  00000000  00000000  00000a14  2**2
+ 24 .rodata.sdmmc_init_host_frequency.str1.4 000000fb  00000000  00000000  00000818  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 26 .rodata       00000010  00000000  00000000  00000b40  2**2
+ 25 .rodata       00000010  00000000  00000000  00000914  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 27 .text.sdmmc_init_host_frequency 000000f6  00000000  00000000  00000b50  2**2
+ 26 .text.sdmmc_init_host_frequency 000000d2  00000000  00000000  00000924  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 28 .rodata.sdmmc_flip_byte_order.str1.4 00000023  00000000  00000000  00000c48  2**2
+ 27 .rodata.sdmmc_flip_byte_order.str1.4 00000023  00000000  00000000  000009f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 29 .text.sdmmc_flip_byte_order 00000058  00000000  00000000  00000c6c  2**2
+ 28 .text.sdmmc_flip_byte_order 00000058  00000000  00000000  00000a1c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 30 .rodata.sdmmc_card_print_info.str1.4 000000d3  00000000  00000000  00000cc4  2**2
+ 29 .rodata.sdmmc_card_print_info.str1.4 000000d3  00000000  00000000  00000a74  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 31 .text.sdmmc_card_print_info 000000f2  00000000  00000000  00000d98  2**2
+ 30 .text.sdmmc_card_print_info 000000f2  00000000  00000000  00000b48  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .rodata.sdmmc_fix_host_flags.str1.4 0000006d  00000000  00000000  00000e8c  2**2
+ 31 .rodata.sdmmc_fix_host_flags.str1.4 0000006d  00000000  00000000  00000c3c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 33 .text.sdmmc_fix_host_flags 00000069  00000000  00000000  00000efc  2**2
+ 32 .text.sdmmc_fix_host_flags 00000069  00000000  00000000  00000cac  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .rodata.__func__$5661 00000016  00000000  00000000  00000f68  2**2
+ 33 .rodata.__func__$5661 00000016  00000000  00000000  00000d18  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 35 .rodata.__func__$5646 0000001a  00000000  00000000  00000f80  2**2
+ 34 .rodata.__func__$5646 0000001a  00000000  00000000  00000d30  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 36 .rodata.__func__$5641 0000001a  00000000  00000000  00000f9c  2**2
+ 35 .rodata.__func__$5630 00000017  00000000  00000000  00000d4c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 37 .rodata.__func__$5636 00000018  00000000  00000000  00000fb8  2**2
+ 36 .rodata.__func__$5624 0000000f  00000000  00000000  00000d64  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 38 .rodata.__func__$5630 00000017  00000000  00000000  00000fd0  2**2
+ 37 .rodata.__func__$5620 0000000f  00000000  00000000  00000d74  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 39 .rodata.__func__$5624 0000000f  00000000  00000000  00000fe8  2**2
+ 38 .rodata.__func__$5613 0000000f  00000000  00000000  00000d84  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 40 .rodata.__func__$5620 0000000f  00000000  00000000  00000ff8  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 41 .rodata.__func__$5613 0000000f  00000000  00000000  00001008  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 42 .debug_frame  00000100  00000000  00000000  00001018  2**2
+ 39 .debug_frame  00000100  00000000  00000000  00000d94  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 43 .debug_info   00002fb2  00000000  00000000  00001118  2**0
+ 40 .debug_info   00002e06  00000000  00000000  00000e94  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 44 .debug_abbrev 000003e4  00000000  00000000  000040ca  2**0
+ 41 .debug_abbrev 00000419  00000000  00000000  00003c9a  2**0
                   CONTENTS, READONLY, DEBUGGING
- 45 .debug_loc    000004b6  00000000  00000000  000044ae  2**0
+ 42 .debug_loc    000004a2  00000000  00000000  000040b3  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 46 .debug_aranges 00000068  00000000  00000000  00004964  2**0
+ 43 .debug_aranges 00000068  00000000  00000000  00004555  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 47 .debug_ranges 00000058  00000000  00000000  000049cc  2**0
+ 44 .debug_ranges 00000058  00000000  00000000  000045bd  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 48 .debug_line   00001614  00000000  00000000  00004a24  2**0
+ 45 .debug_line   000013f4  00000000  00000000  00004615  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 49 .debug_str    00001a3b  00000000  00000000  00006038  2**0
+ 46 .debug_str    00001a3b  00000000  00000000  00005a09  2**0
                   CONTENTS, READONLY, DEBUGGING
- 50 .comment      00000028  00000000  00000000  00007a73  2**0
+ 47 .comment      00000028  00000000  00000000  00007444  2**0
                   CONTENTS, READONLY
- 51 .xtensa.info  00000038  00000000  00000000  00007a9b  2**0
+ 48 .xtensa.info  00000038  00000000  00000000  0000746c  2**0
                   CONTENTS, READONLY
- 52 .xt.lit       00000050  00000000  00000000  00007ad3  2**0
+ 49 .xt.lit       00000050  00000000  00000000  000074a4  2**0
                   CONTENTS, RELOC, READONLY
- 53 .xt.prop      00000594  00000000  00000000  00007b23  2**0
+ 50 .xt.prop      00000558  00000000  00000000  000074f4  2**0
                   CONTENTS, RELOC, READONLY
 
 sdmmc_mmc.o:     file format elf32-xtensa-le
@@ -289,355 +271,331 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
   2 .literal.sdmmc_mmc_send_ext_csd_data 00000020  00000000  00000000  00000048  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.sdmmc_init_mmc_read_ext_csd 0000006c  00000000  00000000  00000068  2**2
+  3 .literal.sdmmc_init_mmc_read_ext_csd 00000048  00000000  00000000  00000068  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.sdmmc_mmc_switch 0000000c  00000000  00000000  000000d4  2**2
+  4 .literal.sdmmc_mmc_switch 0000000c  00000000  00000000  000000b0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.sdmmc_init_mmc_bus_width 00000028  00000000  00000000  000000e0  2**2
+  5 .literal.sdmmc_init_mmc_bus_width 00000028  00000000  00000000  000000bc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.sdmmc_mmc_enable_hs_mode 0000001c  00000000  00000000  00000108  2**2
+  6 .literal.sdmmc_mmc_enable_hs_mode 0000001c  00000000  00000000  000000e4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .text         00000000  00000000  00000000  00000124  2**0
+  7 .text         00000000  00000000  00000000  00000100  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  8 .data         00000000  00000000  00000000  00000124  2**0
+  8 .data         00000000  00000000  00000000  00000100  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000000  00000000  00000000  00000124  2**0
+  9 .bss          00000000  00000000  00000000  00000100  2**0
                   ALLOC
- 10 .text.sdmmc_mmc_decode_cid 000000be  00000000  00000000  00000124  2**2
+ 10 .text.sdmmc_mmc_decode_cid 000000be  00000000  00000000  00000100  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .rodata.sdmmc_mmc_decode_csd.str1.4 0000004b  00000000  00000000  000001e4  2**2
+ 11 .rodata.sdmmc_mmc_decode_csd.str1.4 0000004b  00000000  00000000  000001c0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 12 .text.sdmmc_mmc_decode_csd 00000082  00000000  00000000  00000230  2**2
+ 12 .text.sdmmc_mmc_decode_csd 00000082  00000000  00000000  0000020c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .rodata.sdmmc_mmc_send_ext_csd_data.str1.4 00000056  00000000  00000000  000002b4  2**2
+ 13 .rodata.sdmmc_mmc_send_ext_csd_data.str1.4 00000056  00000000  00000000  00000290  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 14 .text.sdmmc_mmc_send_ext_csd_data 0000004d  00000000  00000000  0000030c  2**2
+ 14 .text.sdmmc_mmc_send_ext_csd_data 0000004d  00000000  00000000  000002e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .rodata.sdmmc_init_mmc_read_ext_csd.str1.4 00000131  00000000  00000000  0000035c  2**2
+ 15 .rodata.sdmmc_init_mmc_read_ext_csd.str1.4 000000a2  00000000  00000000  00000338  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 16 .text.sdmmc_init_mmc_read_ext_csd 00000230  00000000  00000000  00000490  2**2
+ 16 .text.sdmmc_init_mmc_read_ext_csd 000001d0  00000000  00000000  000003dc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .text.sdmmc_mmc_switch 00000056  00000000  00000000  000006c0  2**2
+ 17 .text.sdmmc_mmc_switch 00000056  00000000  00000000  000005ac  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .rodata.sdmmc_init_mmc_bus_width.str1.4 00000085  00000000  00000000  00000718  2**2
+ 18 .rodata.sdmmc_init_mmc_bus_width.str1.4 00000085  00000000  00000000  00000604  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 19 .text.sdmmc_init_mmc_bus_width 000000b6  00000000  00000000  000007a0  2**2
+ 19 .text.sdmmc_init_mmc_bus_width 000000b6  00000000  00000000  0000068c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .rodata.sdmmc_mmc_enable_hs_mode.str1.4 00000046  00000000  00000000  00000858  2**2
+ 20 .rodata.sdmmc_mmc_enable_hs_mode.str1.4 00000046  00000000  00000000  00000744  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 21 .text.sdmmc_mmc_enable_hs_mode 00000048  00000000  00000000  000008a0  2**2
+ 21 .text.sdmmc_mmc_enable_hs_mode 00000048  00000000  00000000  0000078c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 22 .rodata.__func__$5868 0000001c  00000000  00000000  000008e8  2**2
+ 22 .rodata.__func__$5868 0000001c  00000000  00000000  000007d4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 23 .rodata.__func__$5852 00000019  00000000  00000000  00000904  2**2
+ 23 .rodata.__func__$5852 00000019  00000000  00000000  000007f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 24 .rodata.__func__$5845 00000019  00000000  00000000  00000920  2**2
+ 24 .rodata.__func__$5845 00000019  00000000  00000000  0000080c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 25 .rodata.__func__$5838 0000001c  00000000  00000000  0000093c  2**2
+ 25 .rodata.__func__$5838 0000001c  00000000  00000000  00000828  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 26 .debug_frame  000000b8  00000000  00000000  00000958  2**2
+ 26 .debug_frame  000000b8  00000000  00000000  00000844  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 27 .debug_info   000036af  00000000  00000000  00000a10  2**0
+ 27 .debug_info   0000360c  00000000  00000000  000008fc  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 28 .debug_abbrev 000003db  00000000  00000000  000040bf  2**0
+ 28 .debug_abbrev 000003c9  00000000  00000000  00003f08  2**0
                   CONTENTS, READONLY, DEBUGGING
- 29 .debug_loc    0000167c  00000000  00000000  0000449a  2**0
+ 29 .debug_loc    000016a3  00000000  00000000  000042d1  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 30 .debug_aranges 00000050  00000000  00000000  00005b16  2**0
+ 30 .debug_aranges 00000050  00000000  00000000  00005974  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 31 .debug_ranges 00000040  00000000  00000000  00005b66  2**0
+ 31 .debug_ranges 00000040  00000000  00000000  000059c4  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 32 .debug_line   0000186e  00000000  00000000  00005ba6  2**0
+ 32 .debug_line   000017fc  00000000  00000000  00005a04  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 33 .debug_str    000018ca  00000000  00000000  00007414  2**0
+ 33 .debug_str    000018ca  00000000  00000000  00007200  2**0
                   CONTENTS, READONLY, DEBUGGING
- 34 .comment      00000028  00000000  00000000  00008cde  2**0
+ 34 .comment      00000028  00000000  00000000  00008aca  2**0
                   CONTENTS, READONLY
- 35 .xtensa.info  00000038  00000000  00000000  00008d06  2**0
+ 35 .xtensa.info  00000038  00000000  00000000  00008af2  2**0
                   CONTENTS, READONLY
- 36 .xt.lit       00000038  00000000  00000000  00008d3e  2**0
+ 36 .xt.lit       00000038  00000000  00000000  00008b2a  2**0
                   CONTENTS, RELOC, READONLY
- 37 .xt.prop      000003b4  00000000  00000000  00008d76  2**0
+ 37 .xt.prop      000003b4  00000000  00000000  00008b62  2**0
                   CONTENTS, RELOC, READONLY
 
 sdmmc_cmd.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.sdmmc_send_cmd 00000028  00000000  00000000  00000034  2**2
+  0 .literal.sdmmc_send_app_cmd 0000001c  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.sdmmc_send_app_cmd 0000001c  00000000  00000000  0000005c  2**2
+  1 .literal.sdmmc_send_cmd_go_idle_state 00000014  00000000  00000000  00000050  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.sdmmc_send_cmd_go_idle_state 00000014  00000000  00000000  00000078  2**2
+  2 .literal.sdmmc_send_cmd_send_if_cond 0000000c  00000000  00000000  00000064  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.sdmmc_send_cmd_send_if_cond 00000020  00000000  00000000  0000008c  2**2
+  3 .literal.sdmmc_send_cmd_send_op_cond 00000018  00000000  00000000  00000070  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.sdmmc_send_cmd_send_op_cond 00000038  00000000  00000000  000000ac  2**2
+  4 .literal.sdmmc_send_cmd_read_ocr 00000018  00000000  00000000  00000088  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.sdmmc_send_cmd_read_ocr 00000018  00000000  00000000  000000e4  2**2
+  5 .literal.sdmmc_send_cmd_all_send_cid 0000001c  00000000  00000000  000000a0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.sdmmc_send_cmd_all_send_cid 0000001c  00000000  00000000  000000fc  2**2
+  6 .literal.sdmmc_send_cmd_send_cid 0000002c  00000000  00000000  000000bc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal.sdmmc_send_cmd_send_cid 0000002c  00000000  00000000  00000118  2**2
+  7 .literal.sdmmc_send_cmd_set_relative_addr 0000001c  00000000  00000000  000000e8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal.sdmmc_send_cmd_set_relative_addr 0000001c  00000000  00000000  00000144  2**2
+  8 .literal.sdmmc_send_cmd_set_blocklen 00000008  00000000  00000000  00000104  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .literal.sdmmc_send_cmd_set_blocklen 00000008  00000000  00000000  00000160  2**2
+  9 .literal.sdmmc_send_cmd_send_csd 00000018  00000000  00000000  0000010c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .literal.sdmmc_send_cmd_send_csd 00000018  00000000  00000000  00000168  2**2
+ 10 .literal.sdmmc_send_cmd_select_card 00000008  00000000  00000000  00000124  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .literal.sdmmc_send_cmd_select_card 00000008  00000000  00000000  00000180  2**2
+ 11 .literal.sdmmc_send_cmd_send_scr 00000014  00000000  00000000  0000012c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .literal.sdmmc_send_cmd_send_scr 00000014  00000000  00000000  00000188  2**2
+ 12 .literal.sdmmc_send_cmd_set_bus_width 00000008  00000000  00000000  00000140  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 13 .literal.sdmmc_send_cmd_set_bus_width 00000008  00000000  00000000  0000019c  2**2
+ 13 .literal.sdmmc_send_cmd_crc_on_off 00000018  00000000  00000000  00000148  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 14 .literal.sdmmc_send_cmd_crc_on_off 00000018  00000000  00000000  000001a4  2**2
+ 14 .literal.sdmmc_send_cmd_send_status 00000008  00000000  00000000  00000160  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 15 .literal.sdmmc_send_cmd_send_status 00000008  00000000  00000000  000001bc  2**2
+ 15 .literal.sdmmc_write_sectors_dma 00000024  00000000  00000000  00000168  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 16 .literal.sdmmc_write_sectors_dma 00000034  00000000  00000000  000001c4  2**2
+ 16 .literal.sdmmc_write_sectors 0000001c  00000000  00000000  0000018c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .literal.sdmmc_write_sectors 00000030  00000000  00000000  000001f8  2**2
+ 17 .literal.sdmmc_read_sectors_dma 00000020  00000000  00000000  000001a8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 18 .literal.sdmmc_read_sectors_dma 00000030  00000000  00000000  00000228  2**2
+ 18 .literal.sdmmc_read_sectors 0000001c  00000000  00000000  000001c8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .literal.sdmmc_read_sectors 00000030  00000000  00000000  00000258  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 20 .text         00000000  00000000  00000000  00000288  2**0
+ 19 .text         00000000  00000000  00000000  000001e4  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 21 .data         00000000  00000000  00000000  00000288  2**0
+ 20 .data         00000000  00000000  00000000  000001e4  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 22 .bss          00000000  00000000  00000000  00000288  2**0
+ 21 .bss          00000000  00000000  00000000  000001e4  2**0
                   ALLOC
- 23 .rodata.sdmmc_send_cmd.str1.4 000000e7  00000000  00000000  00000288  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 24 .text.sdmmc_send_cmd 000000b2  00000000  00000000  00000370  2**2
+ 22 .text.sdmmc_send_cmd 00000026  00000000  00000000  000001e4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .rodata.sdmmc_send_app_cmd.str1.4 00000034  00000000  00000000  00000424  2**2
+ 23 .rodata.sdmmc_send_app_cmd.str1.4 00000040  00000000  00000000  0000020c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 26 .text.sdmmc_send_app_cmd 0000006c  00000000  00000000  00000458  2**2
+ 24 .text.sdmmc_send_app_cmd 0000006c  00000000  00000000  0000024c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .text.sdmmc_send_cmd_go_idle_state 0000005e  00000000  00000000  000004c4  2**2
+ 25 .text.sdmmc_send_cmd_go_idle_state 0000005e  00000000  00000000  000002b8  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 28 .rodata.sdmmc_send_cmd_send_if_cond.str1.4 00000030  00000000  00000000  00000524  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 29 .text.sdmmc_send_cmd_send_if_cond 00000078  00000000  00000000  00000554  2**2
+ 26 .text.sdmmc_send_cmd_send_if_cond 0000004e  00000000  00000000  00000318  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 30 .rodata.sdmmc_send_cmd_send_op_cond.str1.4 00000056  00000000  00000000  000005cc  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 31 .text.sdmmc_send_cmd_send_op_cond 000000e8  00000000  00000000  00000624  2**2
+ 27 .text.sdmmc_send_cmd_send_op_cond 000000a4  00000000  00000000  00000368  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 32 .rodata.sdmmc_send_cmd_read_ocr.str1.4 0000003e  00000000  00000000  0000070c  2**2
+ 28 .rodata.sdmmc_send_cmd_read_ocr.str1.4 0000003e  00000000  00000000  0000040c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 33 .text.sdmmc_send_cmd_read_ocr 0000004c  00000000  00000000  0000074c  2**2
+ 29 .text.sdmmc_send_cmd_read_ocr 0000004c  00000000  00000000  0000044c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 34 .rodata.sdmmc_send_cmd_all_send_cid.str1.4 0000000c  00000000  00000000  00000798  2**2
+ 30 .rodata.sdmmc_send_cmd_all_send_cid.str1.4 0000000c  00000000  00000000  00000498  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 35 .text.sdmmc_send_cmd_all_send_cid 00000053  00000000  00000000  000007a4  2**2
+ 31 .text.sdmmc_send_cmd_all_send_cid 00000053  00000000  00000000  000004a4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 36 .rodata.sdmmc_send_cmd_send_cid.str1.4 00000083  00000000  00000000  000007f8  2**2
+ 32 .rodata.sdmmc_send_cmd_send_cid.str1.4 00000083  00000000  00000000  000004f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 37 .text.sdmmc_send_cmd_send_cid 0000008e  00000000  00000000  0000087c  2**2
+ 33 .text.sdmmc_send_cmd_send_cid 0000008e  00000000  00000000  0000057c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 38 .rodata.sdmmc_send_cmd_set_relative_addr.str1.4 00000008  00000000  00000000  0000090c  2**2
+ 34 .rodata.sdmmc_send_cmd_set_relative_addr.str1.4 00000008  00000000  00000000  0000060c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 39 .text.sdmmc_send_cmd_set_relative_addr 00000063  00000000  00000000  00000914  2**2
+ 35 .text.sdmmc_send_cmd_set_relative_addr 00000063  00000000  00000000  00000614  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 40 .text.sdmmc_send_cmd_set_blocklen 00000032  00000000  00000000  00000978  2**2
+ 36 .text.sdmmc_send_cmd_set_blocklen 00000032  00000000  00000000  00000678  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 41 .text.sdmmc_send_cmd_send_csd 00000094  00000000  00000000  000009ac  2**2
+ 37 .text.sdmmc_send_cmd_send_csd 00000094  00000000  00000000  000006ac  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 42 .text.sdmmc_send_cmd_select_card 0000003a  00000000  00000000  00000a40  2**2
+ 38 .text.sdmmc_send_cmd_select_card 0000003a  00000000  00000000  00000740  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 43 .text.sdmmc_send_cmd_send_scr 0000005e  00000000  00000000  00000a7c  2**2
+ 39 .text.sdmmc_send_cmd_send_scr 0000005e  00000000  00000000  0000077c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 44 .text.sdmmc_send_cmd_set_bus_width 0000003a  00000000  00000000  00000adc  2**2
+ 40 .text.sdmmc_send_cmd_set_bus_width 0000003a  00000000  00000000  000007dc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 45 .rodata.sdmmc_send_cmd_crc_on_off.str1.4 0000003f  00000000  00000000  00000b18  2**2
+ 41 .rodata.sdmmc_send_cmd_crc_on_off.str1.4 0000003f  00000000  00000000  00000818  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 46 .text.sdmmc_send_cmd_crc_on_off 0000004a  00000000  00000000  00000b58  2**2
+ 42 .text.sdmmc_send_cmd_crc_on_off 0000004a  00000000  00000000  00000858  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 47 .text.sdmmc_send_cmd_send_status 0000003e  00000000  00000000  00000ba4  2**2
+ 43 .text.sdmmc_send_cmd_send_status 0000003e  00000000  00000000  000008a4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 48 .rodata.sdmmc_write_sectors_dma.str1.4 0000006e  00000000  00000000  00000be4  2**2
+ 44 .rodata.sdmmc_write_sectors_dma.str1.4 00000038  00000000  00000000  000008e4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 49 .text.sdmmc_write_sectors_dma 000000e4  00000000  00000000  00000c54  2**2
+ 45 .text.sdmmc_write_sectors_dma 000000b0  00000000  00000000  0000091c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 50 .rodata.sdmmc_write_sectors.str1.4 00000033  00000000  00000000  00000d38  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 51 .text.sdmmc_write_sectors 000000a7  00000000  00000000  00000d6c  2**2
+ 46 .text.sdmmc_write_sectors 0000007f  00000000  00000000  000009cc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 52 .text.sdmmc_read_sectors_dma 000000e4  00000000  00000000  00000e14  2**2
+ 47 .text.sdmmc_read_sectors_dma 000000b0  00000000  00000000  00000a4c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 53 .text.sdmmc_read_sectors 000000a7  00000000  00000000  00000ef8  2**2
+ 48 .text.sdmmc_read_sectors 0000007f  00000000  00000000  00000afc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 54 .rodata.__func__$5778 00000017  00000000  00000000  00000fa0  2**2
+ 49 .rodata.__func__$5778 00000017  00000000  00000000  00000b7c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 55 .rodata.__func__$5765 00000013  00000000  00000000  00000fb8  2**2
+ 50 .rodata.__func__$5748 00000018  00000000  00000000  00000b94  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 56 .rodata.__func__$5748 00000018  00000000  00000000  00000fcc  2**2
+ 51 .rodata.__func__$5716 0000001a  00000000  00000000  00000bac  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 57 .rodata.__func__$5735 00000014  00000000  00000000  00000fe4  2**2
+ 52 .rodata.__func__$5675 00000021  00000000  00000000  00000bc8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 58 .rodata.__func__$5716 0000001a  00000000  00000000  00000ff8  2**2
+ 53 .rodata.__func__$5667 00000018  00000000  00000000  00000bec  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 59 .rodata.__func__$5675 00000021  00000000  00000000  00001014  2**2
+ 54 .rodata.__func__$5660 0000001c  00000000  00000000  00000c04  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 60 .rodata.__func__$5667 00000018  00000000  00000000  00001038  2**2
+ 55 .rodata.__func__$5653 00000018  00000000  00000000  00000c20  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 61 .rodata.__func__$5660 0000001c  00000000  00000000  00001050  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 62 .rodata.__func__$5653 00000018  00000000  00000000  0000106c  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 63 .rodata.__func__$5644 0000001c  00000000  00000000  00001084  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 64 .rodata.__func__$5634 0000001c  00000000  00000000  000010a0  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 65 .debug_frame  000001f0  00000000  00000000  000010bc  2**2
+ 56 .debug_frame  000001f0  00000000  00000000  00000c38  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 66 .debug_info   00003761  00000000  00000000  000012ac  2**0
+ 57 .debug_info   00003487  00000000  00000000  00000e28  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 67 .debug_abbrev 00000471  00000000  00000000  00004a0d  2**0
+ 58 .debug_abbrev 00000477  00000000  00000000  000042af  2**0
                   CONTENTS, READONLY, DEBUGGING
- 68 .debug_loc    00000bea  00000000  00000000  00004e7e  2**0
+ 59 .debug_loc    00000b2d  00000000  00000000  00004726  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 69 .debug_aranges 000000b8  00000000  00000000  00005a68  2**0
+ 60 .debug_aranges 000000b8  00000000  00000000  00005253  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 70 .debug_ranges 00000108  00000000  00000000  00005b20  2**0
+ 61 .debug_ranges 00000108  00000000  00000000  0000530b  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 71 .debug_line   00001c8d  00000000  00000000  00005c28  2**0
+ 62 .debug_line   000018e5  00000000  00000000  00005413  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 72 .debug_str    00001ab0  00000000  00000000  000078b5  2**0
+ 63 .debug_str    00001ab0  00000000  00000000  00006cf8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 73 .comment      00000028  00000000  00000000  00009365  2**0
+ 64 .comment      00000028  00000000  00000000  000087a8  2**0
                   CONTENTS, READONLY
- 74 .xtensa.info  00000038  00000000  00000000  0000938d  2**0
+ 65 .xtensa.info  00000038  00000000  00000000  000087d0  2**0
                   CONTENTS, READONLY
- 75 .xt.lit       000000a0  00000000  00000000  000093c5  2**0
+ 66 .xt.lit       00000098  00000000  00000000  00008808  2**0
                   CONTENTS, RELOC, READONLY
- 76 .xt.prop      00000930  00000000  00000000  00009465  2**0
+ 67 .xt.prop      000008a0  00000000  00000000  000088a0  2**0
                   CONTENTS, RELOC, READONLY
 
 sdmmc_sd.o:     file format elf32-xtensa-le
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .literal.sdmmc_init_sd_if_cond 00000044  00000000  00000000  00000034  2**2
+  0 .literal.sdmmc_init_sd_if_cond 00000020  00000000  00000000  00000034  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  1 .literal.sdmmc_init_sd_blocklen 00000018  00000000  00000000  00000078  2**2
+  1 .literal.sdmmc_init_sd_blocklen 00000018  00000000  00000000  00000054  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  2 .literal.sdmmc_init_sd_scr 00000018  00000000  00000000  00000090  2**2
+  2 .literal.sdmmc_init_sd_scr 00000018  00000000  00000000  0000006c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  3 .literal.sdmmc_init_sd_bus_width 00000014  00000000  00000000  000000a8  2**2
+  3 .literal.sdmmc_init_sd_bus_width 00000014  00000000  00000000  00000084  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  4 .literal.sdmmc_init_sd_wait_data_ready 00000014  00000000  00000000  000000bc  2**2
+  4 .literal.sdmmc_init_sd_wait_data_ready 00000004  00000000  00000000  00000098  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  5 .literal.sdmmc_send_cmd_switch_func 00000040  00000000  00000000  000000d0  2**2
+  5 .literal.sdmmc_send_cmd_switch_func 00000028  00000000  00000000  0000009c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  6 .literal.sdmmc_enable_hs_mode 00000030  00000000  00000000  00000110  2**2
+  6 .literal.sdmmc_enable_hs_mode 00000010  00000000  00000000  000000c4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  7 .literal.sdmmc_enable_hs_mode_and_check 00000054  00000000  00000000  00000140  2**2
+  7 .literal.sdmmc_enable_hs_mode_and_check 00000054  00000000  00000000  000000d4  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  8 .literal.sdmmc_check_scr 00000028  00000000  00000000  00000194  2**2
+  8 .literal.sdmmc_check_scr 00000028  00000000  00000000  00000128  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
-  9 .literal.sdmmc_init_spi_crc 00000024  00000000  00000000  000001bc  2**2
+  9 .literal.sdmmc_init_spi_crc 00000024  00000000  00000000  00000150  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 10 .literal.sdmmc_decode_csd 0000001c  00000000  00000000  000001e0  2**2
+ 10 .literal.sdmmc_decode_csd 0000001c  00000000  00000000  00000174  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 11 .literal.sdmmc_decode_scr 00000004  00000000  00000000  000001fc  2**2
+ 11 .literal.sdmmc_decode_scr 00000004  00000000  00000000  00000190  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 12 .text         00000000  00000000  00000000  00000200  2**0
+ 12 .text         00000000  00000000  00000000  00000194  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 13 .data         00000000  00000000  00000000  00000200  2**0
+ 13 .data         00000000  00000000  00000000  00000194  2**0
                   CONTENTS, ALLOC, LOAD, DATA
- 14 .bss          00000000  00000000  00000000  00000200  2**0
+ 14 .bss          00000000  00000000  00000000  00000194  2**0
                   ALLOC
- 15 .rodata.sdmmc_init_sd_if_cond.str1.4 000000ce  00000000  00000000  00000200  2**2
+ 15 .rodata.sdmmc_init_sd_if_cond.str1.4 00000046  00000000  00000000  00000194  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 16 .text.sdmmc_init_sd_if_cond 000000b2  00000000  00000000  000002d0  2**2
+ 16 .text.sdmmc_init_sd_if_cond 00000061  00000000  00000000  000001dc  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 17 .rodata.sdmmc_init_sd_blocklen.str1.4 00000036  00000000  00000000  00000384  2**2
+ 17 .rodata.sdmmc_init_sd_blocklen.str1.4 00000036  00000000  00000000  00000240  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 18 .text.sdmmc_init_sd_blocklen 00000040  00000000  00000000  000003bc  2**2
+ 18 .text.sdmmc_init_sd_blocklen 00000040  00000000  00000000  00000278  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 19 .rodata.sdmmc_init_sd_scr.str1.4 00000036  00000000  00000000  000003fc  2**2
+ 19 .rodata.sdmmc_init_sd_scr.str1.4 00000036  00000000  00000000  000002b8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 20 .text.sdmmc_init_sd_scr 00000070  00000000  00000000  00000434  2**2
+ 20 .text.sdmmc_init_sd_scr 00000070  00000000  00000000  000002f0  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 21 .rodata.sdmmc_init_sd_bus_width.str1.4 00000033  00000000  00000000  000004a4  2**2
+ 21 .rodata.sdmmc_init_sd_bus_width.str1.4 00000033  00000000  00000000  00000360  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 22 .text.sdmmc_init_sd_bus_width 0000004a  00000000  00000000  000004d8  2**2
+ 22 .text.sdmmc_init_sd_bus_width 0000004a  00000000  00000000  00000394  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 23 .rodata.sdmmc_init_sd_wait_data_ready.str1.4 00000036  00000000  00000000  00000524  2**2
+ 23 .text.sdmmc_init_sd_wait_data_ready 0000002c  00000000  00000000  000003e0  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 24 .rodata.sdmmc_send_cmd_switch_func.str1.4 00000038  00000000  00000000  0000040c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 24 .text.sdmmc_init_sd_wait_data_ready 0000004e  00000000  00000000  0000055c  2**2
+ 25 .text.sdmmc_send_cmd_switch_func 0000013f  00000000  00000000  00000444  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 25 .rodata.sdmmc_send_cmd_switch_func.str1.4 000000c3  00000000  00000000  000005ac  2**2
+ 26 .text.sdmmc_enable_hs_mode 00000073  00000000  00000000  00000584  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+ 27 .rodata.sdmmc_enable_hs_mode_and_check.str1.4 000000f3  00000000  00000000  000005f8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 26 .text.sdmmc_send_cmd_switch_func 0000017a  00000000  00000000  00000670  2**2
+ 28 .text.sdmmc_enable_hs_mode_and_check 000000ee  00000000  00000000  000006ec  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 27 .rodata.sdmmc_enable_hs_mode.str1.4 00000085  00000000  00000000  000007ec  2**2
+ 29 .rodata.sdmmc_check_scr.str1.4 0000007f  00000000  00000000  000007dc  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 28 .text.sdmmc_enable_hs_mode 000000bf  00000000  00000000  00000874  2**2
+ 30 .text.sdmmc_check_scr 00000066  00000000  00000000  0000085c  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 29 .rodata.sdmmc_enable_hs_mode_and_check.str1.4 000000f3  00000000  00000000  00000934  2**2
+ 31 .rodata.sdmmc_init_spi_crc.str1.4 0000008f  00000000  00000000  000008c4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 30 .text.sdmmc_enable_hs_mode_and_check 000000ee  00000000  00000000  00000a28  2**2
+ 32 .text.sdmmc_init_spi_crc 0000004a  00000000  00000000  00000954  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 31 .rodata.sdmmc_check_scr.str1.4 0000007f  00000000  00000000  00000b18  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 32 .text.sdmmc_check_scr 00000066  00000000  00000000  00000b98  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 33 .rodata.sdmmc_init_spi_crc.str1.4 0000008f  00000000  00000000  00000c00  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 34 .text.sdmmc_init_spi_crc 0000004a  00000000  00000000  00000c90  2**2
-                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 35 .text.sdmmc_decode_cid 0000004f  00000000  00000000  00000cdc  2**2
+ 33 .text.sdmmc_decode_cid 0000004f  00000000  00000000  000009a0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 36 .rodata.sdmmc_decode_csd.str1.4 0000003d  00000000  00000000  00000d2c  2**2
+ 34 .rodata.sdmmc_decode_csd.str1.4 0000003d  00000000  00000000  000009f0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 37 .text.sdmmc_decode_csd 000000bd  00000000  00000000  00000d6c  2**2
+ 35 .text.sdmmc_decode_csd 000000bb  00000000  00000000  00000a30  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 38 .text.sdmmc_decode_scr 00000025  00000000  00000000  00000e2c  2**2
+ 36 .text.sdmmc_decode_scr 00000025  00000000  00000000  00000aec  2**2
                   CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
- 39 .rodata.__func__$5674 00000013  00000000  00000000  00000e54  2**2
+ 37 .rodata.__func__$5674 00000013  00000000  00000000  00000b14  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 40 .rodata.__func__$5670 00000010  00000000  00000000  00000e68  2**2
+ 38 .rodata.__func__$5670 00000010  00000000  00000000  00000b28  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 41 .rodata.__func__$5664 0000001f  00000000  00000000  00000e78  2**2
+ 39 .rodata.__func__$5664 0000001f  00000000  00000000  00000b38  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 42 .rodata.__func__$5657 00000015  00000000  00000000  00000e98  2**2
+ 40 .rodata.__func__$5650 0000001b  00000000  00000000  00000b58  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 43 .rodata.__func__$5650 0000001b  00000000  00000000  00000eb0  2**2
+ 41 .rodata.__func__$5623 00000012  00000000  00000000  00000b74  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 44 .rodata.__func__$5623 00000012  00000000  00000000  00000ecc  2**2
+ 42 .rodata.__func__$5618 00000017  00000000  00000000  00000b88  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 45 .rodata.__func__$5618 00000017  00000000  00000000  00000ee0  2**2
+ 43 .rodata.__func__$5613 00000016  00000000  00000000  00000ba0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
- 46 .rodata.__func__$5613 00000016  00000000  00000000  00000ef8  2**2
-                  CONTENTS, ALLOC, LOAD, READONLY, DATA
- 47 .debug_frame  00000148  00000000  00000000  00000f10  2**2
+ 44 .debug_frame  00000148  00000000  00000000  00000bb8  2**2
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 48 .debug_info   00003bd6  00000000  00000000  00001058  2**0
+ 45 .debug_info   000039d1  00000000  00000000  00000d00  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 49 .debug_abbrev 00000496  00000000  00000000  00004c2e  2**0
+ 46 .debug_abbrev 000004a1  00000000  00000000  000046d1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 50 .debug_loc    000016b4  00000000  00000000  000050c4  2**0
+ 47 .debug_loc    000018b6  00000000  00000000  00004b72  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 51 .debug_aranges 00000080  00000000  00000000  00006778  2**0
+ 48 .debug_aranges 00000080  00000000  00000000  00006428  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 52 .debug_ranges 00000070  00000000  00000000  000067f8  2**0
+ 49 .debug_ranges 00000070  00000000  00000000  000064a8  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 53 .debug_line   00001e4c  00000000  00000000  00006868  2**0
+ 50 .debug_line   00001b5a  00000000  00000000  00006518  2**0
                   CONTENTS, RELOC, READONLY, DEBUGGING
- 54 .debug_str    00001a71  00000000  00000000  000086b4  2**0
+ 51 .debug_str    00001a71  00000000  00000000  00008072  2**0
                   CONTENTS, READONLY, DEBUGGING
- 55 .comment      00000028  00000000  00000000  0000a125  2**0
+ 52 .comment      00000028  00000000  00000000  00009ae3  2**0
                   CONTENTS, READONLY
- 56 .xtensa.info  00000038  00000000  00000000  0000a14d  2**0
+ 53 .xtensa.info  00000038  00000000  00000000  00009b0b  2**0
                   CONTENTS, READONLY
- 57 .xt.lit       00000060  00000000  00000000  0000a185  2**0
+ 54 .xt.lit       00000060  00000000  00000000  00009b43  2**0
                   CONTENTS, RELOC, READONLY
- 58 .xt.prop      00000684  00000000  00000000  0000a1e5  2**0
+ 55 .xt.prop      0000066c  00000000  00000000  00009ba3  2**0
                   CONTENTS, RELOC, READONLY

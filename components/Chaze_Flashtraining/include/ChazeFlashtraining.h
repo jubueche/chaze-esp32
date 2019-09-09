@@ -29,13 +29,22 @@ class Flashtraining
     //WRITE TRAINING
     bool start_new_training();
     bool stop_training();
-    bool write_training_cycle_pressure(long Time, float Pressure);
-    bool write_training_cycle_IMU(long Time, float ax, float ay, float az, float q1, float q2, float q3, float q4);
-    //bool write_training_cycle_O2Sensor(long Time, ...);	//TODO
 
     // Added by Julian Buechel; Writes n chars to the flash.
     //! Needs to be tested
     bool write_compressed_chunk(uint8_t * data, uint32_t n);
+    uint16_t get_number_of_unsynched_trainings(void);
+    int32_t get_next_buffer_of_training(uint8_t *); // Takes pointer to buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
+    void completed_synch_of_training(bool); // Passes a boolean indicating whether the training was successfully synched.
+    const char * get_device_id(void); //Returns device ID
+    const char * get_azure_connection_string(void); // Returns connection string for Azure.
+    const char * get_wifi_ssid(void);
+    const char * get_wifi_password(void);
+    bool set_device_id(char *); //Sets device ID
+    bool set_azure_connection_string(const char *); // Sets connection string for Azure.
+    bool set_wifi_ssid(const char *);
+    bool set_wifi_password(const char *);
+
 
     //READING TRAINING DATA
     bool start_reading_data();

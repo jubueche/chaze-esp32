@@ -29,8 +29,7 @@ Distributed as-is; no warranty is given.
 extern "C" void app_main()
 {
 	config.turn_on_main_circuit();
-
-	config.initialize_rtc();
+	rtc.begin();
 
 	if (rtc.updateTime() == false) //Updates the time variables from RTC
   	{
@@ -57,9 +56,7 @@ extern "C" void app_main()
 #include "WProgram.h"
 #endif
 
-#include <Wire.h>
-
-
+#include "Configuration.h"
 
 //The 7-bit I2C ADDRESS of the RV3028
 #define RV3028_ADDR						(uint8_t)0x52
@@ -211,7 +208,7 @@ public:
 
 	RV3028(void);
 
-	boolean begin(TwoWire &wirePort = Wire);
+	boolean begin();
 
 	bool setTime(uint8_t sec, uint8_t min, uint8_t hour, uint8_t weekday, uint8_t date, uint8_t month, uint16_t year);
 	bool setTime(uint8_t * time, uint8_t len);
@@ -275,9 +272,9 @@ public:
 	bool waitforEEPROM();
 
 private:	
+	i2c_port_t port_num;
 	const char * TAG = "Chaze-RTC";
 	uint8_t _time[TIME_ARRAY_LENGTH];
-	TwoWire *_i2cPort;
 };
 
 extern RV3028 rtc;

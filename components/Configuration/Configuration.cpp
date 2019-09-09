@@ -4,6 +4,15 @@
 Configuration config;
 
 
+uint32_t Configuration::get_number_of_unsynched_trainings(void)
+{
+    FlashtrainingWrapper *ft = FlashtrainingWrapper_create();
+    uint32_t num_unsynched_trainings = FlashtrainingWrapper_get_number_of_unsynched_trainings(ft);
+    FlashtrainingWrapper_destroy(ft);
+    return num_unsynched_trainings;
+}
+
+
 void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned long sample_time)
 {
     long tmp = *(long*)&pressure;
@@ -137,6 +146,11 @@ esp_err_t Configuration::initialize_leds(void)
     return err;
 }
 
+int Configuration::random_between(int l, int u)
+{
+    return (rand() % (u-l)) + l; 
+}
+
 void Configuration::flicker_led(gpio_num_t led)
 {
     for(int i=0;i<15;i++){
@@ -169,16 +183,6 @@ esp_err_t Configuration::vibration_signal_sleep(void)
     return err;
 }
 
-esp_err_t Configuration::initialize_rtc(void)
-{
-    Wire.begin(I2C_MASTER_SDA_IO,I2C_MASTER_SCL_IO,I2C_MASTER_FREQ_HZ);
-    if (rtc.begin() == false) {
-        ESP_LOGE(TAG, "Error initializing RT-Clock.");
-        return ESP_FAIL;
-    }
-    else
-        return ESP_OK;
-}
 
 esp_err_t Configuration::initialize_spi(void)
 {

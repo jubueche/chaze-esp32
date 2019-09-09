@@ -35,8 +35,7 @@ void sample_hr(void * pvParams)
 
 			xSemaphoreGiveRecursive(config.i2c_semaphore);
 		}
-
-		vTaskDelay(210);
+		vTaskDelay(config.random_between(5,50));
 	}
 	
 }
@@ -67,8 +66,7 @@ void sample_pressure(void * pvParams)
 
 			xSemaphoreGiveRecursive(config.i2c_semaphore);
 		}
-		
-		//! Delay here?
+		vTaskDelay(config.random_between(5,50));
 	}
 }
 
@@ -102,8 +100,7 @@ void sample_bno(void * pvParams)
 
 			xSemaphoreGiveRecursive(config.i2c_semaphore);
 		}
-		//! Delay here?
-		
+		vTaskDelay(config.random_between(5,50));
 	}
 }
 

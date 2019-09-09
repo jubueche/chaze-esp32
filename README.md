@@ -18,15 +18,16 @@
 
 ## Flashtraining library further requirements
 
-- **New training:** Upon call to ```start_new_training()``` create a new training instance and populate fields such as starting write-index and date. Furthermore, switch states and check if enough space is available. Return ```ESP_OK``` on success or an error of type ```esp_err_t```.
+- **Get number of unsynched trainings:** Upon call to ```uint32_t get_number_of_unsynched_trainings(void)``` should return the number of unsynched trainings. This function is already implemented and always returns 2. TODO: Implement correctly.
+
+- **New training:** Upon call to ```start_new_training()``` write meta-data into flash. Furthermore, switch states and check if enough space is available. Return ```ESP_OK``` on success or an error of type ```esp_err_t```.
 
 - **No lost training data:** After writing a block of a certain size, update the training object/struct to hold the current write index in case the device dies (then the data is not lost).
 
-- **Training meta data:** Supply functions that let the caller query trainings by different indicators. ```get_unsynched_trainings()``` should return an array of trainings that have not been synched yet. ```get_all_trainings()``` should return an array of all the trainings available. If there are not trainings, return ```NULL```.
 
-- **Store training meta data in memory:** Upon creating a new training, store the object in memory and update regularly during recording.
+- **Store training meta data in memory:** Upon creating a new training, store the meta data in memory and update regularly during recording.
 
-- **Get training data:** Function that takes a pointer to a training struct and a pointer to a 512 byte buffer that fills the buffer perfectly and returns ```true``` if there is more to come and ```false``` if this was the last package. Signature: ```bool get_training_data(training_t * current_training, uint8_t *buf)```.
+- **Get training data:** Function that takes a pointer to a 512 byte buffer and fills the buffer perfectly. Returns ```int32_t```. If there is more to come, returns -1, else: the number of bytes written.  Signature: ```int32_t get_training_data(uint8_t *buf)```.
 
 - **Write compressed chunk:** Function that receives a pointer to an array that is holding a variable amount of data. Second argument is the amount of data ```n```. Returns ```ESP_OK``` if successfully written to memory or any error otherwise. Signature: ```esp_err_t write_compressed_chunk(uint8_t *buf, uint32_t n)```.
 
@@ -37,10 +38,25 @@
     - WiFi password
 One example would be ```char * get_device_id(void)```, which will be used like this: ```char * d_id = config.get_device_id();```. This function will internally make a call to a function in the flash library, which returns the deviceID.
 
+- **Functions:**
+```
+    int32_t get_next_buffer_of_training(uint8_t *); // Takes pointer to buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
+    void completed_synch_of_training(bool); // Passes a boolean indicating whether the training was successfully synched.
+    uint32_t get_device_id(void); //Returns device ID
+    const char * get_azure_connection_string(void); // Returns connection string for Azure.
+    const char * get_wifi_ssid(void);
+    const char * get_wifi_password(void);
+    bool set_device_id(uint32_t); //Sets device ID
+    bool set_azure_connection_string(const char *); // Sets connection string for Azure.
+    bool set_wifi_ssid(const char *);
+    bool set_wifi_password(const char *);
+```
+
 ## TODO
 
 - Make config class immutable
 - Add watchdog
+- Add documentation for record.
 
 ## Bugs when setting up
 
@@ -53,3 +69,5 @@ One example would be ```char * get_device_id(void)```, which will be used like t
 4) Delete AzureIoT from Arduino libraries and Camera library.
 
 5) Fix I2C bug, which can be found [here](https://github.com/espressif/esp-idf/issues/680) (see arsinios answer)
+
+6) Not a bug, but avoids redefinition warning: Uncomment ```#define DEC(x) C2(DEC,x)``` in ```esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h```.
