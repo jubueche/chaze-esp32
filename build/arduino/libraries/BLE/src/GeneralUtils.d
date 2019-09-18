@@ -104,6 +104,7 @@ libraries/BLE/src//GeneralUtils.o: \
  /home/julian/esp/esp-idf/components/lwip/lwip/src/include/lwip/def.h \
  /home/julian/esp/esp-idf/components/lwip/include/apps/dhcpserver/dhcpserver.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h
 
@@ -314,6 +315,8 @@ libraries/BLE/src//GeneralUtils.o: \
 /home/julian/esp/esp-idf/components/lwip/include/apps/dhcpserver/dhcpserver.h:
 
 /home/julian/esp/esp-idf/components/esp32/include/esp_wifi_os_adapter.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 

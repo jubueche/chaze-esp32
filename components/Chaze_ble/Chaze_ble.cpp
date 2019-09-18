@@ -26,14 +26,14 @@ void Chaze_ble::initialize_connection(){
   BLEDevice::init("UART Service");
 
   //Set the MTU of the packets sent, maximum is 500, Apple needs 23 apparently.
-  BLEDevice::setMTU(500);
+  BLEDevice::setMTU(517);
 
   // Create the BLE Server
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
 
   // Create the BLE Service
-  BLEService *pService = pServer->createService(SERVICE_UUID);
+  pService = pServer->createService(SERVICE_UUID);
 
   // Create a BLE Characteristic
   pTxCharacteristic = pService->createCharacteristic(

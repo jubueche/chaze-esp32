@@ -1,38 +1,41 @@
 main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/Chaze_Record/include/Chaze_Record.h \
- /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h \
- /home/julian/esp/esp-idf/components/newlib/platform_include/time.h \
- /home/julian/esp/esp-idf/components/newlib/include/time.h \
+ /home/julian/esp/esp-idf/components/log/include/esp_log.h \
+ /home/julian/esp/esp-idf/components/newlib/include/stdint.h \
+ /home/julian/esp/esp-idf/components/newlib/include/machine/_default_types.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/features.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h \
+ /home/julian/Documents/chaze-esp32/build/include/sdkconfig.h \
+ /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
+ /home/julian/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_assert.h \
+ /home/julian/esp/esp-idf/components/newlib/platform_include/assert.h \
+ /home/julian/esp/esp-idf/components/newlib/include/stdlib.h \
+ /home/julian/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
  /home/julian/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/esp/esp-idf/components/newlib/include/newlib.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/config.h \
- /home/julian/esp/esp-idf/components/newlib/include/machine/ieeefp.h \
- /home/julian/esp/esp-idf/components/newlib/include/sys/features.h \
  /home/julian/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/reent.h \
  /home/julian/esp/esp-idf/components/newlib/include/_ansi.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/_types.h \
  /home/julian/esp/esp-idf/components/newlib/include/machine/_types.h \
- /home/julian/esp/esp-idf/components/newlib/include/machine/_default_types.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/lock.h \
- /home/julian/esp/esp-idf/components/newlib/include/machine/time.h \
- /home/julian/esp/esp-idf/components/newlib/include/sys/types.h \
- /home/julian/esp/esp-idf/components/newlib/include/machine/types.h \
- /home/julian/esp/esp-idf/components/newlib/include/sys/sched.h \
- /home/julian/esp/esp-idf/components/driver/include/driver/i2c.h \
- /home/julian/esp/esp-idf/components/esp32/include/esp_types.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/cdefs.h \
- /home/julian/esp/esp-idf/components/newlib/include/stdint.h \
- /home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h \
- /home/julian/esp/esp-idf/components/esp32/include/esp_err.h \
- /home/julian/esp/esp-idf/components/newlib/include/stdio.h \
- /home/julian/esp/esp-idf/components/newlib/include/sys/stdio.h \
- /home/julian/esp/esp-idf/components/newlib/platform_include/assert.h \
- /home/julian/Documents/chaze-esp32/build/include/sdkconfig.h \
- /home/julian/esp/esp-idf/components/newlib/include/stdlib.h \
  /home/julian/esp/esp-idf/components/newlib/include/machine/stdlib.h \
  /home/julian/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/esp/esp-idf/components/newlib/include/assert.h \
+ /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h \
+ /home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h \
+ /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h \
+ /home/julian/esp/esp-idf/components/driver/include/driver/i2c.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_types.h \
+ /home/julian/esp/esp-idf/components/esp32/include/esp_err.h \
+ /home/julian/esp/esp-idf/components/newlib/include/stdio.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/types.h \
+ /home/julian/esp/esp-idf/components/newlib/include/machine/types.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/sched.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/stdio.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_intr_alloc.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/FreeRTOS.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
@@ -46,9 +49,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/xtensa_context.h \
  /home/julian/esp/esp-idf/components/esp32/include/xtensa/corebits.h \
  /home/julian/esp/esp-idf/components/esp32/include/xtensa/xtruntime-frames.h \
- /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
- /home/julian/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
- /home/julian/esp/esp-idf/components/esp32/include/esp_assert.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/projdefs.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/portable.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/deprecated_definitions.h \
@@ -88,6 +88,10 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/list.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/queue.h \
  /home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
+ /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h \
+ /home/julian/esp/esp-idf/components/newlib/platform_include/time.h \
+ /home/julian/esp/esp-idf/components/newlib/include/time.h \
+ /home/julian/esp/esp-idf/components/newlib/include/machine/time.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Arduino.h \
  /home/julian/esp/esp-idf/components/newlib/include/string.h \
@@ -96,8 +100,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
  /home/julian/esp/esp-idf/components/newlib/include/math.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
- /home/julian/esp/esp-idf/components/log/include/esp_log.h \
- /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-uart.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-gpio.h \
@@ -138,8 +140,17 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
- /home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h \
- /home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/BNO055.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/Sensor.h \
  /home/julian/Documents/chaze-esp32/components/BNO055/include/imumaths.h \
@@ -152,27 +163,16 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
  /home/julian/Documents/chaze-esp32/components/Chaze_Advertising/include/Chaze_Advertising.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_ble/include/Chaze_ble.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDevice.h \
- /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h \
- /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h \
  /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gattc_api.h \
- /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
  /home/julian/esp/esp-idf/components/bt/include/esp_bt.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_task.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/FreeRTOSConfig.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEServer.h \
- /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
- /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAdvertising.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEService.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLESecurity.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteCharacteristic.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteDescriptor.h \
@@ -246,21 +246,35 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Record/include/Chaze_Record.h:
 
-/home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h:
+/home/julian/esp/esp-idf/components/log/include/esp_log.h:
 
-/home/julian/esp/esp-idf/components/newlib/platform_include/time.h:
+/home/julian/esp/esp-idf/components/newlib/include/stdint.h:
 
-/home/julian/esp/esp-idf/components/newlib/include/time.h:
+/home/julian/esp/esp-idf/components/newlib/include/machine/_default_types.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/features.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h:
+
+/home/julian/Documents/chaze-esp32/build/include/sdkconfig.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
+
+/home/julian/esp/esp-idf/components/soc/esp32/include/soc/soc.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_assert.h:
+
+/home/julian/esp/esp-idf/components/newlib/platform_include/assert.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/stdlib.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/machine/ieeefp.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/_ansi.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/newlib.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/config.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/machine/ieeefp.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/sys/features.h:
 
 /home/julian/esp/esp-idf/components/esp32/include/xtensa/config/core-isa.h:
 
@@ -272,11 +286,29 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/esp/esp-idf/components/newlib/include/machine/_types.h:
 
-/home/julian/esp/esp-idf/components/newlib/include/machine/_default_types.h:
-
 /home/julian/esp/esp-idf/components/newlib/include/sys/lock.h:
 
-/home/julian/esp/esp-idf/components/newlib/include/machine/time.h:
+/home/julian/esp/esp-idf/components/newlib/include/sys/cdefs.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/machine/stdlib.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/alloca.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/assert.h:
+
+/home/julian/esp/esp-idf/components/log/include/esp_log_internal.h:
+
+/home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h:
+
+/home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h:
+
+/home/julian/esp/esp-idf/components/driver/include/driver/i2c.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_types.h:
+
+/home/julian/esp/esp-idf/components/esp32/include/esp_err.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/stdio.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/types.h:
 
@@ -284,33 +316,7 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/sched.h:
 
-/home/julian/esp/esp-idf/components/driver/include/driver/i2c.h:
-
-/home/julian/esp/esp-idf/components/esp32/include/esp_types.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/sys/cdefs.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/stdint.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h:
-
-/home/julian/esp/esp-idf/components/esp32/include/esp_err.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/stdio.h:
-
 /home/julian/esp/esp-idf/components/newlib/include/sys/stdio.h:
-
-/home/julian/esp/esp-idf/components/newlib/platform_include/assert.h:
-
-/home/julian/Documents/chaze-esp32/build/include/sdkconfig.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/stdlib.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/machine/stdlib.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/alloca.h:
-
-/home/julian/esp/esp-idf/components/newlib/include/assert.h:
 
 /home/julian/esp/esp-idf/components/esp32/include/esp_intr_alloc.h:
 
@@ -337,12 +343,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 /home/julian/esp/esp-idf/components/esp32/include/xtensa/corebits.h:
 
 /home/julian/esp/esp-idf/components/esp32/include/xtensa/xtruntime-frames.h:
-
-/home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
-
-/home/julian/esp/esp-idf/components/soc/esp32/include/soc/soc.h:
-
-/home/julian/esp/esp-idf/components/esp32/include/esp_assert.h:
 
 /home/julian/esp/esp-idf/components/freertos/include/freertos/projdefs.h:
 
@@ -422,6 +422,14 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h:
 
+/home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h:
+
+/home/julian/esp/esp-idf/components/newlib/platform_include/time.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/time.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/machine/time.h:
+
 /home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Arduino.h:
@@ -437,10 +445,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 /home/julian/esp/esp-idf/components/newlib/include/math.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
-
-/home/julian/esp/esp-idf/components/log/include/esp_log.h:
-
-/home/julian/esp/esp-idf/components/log/include/esp_log_internal.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-matrix.h:
 
@@ -522,9 +526,27 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
 
-/home/julian/Documents/chaze-esp32/components/MAX30101/include/heart_rate.h:
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
 
-/home/julian/Documents/chaze-esp32/components/MAX30101/include/MAX30101.h:
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h:
 
 /home/julian/Documents/chaze-esp32/components/BNO055/include/BNO055.h:
 
@@ -550,13 +572,7 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDevice.h:
 
-/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h:
-
-/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h:
-
 /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gattc_api.h:
-
-/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
 
 /home/julian/esp/esp-idf/components/bt/include/esp_bt.h:
 
@@ -566,21 +582,7 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEServer.h:
 
-/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
-
-/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
-
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAdvertising.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEService.h:
 
@@ -589,8 +591,6 @@ main.o: /home/julian/Documents/chaze-esp32/main/main.cpp \
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h:
 

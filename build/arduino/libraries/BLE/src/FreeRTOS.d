@@ -84,6 +84,7 @@ libraries/BLE/src//FreeRTOS.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
  /home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h \
  /home/julian/esp/esp-idf/components/freertos/include/freertos/queue.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h
 
@@ -254,6 +255,8 @@ libraries/BLE/src//FreeRTOS.o: \
 /home/julian/esp/esp-idf/components/esp_ringbuf/include/freertos/ringbuf.h:
 
 /home/julian/esp/esp-idf/components/freertos/include/freertos/queue.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 

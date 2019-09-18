@@ -1,5 +1,5 @@
-#ifndef Chaze_ble_h_
-#define Chaze_ble_h_
+#ifndef CHAZE_BLE_H
+#define CHAZE_BLE_H
 
 #include <BLEDevice.h>
 #include <BLEServer.h>
@@ -26,6 +26,7 @@ public:
     BLEServer *pServer;
     BLECharacteristic * pTxCharacteristic;
     BLECharacteristic * pRxCharacteristic;
+    BLEService *pService;
     uint8_t txValue;
     
     //Functions

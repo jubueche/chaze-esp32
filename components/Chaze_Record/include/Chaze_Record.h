@@ -1,7 +1,6 @@
 #ifndef __CHAZE_RECORD_H__
 #define __CHAZE_RECORD_H__
 
-#include "Configuration.h"
 #include "esp_log.h"
 #include "heart_rate.h"
 #include "BNO055.h"

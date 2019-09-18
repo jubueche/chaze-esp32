@@ -107,7 +107,6 @@ Chaze_ble.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLESecurity.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteCharacteristic.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteDescriptor.h \
@@ -165,7 +164,8 @@ Chaze_ble.o: \
  /home/julian/Documents/chaze-esp32/components/Configuration/include/Configuration.h \
  /home/julian/esp/esp-idf/components/driver/include/driver/i2c.h \
  /home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h
 
 /home/julian/Documents/chaze-esp32/components/Chaze_ble/include/Chaze_ble.h:
 
@@ -381,8 +381,6 @@ Chaze_ble.o: \
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h:
 
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h:
-
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteCharacteristic.h:
@@ -498,4 +496,6 @@ Chaze_ble.o: \
 /home/julian/Documents/chaze-esp32/components/Chaze_Realtime/include/Chaze_Realtime.h:
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
 /home/julian/Documents/chaze-esp32/components/Chaze_ble/./Chaze_ble.cpp:

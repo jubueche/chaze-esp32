@@ -1,5 +1,5 @@
-#ifndef __CHAZE_ADVERTISING_H__
-#define __CHAZE_ADVERTISING_H__
+#ifndef CHAZE_ADVERTISING_H
+#define CHAZE_ADVERTISING_H
 
 #include "BNO055.h"
 #include "Chaze_ble.h"
@@ -9,7 +9,7 @@
 
 static BNO055 bno_adv;
 static bool am_interrupt;
-static Chaze_ble ble;
+extern Chaze_ble * ble;
 static TaskHandle_t wifi_synch_task_handle = NULL;
 
 void advertise(void);

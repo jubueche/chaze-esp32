@@ -129,6 +129,7 @@ libraries/WebServer/src//Parsing.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/WiFi/src/WiFiServer.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Server.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/WiFi/src/WiFiClient.h \
@@ -440,6 +441,8 @@ libraries/WebServer/src//Parsing.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/WiFi/src/WiFiServer.h:
 

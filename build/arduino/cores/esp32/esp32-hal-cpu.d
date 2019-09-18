@@ -91,6 +91,7 @@ cores/esp32/esp32-hal-cpu.o: \
  /home/julian/esp/esp-idf/components/esp32/include/rom/rtc.h \
  /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/esp/esp-idf/components/soc/esp32/include/soc/apb_ctrl_reg.h \
+ /home/julian/esp/esp-idf/components/soc/esp32/include/soc/efuse_reg.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h \
  /home/julian/esp/esp-idf/components/newlib/include/inttypes.h \
  /home/julian/esp/esp-idf/components/newlib/include/string.h \
@@ -297,6 +298,8 @@ cores/esp32/esp32-hal-cpu.o: \
 /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
 
 /home/julian/esp/esp-idf/components/soc/esp32/include/soc/apb_ctrl_reg.h:
+
+/home/julian/esp/esp-idf/components/soc/esp32/include/soc/efuse_reg.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal.h:
 

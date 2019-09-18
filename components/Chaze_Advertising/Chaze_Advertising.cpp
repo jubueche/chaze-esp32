@@ -4,6 +4,8 @@
 
 const char * TAG_Adv = "Chaze-Advertising";
 
+Chaze_ble * ble = new Chaze_ble();
+
 void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
@@ -26,6 +28,7 @@ void advertise()
     bno_adv = BNO055();
 
     // Inilialize nvs
+    
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
 		if(nvs_flash_erase() == ESP_OK){
@@ -45,13 +48,13 @@ void advertise()
 	}
 
     // Setup BLE
-    ble = Chaze_ble();  
-    ble.initialize_connection();
+  
+    ble->initialize_connection();
     config.ble_connected = false;
     config.ble_old_device_connected = false;
 
     ESP_LOGI(TAG_Adv, "Start advertising.");
-    ble.advertise();
+    ble->advertise();
     am_interrupt = false;
     attach_am_interrupt();
     unsigned long blue_led_timer = millis();
@@ -127,7 +130,7 @@ void clean_up()
 
     // Should call destructors, detach interrupts
     config.detach_bno_int();
-    ble.~Chaze_ble();
+    ble->~Chaze_ble();
     bno_adv.~BNO055();
     nvs_flash_deinit();
 }

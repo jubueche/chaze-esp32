@@ -1,16 +1,14 @@
-#ifndef __CHAZE_CONNECTED_H__
-#define __CHAZE_CONNECTED_H__
+#ifndef CHAZE_CONNECTED_H
+#define CHAZE_CONNECTED_H
 
 #include "Chaze_Advertising.h"
-#include "Configuration.h"
-#include "Chaze_ble.h"
 
 struct Rx_buffer {
     char data[128];
     uint8_t size;
 };
 
-enum {IDLE, BATTERY, NAME, NAME_RECEIVED, WIFI, WIFI_2, SSID_RECEIVED, PASS_RECEIVED, VERSION, OTA};
+enum {IDLE, BATTERY, NAME, NAME_RECEIVED, WIFI, WIFI_2, SSID_RECEIVED, PASS_RECEIVED, VERSION, OTA, DATA};
 static uint8_t CONNECTED_STATE = IDLE;
 
 

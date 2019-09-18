@@ -13,7 +13,6 @@ libraries/BLE/src//BLERemoteCharacteristic.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h \
  /home/julian/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/string.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEService.h \
  /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
@@ -88,6 +87,7 @@ libraries/BLE/src//BLERemoteCharacteristic.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteDescriptor.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUtils.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h
 
@@ -116,8 +116,6 @@ libraries/BLE/src//BLERemoteCharacteristic.o: \
 /home/julian/esp/esp-idf/components/newlib/include/string.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/string.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEService.h:
 
@@ -266,6 +264,8 @@ libraries/BLE/src//BLERemoteCharacteristic.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUtils.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 

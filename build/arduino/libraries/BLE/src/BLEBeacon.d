@@ -22,6 +22,7 @@ libraries/BLE/src//BLEBeacon.o: \
  /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h \
  /home/julian/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
@@ -74,6 +75,8 @@ libraries/BLE/src//BLEBeacon.o: \
 /home/julian/esp/esp-idf/components/newlib/include/stdint.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 
