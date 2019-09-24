@@ -26,14 +26,15 @@ void Chaze_ble::initialize_connection(){
   BLEDevice::init("UART Service");
 
   //Set the MTU of the packets sent, maximum is 500, Apple needs 23 apparently.
-  BLEDevice::setMTU(500);
+  BLEDevice::setMTU(185);
+  config.MTU_BLE = 182;
 
   // Create the BLE Server
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
 
   // Create the BLE Service
-  BLEService *pService = pServer->createService(SERVICE_UUID);
+  pService = pServer->createService(SERVICE_UUID);
 
   // Create a BLE Characteristic
   pTxCharacteristic = pService->createCharacteristic(
@@ -73,7 +74,18 @@ void Chaze_ble::write(std::string to_write){
 
 void Chaze_ble::write(uint8_t* data,size_t length){
     if (config.ble_connected){
-        pTxCharacteristic->setValue(data, length);
+
+        uint16_t rest = UPLOAD_BLOCK_SIZE_BLE % config.MTU_BLE;
+        uint16_t num_iters = UPLOAD_BLOCK_SIZE_BLE / config.MTU_BLE;
+
+        // Fragmentation
+        for(int i=0;i<num_iters;i++)
+        {
+          pTxCharacteristic->setValue(data+i*config.MTU_BLE, config.MTU_BLE);
+          pTxCharacteristic->notify();
+        }
+        
+        pTxCharacteristic->setValue(data+num_iters*config.MTU_BLE, rest);
         pTxCharacteristic->notify();
         vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
     }
@@ -81,9 +93,7 @@ void Chaze_ble::write(uint8_t* data,size_t length){
 
 void Chaze_ble::write(char* data,size_t length){
     if (config.ble_connected){
-        pTxCharacteristic->setValue((uint8_t *) data, length);
-        pTxCharacteristic->notify();
-        vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
+        write((uint8_t *) data, length);
     }
 }
 

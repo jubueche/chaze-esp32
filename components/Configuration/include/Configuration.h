@@ -1,11 +1,12 @@
-#ifndef _CONFIGURATION_H
-#define _CONFIGURATION_H
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
 
 #include "time.h"
 #include "driver/i2c.h"
 #include "Chaze_Realtime.h"
 #include "freertos/queue.h"
 #include "ChazeFlashtrainingWrapper.h"
+#include "BLECharacteristic.h"
 
 #define DEBUG 1
 
@@ -94,6 +95,7 @@
 enum {DEEPSLEEP, RECORD, ADVERTISING, CONNECTED, CONNECTED_WIFI, CONNECTED_BLE};
 
 
+
 class Configuration {
   public:
 
@@ -150,6 +152,9 @@ class Configuration {
 
     bool initialized_port0 = false;
     bool initialized_port1 = false;
+
+    uint16_t MTU_BLE = 512;
+
   private:
     const char * TAG = "Configuration";
 };

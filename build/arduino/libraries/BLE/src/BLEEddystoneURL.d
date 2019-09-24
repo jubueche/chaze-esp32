@@ -16,6 +16,7 @@ libraries/BLE/src//BLEEddystoneURL.o: \
  /home/julian/esp/esp-idf/components/newlib/include/sys/lock.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/newlib/include/stdint.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h \
@@ -64,6 +65,8 @@ libraries/BLE/src//BLEEddystoneURL.o: \
 /home/julian/esp/esp-idf/components/newlib/include/sys/cdefs.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/string.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 

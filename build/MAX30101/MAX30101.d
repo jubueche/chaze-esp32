@@ -133,7 +133,18 @@ MAX30101.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/HardwareSerial.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/Esp.h \
  /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h \
- /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h
+ /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h \
+ /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h
 
 /home/julian/esp/esp-idf/components/newlib/include/stdio.h:
 
@@ -402,4 +413,26 @@ MAX30101.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/variants/esp32/pins_arduino.h:
 
 /home/julian/Documents/chaze-esp32/components/Chaze_Flashtraining/include/ChazeFlashtrainingWrapper.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEUUID.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatts_api.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gatt_defs.h:
+
+/home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_gap_ble_api.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEDescriptor.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLECharacteristic.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/FreeRTOS.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEValue.h:
 /home/julian/Documents/chaze-esp32/components/MAX30101/./MAX30101.cpp:

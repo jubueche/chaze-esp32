@@ -79,6 +79,7 @@ libraries/BLE/src//BLEDescriptor.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLESecurity.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h
 
@@ -239,6 +240,8 @@ libraries/BLE/src//BLEDescriptor.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/GeneralUtils.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
 

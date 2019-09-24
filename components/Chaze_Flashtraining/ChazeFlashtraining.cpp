@@ -96,15 +96,17 @@ int32_t Flashtraining::get_next_buffer_of_training(uint8_t * buff)
 {
 	if(config.random_between(0,100) < 75)
 	{
-		for(int i=0;i<512;i++){
-			buff[i] = config.random_between(0,100);
-		} 
+		for(int i=0;i<UPLOAD_BLOCK_SIZE_BLE;i++){
+			buff[i] = config.random_between(66,88);
+		}
+		ESP_LOGI(TAG, "Full chunk."); 
 		return -1;
 	} else {
 		uint32_t n = config.random_between(20,100);
 		for(int i =0; i<n; i++) {
-			buff[i] = config.random_between(0,100);
+			buff[i] = config.random_between(66,88);
 		}
+		ESP_LOGI(TAG, "Half full chunk of size %d.", n);
 		return n;
 	}
 }

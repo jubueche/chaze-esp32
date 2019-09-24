@@ -32,6 +32,8 @@ libraries/BLE/src//BLEAddress.o: \
  /home/julian/esp/esp-idf/components/bt/bluedroid/api/include/api/esp_bt_defs.h \
  /home/julian/esp/esp-idf/components/newlib/include/string.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/esp/esp-idf/components/newlib/include/malloc.h \
+ /home/julian/esp/esp-idf/components/newlib/include/machine/malloc.h \
  /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
  /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
@@ -102,6 +104,10 @@ libraries/BLE/src//BLEAddress.o: \
 /home/julian/esp/esp-idf/components/newlib/include/string.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/string.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/malloc.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/machine/malloc.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
 

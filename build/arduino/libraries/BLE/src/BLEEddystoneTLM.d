@@ -16,12 +16,22 @@ libraries/BLE/src//BLEEddystoneTLM.o: \
  /home/julian/esp/esp-idf/components/newlib/include/sys/lock.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/cdefs.h \
  /home/julian/esp/esp-idf/components/newlib/include/sys/string.h \
+ /home/julian/esp/esp-idf/components/newlib/include/stdio.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/types.h \
+ /home/julian/esp/esp-idf/components/newlib/include/machine/types.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/sched.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/stdio.h \
+ /home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log.h \
+ /home/julian/esp/esp-idf/components/newlib/include/stdint.h \
+ /home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h \
  /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h \
  /home/julian/esp/esp-idf/components/soc/esp32/include/soc/soc.h \
  /home/julian/esp/esp-idf/components/esp32/include/esp_assert.h \
  /home/julian/esp/esp-idf/components/newlib/platform_include/assert.h \
  /home/julian/esp/esp-idf/components/newlib/include/stdlib.h \
+ /home/julian/esp/esp-idf/components/newlib/include/machine/stdlib.h \
+ /home/julian/esp/esp-idf/components/newlib/include/alloca.h \
  /home/julian/esp/esp-idf/components/newlib/include/assert.h \
  /home/julian/esp/esp-idf/components/log/include/esp_log_internal.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEEddystoneTLM.h \
@@ -61,7 +71,23 @@ libraries/BLE/src//BLEEddystoneTLM.o: \
 
 /home/julian/esp/esp-idf/components/newlib/include/sys/string.h:
 
+/home/julian/esp/esp-idf/components/newlib/include/stdio.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/types.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/machine/types.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/sched.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/stdio.h:
+
+/home/julian/Documents/chaze-esp32/components/arduino/cores/esp32/esp32-hal-log.h:
+
 /home/julian/esp/esp-idf/components/log/include/esp_log.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/stdint.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/sys/_intsup.h:
 
 /home/julian/esp/esp-idf/components/esp32/include/rom/ets_sys.h:
 
@@ -72,6 +98,10 @@ libraries/BLE/src//BLEEddystoneTLM.o: \
 /home/julian/esp/esp-idf/components/newlib/platform_include/assert.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/stdlib.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/machine/stdlib.h:
+
+/home/julian/esp/esp-idf/components/newlib/include/alloca.h:
 
 /home/julian/esp/esp-idf/components/newlib/include/assert.h:
 

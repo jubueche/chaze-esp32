@@ -116,7 +116,6 @@ libraries/BLE/src//BLEDevice.o: \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLESecurity.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h \
- /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteCharacteristic.h \
  /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteDescriptor.h \
@@ -378,8 +377,6 @@ libraries/BLE/src//BLEDevice.o: \
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEAddress.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEClient.h:
-
-/home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLEExceptions.h:
 
 /home/julian/Documents/chaze-esp32/components/arduino/libraries/BLE/src/BLERemoteService.h:
 
