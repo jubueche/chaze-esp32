@@ -143,8 +143,8 @@ class Configuration {
 
     volatile uint8_t STATE;
     volatile bool ble_connected = false;
-    volatile bool wifi_connected = false;
     volatile bool ble_old_device_connected = false;
+    volatile bool wifi_connected = false;
 
     xQueueHandle gpio_evt_queue;
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();

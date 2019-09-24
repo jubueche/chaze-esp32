@@ -47,11 +47,15 @@ void advertise()
 
 	}
 
+    ESP_LOGE(TAG_Adv, "Advertise called. old_device is %d", config.ble_old_device_connected);
+
     // Setup BLE
-  
-    ble->initialize_connection();
-    config.ble_connected = false;
-    config.ble_old_device_connected = false;
+    if(!config.ble_old_device_connected)
+    {
+        ble->initialize_connection();
+        config.ble_old_device_connected = true;
+        ESP_LOGE(TAG_Adv, "Not initialized. Intialized!");
+    } else ESP_LOGE(TAG_Adv, "Already initialized.");
 
     ESP_LOGI(TAG_Adv, "Start advertising.");
     ble->advertise();
@@ -64,6 +68,7 @@ void advertise()
 	{
 		ESP_LOGE(TAG_Adv, "Failed to create  wifi_synch-task.");
         config.STATE = DEEPSLEEP;
+        config.ble_old_device_connected = false;
         return;
 	}
 
@@ -112,6 +117,7 @@ void advertise()
 
 void clean_up()
 {
+    config.ble_old_device_connected = false;
     if(config.wifi_synch_semaphore == NULL)
     {
         ESP_LOGI(TAG_Adv, "Sem. is NULL");

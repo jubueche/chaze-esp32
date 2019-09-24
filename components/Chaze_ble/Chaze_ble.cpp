@@ -12,6 +12,8 @@ class MyServerCallbacks: public BLEServerCallbacks {
   
   void onConnect(BLEServer* pServer) {
     config.ble_connected = true;
+    config.ble_old_device_connected = true;
+
   };
 
   void onDisconnect(BLEServer* pServer) {
@@ -32,7 +34,6 @@ void Chaze_ble::initialize_connection(){
   // Create the BLE Server
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
-
   // Create the BLE Service
   pService = pServer->createService(SERVICE_UUID);
 
@@ -49,10 +50,8 @@ void Chaze_ble::initialize_connection(){
 											BLECharacteristic::PROPERTY_WRITE
 										);
 
-
   // Start the service
   pService->start();
-
 
 }
 
@@ -73,18 +72,22 @@ void Chaze_ble::write(std::string to_write){
 }
 
 void Chaze_ble::write(uint8_t* data,size_t length){
+    ESP_LOGI(TAG_BLE, "Length is %d",length);
     if (config.ble_connected){
 
-        uint16_t rest = UPLOAD_BLOCK_SIZE_BLE % config.MTU_BLE;
-        uint16_t num_iters = UPLOAD_BLOCK_SIZE_BLE / config.MTU_BLE;
+        uint16_t rest = length % config.MTU_BLE;
+        uint16_t num_iters = length / config.MTU_BLE;
 
         // Fragmentation
         for(int i=0;i<num_iters;i++)
         {
+          ESP_LOGI(TAG_BLE, "i is %d",i);
           pTxCharacteristic->setValue(data+i*config.MTU_BLE, config.MTU_BLE);
           pTxCharacteristic->notify();
+          vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
+
         }
-        
+        ESP_LOGI(TAG_BLE, "rest is %d",rest);
         pTxCharacteristic->setValue(data+num_iters*config.MTU_BLE, rest);
         pTxCharacteristic->notify();
         vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);

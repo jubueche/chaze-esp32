@@ -165,6 +165,7 @@ void connected()
 
     }
     config.STATE = ADVERTISING;
+    free(buffer);
 
 }
 
@@ -243,6 +244,7 @@ void perform_ota()
 
 void synch_data()
 {
+
     ESP_LOGI(TAG_Con, "Synching data");
     bool done = false;
     uint16_t num_unsynched_trainings = ft.get_number_of_unsynched_trainings();
@@ -266,23 +268,12 @@ void synch_data()
         {
             ble->write(data, UPLOAD_BLOCK_SIZE_BLE);
         } else { // This was the last chunk
+            ESP_LOGI(TAG_Con, "Response is %d", response);
             ble->write(data, response);
             ble->write(EOF); // Write EOF
 
-            // Wait for response
-            unsigned long t1 = millis();
-            bool response;
-            while(!available)
-            {
-                // Safety net against infinity loop
-                if(millis() - t1 > 20000) // Wait 20s for an answer.
-                {
-                    ESP_LOGE(TAG_Con, "Waited too long for BLE response.");
-                    response = false;
-                    break;
-                }
-                vTaskDelay(1000);
-            }
+            //! Wait for response and the delete training
+            
             
             response = strncmp(buffer->data, "1", 1);
 
