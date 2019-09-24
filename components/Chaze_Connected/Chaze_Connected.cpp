@@ -178,9 +178,9 @@ void send_battery()
 void set_name()
 {
     ESP_LOGI(TAG_Con, "Set Name");
-    char name[buffer->size];
+    char name[buffer->size+1];
     memcpy(name, buffer->data, buffer->size);
-
+    name[buffer->size] = '\0';
     if(ft.set_name(name, buffer->size))
     {
         ble->write("1\n");

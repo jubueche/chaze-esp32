@@ -153,6 +153,8 @@ class Configuration {
     bool initialized_port0 = false;
     bool initialized_port1 = false;
 
+    uint16_t MTU_BLE = 512;
+
   private:
     const char * TAG = "Configuration";
 };
