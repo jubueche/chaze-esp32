@@ -1,8 +1,0 @@
-# Automatically generated build file. Do not edit.
-COMPONENT_INCLUDES += $(PROJECT_PATH)/components/WDT/include
-COMPONENT_LDFLAGS += -L$(BUILD_DIR_BASE)/WDT -lWDT
-COMPONENT_LINKER_DEPS += 
-COMPONENT_SUBMODULES += 
-COMPONENT_LIBRARIES += WDT
-COMPONENT_LDFRAGMENTS += 
-component-WDT-build: 

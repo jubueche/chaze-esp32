@@ -1,8 +1,0 @@
-# Automatically generated build file. Do not edit.
-COMPONENT_INCLUDES += $(PROJECT_PATH)/components/WiFiOTA/include
-COMPONENT_LDFLAGS += -L$(BUILD_DIR_BASE)/WiFiOTA -lWiFiOTA
-COMPONENT_LINKER_DEPS += 
-COMPONENT_SUBMODULES += 
-COMPONENT_LIBRARIES += WiFiOTA
-COMPONENT_LDFRAGMENTS += 
-component-WiFiOTA-build: 
