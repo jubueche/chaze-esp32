@@ -13,7 +13,6 @@ static uint8_t CONNECTED_STATE = IDLE;
 
 
 static Rx_buffer *buffer;
-static volatile bool available;
 
 void connected(void);
 void send_battery(void);

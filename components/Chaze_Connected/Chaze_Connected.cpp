@@ -13,7 +13,6 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
       std::string rxValue = pCharacteristic->getValue();
 
       if (rxValue.length() > 0) {
-        available = true;
         uint8_t size = rxValue.length();
         buffer->size = size - 1; // Because of \n
         ESP_LOGI(TAG_Con, "Length is %d", size);
@@ -60,7 +59,7 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                 }
             }
 
-        } else // Size is bigger than 1
+        } else
         {
             // Update the STATE according to the last state.
             // Example: WiFi -> Received Name
@@ -83,6 +82,19 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                 case WIFI_2:
                 {
                     CONNECTED_STATE = PASS_RECEIVED;
+                    break;
+                }
+                case DATA:
+                {
+                    // Check if we have received a "1" or a "0" and set the "synched training flag" corresp.
+                    if(strncmp(buffer->data, "1", buffer->size) == 0)
+                    {
+                        ESP_LOGI(TAG_Con, "Synched successful.");
+                        config.synched_training = SYNCH_COMPLETE;
+                    } else {
+                        ESP_LOGE(TAG_Con, "Synch unsuccessful.");
+                        config.synched_training = SYNCH_INCOMPLETE;
+                    }
                     break;
                 }
                 default:
@@ -256,30 +268,47 @@ void synch_data()
     {
         // Call again for each training
         ft.start_reading_data();
-
-        available = false;
-        int32_t response = ft.get_next_buffer_of_training(data);
-
+        
         ble->write("\nTraining number ");
         ble->write(std::to_string(i));
         ble->write("\n");
 
-        if(response == -1) // data is full
+
+        int32_t response = 0;
+        do {
+            response = ft.get_next_buffer_of_training(data);
+            if(response == -1) // data is full
+            {
+                ble->write(data, UPLOAD_BLOCK_SIZE_BLE);
+            }
+
+        } while(response == -1);
+         // This was the last chunk
+        ESP_LOGI(TAG_Con, "Response is %d", response);
+        ble->write(data, response);
+        ble->write(EOF); // Write EOF
+
+        unsigned long response_timer = millis();
+        while (millis() - response_timer < 10000)
         {
-            ble->write(data, UPLOAD_BLOCK_SIZE_BLE);
-        } else { // This was the last chunk
-            ESP_LOGI(TAG_Con, "Response is %d", response);
-            ble->write(data, response);
-            ble->write(EOF); // Write EOF
-
-            //! Wait for response and the delete training
-            
-            
-            response = strncmp(buffer->data, "1", 1);
-
-            ft.completed_synch_of_training(response);
-
+            if(config.synched_training != AWAITING)
+                break;
+            vTaskDelay(300 / portTICK_PERIOD_MS);
         }
+        
+        if(config.synched_training == SYNCH_COMPLETE)
+        {
+            ft.completed_synch_of_training(true);
+            ESP_LOGI(TAG_Con, "Successful synch.");
+        } else if(config.synched_training == SYNCH_INCOMPLETE)
+        {
+            ft.completed_synch_of_training(false);
+            ESP_LOGE(TAG_Con, "Unsuccessful synch.");
+        } else {
+            ESP_LOGE(TAG_Con, "Timeout waiting for response.");
+        }
+        config.synched_training = AWAITING; // Reset the variable for the next trainings.
+            
     }
     ble->write(EOF);
     CONNECTED_STATE = IDLE;

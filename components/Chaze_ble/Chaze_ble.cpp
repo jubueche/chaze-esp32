@@ -72,7 +72,6 @@ void Chaze_ble::write(std::string to_write){
 }
 
 void Chaze_ble::write(uint8_t* data,size_t length){
-    ESP_LOGI(TAG_BLE, "Length is %d",length);
     if (config.ble_connected){
 
         uint16_t rest = length % config.MTU_BLE;
@@ -81,13 +80,11 @@ void Chaze_ble::write(uint8_t* data,size_t length){
         // Fragmentation
         for(int i=0;i<num_iters;i++)
         {
-          ESP_LOGI(TAG_BLE, "i is %d",i);
           pTxCharacteristic->setValue(data+i*config.MTU_BLE, config.MTU_BLE);
           pTxCharacteristic->notify();
           vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);
 
         }
-        ESP_LOGI(TAG_BLE, "rest is %d",rest);
         pTxCharacteristic->setValue(data+num_iters*config.MTU_BLE, rest);
         pTxCharacteristic->notify();
         vTaskDelay(STACK_CONGESTION_TIMEOUT / portTICK_PERIOD_MS);

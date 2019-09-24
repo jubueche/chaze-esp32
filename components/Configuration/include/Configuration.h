@@ -93,7 +93,7 @@
  * Main state machine variables.
  */
 enum {DEEPSLEEP, RECORD, ADVERTISING, CONNECTED, CONNECTED_WIFI, CONNECTED_BLE};
-
+enum {AWAITING, SYNCH_COMPLETE, SYNCH_INCOMPLETE};
 
 
 class Configuration {
@@ -144,6 +144,7 @@ class Configuration {
     volatile uint8_t STATE;
     volatile bool ble_connected = false;
     volatile bool ble_old_device_connected = false;
+    volatile uint8_t synched_training = AWAITING;
     volatile bool wifi_connected = false;
 
     xQueueHandle gpio_evt_queue;
