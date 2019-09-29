@@ -304,8 +304,12 @@ void synch_data()
         {
             ft.completed_synch_of_training(false);
             ESP_LOGE(TAG_Con, "Unsuccessful synch.");
+            CONNECTED_STATE = IDLE; 
+            return;
         } else {
             ESP_LOGE(TAG_Con, "Timeout waiting for response.");
+            CONNECTED_STATE = IDLE; 
+            return;
         }
         config.synched_training = AWAITING; // Reset the variable for the next trainings.
             

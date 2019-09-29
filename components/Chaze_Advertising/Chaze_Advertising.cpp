@@ -64,13 +64,18 @@ void advertise()
     unsigned long blue_led_timer = millis();
     unsigned long timeout_timer = millis();
 
-    if (xTaskCreate(&synch_via_wifi, "synch_via_wifi", 1024 * 8, NULL, 5, &wifi_synch_task_handle) != pdPASS )
-	{
-		ESP_LOGE(TAG_Adv, "Failed to create  wifi_synch-task.");
-        config.STATE = DEEPSLEEP;
-        config.ble_old_device_connected = false;
-        return;
-	}
+    if(wifi_synch_task_handle == NULL)
+    {
+        if (xTaskCreate(&synch_via_wifi, "synch_via_wifi", 1024 * 8, NULL, 5, &wifi_synch_task_handle) != pdPASS )
+            {
+                ESP_LOGE(TAG_Adv, "Failed to create  wifi_synch-task.");
+                config.STATE = DEEPSLEEP;
+                config.ble_old_device_connected = false;
+                return;
+            }
+    } else {
+        ESP_LOGI(TAG_Adv, "Synch via WiFi task already running.");
+    }
 
     while(config.STATE == ADVERTISING)
     {

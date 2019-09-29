@@ -22,7 +22,6 @@ const int CONNECTED_BIT = BIT0;
 EventGroupHandle_t wifi_event_group;
 EventBits_t uxBits;
 
-static bool allow_to_connect = false;
 
 /**
  * @brief Event handler for WiFi. If disconnected -> connect again
@@ -32,28 +31,26 @@ static bool allow_to_connect = false;
  */
 static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
-switch(event->event_id) {
-case SYSTEM_EVENT_STA_START:
-ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_START");
-if(allow_to_connect){
-	ESP_ERROR_CHECK(esp_wifi_connect());
-}
-break;
-case SYSTEM_EVENT_STA_GOT_IP:
-ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_GOT_IP");
-ESP_LOGI(TAG_WiFi, "got ip:%s\n",
-	ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
-xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-	break;
-case SYSTEM_EVENT_STA_DISCONNECTED:
-ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_DISCONNECTED");
-//ESP_ERROR_CHECK(esp_wifi_connect());
-xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
-break;
-default:
-	break;
-}
-return ESP_OK;
+	switch(event->event_id) {
+		case SYSTEM_EVENT_STA_START:
+			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_START");
+			ESP_ERROR_CHECK(esp_wifi_connect());
+		break;
+		case SYSTEM_EVENT_STA_GOT_IP:
+			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_GOT_IP");
+			ESP_LOGI(TAG_WiFi, "got ip:%s\n",
+			ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
+			xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+			break;
+		case SYSTEM_EVENT_STA_DISCONNECTED:
+			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_DISCONNECTED");
+			//ESP_ERROR_CHECK(esp_wifi_connect());
+			xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+			break;
+		default:
+			break;
+	}
+	return ESP_OK;
 }
 
 /**
@@ -94,17 +91,20 @@ void synch_via_wifi(void *pvParameter)
 			ft.~Flashtraining();
 			vSemaphoreDelete(xSemaphore);
 			vSemaphoreDelete(config.wifi_synch_semaphore);
-			vTaskDelete(NULL);
+			return;
 		}
 
 		config.wifi_connected = poll_wifi();
 		if(config.wifi_connected){
 			ESP_LOGI(TAG_WiFi, "Connected to WiFi, syncing data now...");
 
-			if (xTaskCreate(&synch_with_azure, "synch_with_azure", 1024 * 8, NULL, 5, &synch_with_azure_task_handle) != pdPASS )
+			if(synch_with_azure_task_handle == NULL)
 			{
-				ESP_LOGE(TAG_WiFi, "Creating synch_azure task failed.");
-				break; //Shall exit the while loop and clean up resources
+				if (xTaskCreate(&synch_with_azure, "synch_with_azure", 1024 * 8, NULL, 5, &synch_with_azure_task_handle) != pdPASS )
+				{
+					ESP_LOGE(TAG_WiFi, "Creating synch_azure task failed.");
+					break; //Shall exit the while loop and clean up resources
+				}
 			}
 
 			// Let the azure-task acquire the lock first.
@@ -128,6 +128,7 @@ void synch_via_wifi(void *pvParameter)
 			{
 				if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
 				{
+					ESP_LOGI(TAG_WiFi, "State switched.");
 					tmp_state_switched = true;
 					break;
 				}
@@ -138,15 +139,17 @@ void synch_via_wifi(void *pvParameter)
 		}
 	}
 	ESP_LOGI(TAG_WiFi, "Done. Stopping WiFi");
-	allow_to_connect = false;
-	if(esp_wifi_stop() == ESP_OK){
-		if(esp_wifi_deinit() != ESP_OK){
-			ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
-		}
+	esp_err_t stop_wifi_res = esp_wifi_stop();
+	if(stop_wifi_res == ESP_OK){
+		esp_err_t deinit_wifi_res = esp_wifi_deinit();
+		if(deinit_wifi_res != ESP_OK){
+			ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi: %s", esp_err_to_name(deinit_wifi_res));
+		} else 	ESP_LOGI(TAG_WiFi, "Deinited WiFi: l.143");
 	} else {
-		ESP_LOGE(TAG_WiFi, "Could not stop WiFi");
+		ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(stop_wifi_res));
 	}
 	xSemaphoreGive(config.wifi_synch_semaphore);
+	ESP_LOGI(TAG_WiFi, "Deleted task");
 	vTaskDelete(NULL);
 }
 
@@ -290,104 +293,14 @@ void synch_with_azure(void *pvParameter)
 	vTaskDelete(NULL);
 }
 
-/**
- * @brief Scans the available networks for a matching one. Does not connect.
- * @return True if SSID was found.
- */
-bool scan_for_ssid(void)
-{
-	// No need to clean up. wifi_stop() does that.
-	tcpip_adapter_init();
-
-	wifi_init_config_t wifi_config = WIFI_INIT_CONFIG_DEFAULT();
-	if(esp_wifi_init(&wifi_config) == ESP_OK){
-		if(esp_wifi_set_mode(WIFI_MODE_STA) == ESP_OK){
-			if(esp_wifi_start() != ESP_OK){
-				//No need to clean up
-				ESP_LOGE(TAG_WiFi, "Failed to start WiFi");
-				return false;
-			}
-		} else{
-			ESP_LOGE(TAG_WiFi, "Failed to set WiFi mode.");
-			return false;
-		}
-	} else{
-		ESP_LOGE(TAG_WiFi, "Failed to initialize WiFi");
-		return false;
-	}
-
-	// configure and run the scan process in blocking mode
-	wifi_scan_config_t scan_config = {
-		.ssid = (uint8_t *) ft.get_wifi_ssid(),
-		.bssid = 0,
-		.channel = 0,
-		.show_hidden = true
-	};
-	if(esp_wifi_scan_start(&scan_config, true) != ESP_OK){
-		ESP_LOGE(TAG_WiFi, "Failed to start scanning.");
-		return false;
-	}
-
-	uint16_t ap_num = MAX_APs;
-	wifi_ap_record_t ap_records[MAX_APs];
-	if(esp_wifi_scan_get_ap_records(&ap_num, ap_records) != ESP_OK){
-		ESP_LOGE(TAG_WiFi, "Failed to get AP records.");
-		return false;
-	}
-
-	const char * tmp_ssid = ft.get_wifi_ssid();
-	for(int i = 0; i < ap_num; i++){
-		ESP_LOGI(TAG_WiFi, "Network found: %s\n", (char *)ap_records[i].ssid);
-		if(strcmp((char *)ap_records[i].ssid, tmp_ssid) == 0){
-			if(esp_wifi_stop() == ESP_OK){
-				if(esp_wifi_deinit() != ESP_OK){
-					ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi.");
-					return false;
-				} else {
-					if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
-						return false;
-					return true;
-				}
-			} else{
-				ESP_LOGE(TAG_WiFi, "Failed to stop WiFi");
-				return false;
-			}
-		}
-	}
-	esp_wifi_scan_stop();
-	if(esp_wifi_stop() == ESP_OK){
-		if(esp_wifi_deinit() != ESP_OK){
-			ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi.");
-		}
-	} else{
-			ESP_LOGE(TAG_WiFi, "Failed to stop WiFi");
-	}
-	return false;
-}
 
 /**
  * @brief This function is periodically called and firstly checks if the given SSID can be found on the WiFi.
  * If the SSID can be found, we establish a WiFi connection.
- * @return True on successful connection.
+ * @return True on successful connection. If True returned: Is connected, else not connected
  */
 bool poll_wifi(void){
 
-	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
-		return false;
-
-	//First, scan to see if there is one ssid that matches ours.
-	bool tmp = scan_for_ssid();
-
-	allow_to_connect = true; //Enable connect on event STA_READY
-	ESP_LOGI(TAG_WiFi, "Enabled allow_to_connect");
-
-	if(!tmp){
-		ESP_LOGI(TAG_WiFi, "WiFi SSID not found.");
-		allow_to_connect = false;
-		return false;
-	}
-
-	ESP_LOGI(TAG_WiFi, "Abort");
 	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
 		return false;
 
@@ -400,52 +313,45 @@ bool poll_wifi(void){
 	}
 
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-	if(esp_wifi_init(&cfg) != ESP_OK){
-		ESP_LOGE(TAG_WiFi, "Could not initialize WiFi.");
-		allow_to_connect = false;
+	esp_err_t wifi_init_res = esp_wifi_init(&cfg);  
+	if(wifi_init_res != ESP_OK){
+		ESP_LOGE(TAG_WiFi, "Could not initialize WiFi: %s", esp_err_to_name(wifi_init_res));
 		return false;
-	}
+	} else ESP_LOGI(TAG_WiFi, "Initialized WiFi");
 
 	wifi_sta_config_t sta_cnfg = {};
 	strcpy((char *) sta_cnfg.ssid, ft.get_wifi_ssid());
 	strcpy((char *) sta_cnfg.password, ft.get_wifi_password());
 
 	wifi_config_t wifi_config = { .sta = sta_cnfg };
-	if(esp_wifi_set_mode(WIFI_MODE_STA) != ESP_OK){
-		ESP_LOGE(TAG_WiFi, "Could not set WiFi mode.");
-		allow_to_connect = false;
-		return false;
-	}
-	if(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) != ESP_OK){
-		ESP_LOGE(TAG_WiFi, "Could not set WiFi config.");
-		allow_to_connect = false;
-		return false;
-	}
-
-	if(esp_wifi_start() != ESP_OK){
-		ESP_LOGE(TAG_WiFi, "WiFi start error.");
-		allow_to_connect = false;
+	bool res = (esp_wifi_set_mode(WIFI_MODE_STA) == ESP_OK);
+	res = res &&  (esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) == ESP_OK);
+	res = res &&  (esp_wifi_start() == ESP_OK);
+	if(!res)
+	{
+		esp_wifi_deinit();
+		ESP_LOGI(TAG_WiFi, "Set mode, set config or start failed.");
 		return false;
 	}
 
 	esp_wifi_set_ps(/*WIFI_PS_MAX_MODEM*/WIFI_PS_NONE); //Give 100% power for short amount of time
 
 	//Wait for connection. If not connected after WAIT_TIME many ms, continue as usual.
+	ESP_LOGI(TAG_WiFi, "Waiting for connection");
 	uxBits = xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT, false, true, WAIT_TIME / portTICK_PERIOD_MS);
 
 	if(CONNECTED_BIT & uxBits){
 		return true;
 	} else{
-		if(esp_wifi_stop() == ESP_OK){
+		esp_err_t wifi_stop_res = esp_wifi_stop();
+		if(wifi_stop_res == ESP_OK){
 			if(esp_wifi_deinit() != ESP_OK){
 				ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
-			}
+			} else 	ESP_LOGI(TAG_WiFi, "Deinited WiFi l.342");
 		} else {
-			ESP_LOGE(TAG_WiFi, "Could not stop WiFi");
+			ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
 		}
 		ESP_LOGE(TAG_WiFi, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
-		allow_to_connect = false;
-		ESP_LOGI(TAG_WiFi, "Disabled connect on STA mode.");
 		return false;
 	}
 }

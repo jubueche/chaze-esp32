@@ -130,13 +130,13 @@ const char * Flashtraining::get_azure_connection_string(void)
 
 const char * Flashtraining::get_wifi_ssid(void)
 {
-	return "EatOrBeEaten";
+	return "Refhaus_Mitte/Zentral";
 }
 
 
 const char * Flashtraining::get_wifi_password(void)
 {
-	return "Fussball08";
+	return "Amm+Tag+Vc+1"; 
 }
 
 
