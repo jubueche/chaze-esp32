@@ -12,7 +12,7 @@ const char * TAG_WiFi = "Chaze-WIFI-Synch";
 
 
 //This semaphore is used so that the synch_via_wifi task waits for the azure task to end.
-SemaphoreHandle_t xSemaphore = NULL;
+SemaphoreHandle_t azure_task_semaphore = NULL;
 
 static bool last_block = false;
 
@@ -44,8 +44,8 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 			break;
 		case SYSTEM_EVENT_STA_DISCONNECTED:
 			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_DISCONNECTED");
-			//ESP_ERROR_CHECK(esp_wifi_connect());
 			xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+			config.wifi_connected = false;
 			break;
 		default:
 			break;
@@ -65,92 +65,63 @@ void synch_via_wifi(void *pvParameter)
 	config.wifi_connected = false;
 	config.wifi_synch_semaphore = xSemaphoreCreateBinary();
 	xSemaphoreGive(config.wifi_synch_semaphore);
-
+	
 	for(;;)
 	{
-		if(xSemaphoreTake(config.wifi_synch_semaphore, LONG_TIME) == pdTRUE){
-			ESP_LOGI(TAG_WiFi, "Acquired wifi_synch_semaphore.");
-			break;
-		}
-		vTaskDelay(80 / portTICK_PERIOD_MS);
-	}
-	
-	xSemaphore = xSemaphoreCreateBinary();
-	xSemaphoreGive(xSemaphore);
 
-	// Continue to try and synch even if we are connected with the phone.
-	// We will stay in Adv. mode max. 10min. This should be more than enough time to try & synch. We continue to
-	// Synch in connected mode.
-	while(config.STATE == ADVERTISING || config.STATE == CONNECTED ){
+		// Continue to try and synch even if we are connected with the phone.
+		// We will stay in Adv. mode max. 10min. This should be more than enough time to try & synch. We continue to
+		// Synch in connected mode.
+		while(config.STATE == ADVERTISING || config.STATE == CONNECTED ){
 
-		uint16_t number_of_unsynched_trainings = ft.get_number_of_unsynched_trainings();
-		// TODO Test that case
-		if(number_of_unsynched_trainings == 0)
-		{
-			xSemaphoreGive(config.wifi_synch_semaphore);
-			ft.~Flashtraining();
-			vSemaphoreDelete(xSemaphore);
-			vSemaphoreDelete(config.wifi_synch_semaphore);
-			return;
-		}
-
-		config.wifi_connected = poll_wifi();
-		if(config.wifi_connected){
-			ESP_LOGI(TAG_WiFi, "Connected to WiFi, syncing data now...");
-
-			if(synch_with_azure_task_handle == NULL)
+			for(;;)
 			{
-				if (xTaskCreate(&synch_with_azure, "synch_with_azure", 1024 * 8, NULL, 5, &synch_with_azure_task_handle) != pdPASS )
-				{
-					ESP_LOGE(TAG_WiFi, "Creating synch_azure task failed.");
-					break; //Shall exit the while loop and clean up resources
-				}
-			}
-
-			// Let the azure-task acquire the lock first.
-			vTaskDelay(1000 / portTICK_PERIOD_MS);
-
-			for(;;){
-				 if( xSemaphoreTake( xSemaphore, LONG_TIME ) == pdTRUE )
-				 {
-					ESP_LOGI(TAG_WiFi, "Azure is done and acquired the semaphore. Returning...");
-					break; //Shall exit for(;;) loop
-				 }
-				 vTaskDelay(200 / portTICK_PERIOD_MS);
-				 ESP_LOGI(TAG_WiFi, "Waiting for lock...");
-			}
-			break; //Shall exit while loop
-
-		} else{
-			unsigned long tmp_timer = millis();
-			bool tmp_state_switched = false;
-			while(millis() - tmp_timer < SCAN_INTERVAL*1000)
-			{
-				if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
-				{
-					ESP_LOGI(TAG_WiFi, "State switched.");
-					tmp_state_switched = true;
+				if(xSemaphoreTake(config.wifi_synch_semaphore, 300) == pdTRUE){
+					ESP_LOGI(TAG_WiFi, "Acquired wifi_synch_semaphore.");
 					break;
 				}
-				vTaskDelay(100 / portTICK_PERIOD_MS);
+				vTaskDelay(80 / portTICK_PERIOD_MS);
 			}
-			if(tmp_state_switched)
-				break;
+
+			uint16_t number_of_unsynched_trainings = ft.get_number_of_unsynched_trainings();
+			// TODO Test that case
+			// vTaskResume(task_handle) will be called when the number of trainings is greater zero again
+			if(number_of_unsynched_trainings == 0)
+			{
+				config.wifi_synch_task_suspended = true;
+				xSemaphoreGive(config.wifi_synch_semaphore);
+				vTaskSuspend(NULL);
+			} else {
+				if(!config.wifi_connected)
+				{
+					config.wifi_connected = poll_wifi();
+				}
+				if(config.wifi_connected){
+					ESP_LOGI(TAG_WiFi, "Connected to WiFi, synching data now...");
+					bool success = synch_with_azure();
+				}
+			}
+
+			// Release the semaphore and suspend for SCAN_INTERVAL number of seconds
+			xSemaphoreGive(config.wifi_synch_semaphore);
+			vTaskDelay(SCAN_INTERVAL*1000 / portTICK_PERIOD_MS); //Delay for 20s
+			ESP_LOGI(TAG_WiFi, "After delay.");
 		}
+		ESP_LOGI(TAG_WiFi, "State changed. Wifi is stopping.");
+		esp_err_t stop_wifi_res = esp_wifi_stop();
+		if(stop_wifi_res == ESP_OK){
+			esp_err_t deinit_wifi_res = esp_wifi_deinit();
+			if(deinit_wifi_res != ESP_OK){
+				ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi: %s", esp_err_to_name(deinit_wifi_res));
+			} else 	ESP_LOGI(TAG_WiFi, "Deinited WiFi: l.167");
+		} else {
+			ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(stop_wifi_res));
+		}
+		xSemaphoreGive(config.wifi_synch_semaphore);
+		ESP_LOGI(TAG_WiFi, "Suspending task");
+		config.wifi_synch_task_suspended = true;
+		vTaskSuspend(NULL);
 	}
-	ESP_LOGI(TAG_WiFi, "Done. Stopping WiFi");
-	esp_err_t stop_wifi_res = esp_wifi_stop();
-	if(stop_wifi_res == ESP_OK){
-		esp_err_t deinit_wifi_res = esp_wifi_deinit();
-		if(deinit_wifi_res != ESP_OK){
-			ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi: %s", esp_err_to_name(deinit_wifi_res));
-		} else 	ESP_LOGI(TAG_WiFi, "Deinited WiFi: l.143");
-	} else {
-		ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(stop_wifi_res));
-	}
-	xSemaphoreGive(config.wifi_synch_semaphore);
-	ESP_LOGI(TAG_WiFi, "Deleted task");
-	vTaskDelete(NULL);
 }
 
 
@@ -212,21 +183,11 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
 
 /**
  * @brief Initializes the IoTHub client, sets options, sets filename, uploads data to blob.
- * @param pvParameter
+ * @param
  */
-void synch_with_azure(void *pvParameter)
+bool synch_with_azure(void)
 {
-
-	for(;;){
-		if( xSemaphoreTake( xSemaphore, LONG_TIME ) == pdTRUE )
-		{
-			ESP_LOGI(TAG_WiFi, "Azure task got the lock...");
-			break;
-		}
-		vTaskDelay(100 / portTICK_PERIOD_MS);
-		ESP_LOGI(TAG_WiFi, "Azure task waiting for lock...");
-	}
-
+	bool success = false;
 	(void)IoTHub_Init();
 	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(ft.get_azure_connection_string(), HTTP_Protocol);
 
@@ -238,59 +199,51 @@ void synch_with_azure(void *pvParameter)
 	{
 
 		IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
-		if(config.STATE == ADVERTISING || config.STATE == CONNECTED)
+
+		time_t now;
+		time_t tmp;
+		now = get_time(&tmp);
+
+		char strftime_buf[64];
+		struct tm timeinfo;
+
+		localtime_r(&now, &timeinfo);
+		strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
+
+		if(rtc.begin()) {
+			rtc.set24Hour();
+			rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);	
+			ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
+		} else {
+			ESP_LOGE(TAG_WiFi, "Error setting time.");
+		}
+
+		for(int i=0;i<strlen(strftime_buf);i++){
+			if(strftime_buf[i] == ' '){
+				strftime_buf[i] = '_';
+			}
+		}
+		char file_name[128]; //64+32+puffer
+		strcpy(file_name, ft.get_device_id());
+		strcat(file_name, "_");
+		strcat(file_name, strftime_buf);
+		strcat(file_name, ".txt");
+
+		ft.start_reading_data();
+		if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
 		{
-
-			time_t now;
-			time_t tmp;
-			now = get_time(&tmp);
-
-			char strftime_buf[64];
-			struct tm timeinfo;
-
-			localtime_r(&now, &timeinfo);
-			strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
-
-			if(rtc.begin()) {
-				rtc.set24Hour();
-				rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);	
-				ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
-			} else {
-				ESP_LOGE(TAG_WiFi, "Error setting time.");
-			}
-
-			for(int i=0;i<strlen(strftime_buf);i++){
-				if(strftime_buf[i] == ' '){
-					strftime_buf[i] = '_';
-				}
-			}
-			char file_name[128]; //64+32+puffer
-			strcpy(file_name, ft.get_device_id());
-			strcat(file_name, "_");
-			strcat(file_name, strftime_buf);
-			strcat(file_name, ".txt");
-
-			ft.start_reading_data();
-
-			if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
-			{
-				ESP_LOGE(TAG_WiFi, "Failed to upload");
-			}
-			else
-			{
-				ESP_LOGI(TAG_WiFi, "Successful upload.");
-			}
+			ESP_LOGE(TAG_WiFi, "Failed to upload");
+		}
+		else
+		{
+			ESP_LOGI(TAG_WiFi, "Successful upload.");
+			success = true;
 		}
 
 		IoTHubDeviceClient_LL_Destroy(device_ll_handle);
 	}
 	IoTHub_Deinit();
-	if(xSemaphoreGive(xSemaphore) != pdTRUE)
-	{
-		ESP_LOGE(TAG_WiFi, "Failed to release the semaphore.");
-	}
-	ESP_LOGI(TAG_WiFi, "Delete this task.");
-	vTaskDelete(NULL);
+	return success;
 }
 
 
@@ -351,7 +304,7 @@ bool poll_wifi(void){
 		} else {
 			ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
 		}
-		ESP_LOGE(TAG_WiFi, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
+		ESP_LOGW(TAG_WiFi, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
 		return false;
 	}
 }

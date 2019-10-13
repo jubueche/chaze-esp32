@@ -32,11 +32,10 @@ extern "C" {
 #include "ChazeFlashtraining.h"
 
 void synch_via_wifi(void *);
-void synch_with_azure(void *);
 bool poll_wifi(void);
+bool synch_with_azure(void);
 
 static IOTHUB_DEVICE_CLIENT_LL_HANDLE device_ll_handle = NULL;
-static TaskHandle_t synch_with_azure_task_handle = NULL;
 static Flashtraining ft;
 
 #endif

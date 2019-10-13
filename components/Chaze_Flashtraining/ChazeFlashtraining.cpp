@@ -136,7 +136,7 @@ const char * Flashtraining::get_wifi_ssid(void)
 
 const char * Flashtraining::get_wifi_password(void)
 {
-	return "Amm+Tag+Vc+1"; 
+	return "Amm+Tag+Vc+0"; 
 }
 
 

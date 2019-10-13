@@ -144,12 +144,14 @@ class Configuration {
     volatile uint8_t STATE;
     volatile bool ble_connected = false;
     volatile bool ble_old_device_connected = false;
+    volatile bool OTA_request = false;
+    volatile bool wifi_synch_task_suspended = false;
     volatile uint8_t synched_training = AWAITING;
     volatile bool wifi_connected = false;
 
     xQueueHandle gpio_evt_queue;
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
-    SemaphoreHandle_t wifi_synch_semaphore = xSemaphoreCreateBinary();
+    SemaphoreHandle_t wifi_synch_semaphore = NULL;
 
     bool initialized_port0 = false;
     bool initialized_port1 = false;

@@ -329,7 +329,7 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	hr.~HeartRate();
 
 	if(DEBUG) ESP_LOGI(TAG_RECORD, "Cleaned up");
-
+	config.STATE = DEEPSLEEP;
 
 	vTaskDelay(500 /portTICK_PERIOD_MS);
 }

@@ -2,6 +2,7 @@
 #define CHAZE_CONNECTED_H
 
 #include "Chaze_Advertising.h"
+#include "Chaze_OTA.h"
 
 struct Rx_buffer {
     char data[128];

@@ -11,6 +11,10 @@ extern "C" void app_main()
 	config.initialize_leds();
 
 	vTaskDelay(2000 / portTICK_PERIOD_MS);
+
+	/*Check free heap space*/
+	ESP_LOGE(TAG_MAIN, "Free heap space is %d bytes", esp_get_free_heap_size());
+
 	//! Change to ADVERTISING
 	config.STATE = ADVERTISING;
 

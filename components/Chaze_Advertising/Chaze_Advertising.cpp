@@ -54,8 +54,7 @@ void advertise()
     {
         ble->initialize_connection();
         config.ble_old_device_connected = true;
-        ESP_LOGE(TAG_Adv, "Not initialized. Intialized!");
-    } else ESP_LOGE(TAG_Adv, "Already initialized.");
+    }
 
     ESP_LOGI(TAG_Adv, "Start advertising.");
     ble->advertise();
@@ -75,6 +74,11 @@ void advertise()
             }
     } else {
         ESP_LOGI(TAG_Adv, "Synch via WiFi task already running.");
+        if(config.wifi_synch_task_suspended)
+        {
+            vTaskResume(wifi_synch_task_handle);
+            config.wifi_synch_task_suspended = false;
+        }
     }
 
     while(config.STATE == ADVERTISING)
@@ -120,23 +124,24 @@ void advertise()
 }
 
 
-void clean_up()
+void clean_up(void)
 {
     config.ble_old_device_connected = false;
     if(config.wifi_synch_semaphore == NULL)
     {
         ESP_LOGI(TAG_Adv, "Sem. is NULL");
-    }
-    
-    for(;;)
+    } else
     {
-        // Wait until wifi_synch task terminated. If this task terminated. The other must have terminated.
-        if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(100)) == pdTRUE)
+        for(;;)
         {
-            ESP_LOGI(TAG_Adv, "Took the WiFi semaphore. WiFi-Synch task terminated.");
-            break;
-        }
-        vTaskDelay(80 / portTICK_PERIOD_MS);
+            // Wait until wifi_synch task terminated. If this task terminated. The other must have terminated.
+            if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(100)) == pdTRUE)
+            {
+                ESP_LOGI(TAG_Adv, "Took the WiFi semaphore. WiFi-Synch task terminated.");
+                break;
+            }
+            vTaskDelay(80 / portTICK_PERIOD_MS);
+        }   
     }
 
     // Should call destructors, detach interrupts

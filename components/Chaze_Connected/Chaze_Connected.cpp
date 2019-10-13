@@ -120,6 +120,8 @@ void connected()
     
     ble->pRxCharacteristic->setCallbacks(new ConnectedCallbacks());
 
+    ESP_LOGI(TAG_Con, "Connected");
+
 
     while(config.ble_connected)
     {
@@ -250,7 +252,45 @@ void get_version()
 void perform_ota()
 {
     ESP_LOGI(TAG_Con, "Performing OTA update.");
-    ble->write("s\n");
+    config.OTA_request = true;
+
+    if(config.wifi_synch_semaphore != NULL)
+	{
+		unsigned long start_timer = esp_timer_get_time()/1000000;
+		for(;;)
+		{
+			//! Add a global #define to Configuration.h
+			if((esp_timer_get_time()/1000000) - start_timer > 9)
+			{
+				ESP_LOGI(TAG_Con, "Waited too long for lock.");
+				ble->write("n\n");
+                CONNECTED_STATE = IDLE;
+                return;
+			}
+			if(xSemaphoreTake(config.wifi_synch_semaphore, 300) == pdTRUE){
+				ESP_LOGI(TAG_Con, "Acquired wifi_synch_semaphore.");
+				break;
+			}
+			vTaskDelay(80 / portTICK_PERIOD_MS);
+		}
+	}
+
+    uint8_t result = perform_OTA();
+    if(result == 0) { // Success
+        ble->write("s\n");
+    } else if(result == 1) { // No internet
+        ble->write("n\n");
+    } else { // Other
+        ble->write("e\n");
+    }
+    config.OTA_request = false;
+
+    if(config.wifi_synch_semaphore != NULL)
+    {
+        xSemaphoreGive(config.wifi_synch_semaphore);
+    }
+    // Write result to BLE
+    ESP_LOGI(TAG_Con, "Released WiFi Synch semaphore.");
     CONNECTED_STATE = IDLE;
 }
 
