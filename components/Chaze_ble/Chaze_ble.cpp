@@ -8,6 +8,14 @@ Chaze_ble::Chaze_ble(void){
     txValue = 0;
 }
 
+Chaze_ble::~Chaze_ble(void){
+  BLEDevice::deinit(true);
+  free(pServer);
+  free(pService);
+  pTxCharacteristic->~BLECharacteristic();
+  pRxCharacteristic->~BLECharacteristic();
+}
+
 class MyServerCallbacks: public BLEServerCallbacks {
   
   void onConnect(BLEServer* pServer) {
@@ -103,47 +111,3 @@ void Chaze_ble::advertise(void){
     ESP_LOGI(TAG_BLE, "Start advertising");
     config.ble_old_device_connected = config.ble_connected;
 }
-
-
-/*
-//This program measures the throughput of the BLE module. Achieves ~34s/1 MB
-#include "Chaze_ble.h"
-
-Chaze_ble ble;
-bool connected;
-bool oldDeviceConnected;
-uint8_t throughput[600];
-
-void setup(){
-  ble = Chaze_ble();  
-  ble.initialize_connection();
-  Serial.println("Done initializing...");
-  connected = false;
-  oldDeviceConnected = false;
-  std::fill_n(throughput,600,1);
-}
-
-void loop() {
-  if(connected){
-    delay(10000);
-    Serial.println("Start");
-    time_t start = time(0);
-    for (int i=0;i<854;i++){ //~512 kByte
-      ble.write(throughput, sizeof(throughput)); 
-
-      // disconnecting
-      if (!connected && oldDeviceConnected) {
-          ble.advertise();
-      }
-      // connecting
-      if (connected && !oldDeviceConnected) {
-      // do stuff here on connecting
-          oldDeviceConnected = connected;
-      }
-    }
-    time_t end = time(0);
-    double expired = difftime(end,start);
-    Serial.println(expired);
-  }
-}
-*/

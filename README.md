@@ -20,6 +20,8 @@
 
 - **Get number of unsynched trainings:** Upon call to ```uint32_t get_number_of_unsynched_trainings(void)``` should return the number of unsynched trainings. This function is already implemented and always returns 2. TODO: Implement correctly.
 
+- **Set number of unsynched trainings:** Upon call to ```void set_number_of_unsynched_trainings(uint16_t)``` should set the new number of unsynched trainings to the passed value. This function is called after a new training was recorded or a new training was successfully synched via BLE or WiFi.
+
 - **New training:** Upon call to ```start_new_training()``` write meta-data into flash. Furthermore, switch states and check if enough space is available. Return ```ESP_OK``` on success or an error of type ```esp_err_t```.
 
 - **No lost training data:** After writing a block of a certain size, update the training object/struct to hold the current write index in case the device dies (then the data is not lost).

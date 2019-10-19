@@ -5,8 +5,7 @@ const char * TAG_OTA = "Chaze OTA";
 const int OTA_CONNECTED_BIT = BIT0;
 
 EventGroupHandle_t ota_wifi_event_group;
-EventBits_t ota_uxBits;
-Flashtraining ota_ft;
+EventBits_t ota_uxBits;	
 
 cJSON *json;
 bool new_firmware_available;
@@ -115,7 +114,7 @@ uint8_t perform_OTA(void)
 {
 	if(!config.wifi_connected)
 	{
-		config.wifi_connected = poll_wifi();
+		poll_wifi();
 		if(!config.wifi_connected)
 			return 1;
 	}

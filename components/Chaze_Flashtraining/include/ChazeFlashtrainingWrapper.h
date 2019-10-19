@@ -7,6 +7,7 @@ extern "C" {
 
 #include <stdbool.h>
 
+
 struct FlashtrainingWrapper;
 
 typedef struct FlashtrainingWrapper FlashtrainingWrapper_t;

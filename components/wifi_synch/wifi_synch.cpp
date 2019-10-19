@@ -1,5 +1,5 @@
 #include "wifi_synch.h"
-
+#include "Chaze_Advertising.h"
 
 //After we scanned and saw that the SSID was available, connect and timeout connection try after 9s.
 #define WAIT_TIME 9000
@@ -9,6 +9,7 @@
 
 
 const char * TAG_WiFi = "Chaze-WIFI-Synch";
+uint8_t * tmp_upload_buffer = new uint8_t[UPLOAD_BLOCK_SIZE];
 
 
 //This semaphore is used so that the synch_via_wifi task waits for the azure task to end.
@@ -40,11 +41,10 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_GOT_IP");
 			ESP_LOGI(TAG_WiFi, "got ip:%s\n",
 			ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
-			xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+			config.wifi_connected = true;
 			break;
 		case SYSTEM_EVENT_STA_DISCONNECTED:
 			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_DISCONNECTED");
-			xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
 			config.wifi_connected = false;
 			break;
 		default:
@@ -61,14 +61,10 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
  */
 void synch_via_wifi(void *pvParameter)
 {
-	ft = Flashtraining();
 	config.wifi_connected = false;
-	config.wifi_synch_semaphore = xSemaphoreCreateBinary();
-	xSemaphoreGive(config.wifi_synch_semaphore);
 	
 	for(;;)
 	{
-
 		// Continue to try and synch even if we are connected with the phone.
 		// We will stay in Adv. mode max. 10min. This should be more than enough time to try & synch. We continue to
 		// Synch in connected mode.
@@ -83,7 +79,7 @@ void synch_via_wifi(void *pvParameter)
 				vTaskDelay(80 / portTICK_PERIOD_MS);
 			}
 
-			uint16_t number_of_unsynched_trainings = ft.get_number_of_unsynched_trainings();
+			uint16_t number_of_unsynched_trainings = global_ft->get_number_of_unsynched_trainings();
 			// TODO Test that case
 			// vTaskResume(task_handle) will be called when the number of trainings is greater zero again
 			if(number_of_unsynched_trainings == 0)
@@ -94,11 +90,30 @@ void synch_via_wifi(void *pvParameter)
 			} else {
 				if(!config.wifi_connected)
 				{
-					config.wifi_connected = poll_wifi();
+					poll_wifi();
 				}
 				if(config.wifi_connected){
 					ESP_LOGI(TAG_WiFi, "Connected to WiFi, synching data now...");
+
+					while(ble != NULL)
+					{
+						vTaskDelay(1000 / portTICK_PERIOD_MS);
+						ESP_LOGI(TAG_WiFi, "Waiting for BLE to be deallocated.");
+					}
 					bool success = synch_with_azure();
+
+					// Set the new number of trainings
+					global_ft->set_number_of_unsynched_trainings(number_of_unsynched_trainings - 1);
+					// Clean up WiFi
+					esp_err_t wifi_stop_res = esp_wifi_stop();
+					if(wifi_stop_res == ESP_OK){
+						if(esp_wifi_deinit() != ESP_OK){
+							ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
+						} else 	ESP_LOGI(TAG_WiFi, "Deinited WiFi after successful upload.");
+					} else {
+						ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
+					}
+					//Start deleting this training in the background
 				}
 			}
 
@@ -143,10 +158,9 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
 
 			if(!last_block)
 			{
-				uint8_t * tmp = (uint8_t *) malloc(UPLOAD_BLOCK_SIZE);
-				int32_t bytes_read = ft.get_next_buffer_of_training(tmp);
+				int32_t bytes_read = global_ft->get_next_buffer_of_training(tmp_upload_buffer);
 				
-				*data = (const uint8_t *) tmp;
+				*data = (const uint8_t *) tmp_upload_buffer;
 				if(bytes_read == -1){
 					*size = UPLOAD_BLOCK_SIZE;
 				} else {
@@ -189,16 +203,14 @@ bool synch_with_azure(void)
 {
 	bool success = false;
 	(void)IoTHub_Init();
-	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(ft.get_azure_connection_string(), HTTP_Protocol);
-
+	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(global_ft->get_azure_connection_string(), HTTP_Protocol);
 	if (device_ll_handle == NULL)
 	{
 		ESP_LOGE(TAG_WiFi, "Failure creating Iothub device. Check conn string.");
 	}
 	else
 	{
-
-		IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
+		IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_HTTP_TIMEOUT, certificates);
 
 		time_t now;
 		time_t tmp;
@@ -224,12 +236,13 @@ bool synch_with_azure(void)
 			}
 		}
 		char file_name[128]; //64+32+puffer
-		strcpy(file_name, ft.get_device_id());
+		strcpy(file_name, global_ft->get_device_id());
 		strcat(file_name, "_");
 		strcat(file_name, strftime_buf);
 		strcat(file_name, ".txt");
 
-		ft.start_reading_data();
+		global_ft->start_reading_data();
+		
 		if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
 		{
 			ESP_LOGE(TAG_WiFi, "Failed to upload");
@@ -240,9 +253,12 @@ bool synch_with_azure(void)
 			success = true;
 		}
 
+		global_ft->abort_reading_data();
+
 		IoTHubDeviceClient_LL_Destroy(device_ll_handle);
 	}
 	IoTHub_Deinit();
+
 	return success;
 }
 
@@ -252,12 +268,9 @@ bool synch_with_azure(void)
  * If the SSID can be found, we establish a WiFi connection.
  * @return True on successful connection. If True returned: Is connected, else not connected
  */
-bool poll_wifi(void){
-
+void poll_wifi(void){
 	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
-		return false;
-
-	wifi_event_group = xEventGroupCreate();
+		return;
 
 	tcpip_adapter_init();
 	esp_err_t ret = esp_event_loop_init(event_handler, NULL);
@@ -266,15 +279,16 @@ bool poll_wifi(void){
 	}
 
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+
 	esp_err_t wifi_init_res = esp_wifi_init(&cfg);  
 	if(wifi_init_res != ESP_OK){
 		ESP_LOGE(TAG_WiFi, "Could not initialize WiFi: %s", esp_err_to_name(wifi_init_res));
-		return false;
+		return;
 	} else ESP_LOGI(TAG_WiFi, "Initialized WiFi");
 
 	wifi_sta_config_t sta_cnfg = {};
-	strcpy((char *) sta_cnfg.ssid, ft.get_wifi_ssid());
-	strcpy((char *) sta_cnfg.password, ft.get_wifi_password());
+	strcpy((char *) sta_cnfg.ssid, global_ft->get_wifi_ssid());
+	strcpy((char *) sta_cnfg.password, global_ft->get_wifi_password());
 
 	wifi_config_t wifi_config = { .sta = sta_cnfg };
 	bool res = (esp_wifi_set_mode(WIFI_MODE_STA) == ESP_OK);
@@ -284,18 +298,23 @@ bool poll_wifi(void){
 	{
 		esp_wifi_deinit();
 		ESP_LOGI(TAG_WiFi, "Set mode, set config or start failed.");
-		return false;
+		return;
 	}
 
 	esp_wifi_set_ps(/*WIFI_PS_MAX_MODEM*/WIFI_PS_NONE); //Give 100% power for short amount of time
 
 	//Wait for connection. If not connected after WAIT_TIME many ms, continue as usual.
 	ESP_LOGI(TAG_WiFi, "Waiting for connection");
-	uxBits = xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT, false, true, WAIT_TIME / portTICK_PERIOD_MS);
-
-	if(CONNECTED_BIT & uxBits){
-		return true;
-	} else{
+	
+	unsigned long start = millis();
+	while(millis() - start < WAIT_TIME)
+	{
+		if(config.wifi_connected)
+			break;
+		vTaskDelay(500);
+	}
+	
+	if(!config.wifi_connected) {
 		esp_err_t wifi_stop_res = esp_wifi_stop();
 		if(wifi_stop_res == ESP_OK){
 			if(esp_wifi_deinit() != ESP_OK){
@@ -305,6 +324,6 @@ bool poll_wifi(void){
 			ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
 		}
 		ESP_LOGW(TAG_WiFi, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
-		return false;
+		return;
 	}
 }

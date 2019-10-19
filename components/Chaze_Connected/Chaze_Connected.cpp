@@ -123,7 +123,7 @@ void connected()
     ESP_LOGI(TAG_Con, "Connected");
 
 
-    while(config.ble_connected)
+    while(config.ble_connected && !config.wifi_connected)
     {
         
         switch(CONNECTED_STATE) {
@@ -178,6 +178,10 @@ void connected()
         vTaskDelay(500 / portTICK_PERIOD_MS);
 
     }
+    if(config.wifi_connected)
+    {
+        ble->pServer->disconnect(ble->pServer->getConnId());
+    }
     config.STATE = ADVERTISING;
     free(buffer);
 
@@ -196,7 +200,7 @@ void set_name()
     char name[buffer->size+1];
     memcpy(name, buffer->data, buffer->size);
     name[buffer->size] = '\0';
-    if(ft.set_name(name, buffer->size))
+    if(global_ft->set_name(name, buffer->size))
     {
         ble->write("1\n");
     } else{
@@ -213,7 +217,7 @@ void set_ssid()
     char * ssid = new char[buffer->size];
     memcpy(ssid, buffer->data, buffer->size);
 
-    if(ft.set_wifi_ssid(ssid, buffer->size))
+    if(global_ft->set_wifi_ssid(ssid, buffer->size))
     {
         ble->write("1\n");
     } else {
@@ -231,7 +235,7 @@ void set_password()
     char password[buffer->size];
     memcpy(password, buffer->data, buffer->size);
 
-    if(ft.set_wifi_password(password, buffer->size))
+    if(global_ft->set_wifi_password(password, buffer->size))
     {
         ble->write("1\n");
     } else {
@@ -243,7 +247,7 @@ void set_password()
 void get_version()
 {
     char version[128];
-    uint8_t n = ft.get_version(version);
+    uint8_t n = global_ft->get_version(version);
     ble->write(version, n);
     CONNECTED_STATE = IDLE;
 }
@@ -251,46 +255,10 @@ void get_version()
 // TODO
 void perform_ota()
 {
+    //! Need to destroy ble object and then perform the OTA update.
+    //! No matter if successful or not, need to go back to ADVERTISING mode
+    //! since we need to initialize the ble object again.
     ESP_LOGI(TAG_Con, "Performing OTA update.");
-    config.OTA_request = true;
-
-    if(config.wifi_synch_semaphore != NULL)
-	{
-		unsigned long start_timer = esp_timer_get_time()/1000000;
-		for(;;)
-		{
-			//! Add a global #define to Configuration.h
-			if((esp_timer_get_time()/1000000) - start_timer > 9)
-			{
-				ESP_LOGI(TAG_Con, "Waited too long for lock.");
-				ble->write("n\n");
-                CONNECTED_STATE = IDLE;
-                return;
-			}
-			if(xSemaphoreTake(config.wifi_synch_semaphore, 300) == pdTRUE){
-				ESP_LOGI(TAG_Con, "Acquired wifi_synch_semaphore.");
-				break;
-			}
-			vTaskDelay(80 / portTICK_PERIOD_MS);
-		}
-	}
-
-    uint8_t result = perform_OTA();
-    if(result == 0) { // Success
-        ble->write("s\n");
-    } else if(result == 1) { // No internet
-        ble->write("n\n");
-    } else { // Other
-        ble->write("e\n");
-    }
-    config.OTA_request = false;
-
-    if(config.wifi_synch_semaphore != NULL)
-    {
-        xSemaphoreGive(config.wifi_synch_semaphore);
-    }
-    // Write result to BLE
-    ESP_LOGI(TAG_Con, "Released WiFi Synch semaphore.");
     CONNECTED_STATE = IDLE;
 }
 
@@ -299,7 +267,7 @@ void synch_data()
 
     ESP_LOGI(TAG_Con, "Synching data");
     bool done = false;
-    uint16_t num_unsynched_trainings = ft.get_number_of_unsynched_trainings();
+    uint16_t num_unsynched_trainings = global_ft->get_number_of_unsynched_trainings();
 
     uint8_t data[UPLOAD_BLOCK_SIZE_BLE];
     ble->write(std::to_string(num_unsynched_trainings));
@@ -307,7 +275,7 @@ void synch_data()
     for(int i=0;i<num_unsynched_trainings;i++)
     {
         // Call again for each training
-        ft.start_reading_data();
+        global_ft->start_reading_data();
         
         ble->write("\nTraining number ");
         ble->write(std::to_string(i));
@@ -316,7 +284,7 @@ void synch_data()
 
         int32_t response = 0;
         do {
-            response = ft.get_next_buffer_of_training(data);
+            response = global_ft->get_next_buffer_of_training(data);
             if(response == -1) // data is full
             {
                 ble->write(data, UPLOAD_BLOCK_SIZE_BLE);
@@ -338,11 +306,11 @@ void synch_data()
         
         if(config.synched_training == SYNCH_COMPLETE)
         {
-            ft.completed_synch_of_training(true);
+            global_ft->completed_synch_of_training(true);
             ESP_LOGI(TAG_Con, "Successful synch.");
         } else if(config.synched_training == SYNCH_INCOMPLETE)
         {
-            ft.completed_synch_of_training(false);
+            global_ft->completed_synch_of_training(false);
             ESP_LOGE(TAG_Con, "Unsuccessful synch.");
             CONNECTED_STATE = IDLE; 
             return;

@@ -1,8 +1,8 @@
 /*Flash_training.h - Library to organize Training Data on Flash memory
    Created by Constantin Koch, May 23, 2018
 */
-#ifndef Flashtraining_h
-#define Flashtraining_h
+#ifndef FLASHTRAINING_H
+#define FLASHTRAINING_H
 
 #include "SPIFlash.h"
 #include "Configuration.h"
@@ -34,6 +34,8 @@ class Flashtraining
     //! Needs to be tested and implemented
     bool write_compressed_chunk(uint8_t * data, uint32_t n);
     uint16_t get_number_of_unsynched_trainings(void);
+    void set_number_of_unsynched_trainings(uint16_t);
+    void add_unsynched_training();
     int32_t get_next_buffer_of_training(uint8_t *); // Takes pointer to buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
     void completed_synch_of_training(bool); // Passes a boolean indicating whether the training was successfully synched.
     const char * get_device_id(void); //Returns device ID
@@ -102,48 +104,8 @@ class Flashtraining
     // Disallow creating an instance:
     //Flashtraining() {}
 };
+
+extern Flashtraining *global_ft;
+
 #endif
 
-
-/*
-//Working main.cpp file
-#include "ChazeFlashtraining.h"
-#include "Configuration.h"
-
-extern "C" void app_main()
-{
-
-	config.turn_on_main_circuit();
-
-	Flashtraining ft = Flashtraining();
-	printf("Start new training successful?: %d\n",ft.start_new_training());
-
-	int i =0;
-	while(i < 100){
-		ft.write_training_cycle_IMU(10000, 0.23, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55);
-		vTaskDelay(100 / portTICK_PERIOD_MS);
-		//ft.please_call_every_loop();
-		//printf("Iteration: is %d\n", i);
-		i++;
-	}
-	ft.stop_training();
-
-	ft.start_reading_data();
-
-	uint8_t buf[512];
-	ft.get_all_data_bufferwise(buf);
-
-	for(int i=0; i<512;i=i+4){
-		//printf("Data is %d\n", buf[i]);
-		long l_regenerated = 16777216 * buf[i+0] + 65536 * buf[i+1] + 256 * buf[i+2] + buf[i+3];
-  		float floaty_regenerated = *(float*) &l_regenerated;
-		printf("Regen.: %f\n", floaty_regenerated);
-	}
-
-	while(1) {
-		vTaskDelay(100 / portTICK_PERIOD_MS);
-	}
-
-}
-
-*/

@@ -3,6 +3,8 @@
 */
 #include "ChazeFlashtraining.h"
 
+Flashtraining *global_ft = new Flashtraining();
+
 SPIFlash Flashtraining::myflash;
 
 //! Needs to be checked
@@ -87,8 +89,19 @@ const char * Flashtraining::get_name()
 	return "Julian'sChazeBand";
 }
 
+void Flashtraining::add_unsynched_training()
+{
+	uint16_t current_unsynched = this->get_number_of_unsynched_trainings();
+	this->set_number_of_unsynched_trainings(current_unsynched + 1);
+}
+
 uint16_t Flashtraining::get_number_of_unsynched_trainings(){
 	return 2;
+}
+
+void Flashtraining::set_number_of_unsynched_trainings(uint16_t new_number_of_unsynched_trainings)
+{
+	return;
 }
 
 
@@ -123,7 +136,6 @@ const char * Flashtraining::get_device_id(void)
 }
 const char * Flashtraining::get_azure_connection_string(void)
 {
-	//return "HostName=chaze-iot-hub.azure-devices.net;DeviceId=device-2;SharedAccessKey=lMPIGSbbyrWlMUDDi0wPgOL+NaM8ATwB3rkUiQp4xH8=";
 	return "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-3;SharedAccessKey=9vhufTtWrFy9vtucS1rzc4eKt9eIyfk6XnCoYIfI/7Y=";
 }
 

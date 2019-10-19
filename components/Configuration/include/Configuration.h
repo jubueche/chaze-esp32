@@ -7,7 +7,6 @@
 #include "freertos/queue.h"
 #include "ChazeFlashtrainingWrapper.h"
 #include "BLECharacteristic.h"
-
 #define DEBUG 1
 
 
@@ -139,7 +138,6 @@ class Configuration {
     void flicker_led(gpio_num_t);
     int random_between(int, int);
     uint8_t get_battery_level(void);
-
 
     volatile uint8_t STATE;
     volatile bool ble_connected = false;

@@ -12,8 +12,8 @@ struct Rx_buffer {
 enum {IDLE, BATTERY, NAME, NAME_RECEIVED, WIFI, WIFI_2, SSID_RECEIVED, PASS_RECEIVED, VERSION, OTA, DATA};
 static uint8_t CONNECTED_STATE = IDLE;
 
-
 static Rx_buffer *buffer;
+
 
 void connected(void);
 void send_battery(void);

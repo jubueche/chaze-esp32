@@ -13,12 +13,9 @@ struct FlashtrainingWrapper
 FlashtrainingWrapper_t * FlashtrainingWrapper_create(void)
 {
     FlashtrainingWrapper *ft;
-    Flashtraining *obj;
 
     ft = (FlashtrainingWrapper_t *) malloc (sizeof(*ft));
-    //obj = new Flashtraining();
-    obj = new Flashtraining();
-    ft->obj = obj;
+    ft->obj = global_ft;
 
     return ft;
 }

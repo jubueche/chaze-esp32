@@ -3,7 +3,6 @@
 
 Configuration config;
 
-
 // TODO Needs implementation
 uint8_t Configuration::get_battery_level(void)
 {

@@ -7,13 +7,10 @@
 #include "wifi_synch.h"
 #include "ChazeFlashtraining.h"
 
-static BNO055 bno_adv;
-static bool am_interrupt;
 extern Chaze_ble * ble;
-static TaskHandle_t wifi_synch_task_handle = NULL;
 
 void advertise(void);
-void attach_am_interrupt(void);
-void clean_up(void);
+void attach_am_interrupt(BNO055 *);
+void clean_up(BNO055 *);
 
 #endif
