@@ -61,6 +61,13 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
  */
 void synch_via_wifi(void *pvParameter)
 {
+
+	if(config.wifi_synch_semaphore == NULL)
+	{
+		config.wifi_synch_semaphore = xSemaphoreCreateMutex();
+		xSemaphoreGive(config.wifi_synch_semaphore);
+	}
+
 	config.wifi_connected = false;
 	
 	for(;;)
@@ -70,18 +77,10 @@ void synch_via_wifi(void *pvParameter)
 		// Synch in connected mode.
 		while(config.STATE == ADVERTISING || config.STATE == CONNECTED ){
 
-			for(;;)
-			{
-				if(xSemaphoreTake(config.wifi_synch_semaphore, 300) == pdTRUE){
-					ESP_LOGI(TAG_WiFi, "Acquired wifi_synch_semaphore.");
-					break;
-				}
-				vTaskDelay(80 / portTICK_PERIOD_MS);
-			}
-
 			uint16_t number_of_unsynched_trainings = global_ft->get_number_of_unsynched_trainings();
 			// TODO Test that case
 			// vTaskResume(task_handle) will be called when the number of trainings is greater zero again
+			// Pre: We are not connected via WiFi
 			if(number_of_unsynched_trainings == 0)
 			{
 				config.wifi_synch_task_suspended = true;
@@ -90,20 +89,32 @@ void synch_via_wifi(void *pvParameter)
 			} else {
 				if(!config.wifi_connected)
 				{
-					poll_wifi();
+					ESP_LOGE(TAG_WiFi, "Free heap space is %d", esp_get_free_heap_size());
+					poll_wifi(); // Tries to connect to WiFi. If successful sets config.wifi_connected to true.
+					ESP_LOGE(TAG_WiFi, "Free heap space is %d", esp_get_free_heap_size());
 				}
 				if(config.wifi_connected){
-					ESP_LOGI(TAG_WiFi, "Connected to WiFi, synching data now...");
+					ESP_LOGI(TAG_WiFi, "Connected to WiFi, trying to synch data now...");
 
-					while(ble != NULL)
+					for(;;)
 					{
-						vTaskDelay(1000 / portTICK_PERIOD_MS);
-						ESP_LOGI(TAG_WiFi, "Waiting for BLE to be deallocated.");
+						if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(1000000)) == pdTRUE)
+						{
+							break;
+						}
+						vTaskDelay(80);
 					}
+					ESP_LOGI(TAG_WiFi, "Obtained wifi_synch_semaphore. Synching with azure.");
+					//ESP_LOGE(TAG_WiFi, "Free heap space is %d", esp_get_free_heap_size());
 					bool success = synch_with_azure();
+					xSemaphoreGive(config.wifi_synch_semaphore);
+					ESP_LOGI(TAG_WiFi, "Released wifi_synch_semaphore after synch with azure.");
 
 					// Set the new number of trainings
-					global_ft->set_number_of_unsynched_trainings(number_of_unsynched_trainings - 1);
+					if(success)
+					{
+						global_ft->set_number_of_unsynched_trainings(number_of_unsynched_trainings - 1);
+					}
 					// Clean up WiFi
 					esp_err_t wifi_stop_res = esp_wifi_stop();
 					if(wifi_stop_res == ESP_OK){
@@ -113,6 +124,7 @@ void synch_via_wifi(void *pvParameter)
 					} else {
 						ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
 					}
+					config.wifi_connected = false;
 					//Start deleting this training in the background
 				}
 			}
@@ -160,6 +172,7 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
 			{
 				int32_t bytes_read = global_ft->get_next_buffer_of_training(tmp_upload_buffer);
 				
+
 				*data = (const uint8_t *) tmp_upload_buffer;
 				if(bytes_read == -1){
 					*size = UPLOAD_BLOCK_SIZE;
@@ -210,7 +223,7 @@ bool synch_with_azure(void)
 	}
 	else
 	{
-		IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_HTTP_TIMEOUT, certificates);
+		IoTHubDeviceClient_LL_SetOption(device_ll_handle, OPTION_TRUSTED_CERT, certificates);
 
 		time_t now;
 		time_t tmp;
@@ -241,6 +254,7 @@ bool synch_with_azure(void)
 		strcat(file_name, strftime_buf);
 		strcat(file_name, ".txt");
 
+
 		global_ft->start_reading_data();
 		
 		if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
@@ -252,6 +266,7 @@ bool synch_with_azure(void)
 			ESP_LOGI(TAG_WiFi, "Successful upload.");
 			success = true;
 		}
+
 
 		global_ft->abort_reading_data();
 
@@ -269,6 +284,7 @@ bool synch_with_azure(void)
  * @return True on successful connection. If True returned: Is connected, else not connected
  */
 void poll_wifi(void){
+
 	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
 		return;
 

@@ -58,7 +58,6 @@ One example would be ```char * get_device_id(void)```, which will be used like t
 
 ## TODO
 
-- Make config class immutable
 - Add watchdog
 - Add documentation for record.
 
@@ -75,3 +74,7 @@ One example would be ```char * get_device_id(void)```, which will be used like t
 5) Fix I2C bug, which can be found [here](https://github.com/espressif/esp-idf/issues/680) (see arsinios answer)
 
 6) Not a bug, but avoids redefinition warning: Uncomment ```#define DEC(x) C2(DEC,x)``` in ```esp-azure/azure-iot-sdk-c/c-utility/inc/azure_c_shared_utility/macro_utils.h```.
+
+## Pre setup
+
+- Call ```make erase_flash``` to erase the nvs flash.

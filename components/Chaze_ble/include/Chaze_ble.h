@@ -22,7 +22,8 @@ public:
     ~Chaze_ble();
 
     // Attributes
-    BLEServer *pServer;
+    
+    BLEServer *pServer = NULL;
     BLECharacteristic * pTxCharacteristic;
     BLECharacteristic * pRxCharacteristic;
     BLEService *pService;
@@ -35,8 +36,7 @@ public:
     void write(uint8_t*,size_t);
     void write(char*,size_t);
     void advertise(void);
-private:
-    const char * TAG = "Chaze-Ble";
+    bool is_initialized(void);
 };
 
 #endif

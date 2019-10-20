@@ -2,26 +2,10 @@
 
 const char * TAG_BLE = "Chaze-BLE";
 
-Chaze_ble::Chaze_ble(void){
-    pServer = NULL;
-    pTxCharacteristic = NULL;
-    txValue = 0;
-}
-
-Chaze_ble::~Chaze_ble(void){
-  BLEDevice::deinit(true);
-  free(pServer);
-  free(pService);
-  pTxCharacteristic->~BLECharacteristic();
-  pRxCharacteristic->~BLECharacteristic();
-}
-
 class MyServerCallbacks: public BLEServerCallbacks {
   
   void onConnect(BLEServer* pServer) {
     config.ble_connected = true;
-    config.ble_old_device_connected = true;
-
   };
 
   void onDisconnect(BLEServer* pServer) {
@@ -29,19 +13,79 @@ class MyServerCallbacks: public BLEServerCallbacks {
   }
 };
 
+MyServerCallbacks * callbacks = NULL;
+BLE2902 * ble_2902 = NULL;
+
+Chaze_ble::Chaze_ble(void){
+
+  // Try to obtain the wifi_synch_semaphore
+  for(;;)
+  {
+    if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(1000000)) == pdTRUE)
+    {
+        ESP_LOGI(TAG_BLE, "Took the WiFi semaphore. WiFi-Synch task terminated.");
+        break;
+    }
+    vTaskDelay(80);
+  }
+  ESP_LOGI(TAG_BLE, "Obtained WiFi synch semaphore in BLE constructor.");
+
+  pServer = NULL;
+  pTxCharacteristic = NULL;
+  txValue = 0;
+}
+
+Chaze_ble::~Chaze_ble(void){
+  
+  BLEDevice::deinit();
+
+  pServer->removeService(pService);
+
+  free(pServer);
+  free(pService);
+  
+  pTxCharacteristic->~BLECharacteristic();
+  pRxCharacteristic->~BLECharacteristic();
+
+  free(pTxCharacteristic);
+  free(pRxCharacteristic);
+
+  free(ble_2902);
+  ble_2902 = NULL;
+
+  //Release the wifi_synch_semaphore
+  xSemaphoreGive(config.wifi_synch_semaphore);
+  ESP_LOGI(TAG_BLE, "Released wifi_synch_semaphore after BLE has been deallocated.");
+}
+
+bool Chaze_ble::is_initialized()
+{
+  return BLEDevice::getInitialized();
+}
+
 
 void Chaze_ble::initialize_connection(){
 
   // Create the BLE Device
-  BLEDevice::init("UART Service");
+  if(!BLEDevice::getInitialized())
+  {
+    BLEDevice::init("UART Service");
+    esp_bt_controller_mem_release(ESP_BT_MODE_BTDM);
+  }
 
   //Set the MTU of the packets sent, maximum is 500, Apple needs 23 apparently.
   BLEDevice::setMTU(185);
   config.MTU_BLE = 182;
 
   // Create the BLE Server
-  pServer = BLEDevice::createServer();
-  pServer->setCallbacks(new MyServerCallbacks());
+  pServer = BLEDevice::createServer(); 
+
+  ESP_LOGI(TAG_BLE, "Created server");
+  if(callbacks == NULL)
+  {
+    callbacks = new MyServerCallbacks();
+  }
+  pServer->setCallbacks(callbacks);
   // Create the BLE Service
   pService = pServer->createService(SERVICE_UUID);
 
@@ -51,7 +95,11 @@ void Chaze_ble::initialize_connection(){
 										BLECharacteristic::PROPERTY_NOTIFY
 									);
                       
-  pTxCharacteristic->addDescriptor(new BLE2902());
+  if(ble_2902 == NULL)
+  {
+    ble_2902 = new BLE2902();
+  }
+  pTxCharacteristic->addDescriptor(ble_2902);
 
   pRxCharacteristic = pService->createCharacteristic(
 											 CHARACTERISTIC_UUID_RX,
@@ -108,6 +156,4 @@ void Chaze_ble::write(char* data,size_t length){
 void Chaze_ble::advertise(void){
     delay(500); // give the bluetooth stack the chance to get things ready
     pServer->startAdvertising(); // restart advertising
-    ESP_LOGI(TAG_BLE, "Start advertising");
-    config.ble_old_device_connected = config.ble_connected;
 }

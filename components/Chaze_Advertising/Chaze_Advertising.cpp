@@ -28,6 +28,22 @@ void gpio_bno_task(void* arg)
 void advertise()
 {
 
+    if(config.wifi_connected)
+    {
+        if(ble != NULL)
+        {
+            ble->~Chaze_ble();
+            ble = NULL;
+        }
+    }
+
+    if(config.wifi_synch_semaphore == NULL)
+	{
+		config.wifi_synch_semaphore = xSemaphoreCreateMutex();
+		xSemaphoreGive(config.wifi_synch_semaphore);
+        ESP_LOGI(TAG_Adv, "Created wifi_synch_semaphore");
+	}
+
     // Inilialize nvs
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -44,52 +60,17 @@ void advertise()
 		}
 	}
 
-    if(config.wifi_connected)
-    {
-        //Deallocate ble if not already deallocated
-        if(ble != NULL)
-        {
-            ble->~Chaze_ble();
-            ble = NULL;
-        }
-        //! Add a timer and deinit wifi if timer elapses for safety
-        while (config.wifi_connected)
-        {
-            ESP_LOGI(TAG_Adv, "Waiting for WiFi to be done.");
-            vTaskDelay(1000 / portTICK_PERIOD_MS);
-        }
-    }
-
-    if(config.wifi_synch_semaphore != NULL)
-    {
-        // wifi_synch task has been created and we need to try and obtain the lock
-        for(;;)
-        {
-            if(xSemaphoreTake(config.wifi_synch_semaphore, 300) == pdTRUE){
-                ESP_LOGI(TAG_Adv, "Acquired wifi_synch_semaphore.");
-                break;
-            }
-            vTaskDelay(80 / portTICK_PERIOD_MS);
-        }
-    }
-    // else: We can proceed normally, creating the BLE object and spawning the task
-
-
     BNO055 bno_adv = BNO055();
 
     if(ble == NULL)
     {
-        ESP_LOGI(TAG_Adv, "Creating BLE object.");
         ble = new Chaze_ble();
+        ESP_LOGI(TAG_Adv, "Created BLE object.");
+
     }
 
-    // Setup BLE
-    if(!config.ble_old_device_connected)
-    {
-        ESP_LOGI(TAG_Adv, "Starting BLE.");
-        ble->initialize_connection();
-        config.ble_old_device_connected = true;
-    }
+    ESP_LOGI(TAG_Adv, "Not initialized. Starting BLE.");
+    ble->initialize_connection();
 
     ESP_LOGI(TAG_Adv, "Start advertising.");
     ble->advertise();
@@ -99,27 +80,24 @@ void advertise()
     unsigned long blue_led_timer = millis();
     unsigned long timeout_timer = millis();
 
-    if(wifi_synch_task_handle == NULL)
+    if(wifi_synch_task_handle == NULL && global_ft->get_number_of_unsynched_trainings() > 0)
     {
         if (xTaskCreate(&synch_via_wifi, "synch_via_wifi", 1024 * 8, NULL, 5, &wifi_synch_task_handle) != pdPASS )
             {
                 ESP_LOGE(TAG_Adv, "Failed to create  wifi_synch-task.");
                 config.STATE = DEEPSLEEP;
-                config.ble_old_device_connected = false;
                 return;
             }
-    } else {
-        ESP_LOGI(TAG_Adv, "Synch via WiFi task already running.");
-        if(config.wifi_synch_task_suspended)
-        {
-            vTaskResume(wifi_synch_task_handle);
-            config.wifi_synch_task_suspended = false;
-        }
+    } else if (config.wifi_synch_task_suspended && global_ft->get_number_of_unsynched_trainings() > 0)
+    {
+        ESP_LOGI(TAG_Adv, "Resuming the task");
+        vTaskResume(wifi_synch_task_handle);
+        config.wifi_synch_task_suspended = false;
     }
 
-    while(config.STATE == ADVERTISING && !config.wifi_connected)
+
+    while(config.STATE == ADVERTISING)
     {
-        ESP_LOGI(TAG_Adv, "WiFi not connected and advertising.");
         if(am_interrupt){
             printf("Interrupt.\n");
             am_interrupt = false;
@@ -138,7 +116,6 @@ void advertise()
             config.flicker_led(GPIO_BLUE);
             config.STATE = CONNECTED;
             return;
-
         }
 
         if(millis() - blue_led_timer > LED_BLUE_TIMEOUT){
@@ -155,22 +132,19 @@ void advertise()
             ESP_LOGI(TAG_Adv, "Advertising timeout. Going to sleep.");
             return;
         }
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
 
-    // If we are connected to WiFi and we are in advertising mode, we release the semaphore and return.
-    // After the return, advertise() is called again, releasing the BLE resources and waiting for the lock,
-    // which will be released by the wifi_synch task if the synch is done, either successfully or not.
-    if(config.wifi_connected)
-    {
-        xSemaphoreGive(config.wifi_synch_semaphore);
+        if(config.wifi_connected)
+        {
+            ESP_LOGI(TAG_Adv, "WiFi is connected. Returning from advertise().");
+            return;
+        }
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
 
 void clean_up(BNO055 *bno_adv)
 {
-    config.ble_old_device_connected = false;
     if(config.wifi_synch_semaphore == NULL)
     {
         ESP_LOGI(TAG_Adv, "Sem. is NULL");
@@ -179,12 +153,15 @@ void clean_up(BNO055 *bno_adv)
         for(;;)
         {
             // Wait until wifi_synch task terminated. If this task terminated. The other must have terminated.
-            if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(100)) == pdTRUE)
+            if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(1000000)) == pdTRUE)
             {
                 ESP_LOGI(TAG_Adv, "Took the WiFi semaphore. WiFi-Synch task terminated.");
+                // Suspend the task
+                vTaskSuspend(wifi_synch_task_handle);
+                config.wifi_synch_task_suspended = true;
                 break;
             }
-            vTaskDelay(80 / portTICK_PERIOD_MS);
+            vTaskDelay(80);
         }   
     }
 

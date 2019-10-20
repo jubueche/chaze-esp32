@@ -141,7 +141,6 @@ class Configuration {
 
     volatile uint8_t STATE;
     volatile bool ble_connected = false;
-    volatile bool ble_old_device_connected = false;
     volatile bool OTA_request = false;
     volatile bool wifi_synch_task_suspended = false;
     volatile uint8_t synched_training = AWAITING;

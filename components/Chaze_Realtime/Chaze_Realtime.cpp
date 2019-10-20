@@ -224,7 +224,7 @@ bool RV3028::updateTime()
 //Returns a pointer to array of chars that are the date in mm/dd/yyyy format because they're weird
 char* RV3028::stringDateUSA()
 {
-	static char date[11]; //Max of mm/dd/yyyy with \0 terminator
+	static char date[16]; //Max of mm/dd/yyyy with \0 terminator
 	sprintf(date, "%02hhu/%02hhu/20%02hhu", BCDtoDEC(_time[TIME_MONTH]), BCDtoDEC(_time[TIME_DATE]), BCDtoDEC(_time[TIME_YEAR]));
 	return(date);
 }
@@ -232,7 +232,7 @@ char* RV3028::stringDateUSA()
 //Returns a pointer to array of chars that are the date in dd/mm/yyyy format
 char*  RV3028::stringDate()
 {
-	static char date[11]; //Max of dd/mm/yyyy with \0 terminator
+	static char date[16]; //Max of dd/mm/yyyy with \0 terminator
 	sprintf(date, "%02hhu/%02hhu/20%02hhu", BCDtoDEC(_time[TIME_DATE]), BCDtoDEC(_time[TIME_MONTH]), BCDtoDEC(_time[TIME_YEAR]));
 	return(date);
 }
@@ -241,7 +241,7 @@ char*  RV3028::stringDate()
 //Adds AM/PM if in 12 hour mode
 char* RV3028::stringTime()
 {
-	static char time[11]; //Max of hh:mm:ssXM with \0 terminator
+	static char time[16]; //Max of hh:mm:ssXM with \0 terminator
 
 	if (is12Hour() == true)
 	{
@@ -258,7 +258,7 @@ char* RV3028::stringTime()
 
 char* RV3028::stringTimeStamp()
 {
-	static char timeStamp[25]; //Max of yyyy-mm-ddThh:mm:ss.ss with \0 terminator
+	static char timeStamp[32]; //Max of yyyy-mm-ddThh:mm:ss.ss with \0 terminator
 
 	if (is12Hour() == true)
 	{
