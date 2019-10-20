@@ -84,10 +84,21 @@ void Configuration::attach_btn_int( void (*handlerTask)(void *), void (*gpio_isr
 
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
     //start gpio task
-    xTaskCreate(*handlerTask, "Button-interrupt handler", 2048, NULL, 10, NULL);
 
-    //install gpio isr service
-    gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
+    if(!this->isr_installed)
+    {
+        //install gpio isr service
+        gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
+        this->isr_installed = true;
+    }
+
+    if(this->btn_interrupt_task_handle == NULL)
+    {
+        if(xTaskCreate(*handlerTask, "Button-interrupt handler", 2048, NULL, 10, &this->btn_interrupt_task_handle) != pdPASS)
+        {
+            ESP_LOGE(TAG, "Error creating Button handler.");
+        }
+    }
     //hook isr handler for specific gpio pin
     gpio_isr_handler_add(GPIO_BUTTON, *gpio_isr_handler, (void*) GPIO_BUTTON);
 }
@@ -106,25 +117,38 @@ void Configuration::attach_bno_int( void (*handlerTask)(void *), void (*gpio_isr
     }
 
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-    //start gpio task
-    xTaskCreate(*handlerTask, "BNO055-interrupt handler", 2048, NULL, 10, NULL);
+    //start gpio 
 
-    //install gpio isr service
-    gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
+    if(!this->isr_installed)
+    {
+        //install gpio isr service
+        gpio_install_isr_service(ESP_INTR_FLAG_EDGE);
+        this->isr_installed = true;
+    }
+
+    if(this->bno_interrupt_task_handle == NULL)
+    {
+        if(xTaskCreate(*handlerTask, "BNO055-interrupt handler", 2048, NULL, 10, &this->bno_interrupt_task_handle) != pdPASS)
+        {
+            ESP_LOGE(TAG, "Error creating BNO handler.");
+        }
+    }
     //hook isr handler for specific gpio pin
-    gpio_isr_handler_add(GPIO_BNO_INT, *gpio_isr_handler, (void*) GPIO_BNO_INT);
-
-        
+    gpio_isr_handler_add(GPIO_BNO_INT, *gpio_isr_handler, (void*) GPIO_BNO_INT);   
 }
 
 void Configuration::detach_btn_int()
 {
     gpio_isr_handler_remove(GPIO_BUTTON);
+    vTaskDelete(this->btn_interrupt_task_handle);
+    this->btn_interrupt_task_handle = NULL;
 }
 
 void Configuration::detach_bno_int()
 {
     gpio_isr_handler_remove(GPIO_BNO_INT);
+    vTaskDelete(this->bno_interrupt_task_handle);
+    this->bno_interrupt_task_handle = NULL;
 }
 
 esp_err_t Configuration::initialize_vib(void)

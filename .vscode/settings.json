@@ -3,5 +3,6 @@
     "files.associations": {
         "*.tcc": "cpp",
         "streambuf": "cpp"
-    }
+    },
+    "C_Cpp.dimInactiveRegions": false
 }

@@ -141,6 +141,7 @@ class Configuration {
 
     volatile uint8_t STATE;
     volatile bool ble_connected = false;
+    volatile bool event_handler_set = false;
     volatile bool OTA_request = false;
     volatile bool wifi_synch_task_suspended = false;
     volatile uint8_t synched_training = AWAITING;
@@ -150,8 +151,12 @@ class Configuration {
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
     SemaphoreHandle_t wifi_synch_semaphore = NULL;
 
+    TaskHandle_t bno_interrupt_task_handle = NULL;
+    TaskHandle_t btn_interrupt_task_handle = NULL;
+
     bool initialized_port0 = false;
     bool initialized_port1 = false;
+    bool isr_installed = false;
 
     uint16_t MTU_BLE = 512;
 

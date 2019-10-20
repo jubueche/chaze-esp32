@@ -21,7 +21,7 @@ Chaze_ble::Chaze_ble(void){
   // Try to obtain the wifi_synch_semaphore
   for(;;)
   {
-    if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(1000000)) == pdTRUE)
+    if(xSemaphoreTake(config.wifi_synch_semaphore, portMAX_DELAY) == pdTRUE)
     {
         ESP_LOGI(TAG_BLE, "Took the WiFi semaphore. WiFi-Synch task terminated.");
         break;
@@ -55,6 +55,7 @@ Chaze_ble::~Chaze_ble(void){
 
   //Release the wifi_synch_semaphore
   xSemaphoreGive(config.wifi_synch_semaphore);
+  // vTaskDelay(1000);
   ESP_LOGI(TAG_BLE, "Released wifi_synch_semaphore after BLE has been deallocated.");
 }
 
@@ -69,8 +70,8 @@ void Chaze_ble::initialize_connection(){
   // Create the BLE Device
   if(!BLEDevice::getInitialized())
   {
-    BLEDevice::init("UART Service");
-    esp_bt_controller_mem_release(ESP_BT_MODE_BTDM);
+    ESP_LOGI(TAG_BLE, "Not yet initialized, start init.");
+    BLEDevice::init(global_ft->get_name());
   }
 
   //Set the MTU of the packets sent, maximum is 500, Apple needs 23 apparently.

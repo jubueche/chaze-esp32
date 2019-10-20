@@ -66,7 +66,6 @@ void advertise()
     {
         ble = new Chaze_ble();
         ESP_LOGI(TAG_Adv, "Created BLE object.");
-
     }
 
     ESP_LOGI(TAG_Adv, "Not initialized. Starting BLE.");
@@ -145,26 +144,18 @@ void advertise()
 
 void clean_up(BNO055 *bno_adv)
 {
-    if(config.wifi_synch_semaphore == NULL)
+    if(config.wifi_connected)
     {
-        ESP_LOGI(TAG_Adv, "Sem. is NULL");
-    } else
-    {
-        for(;;)
-        {
-            // Wait until wifi_synch task terminated. If this task terminated. The other must have terminated.
-            if(xSemaphoreTake(config.wifi_synch_semaphore, pdMS_TO_TICKS(1000000)) == pdTRUE)
-            {
-                ESP_LOGI(TAG_Adv, "Took the WiFi semaphore. WiFi-Synch task terminated.");
-                // Suspend the task
-                vTaskSuspend(wifi_synch_task_handle);
-                config.wifi_synch_task_suspended = true;
-                break;
-            }
-            vTaskDelay(80);
-        }   
+        esp_err_t wifi_stop_res = esp_wifi_stop();
+        if(wifi_stop_res == ESP_OK){
+            if(esp_wifi_deinit() != ESP_OK){
+                ESP_LOGE(TAG_Adv, "Failed to deinit WiFi");
+            } else 	ESP_LOGI(TAG_Adv, "Deinited WiFi after successful upload.");
+        } else {
+            ESP_LOGE(TAG_Adv, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
+        }
+        config.wifi_connected = false;
     }
-
     // Should call destructors, detach interrupts
     config.detach_bno_int();
     ble->~Chaze_ble();

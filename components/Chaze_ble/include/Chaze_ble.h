@@ -6,6 +6,7 @@
 #include <BLEUtils.h>
 #include <BLE2902.h>
 #include <time.h>
+#include <ChazeFlashtraining.h>
 
 #include "Arduino.h"
 #include "Configuration.h"

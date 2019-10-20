@@ -86,7 +86,7 @@ bool Flashtraining::set_name(char * name, uint8_t size)
 
 const char * Flashtraining::get_name()
 {
-	return "Julian'sChazeBand";
+	return "Julian's Chaze Band";
 }
 
 void Flashtraining::add_unsynched_training()
@@ -96,6 +96,9 @@ void Flashtraining::add_unsynched_training()
 }
 
 uint16_t Flashtraining::get_number_of_unsynched_trainings(){
+	int tmp = config.random_between(0,2);
+	//ESP_LOGI(TAG, "Number of unsynched trainings is %d", tmp);
+	//return tmp;
 	return 2;
 }
 
