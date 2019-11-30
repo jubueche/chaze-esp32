@@ -66,10 +66,9 @@ void advertise()
     {
         ble = new Chaze_ble();
         ESP_LOGI(TAG_Adv, "Created BLE object.");
+        ESP_LOGI(TAG_Adv, "Not initialized. Starting BLE.");
+        ble->initialize_connection();
     }
-
-    ESP_LOGI(TAG_Adv, "Not initialized. Starting BLE.");
-    ble->initialize_connection();
 
     ESP_LOGI(TAG_Adv, "Start advertising.");
     ble->advertise();

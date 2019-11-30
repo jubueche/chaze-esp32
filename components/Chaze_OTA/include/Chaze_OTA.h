@@ -7,7 +7,7 @@
 #include "esp_http_client.h"
 #include "cJSON.h"
 #include "wifi_synch.h"
-
+#include "esp_https_ota.h"
 
 #define OTA_WAIT_TIME 9000
 

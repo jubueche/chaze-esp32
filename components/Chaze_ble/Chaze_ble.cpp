@@ -73,7 +73,7 @@ void Chaze_ble::initialize_connection(){
     ESP_LOGI(TAG_BLE, "Not yet initialized, start init.");
     BLEDevice::init(global_ft->get_name());
   }
-
+  
   //Set the MTU of the packets sent, maximum is 500, Apple needs 23 apparently.
   BLEDevice::setMTU(185);
   config.MTU_BLE = 182;
@@ -100,6 +100,7 @@ void Chaze_ble::initialize_connection(){
   {
     ble_2902 = new BLE2902();
   }
+
   pTxCharacteristic->addDescriptor(ble_2902);
 
   pRxCharacteristic = pService->createCharacteristic(

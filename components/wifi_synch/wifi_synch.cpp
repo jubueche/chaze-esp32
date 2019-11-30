@@ -349,5 +349,7 @@ void poll_wifi(void){
 		}
 		ESP_LOGW(TAG_WiFi, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
 		return;
+	} else {
+		ESP_LOGI(TAG_WiFi, "Connected to WiFi");
 	}
 }

@@ -1,6 +1,5 @@
 #include "Chaze_Connected.h"
 
-
 const char * TAG_Con = "Chaze-Connected";
 
 
@@ -23,7 +22,6 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
             buffer->data[i] = rxValue[i];
         }
 
-        
         if(CONNECTED_STATE == IDLE)
         {
             if(buffer->size == 1)
@@ -105,7 +103,9 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
             }
             vTaskDelay(100);
         }
-
+      }
+      else {
+          ESP_LOGI(TAG_Con, "Received one char.");
       }
     }
 };
@@ -117,15 +117,18 @@ void connected()
 {
     CONNECTED_STATE = IDLE;
     buffer = (Rx_buffer *) malloc(sizeof(Rx_buffer));
+    if(buffer == NULL)
+    {
+        ESP_LOGE(TAG_Con, "Could not allocate buffer for receiving data");
+    }
     
-    ble->pRxCharacteristic->setCallbacks(new ConnectedCallbacks());
+    ble->pRxCharacteristic->setCallbacks(callback);
 
     ESP_LOGI(TAG_Con, "Connected");
 
 
     while(config.ble_connected && !config.wifi_connected)
     {
-        
         switch(CONNECTED_STATE) {
             case IDLE:
             {
@@ -178,6 +181,7 @@ void connected()
         vTaskDelay(500 / portTICK_PERIOD_MS);
 
     }
+    ESP_LOGI(TAG_Con, "Going back to advertising mode.");
     if(config.wifi_connected)
     {
         ble->pServer->disconnect(ble->pServer->getConnId());
@@ -252,7 +256,6 @@ void get_version()
     CONNECTED_STATE = IDLE;
 }
 
-// TODO
 void ota()
 {
     // We can be sure this task has the wifi_synch_semaphore. This means we are either connected to WiFi or not,
@@ -262,15 +265,31 @@ void ota()
 	{
 		poll_wifi();
 		if(!config.wifi_connected)
+        {
+            ESP_LOGI(TAG_Con, "Not connected.");
 			ble->write("\nn");
             CONNECTED_STATE = IDLE;
             return;
+        }
 	}
     // We are connected
     ble->write("\ns");
     ESP_LOGI(TAG_Con, "Connected to WiFi, attempting OTA update.");
     perform_OTA();
     
+    esp_err_t wifi_stop_res = esp_wifi_stop();
+    if(wifi_stop_res == ESP_OK){
+        if(esp_wifi_deinit() != ESP_OK){
+            ESP_LOGE(TAG_Con, "Failed to deinit WiFi");
+        } else {
+            ESP_LOGI(TAG_Con, "Deinited WiFi l.342");
+        }
+    } else {
+        ESP_LOGE(TAG_Con, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
+    }
+    config.wifi_connected = false;
+    CONNECTED_STATE = IDLE;
+
 }
 
 void synch_data()
