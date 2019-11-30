@@ -8,6 +8,8 @@
 #include "cJSON.h"
 #include "wifi_synch.h"
 #include "esp_https_ota.h"
+#include "Chaze_Advertising.h"
+#include "mbedtls/esp_config.h"
 
 #define OTA_WAIT_TIME 9000
 

@@ -135,8 +135,23 @@ void perform_OTA(void)
 {	
 	check_for_update();
 
+	ble->~Chaze_ble();
+
 	esp_err_t ret;
-	if(new_firmware_available){
+	esp_http_client_config_t ota_client_config = {
+			.url = "https://firmwarestorage.blob.core.windows.net/firmware/app-template.bin",
+			.cert_pem = msft_ssl_cert_pem_start,};
+	ret = esp_https_ota(&ota_client_config);
+	if (ret == ESP_OK) {
+		write_new_firmware_version();
+		ESP_LOGI(TAG_OTA, "OTA OK, restarting...");
+		esp_restart();
+	} else {
+		ESP_LOGE(TAG_OTA, "OTA failed...");
+	}
+
+	// This is the real code.
+	/*if(new_firmware_available){
 		cJSON *file = cJSON_GetObjectItemCaseSensitive(json, "file");
 		if(cJSON_IsString(file) && (file->valuestring != NULL)) {
 			ESP_LOGI(TAG_OTA, "downloading and installing new firmware (%s).", file->valuestring);
@@ -154,6 +169,5 @@ void perform_OTA(void)
 			}
 		}
 		else ESP_LOGE(TAG_OTA, "unable to read the new file name, aborting.");
-	}
-
+	}*/
 }
