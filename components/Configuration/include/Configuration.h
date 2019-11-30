@@ -52,6 +52,8 @@
  */
 #define I2C_MASTER_SCL_IO GPIO_NUM_22 //GPIO of SCL
 #define I2C_MASTER_SDA_IO GPIO_NUM_23 //GPIO of SDA
+#define I2C_MASTER_TWO_SCL_IO GPIO_NUM_4
+#define I2C_MASTER_TWO_SDA_IO GPIO_NUM_21
 #define I2C_MASTER_FREQ_HZ 100000 //100 kHz is standard, but also 400kHz is supported
 #define READ_BIT 1
 #define WRITE_BIT 0
@@ -113,7 +115,7 @@ class Configuration {
     bool set_wifi_password(const char *);
     */
 
-    void populate_pressure(uint8_t *, float, unsigned long);
+    void populate_pressure(uint8_t *, float, unsigned long, bool);
     void populate_bno(uint8_t *, float *, unsigned long);
     void populate_heart_rate(uint8_t *, uint32_t, unsigned long);
     
@@ -146,9 +148,11 @@ class Configuration {
     volatile bool wifi_synch_task_suspended = false;
     volatile uint8_t synched_training = AWAITING;
     volatile bool wifi_connected = false;
+    volatile bool allow_azure = true;
 
     xQueueHandle gpio_evt_queue;
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
+    SemaphoreHandle_t i2c_back_semaphore = xSemaphoreCreateRecursiveMutex();
     SemaphoreHandle_t wifi_synch_semaphore = NULL;
 
     TaskHandle_t bno_interrupt_task_handle = NULL;

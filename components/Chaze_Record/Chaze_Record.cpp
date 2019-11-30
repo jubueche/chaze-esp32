@@ -4,6 +4,7 @@
 const char * TAG_RECORD = "Chaze Record";
 
 // TODO Emergency training stop when eg buffer can not be written anymore
+// TODO Enable no motion again
 //! Check exits (quick return statements and free objects there)
 
 void sample_hr(void * pvParams)
@@ -52,7 +53,6 @@ void sample_pressure(void * pvParams)
 
 		if(xSemaphoreTakeRecursive(config.i2c_semaphore, 20) == pdPASS)
 		{
-			//! Refactor to pressure_obj
 			pressure.read_vals();
 			vTaskDelay(30 / portTICK_PERIOD_MS);
 			float value = pressure.pressure();
@@ -60,11 +60,39 @@ void sample_pressure(void * pvParams)
 			unsigned long sample_time = millis() - base_time;
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
 			uint8_t bytes[9] = {};
-			config.populate_pressure(bytes, value, sample_time);
+			config.populate_pressure(bytes, value, sample_time, false);
 			char const * name = "Pressure";
 			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
 
 			xSemaphoreGiveRecursive(config.i2c_semaphore);
+		}
+		vTaskDelay(config.random_between(5,50));
+	}
+}
+
+void sample_pressure_backside(void * pvParams)
+{
+	FlashtrainingWrapper_t *ft = (FlashtrainingWrapper_t *) pvParams; 
+	
+	for(;;){
+
+		//Try to aquire the mutex for a given amount of time then back-off
+		buffer_t * curr_buff = buffers[buff_idx];
+
+		if(xSemaphoreTakeRecursive(config.i2c_back_semaphore, 20) == pdPASS)
+		{
+			pressure_backside.read_vals();
+			vTaskDelay(30 / portTICK_PERIOD_MS);
+			float value = pressure_backside.pressure();
+			// Get time of sample
+			unsigned long sample_time = millis() - base_time;
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure Backside: Time: %lu  Pressure: %f", sample_time, value);
+			uint8_t bytes[9] = {};
+			config.populate_pressure(bytes, value, sample_time,true);
+			char const * name = "Pressure Back";
+			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
+
+			xSemaphoreGiveRecursive(config.i2c_back_semaphore);
 		}
 		vTaskDelay(config.random_between(5,50));
 	}
@@ -140,6 +168,7 @@ void record()
 	if(!FlashtrainingWrapper_start_new_training(ft))
 	{
 		ESP_LOGE(TAG_RECORD, "Error creating training.");
+		// TODO Close training or smth.?
 		config.flicker_led(GPIO_LED_RED);
 		config.STATE = DEEPSLEEP;
 		return;
@@ -199,27 +228,28 @@ void record()
 	config.attach_bno_int(&gpio_interrupt_handler_task, &record_gpio_isr_handler);
 
 	//Enable no-motion interrupts on BNO
-	bno.enableSlowNoMotion(NO_MOTION_THRESHOLD, NO_MOTION_DURATION, NO_MOTION);
+	/*bno.enableSlowNoMotion(NO_MOTION_THRESHOLD, NO_MOTION_DURATION, NO_MOTION);
  	bno.enableInterruptsOnXYZ(ENABLE, ENABLE, ENABLE);
-  	bno.setExtCrystalUse(true);
+  	bno.setExtCrystalUse(true);*/
 	
 	bool timeout_before = false;
-
 
 	TaskHandle_t hr_task_handle = NULL;
 	TaskHandle_t bno_task_handle = NULL;
 	TaskHandle_t pressure_task_handle = NULL;
+	TaskHandle_t pressure_backside_task_handle = NULL;
 
 	// Start all tasks. Heart rate has the highest priority followed by pressure and BNO.
 	bool success = (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 8, ft, 10, &hr_task_handle);
 	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 8, ft, 10, &bno_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 8, ft, 10, &pressure_task_handle);
+	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 8, ft, 10, &pressure_backside_task_handle);
+	
 	if(!success){
 		ESP_LOGE(TAG_RECORD, "Failed to create tasks. Going to sleep.");
 		config.STATE = DEEPSLEEP;
 		return;
 	}
-
 
 	// Loop and check if the state is still record.
 	while(config.STATE == RECORD)
@@ -229,7 +259,7 @@ void record()
 			bno.resetInterrupts();
 			nm_interrupt = false;
 
-			clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, ft);
+			clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, pressure_backside_task_handle, ft);
 			return;
 		}
 
@@ -244,7 +274,7 @@ void record()
 				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && !timeout_before)
 				{
 					timeout_before = true;
-					clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, ft);
+					clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, pressure_backside_task_handle, ft);
 					return;
 				}
 			}
@@ -269,7 +299,7 @@ void record()
 
 }
 
-void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHandle_t pressure_task_handle, FlashtrainingWrapper_t *ft)
+void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHandle_t pressure_task_handle, TaskHandle_t pressure_backside_task_handle, FlashtrainingWrapper_t *ft)
 {
 	config.STATE = DEEPSLEEP;
 	gpio_set_level(GPIO_VIB, 1);
@@ -283,7 +313,8 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	vTaskDelete(hr_task_handle);
 	vTaskDelete(bno_task_handle);
 	vTaskDelete(pressure_task_handle);
-
+	vTaskDelete(pressure_backside_task_handle);
+	
 	// Write last buffer and stop training
 	buffer_t * curr_buff = buffers[buff_idx];
 	if(DEBUG) ESP_LOGI(TAG_RECORD, "Filling up %d many bytes", BUFFER_SIZE-curr_buff->counter);
@@ -325,6 +356,7 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 		free(buffers);
 	}
 	pressure.~MS5837();
+	pressure_backside.~MS5837();
 	bno.~BNO055();
 	hr.~HeartRate();
 
@@ -343,16 +375,25 @@ void setup_hr()
 esp_err_t setup_pressure()
 {
 	pressure = MS5837();
-	if(!pressure.init())
+	pressure_backside = MS5837();
+	if(!pressure.init(I2C_NUM_0))
 	{
 		config.STATE = DEEPSLEEP;
 		ESP_LOGE(TAG_RECORD, "Error initializing pressure.");
 		return ESP_FAIL;
 	}
+	if(!pressure_backside.init(I2C_NUM_1))
+	{
+		config.STATE = DEEPSLEEP;
+		ESP_LOGE(TAG_RECORD, "Error initializing pressure on the back.");
+		return ESP_FAIL;
+	}
+
 	pressure.setModel(MS5837::MS5837_02BA);
 	pressure.setFluidDensity(997);
+	pressure_backside.setModel(MS5837::MS5837_02BA);
+	pressure_backside.setFluidDensity(997);
 	return ESP_OK;
-
 }
 
 
@@ -406,7 +447,6 @@ void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, Flas
 				if(DEBUG)  ESP_LOGE(TAG_RECORD, "FlashtrainingWrapper is NULL");
 				xSemaphoreGiveRecursive(config.i2c_semaphore);
 			} else {
-				if(DEBUG) printf("State is %d\n", FlashtrainingWrapper_get_STATE(ft));
 				compress_and_save(ft, !buff_idx, buffers);
 				curr_buff->counter = 0; //Reset the compressed buffer
 			}

@@ -11,7 +11,7 @@
 
 #define OTA_WAIT_TIME 9000
 
-uint8_t perform_OTA(void);
+void perform_OTA(void);
 void check_for_update(void);
 
 #endif

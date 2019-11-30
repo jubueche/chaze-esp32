@@ -21,13 +21,8 @@ extern "C" {
 #include "freertos/semphr.h"
 #include "esp_log.h"
 
-// Callbacks for button and no-motion interrupt
-//...
-
-// Boolean variables for callbacks etc.
-//...
-
 static MS5837 pressure;
+static MS5837 pressure_backside;
 static HeartRate hr;
 static BNO055 bno;
 static volatile uint8_t buff_idx = 0;
@@ -37,7 +32,7 @@ static volatile bool rising_interrupt;
 static unsigned long base_time;
 
 void setup_hr(void);
-void clean_up(TaskHandle_t, TaskHandle_t, TaskHandle_t, FlashtrainingWrapper_t *);
+void clean_up(TaskHandle_t, TaskHandle_t, TaskHandle_t, TaskHandle_t, FlashtrainingWrapper_t *);
 esp_err_t setup_bno(FlashtrainingWrapper_t *ft);
 esp_err_t setup_pressure(void);
 

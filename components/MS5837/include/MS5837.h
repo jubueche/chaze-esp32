@@ -21,7 +21,7 @@ public:
 	void writeReg_IDF(uint8_t, uint8_t *, size_t);
 	void readReg_IDF(uint8_t, uint8_t *, size_t);
 
-	bool init();
+	bool init(i2c_port_t);
 
 	/** Set model of MS5837 sensor. Valid options are MS5837::MS5837_30BA (default)
 	 * and MS5837::MS5837_02BA.

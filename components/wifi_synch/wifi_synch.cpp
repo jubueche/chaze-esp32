@@ -77,7 +77,7 @@ void synch_via_wifi(void *pvParameter)
 			// TODO Test that case
 			// vTaskResume(task_handle) will be called when the number of trainings is greater zero again
 			// Pre: config.wifi_connected == false
-			if(number_of_unsynched_trainings == 0)
+			if(number_of_unsynched_trainings == 0 || !config.allow_azure)
 			{
 				config.wifi_synch_task_suspended = true;
 				xSemaphoreGive(config.wifi_synch_semaphore);
@@ -85,9 +85,8 @@ void synch_via_wifi(void *pvParameter)
 			} else {
 				if(!config.wifi_connected)
 				{
-					ESP_LOGE(TAG_WiFi, "Before poll_wifi(): Free heap space is %d", esp_get_free_heap_size());
 					poll_wifi(); // Tries to connect to WiFi. If successful sets config.wifi_connected to true.
-					ESP_LOGE(TAG_WiFi, "After poll_wifi(): Free heap space is %d", esp_get_free_heap_size());
+					ESP_LOGI(TAG_WiFi, "After poll_wifi(): Free heap space is %d", esp_get_free_heap_size());
 				} // No else if!
 				if(config.wifi_connected){
 					ESP_LOGI(TAG_WiFi, "Connected to WiFi, trying to synch data now...");
@@ -101,8 +100,11 @@ void synch_via_wifi(void *pvParameter)
 						vTaskDelay(80);
 					}
 					ESP_LOGI(TAG_WiFi, "Obtained wifi_synch_semaphore. Synching with azure.");
-					//ESP_LOGE(TAG_WiFi, "Free heap space is %d", esp_get_free_heap_size());
-					bool success = synch_with_azure();
+					bool success = false;
+					if(config.allow_azure)
+					{
+						success = synch_with_azure();
+					}
 					xSemaphoreGive(config.wifi_synch_semaphore);
 					ESP_LOGI(TAG_WiFi, "Released wifi_synch_semaphore after synch with azure.");
 
@@ -110,6 +112,9 @@ void synch_via_wifi(void *pvParameter)
 					if(success)
 					{
 						global_ft->set_number_of_unsynched_trainings(number_of_unsynched_trainings - 1);
+					} else {
+						ESP_LOGE(TAG_WiFi, "Unsuccessful synch with azure");
+						config.allow_azure = false;
 					}
 					// Clean up WiFi
 					esp_err_t wifi_stop_res = esp_wifi_stop();
@@ -284,13 +289,10 @@ void poll_wifi(void){
 	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
 		return;
 
-	ESP_LOGE(TAG_WiFi, "1 Free heap space is %d", esp_get_free_heap_size());
 	tcpip_adapter_init();
-	ESP_LOGE(TAG_WiFi, "2 Free heap space is %d", esp_get_free_heap_size());
 	if(!config.event_handler_set)
 	{
 		esp_err_t ret = esp_event_loop_init(event_handler, NULL);
-		ESP_LOGE(TAG_WiFi, "3 Free heap space is %d", esp_get_free_heap_size());
 		if(ret == ESP_FAIL){
 			ESP_LOGI(TAG_WiFi, "Event handler already initialized. That is ok. Continue.\n");
 		}
@@ -300,7 +302,6 @@ void poll_wifi(void){
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
 
 	esp_err_t wifi_init_res = esp_wifi_init(&cfg);  
-	ESP_LOGE(TAG_WiFi, "4 Free heap space is %d", esp_get_free_heap_size());
 
 	if(wifi_init_res != ESP_OK){
 		ESP_LOGE(TAG_WiFi, "Could not initialize WiFi: %s", esp_err_to_name(wifi_init_res));
@@ -315,7 +316,6 @@ void poll_wifi(void){
 	bool res = (esp_wifi_set_mode(WIFI_MODE_STA) == ESP_OK);
 	res = res &&  (esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) == ESP_OK);
 	res = res &&  (esp_wifi_start() == ESP_OK);
-	ESP_LOGE(TAG_WiFi, "5 Free heap space is %d", esp_get_free_heap_size());
 	if(!res)
 	{
 		esp_wifi_deinit();
@@ -338,13 +338,11 @@ void poll_wifi(void){
 	
 	if(!config.wifi_connected) {
 		esp_err_t wifi_stop_res = esp_wifi_stop();
-		ESP_LOGE(TAG_WiFi, "6 Free heap space is %d", esp_get_free_heap_size());
 		if(wifi_stop_res == ESP_OK){
 			if(esp_wifi_deinit() != ESP_OK){
 				ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
 			} else {
 				ESP_LOGI(TAG_WiFi, "Deinited WiFi l.342");
-				ESP_LOGE(TAG_WiFi, "7 Free heap space is %d", esp_get_free_heap_size());
 			}
 		} else {
 			ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));

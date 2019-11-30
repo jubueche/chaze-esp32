@@ -13,6 +13,8 @@
 
 const char * TAG = "Chaze-Compression";
 
+buffer_t ** buffers = NULL;
+
 #define DEBUG_COMPRESSION 0
 
 /**
@@ -85,7 +87,7 @@ uint32_t def(uint8_t * source, uint8_t * dest, uint8_t level)
             if(DEBUG_COMPRESSION) ESP_LOGI(TAG, "Have: %d", have);
 			if(DEBUG_COMPRESSION){ //Prints the compressed uint8_t array
 				for(int i=0;i<have;i++)
-            		printf("%c", out[i]);
+            		printf("%d ", out[i]);
 			}
 
             memcpy(dest+dest_offset, out, have);
@@ -112,7 +114,7 @@ void write_data_to_flash(FlashtrainingWrapper_t * ft, uint8_t * data, uint32_t n
 	if(DEBUG_COMPRESSION) ESP_LOGI(TAG, "Writing data to flash.");
 
 	bool err = !FlashtrainingWrapper_write_compressed_chunk(ft, data, n);
-	
+
 	if(err){
 		ESP_LOGE(TAG, "Error ocurred while writing to flash.");
 	} else {

@@ -159,7 +159,7 @@ void connected()
             }
             case OTA:
             {
-                perform_ota();
+                ota();
                 break;
             }
             case DATA:
@@ -253,13 +253,24 @@ void get_version()
 }
 
 // TODO
-void perform_ota()
+void ota()
 {
-    //! Need to destroy ble object and then perform the OTA update.
-    //! No matter if successful or not, need to go back to ADVERTISING mode
-    //! since we need to initialize the ble object again.
+    // We can be sure this task has the wifi_synch_semaphore. This means we are either connected to WiFi or not,
+    // but there cannot happen a synch with azure.
     ESP_LOGI(TAG_Con, "Performing OTA update.");
-    CONNECTED_STATE = IDLE;
+    if(!config.wifi_connected)
+	{
+		poll_wifi();
+		if(!config.wifi_connected)
+			ble->write("\nn");
+            CONNECTED_STATE = IDLE;
+            return;
+	}
+    // We are connected
+    ble->write("\ns");
+    ESP_LOGI(TAG_Con, "Connected to WiFi, attempting OTA update.");
+    perform_OTA();
+    
 }
 
 void synch_data()

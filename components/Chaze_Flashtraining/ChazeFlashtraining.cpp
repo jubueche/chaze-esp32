@@ -99,7 +99,7 @@ uint16_t Flashtraining::get_number_of_unsynched_trainings(){
 	int tmp = config.random_between(0,2);
 	//ESP_LOGI(TAG, "Number of unsynched trainings is %d", tmp);
 	//return tmp;
-	return 2;
+	return 0;
 }
 
 void Flashtraining::set_number_of_unsynched_trainings(uint16_t new_number_of_unsynched_trainings)

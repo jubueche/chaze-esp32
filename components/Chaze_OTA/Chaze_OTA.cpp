@@ -110,22 +110,13 @@ void check_for_update(void)
 }
 
 // WiFi semaphore was already acquired prior to this call. Need to check if we are connected to the WiFi
-uint8_t perform_OTA(void)
-{
-	if(!config.wifi_connected)
-	{
-		poll_wifi();
-		if(!config.wifi_connected)
-			return 1;
-	}
-	// We are connected to WiFi here and we acquired the wifi lock. That means the wifi task will block
+void perform_OTA(void)
+{	
 	check_for_update();
 
-	if(new_firmware_available)
+	/*if(new_firmware_available)
 	{
 		ESP_LOGI(TAG_OTA, "New firmware available");
-	}
-
-	return 0;
+	}*/
 
 }

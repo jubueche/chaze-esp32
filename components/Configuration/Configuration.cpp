@@ -18,11 +18,15 @@ uint32_t Configuration::get_number_of_unsynched_trainings(void)
 }
 
 
-void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned long sample_time)
+void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned long sample_time, bool is_back)
 {
     long tmp = *(long*)&pressure;
-
-    bytes[0] = 5;
+    if(is_back)
+    {
+        bytes[0] = 2;
+    } else {
+        bytes[0] = 5;
+    }
     bytes[1] = sample_time >> 24;
     bytes[2] = sample_time >> 16;
     bytes[3] = sample_time >> 8;
@@ -38,7 +42,7 @@ void Configuration::populate_heart_rate(uint8_t * bytes, uint32_t heart_rate, un
 {
     long tmp = *(long*)&heart_rate;
 
-    bytes[0] = 5;
+    bytes[0] = 3;
     bytes[1] = sample_time >> 24;
     bytes[2] = sample_time >> 16;
     bytes[3] = sample_time >> 8;
@@ -274,11 +278,22 @@ esp_err_t Configuration::i2c_master_init_IDF(i2c_port_t port_num)
     }
     port_num == I2C_NUM_0 ? initialized_port0 = true : initialized_port1 = true;
 
+    gpio_num_t scl;
+    gpio_num_t sda;
+    if(port_num == I2C_NUM_0)
+    {
+        scl = I2C_MASTER_SCL_IO;
+        sda = I2C_MASTER_SDA_IO;
+    } else {
+        scl = I2C_MASTER_TWO_SCL_IO;
+        sda = I2C_MASTER_TWO_SDA_IO;
+    }
+
     i2c_config_t conf;
     conf.mode = I2C_MODE_MASTER;
-    conf.sda_io_num = I2C_MASTER_SDA_IO;
+    conf.sda_io_num = sda;
     conf.sda_pullup_en = GPIO_PULLUP_ENABLE;
-    conf.scl_io_num = I2C_MASTER_SCL_IO;
+    conf.scl_io_num = scl;
     conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
     conf.master.clk_speed = I2C_MASTER_FREQ_HZ;
     i2c_param_config(port_num, &conf);
@@ -299,7 +314,14 @@ esp_err_t Configuration::i2c_master_init_IDF(i2c_port_t port_num)
 esp_err_t Configuration::write(uint8_t * data_wr, size_t size, uint8_t addr, i2c_port_t port_num){
 	
 	esp_err_t err = ESP_OK;
-	if(xSemaphoreTakeRecursive(i2c_semaphore, pdMS_TO_TICKS(300)) == pdPASS)
+    bool res;
+    if(port_num == I2C_NUM_0)
+    {
+        res = xSemaphoreTakeRecursive(i2c_semaphore, pdMS_TO_TICKS(300)) == pdPASS;
+    } else {
+        res = xSemaphoreTakeRecursive(i2c_back_semaphore, pdMS_TO_TICKS(300)) == pdPASS;
+    }
+	if(res)
 	{
 		i2c_cmd_handle_t cmd = i2c_cmd_link_create();
 		i2c_master_start(cmd);
@@ -308,10 +330,14 @@ esp_err_t Configuration::write(uint8_t * data_wr, size_t size, uint8_t addr, i2c
 		i2c_master_stop(cmd);
 		i2c_master_cmd_begin(port_num, cmd, 1000 / portTICK_RATE_MS);
 		i2c_cmd_link_delete(cmd);
-		xSemaphoreGiveRecursive(i2c_semaphore);
+        if(port_num == I2C_NUM_0)
+        {
+            xSemaphoreGiveRecursive(i2c_semaphore);
+        } else {
+            xSemaphoreGiveRecursive(i2c_back_semaphore);
+        }
 	} else {
         ESP_LOGE(TAG, "Did not acquire i2c lock.");
-        return ESP_FAIL;
     }
 	
 	return err;
@@ -333,7 +359,15 @@ esp_err_t Configuration::read(uint8_t * data_rd, size_t size, uint8_t addr, i2c_
     }
     esp_err_t ret = ESP_OK;
 
-    if(xSemaphoreTakeRecursive(i2c_semaphore, pdMS_TO_TICKS(300)) == pdPASS)
+    bool res;
+    if(port_num == I2C_NUM_0)
+    {
+        res = xSemaphoreTakeRecursive(i2c_semaphore, pdMS_TO_TICKS(300)) == pdPASS;
+    } else {
+        res = xSemaphoreTakeRecursive(i2c_back_semaphore, pdMS_TO_TICKS(300)) == pdPASS;
+    }
+
+    if(res)
     {
         i2c_cmd_handle_t cmd = i2c_cmd_link_create();
         i2c_master_start(cmd);
@@ -349,7 +383,12 @@ esp_err_t Configuration::read(uint8_t * data_rd, size_t size, uint8_t addr, i2c_
         }
         i2c_cmd_link_delete(cmd);
 
-        xSemaphoreGiveRecursive(i2c_semaphore);
+        if(port_num == I2C_NUM_0)
+        {
+            xSemaphoreGiveRecursive(i2c_semaphore);
+        } else {
+            xSemaphoreGiveRecursive(i2c_back_semaphore);
+        }
     } else {
         ESP_LOGE(TAG, "Did not acquire i2c lock.");
     }

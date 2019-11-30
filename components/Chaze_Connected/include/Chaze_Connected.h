@@ -21,7 +21,7 @@ void set_name(void);
 void set_ssid(void);
 void set_password(void);
 void get_version(void);
-void perform_ota(void);
+void ota(void);
 void synch_data(void);
 
 #endif

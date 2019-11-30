@@ -47,9 +47,9 @@ MS5837::MS5837() {
 	fluidDensity = 1029;
 }
 
-bool MS5837::init() {
+bool MS5837::init(i2c_port_t i2c_port) {
 	// Reset the MS5837, per datasheet
-	port_num = I2C_NUM_0;
+	port_num = i2c_port;
 
 	esp_err_t err = (config.i2c_master_init_IDF(port_num));
 	if(err != ESP_OK){
@@ -82,7 +82,7 @@ bool MS5837::init() {
 	if ( crcCalculated == crcRead ) {
 		return true; // Initialization success
 	}
-
+	ESP_LOGE(TAG, "CRC Value does not match.");
 	return false; // CRC fail
 }
 
