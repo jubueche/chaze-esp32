@@ -7,6 +7,7 @@ const char * TAG_Adv = "Chaze-Advertising";
 Chaze_ble * ble = NULL;
 
 volatile bool am_interrupt;
+volatile bool rising_interrupt;
 TaskHandle_t wifi_synch_task_handle = NULL;
 
 void IRAM_ATTR gpio_isr_handler(void* arg)
@@ -20,7 +21,13 @@ void gpio_bno_task(void* arg)
     uint32_t io_num;
     for(;;) {
         if(xQueueReceive(config.gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            am_interrupt = true;
+            if(io_num == GPIO_BNO_INT_NUM){
+				am_interrupt = true;
+			} else{
+				if(io_num == GPIO_BUTTON_NUM){
+					rising_interrupt = true;
+				}
+			}
         }
     }
 }
@@ -47,6 +54,7 @@ void advertise()
     // Inilialize nvs
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ESP_LOGE(TAG_Adv, "Attempting to erase flash!");
 		if(nvs_flash_erase() == ESP_OK){
 			if(nvs_flash_init() != ESP_OK){
 				ESP_LOGE(TAG_Adv, "Failed to init NVS flash.");
@@ -74,7 +82,11 @@ void advertise()
     ble->advertise();
 
     am_interrupt = false;
+    rising_interrupt = false;
+    bool timeout_before = false;
     attach_am_interrupt(&bno_adv);
+    config.attach_btn_int(&gpio_bno_task, &gpio_isr_handler);
+    ESP_LOGI(TAG_Adv, "Attached Button interrupt");
     unsigned long blue_led_timer = millis();
     unsigned long timeout_timer = millis();
 
@@ -107,6 +119,31 @@ void advertise()
             break;
         }
 
+        if(rising_interrupt){
+			ESP_LOGI(TAG_Adv, "Interrupt");
+			rising_interrupt = false;
+			long timer = millis();
+
+			while(gpio_get_level(GPIO_BUTTON))
+			{
+				ESP_LOGI(TAG_Adv, "Waiting for release...");
+				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && !timeout_before && millis() - timer < TIMEOUT_BUTTON_PUSHED_TO_OFF)
+				{
+					timeout_before = true;
+					config.STATE = RECORD;
+                    clean_up(&bno_adv);
+                    gpio_set_level(GPIO_VIB, 1);
+                    vTaskDelay(80 / portTICK_PERIOD_MS);
+                    gpio_set_level(GPIO_VIB, 0);
+                    break;
+				}
+			}
+			if(timeout_before)
+			{
+				gpio_set_level(GPIO_LED_RED, 0);
+			}
+		}
+
         if(config.ble_connected)
         {
             // Switch to connected state
@@ -134,6 +171,8 @@ void advertise()
         if(config.wifi_connected)
         {
             ESP_LOGI(TAG_Adv, "WiFi is connected. Returning from advertise().");
+            config.detach_bno_int();
+            config.detach_btn_int();
             return;
         }
         vTaskDelay(1000 / portTICK_PERIOD_MS);

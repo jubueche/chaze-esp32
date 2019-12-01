@@ -6,6 +6,8 @@
 
 #include "SPIFlash.h"
 #include "Configuration.h"
+#include "nvs_flash.h"
+#include "nvs.h"
 
 //Necessary Defines:
 //SPIFlash_SUPPLY
@@ -31,11 +33,13 @@ class Flashtraining
     bool stop_training();
 
     // Added by Julian Buechel; Writes n chars to the flash.
+    bool initialize_flash();
     //! Needs to be tested and implemented
     bool write_compressed_chunk(uint8_t * data, uint32_t n);
     uint16_t get_number_of_unsynched_trainings(void);
     void set_number_of_unsynched_trainings(uint16_t);
     void add_unsynched_training();
+    void remove_unsynched_training();
     int32_t get_next_buffer_of_training(uint8_t *); // Takes pointer to buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
     void completed_synch_of_training(bool); // Passes a boolean indicating whether the training was successfully synched.
     const char * get_device_id(void); //Returns device ID

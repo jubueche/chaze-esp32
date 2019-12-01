@@ -92,19 +92,86 @@ const char * Flashtraining::get_name()
 void Flashtraining::add_unsynched_training()
 {
 	uint16_t current_unsynched = this->get_number_of_unsynched_trainings();
+	ESP_LOGI(TAG, "Number of unsycnhed trainings was %d", current_unsynched);
 	this->set_number_of_unsynched_trainings(current_unsynched + 1);
+	ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
+}
+
+void Flashtraining::remove_unsynched_training()
+{
+	uint16_t current_unsynched = this->get_number_of_unsynched_trainings();
+	ESP_LOGI(TAG, "Number of unsynched trainings was %d", current_unsynched);
+	uint16_t new_val = 0;
+	if(current_unsynched >= 1)
+	{
+		new_val = current_unsynched -1;
+	}
+	this->set_number_of_unsynched_trainings(new_val);
+	ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
 }
 
 uint16_t Flashtraining::get_number_of_unsynched_trainings(){
-	int tmp = config.random_between(0,2);
-	//ESP_LOGI(TAG, "Number of unsynched trainings is %d", tmp);
-	//return tmp;
-	return 0;
+	uint16_t number_unsynched = 0; // value will default to 0, if not set yet in NVS
+	if(!initialize_flash())
+	{
+		return number_unsynched;
+	}
+	nvs_handle my_handle;
+	esp_err_t err = nvs_open("unsynched", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+    } else {
+		err = nvs_get_u16(my_handle, "unsynched", &number_unsynched);
+		switch (err) {
+			case ESP_OK:
+				ESP_LOGI(TAG, "Done");
+				ESP_LOGI(TAG, "Num. unsynched trainings is = %d", number_unsynched);
+				break;
+			case ESP_ERR_NVS_NOT_FOUND:
+				ESP_LOGE(TAG, "The value is not initialized yet!");
+				break;
+			default :
+				ESP_LOGE(TAG, "Error (%s) reading!", esp_err_to_name(err));
+		}	
+	}
+	return number_unsynched;
 }
 
 void Flashtraining::set_number_of_unsynched_trainings(uint16_t new_number_of_unsynched_trainings)
 {
+	if(!initialize_flash())
+	{
+		return;
+	}
+	nvs_handle my_handle;
+	esp_err_t err = nvs_open("unsynched", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+    } else {
+		err = nvs_set_u16(my_handle, "unsynched", new_number_of_unsynched_trainings);
+		if(err != ESP_OK)
+		{
+			ESP_LOGE(TAG, "Error setting new number of unsynched trainings.");
+		}
+    }
 	return;
+}
+
+bool Flashtraining::initialize_flash()
+{
+	esp_err_t ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+		if(nvs_flash_erase() == ESP_OK){
+			if(nvs_flash_init() != ESP_OK){
+				ESP_LOGE(TAG, "Failed to init NVS flash.");
+                return false;
+			}
+		} else{
+			ESP_LOGE(TAG, "Failed to erase flash.");
+            return false;
+		}
+	}
+	return true;
 }
 
 

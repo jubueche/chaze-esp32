@@ -22,6 +22,7 @@ bool FlashtrainingWrapper_stop_training(FlashtrainingWrapper_t *);
 int FlashtrainingWrapper_get_STATE(FlashtrainingWrapper_t *);
 float FlashtrainingWrapper_readCalibration(FlashtrainingWrapper_t *, uint8_t);
 uint32_t FlashtrainingWrapper_get_number_of_unsynched_trainings(FlashtrainingWrapper_t *);
+void FlashtrainingWrapper_add_unsynched_training(FlashtrainingWrapper_t *);
 
 #ifdef __cplusplus
 }

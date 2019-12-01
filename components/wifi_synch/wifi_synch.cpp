@@ -111,7 +111,7 @@ void synch_via_wifi(void *pvParameter)
 					// Set the new number of trainings
 					if(success)
 					{
-						global_ft->set_number_of_unsynched_trainings(number_of_unsynched_trainings - 1);
+						global_ft->remove_unsynched_training();
 					} else {
 						ESP_LOGE(TAG_WiFi, "Unsuccessful synch with azure");
 						config.allow_azure = false;
