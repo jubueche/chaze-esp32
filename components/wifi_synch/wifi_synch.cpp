@@ -217,7 +217,9 @@ bool synch_with_azure(void)
 {
 	bool success = false;
 	(void)IoTHub_Init();
-	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(global_ft->get_azure_connection_string(), HTTP_Protocol);
+	char * conn_string = global_ft->get_azure_connection_string();
+	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(conn_string, HTTP_Protocol);
+	free(conn_string);
 	if (device_ll_handle == NULL)
 	{
 		ESP_LOGE(TAG_WiFi, "Failure creating Iothub device. Check conn string.");

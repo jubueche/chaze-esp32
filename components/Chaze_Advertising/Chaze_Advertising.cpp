@@ -150,6 +150,8 @@ void advertise()
             ESP_LOGI(TAG_Adv, "Connected");
             config.flicker_led(GPIO_BLUE);
             config.STATE = CONNECTED;
+            config.detach_bno_int();
+            config.detach_btn_int();
             return;
         }
 

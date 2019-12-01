@@ -2,6 +2,7 @@
    Created by Constantin Koch, May 23, 2018
 */
 #include "ChazeFlashtraining.h"
+#include "string.h"
 
 Flashtraining *global_ft = new Flashtraining();
 
@@ -79,14 +80,83 @@ bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
 
 }
 
-bool Flashtraining::set_name(char * name, uint8_t size)
+bool Flashtraining::set_name(const char * name, uint8_t size)
 {
+	ESP_LOGI(TAG, "Size is %d", size);
+	if(size > 128 || size < 1)
+	{
+		ESP_LOGE(TAG, "Name length is too long.");
+		return false;
+	}
+	char new_name[size+1];
+	memcpy(new_name, name, size);
+	new_name[size] = '\0';
+	if(!initialize_flash())
+	{
+		return false;
+	}
+
+	nvs_handle my_handle;
+	esp_err_t err = nvs_open("name", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+		return false;
+    } else {
+		err = nvs_set_str(my_handle, "name", new_name);
+		if(err != ESP_OK)
+		{
+			ESP_LOGE(TAG, "Error setting new number of unsynched trainings.");
+			return false;
+		}
+    }
 	return true;
 }
 
+// TODO There is a small memory leak here. We don't free the memory used by final_name
 const char * Flashtraining::get_name()
 {
-	return "Julian's Chaze Band";
+	const char * name = "Chaze Band";
+	size_t max_len = 128;
+	char new_name[max_len];
+	if(!initialize_flash())
+	{
+		return name;
+	}
+	nvs_handle my_handle;
+	esp_err_t err = nvs_open("name", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+    } else {
+		err = nvs_get_str(my_handle, "name", new_name, &max_len);
+		switch (err) {
+			case ESP_OK: {
+				uint16_t len = 0;
+				for(int i=0;i<max_len;i++)
+				{
+					if(new_name[i] == '\0')
+					{
+						len = i+1;
+						break;
+					}
+					printf("%c",new_name[i]);
+				}
+				char * final_name = (char *) malloc(len);
+				if(final_name == NULL){
+					return name;
+				}
+				memcpy(final_name, new_name, len);
+				ESP_LOGI(TAG, "Done");
+				ESP_LOGI(TAG, "Name is = %s", final_name);
+				return (const char *) final_name;
+			} break;
+			case ESP_ERR_NVS_NOT_FOUND: {
+				ESP_LOGE(TAG, "The value is not initialized yet!");
+			} break;
+			default :
+				ESP_LOGE(TAG, "Error (%s) reading!", esp_err_to_name(err));
+		}	
+	}
+	return new_name;
 }
 
 void Flashtraining::add_unsynched_training()
@@ -204,9 +274,62 @@ const char * Flashtraining::get_device_id(void)
 {
 	return "chaze-3";
 }
-const char * Flashtraining::get_azure_connection_string(void)
+
+char * Flashtraining::get_azure_connection_string(void)
 {
-	return "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-3;SharedAccessKey=9vhufTtWrFy9vtucS1rzc4eKt9eIyfk6XnCoYIfI/7Y=";
+	// TODO Must be initially set to any value
+	char * conn_string = "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-3;SharedAccessKey=9vhufTtWrFy9vtucS1rzc4eKt9eIyfk6XnCoYIfI/7Y=";
+	size_t max_len = 512;
+	char new_conn_string[max_len];
+	if(!initialize_flash())
+	{
+		uint16_t len_s = strlen(conn_string);
+		char * ret_val = (char *) malloc(len_s+1);
+		memcpy(ret_val, conn_string, len_s);
+		ret_val[len_s] = '\0';
+		return ret_val;
+	}
+	nvs_handle my_handle;
+	esp_err_t err = nvs_open("conn_string", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
+    } else {
+		err = nvs_get_str(my_handle, "conn_string", new_conn_string, &max_len);
+		switch (err) {
+			case ESP_OK: {
+				uint16_t len = 0;
+				for(int i=0;i<max_len;i++)
+				{
+					if(new_conn_string[i] == '\0')
+					{
+						len = i+1;
+						break;
+					}
+					printf("%c",new_conn_string[i]);
+				}
+				char * final_conn_string = (char *) malloc(len);
+				if(final_conn_string == NULL){
+					config.STATE = DEEPSLEEP;
+					return (char*) malloc(1); // All hope is lost and we go to sleep.
+				}
+				memcpy(final_conn_string, new_conn_string, len);
+				ESP_LOGI(TAG, "Done");
+				ESP_LOGI(TAG, "Conn string is = %s", final_conn_string);
+				return final_conn_string;
+			} break;
+			case ESP_ERR_NVS_NOT_FOUND: {
+				ESP_LOGE(TAG, "The value is not initialized yet!");
+			} break;
+			default :
+				ESP_LOGE(TAG, "Error (%s) reading!", esp_err_to_name(err));
+		}	
+	}
+	uint16_t len_s = strlen(conn_string);
+	char * ret_val = (char *) malloc(len_s+1);
+	memcpy(ret_val, conn_string, len_s);
+	ret_val[len_s] = '\0';
+	ESP_LOGI(TAG, "The Conn string is = %s", ret_val);
+	return ret_val;
 }
 
 
@@ -222,13 +345,45 @@ const char * Flashtraining::get_wifi_password(void)
 }
 
 
-bool Flashtraining::set_device_id(char * did)
+bool Flashtraining::set_device_id(uint64_t id)
 {
 	return true;
 }
 
-bool Flashtraining::set_azure_connection_string(const char * conn_string)
+bool Flashtraining::set_azure_connection_string(const char * conn_string, uint8_t size)
 {
+	ESP_LOGI(TAG, "Size is %d", size);
+	
+	for(int i=0;i<size+3;i++)
+	{
+		if(conn_string[i] == '\0')
+		{
+			printf("Reached null value\n");
+			break;
+		}
+		printf("%c",conn_string[i]);
+	}
+	char new_conn_string[size+1];
+	memcpy(new_conn_string, conn_string, size);
+	new_conn_string[size] = '\0';
+	if(!initialize_flash())
+	{
+		return false;
+	}
+
+	nvs_handle my_handle;
+	esp_err_t err = nvs_open("conn_string", NVS_READWRITE, &my_handle);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+		return false;
+    } else {
+		err = nvs_set_str(my_handle, "conn_string", new_conn_string);
+		if(err != ESP_OK)
+		{
+			ESP_LOGE(TAG, "Error setting new connection string.");
+			return false;
+		}
+    }
 	return true;
 }
 

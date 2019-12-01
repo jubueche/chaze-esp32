@@ -4,7 +4,8 @@
 
 - **Battery:** The app should be able to query the battery level of the device. ```Input: b``` followed by ```Output: 0-100``` which is the percentage.
 
-- **Name:** User should be able to change the advertised name of the device. The name should not be too long and should not contain any characters apart from numbers and upper/lower case letters. Command to request a change of name: ```Input: n``` followed by the name, followed by ```-1```. Returns ```1``` if successful and ```0``` otherwise. Returns to menu.
+- **Name:** User should be able to change the advertised name of the device. The name should not be too long and should not contain any characters apart from numbers and upper/lower case letters. Command to request a change of name: ```Input: n``` followed by the name. Returns ```1``` if successful and ```0``` otherwise. Returns to menu. The length of the name has to be, including the
+null terminator between 1 and 128, including 128, characters long.
 
 - **WiFi Configuration:** The user should be able to configure the WiFi-SSID and the password. The SSID should have a reasonable maximum length. Command: ```Input: w``` followed by the ```SSID```, ```Output successful ? 1 : 0```, followed by the ```password```, ```Output successful ? 1 : 0```. Returns to menu.
 

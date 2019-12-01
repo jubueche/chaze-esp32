@@ -9,7 +9,7 @@ struct Rx_buffer {
     uint8_t size;
 };
 
-enum {IDLE, BATTERY, NAME, NAME_RECEIVED, WIFI, WIFI_2, SSID_RECEIVED, PASS_RECEIVED, VERSION, OTA, DATA};
+enum {IDLE, BATTERY, NAME, NAME_RECEIVED, WIFI, WIFI_2, SSID_RECEIVED, PASS_RECEIVED, VERSION, OTA, DATA, CONN_STRING_RECEIVED, CONN_STRING};
 static uint8_t CONNECTED_STATE = IDLE;
 
 static Rx_buffer *buffer;
@@ -23,5 +23,6 @@ void set_password(void);
 void get_version(void);
 void ota(void);
 void synch_data(void);
+void set_conn_string(void);
 
 #endif

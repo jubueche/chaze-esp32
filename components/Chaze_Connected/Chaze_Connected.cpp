@@ -51,7 +51,12 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                 {
                     CONNECTED_STATE = DATA;
                     ESP_LOGI(TAG_Con, "Received send data command.");
-                } else { //default
+                } else if(strncmp(buffer->data, "c", buffer->size) == 0)
+                {
+                    CONNECTED_STATE = CONN_STRING;
+                    ESP_LOGI(TAG_Con, "Received set conn string command.");
+                }  
+                else { //default
                     ESP_LOGE(TAG_Con, "Command %c not recognized. Reset the state to IDLE.", buffer->data[0]);
                     CONNECTED_STATE = IDLE;
                 }
@@ -93,6 +98,11 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                         ESP_LOGE(TAG_Con, "Synch unsuccessful.");
                         config.synched_training = SYNCH_INCOMPLETE;
                     }
+                    break;
+                }
+                case CONN_STRING:
+                {
+                    CONNECTED_STATE = CONN_STRING_RECEIVED;
                     break;
                 }
                 default:
@@ -170,6 +180,11 @@ void connected()
                 synch_data();
                 break;
             }
+            case CONN_STRING_RECEIVED:
+            {
+                set_conn_string();
+                break;
+            }
             default:
             {
                 ESP_LOGI(TAG_Con, "Waiting...");
@@ -189,6 +204,22 @@ void connected()
     config.STATE = ADVERTISING;
     free(buffer);
 
+}
+
+void set_conn_string()
+{
+    ESP_LOGI(TAG_Con, "Set Conn String");
+    char cs[buffer->size+1];
+    memcpy(cs, buffer->data, buffer->size);
+    cs[buffer->size] = '\0';
+    if(global_ft->set_azure_connection_string(cs, buffer->size))
+    {
+        ble->write("1\n");
+    } else{
+        ble->write("0\n");
+    }
+    ESP_LOGI(TAG_Con, "Set the conn string to to %s", cs);
+    CONNECTED_STATE = IDLE;
 }
 
 void send_battery()
@@ -337,6 +368,7 @@ void synch_data()
         if(config.synched_training == SYNCH_COMPLETE)
         {
             global_ft->completed_synch_of_training(true);
+            global_ft->remove_unsynched_training();
             ESP_LOGI(TAG_Con, "Successful synch.");
         } else if(config.synched_training == SYNCH_INCOMPLETE)
         {

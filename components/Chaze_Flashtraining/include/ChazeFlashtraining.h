@@ -36,21 +36,21 @@ class Flashtraining
     bool initialize_flash();
     //! Needs to be tested and implemented
     bool write_compressed_chunk(uint8_t * data, uint32_t n);
-    uint16_t get_number_of_unsynched_trainings(void);
-    void set_number_of_unsynched_trainings(uint16_t);
-    void add_unsynched_training();
-    void remove_unsynched_training();
+    uint16_t get_number_of_unsynched_trainings(void); //! Done
+    void set_number_of_unsynched_trainings(uint16_t); //! Done
+    void add_unsynched_training(); //! Done
+    void remove_unsynched_training(); //! Done
     int32_t get_next_buffer_of_training(uint8_t *); // Takes pointer to buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
     void completed_synch_of_training(bool); // Passes a boolean indicating whether the training was successfully synched.
     const char * get_device_id(void); //Returns device ID
-    const char * get_azure_connection_string(void); // Returns connection string for Azure.
+    char * get_azure_connection_string(void); // Returns connection string for Azure. //! Done
     const char * get_wifi_ssid(void);
     const char * get_wifi_password(void);
-    bool set_device_id(char *); //Sets device ID
-    bool set_azure_connection_string(const char *); // Sets connection string for Azure.
+    bool set_device_id(uint64_t); //Sets device ID
+    bool set_azure_connection_string(const char *, uint8_t); // Sets connection string for Azure. //! Done
     bool set_wifi_ssid(char *, uint8_t);
     bool set_wifi_password(char *, uint8_t);
-    bool set_name(char *, uint8_t);
+    bool set_name(const char *, uint8_t);
     const char * get_name(void);
     uint8_t get_version(char *);
     bool set_version(char *, uint8_t);
