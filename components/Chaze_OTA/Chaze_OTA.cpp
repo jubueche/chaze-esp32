@@ -133,6 +133,36 @@ void check_for_update(void)
 // WiFi semaphore was already acquired prior to this call. 
 void perform_OTA(void)
 {	
+	// Get current version
+	const char numbers[] = {"0123456789"};
+	char current_version_string[128];
+	bool dot_occ = false;
+	float version_float = 1000.0;
+	uint8_t n = global_ft->get_version(current_version_string);
+	for(int i=0;i<n;i++)
+	{
+		if(current_version_string[i] == '.')
+		{
+			dot_occ = true;
+		} else {
+			int8_t num = -1;
+			for(int j=0;j<10;j++)
+			{
+				if(current_version_string[i] == numbers[j])
+					num = j;
+			}
+			if(num > -1)
+			{
+				if(!dot_occ)
+					version_float = (float) num;
+				if(dot_occ)
+					version_float += 0.1*((float) num);
+			}
+		}
+	}
+	current_version = version_float;
+	ESP_LOGI(TAG_OTA, "Current version %s transformed to %.4f", current_version_string, current_version);
+
 	check_for_update();
 
 	ble->~Chaze_ble();
