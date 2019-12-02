@@ -49,14 +49,14 @@ class Flashtraining
     char * get_azure_connection_string(void); // Returns connection string for Azure. //! Done
     char * get_wifi_ssid(void); //! Done
     char * get_wifi_password(void); //! Done
-    bool set_device_name(char *, uint8_t); //Sets device name
+    bool set_device_name(char *, uint8_t); //Sets device name //! Done
     bool set_azure_connection_string(char *, uint8_t); // Sets connection string for Azure. //! Done
     bool set_wifi_ssid(char *, uint8_t); //! Done
     bool set_wifi_password(char *, uint8_t); //! Done
     bool set_name(char *, uint8_t); //! Done
     char * get_name(void); //! Done
-    uint8_t get_version(char *);
-    bool set_version(char *, uint8_t);
+    uint8_t get_version(char *); //! Done
+    bool set_version(char *, uint8_t); //! Done
 
 
     //READING TRAINING DATA

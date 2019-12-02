@@ -55,7 +55,15 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                 {
                     CONNECTED_STATE = CONN_STRING;
                     ESP_LOGI(TAG_Con, "Received set conn string command.");
-                }  
+                } else if(strncmp(buffer->data, "q", buffer->size) == 0)
+                {
+                    CONNECTED_STATE = DEVICE_NAME;
+                    ESP_LOGI(TAG_Con, "Received set device name command.");
+                } else if(strncmp(buffer->data, "s", buffer->size) == 0)
+                {
+                    CONNECTED_STATE = SET_VERSION;
+                    ESP_LOGI(TAG_Con, "Received set version command.");
+                }
                 else { //default
                     ESP_LOGE(TAG_Con, "Command %c not recognized. Reset the state to IDLE.", buffer->data[0]);
                     CONNECTED_STATE = IDLE;
@@ -103,6 +111,16 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                 case CONN_STRING:
                 {
                     CONNECTED_STATE = CONN_STRING_RECEIVED;
+                    break;
+                }
+                case DEVICE_NAME:
+                {
+                    CONNECTED_STATE = DEVICE_NAME_RECEIVED;
+                    break;
+                }
+                case SET_VERSION:
+                {
+                    CONNECTED_STATE = VERSION_RECEIVED;
                     break;
                 }
                 default:
@@ -185,6 +203,16 @@ void connected()
                 set_conn_string();
                 break;
             }
+            case DEVICE_NAME_RECEIVED:
+            {
+                set_device_name();
+                break;
+            }
+            case VERSION_RECEIVED:
+            {
+                set_version();
+                break;
+            }
             default:
             {
                 ESP_LOGI(TAG_Con, "Waiting...");
@@ -208,6 +236,8 @@ void connected()
 
 void set_conn_string()
 {
+    if(buffer->size > 512)
+        return;
     ESP_LOGI(TAG_Con, "Set Conn String");
     char cs[buffer->size+1];
     memcpy(cs, buffer->data, buffer->size);
@@ -222,6 +252,42 @@ void set_conn_string()
     CONNECTED_STATE = IDLE;
 }
 
+void set_device_name()
+{
+    ESP_LOGI(TAG_Con, "Set device name");
+    if(buffer->size > 128)
+        return;
+    char device_name[buffer->size+1];
+    memcpy(device_name, buffer->data, buffer->size);
+    device_name[buffer->size] = '\0';
+    if(global_ft->set_device_name(device_name, buffer->size))
+    {
+        ble->write("1\n");
+    } else{
+        ble->write("0\n");
+    }
+    ESP_LOGI(TAG_Con, "Set the device name to to %s", device_name);
+    CONNECTED_STATE = IDLE;
+}
+
+void set_version()
+{
+    ESP_LOGI(TAG_Con, "Set version");
+    if(buffer->size > 128)
+        return;
+    char version[buffer->size+1];
+    memcpy(version, buffer->data, buffer->size);
+    version[buffer->size] = '\0';
+    if(global_ft->set_version(version, buffer->size))
+    {
+        ble->write("1\n");
+    } else{
+        ble->write("0\n");
+    }
+    ESP_LOGI(TAG_Con, "Set version to to %s", version);
+    CONNECTED_STATE = IDLE;
+}
+
 void send_battery()
 {
     uint8_t battery_percentage = config.get_battery_level();
@@ -231,6 +297,8 @@ void send_battery()
 
 void set_name()
 {
+    if(buffer->size > 128)
+        return;
     ESP_LOGI(TAG_Con, "Set Name");
     char name[buffer->size+1];
     memcpy(name, buffer->data, buffer->size);
@@ -247,6 +315,8 @@ void set_name()
 
 void set_ssid()
 {
+    if(buffer->size > 128)
+        return;
     ESP_LOGI(TAG_Con, "Set SSID");
     //char ssid[buffer->size];
     char * ssid = new char[buffer->size];
@@ -266,6 +336,8 @@ void set_ssid()
 
 void set_password()
 {
+    if(buffer->size > 128)
+        return;
     ESP_LOGI(TAG_Con, "Set password");
     char password[buffer->size];
     memcpy(password, buffer->data, buffer->size);

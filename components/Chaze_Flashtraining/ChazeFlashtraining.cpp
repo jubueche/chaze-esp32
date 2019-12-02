@@ -255,7 +255,6 @@ char * Flashtraining::get_string_pointer_from_memory(const char * indicator, siz
 						len = i+1;
 						break;
 					}
-					printf("%c",new_value[i]);
 				}
 				char * final_value = (char *) malloc(len);
 				if(final_value == NULL){
@@ -336,7 +335,7 @@ char * Flashtraining::get_wifi_password(void)
 
 bool Flashtraining::set_device_name(char * name, uint8_t size)
 {
-	return true;
+	return this->set_string_in_memory("device_name", name, size);
 }
 
 bool Flashtraining::set_azure_connection_string(char * conn_string, uint8_t size)
@@ -356,15 +355,23 @@ bool Flashtraining::set_wifi_password(char * pass, uint8_t size)
 
 uint8_t Flashtraining::get_version(char * version_buffer)
 {
-	const char * v = "v1.3";
-	for(int i=0;i<4; i++)
-		version_buffer[i] = v[i];
-	return 4;
+	char * version_from_mem = this->get_string_pointer_from_memory("version", 128, "v1.0");
+	uint8_t len = 4;
+	for(int i=0;i<128;i++)
+	{
+		version_buffer[i] =  version_from_mem[i];
+		if(version_from_mem[i] == '\0')
+		{
+			len = i+1;
+			break;
+		}
+	}
+	return len;
 }
 
 bool Flashtraining::set_version(char * version, uint8_t size)
 {
-	return true;
+	return this->set_string_in_memory("version", version, size);
 }
 
 // TODO: End Needs implementation
@@ -413,9 +420,7 @@ bool Flashtraining::abort_reading_data() {
 void Flashtraining::please_call_every_loop() {
 	_Check_or_Initialize();
 	if (_STATE == 4) {
-#ifdef DEBUG
-		Serial.print("_current_sector_eraseposition: "); Serial.println(_current_sector_eraseposition);
-#endif
+		ESP_LOGI(TAG, "_current_sector_eraseposition: %d", _current_sector_eraseposition);
 		if (myflash.CheckErasing_inProgress() == 0) {
 			myflash.readByteArray(_current_sector_eraseposition * 262144, _pagereadbuffer, 512);
 			if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
