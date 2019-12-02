@@ -71,10 +71,11 @@ void Chaze_ble::initialize_connection(){
   if(!BLEDevice::getInitialized())
   {
     ESP_LOGI(TAG_BLE, "Not yet initialized, start init.");
-    const char* name = global_ft->get_name();
+    char* name = global_ft->get_name();
     ESP_LOGI(TAG_BLE, "Setting device name to %s", name);
     std::string name_s = name;
     BLEDevice::init(name_s);
+    free(name);
   }
   
   //Set the MTU of the packets sent, maximum is 500, Apple needs 23 apparently.

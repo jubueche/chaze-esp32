@@ -252,11 +252,12 @@ bool synch_with_azure(void)
 			}
 		}
 		char file_name[128]; //64+32+puffer
-		strcpy(file_name, global_ft->get_device_id());
+		char * device_name = global_ft->get_device_name();
+		strcpy(file_name, device_name);
 		strcat(file_name, "_");
 		strcat(file_name, strftime_buf);
 		strcat(file_name, ".txt");
-
+		free(device_name);
 
 		global_ft->start_reading_data();
 		
@@ -311,8 +312,12 @@ void poll_wifi(void){
 	} else ESP_LOGI(TAG_WiFi, "Initialized WiFi");
 
 	wifi_sta_config_t sta_cnfg = {};
-	strcpy((char *) sta_cnfg.ssid, global_ft->get_wifi_ssid());
-	strcpy((char *) sta_cnfg.password, global_ft->get_wifi_password());
+	char * ssid = global_ft->get_wifi_ssid();
+	char * pass = global_ft->get_wifi_password();
+	strcpy((char *) sta_cnfg.ssid, ssid);
+	strcpy((char *) sta_cnfg.password, pass);
+	free(ssid);
+	free(pass);
 
 	wifi_config_t wifi_config = { .sta = sta_cnfg };
 	bool res = (esp_wifi_set_mode(WIFI_MODE_STA) == ESP_OK);
