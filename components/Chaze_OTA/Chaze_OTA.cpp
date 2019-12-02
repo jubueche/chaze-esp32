@@ -10,6 +10,7 @@ EventBits_t ota_uxBits;
 cJSON *json;
 bool new_firmware_available;
 float current_version;
+float new_version;
 
 extern const char msft_ssl_cert_pem_start[] asm("_binary_msft_ssl_cert_pem_start");
 extern const char msft_ssl_cert_pem_end[]   asm("_binary_msft_ssl_cert_pem_end");
@@ -47,7 +48,7 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 					{
 						ESP_LOGE(TAG_OTA, "Encountered null pointer in field.");
 					} else {
-						double new_version = version->valuedouble;
+						new_version = version->valuedouble;
 						if(new_version > current_version){
 							//Set the flag
 							new_firmware_available = true;
@@ -98,13 +99,27 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 }
 
 
+//! NOT TESTED
 /**
  * @brief Writes the new firmware version to the SPI flash.
  * @return bool. True if successful.
  */
 bool write_new_firmware_version(void)
 {
-	return true;
+	const char numbers[] = {"0123456789"};
+	int before_dot = (int) new_version;
+	int after_dot = (int) (10*(new_version - (float) before_dot));
+	char version_string[5];
+	if(before_dot > 9 || after_dot > 9)
+	{
+		return false;
+	}
+	version_string[0] = 'v';
+	version_string[1] = numbers[before_dot];
+	version_string[2] = '.';
+	version_string[3] = numbers[after_dot];
+	version_string[4] = '\0';
+	return global_ft->set_version(version_string, 5);
 }
 
 /**
@@ -137,7 +152,7 @@ void perform_OTA(void)
 	const char numbers[] = {"0123456789"};
 	char current_version_string[128];
 	bool dot_occ = false;
-	float version_float = 1000.0;
+	float version_float = 9.9;
 	uint8_t n = global_ft->get_version(current_version_string);
 	for(int i=0;i<n;i++)
 	{
@@ -161,6 +176,7 @@ void perform_OTA(void)
 		}
 	}
 	current_version = version_float;
+	new_version = current_version;
 	ESP_LOGI(TAG_OTA, "Current version %s transformed to %.4f", current_version_string, current_version);
 
 	check_for_update();
