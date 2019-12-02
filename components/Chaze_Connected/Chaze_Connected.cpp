@@ -456,6 +456,7 @@ void synch_data()
         config.synched_training = AWAITING; // Reset the variable for the next trainings.
             
     }
+    global_ft->abort_reading_data();
     ble->write(EOF);
     CONNECTED_STATE = IDLE;
 }
