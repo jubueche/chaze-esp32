@@ -32,10 +32,10 @@ void Configuration::populate_pressure(uint8_t * bytes, float pressure, unsigned 
     bytes[3] = sample_time >> 8;
     bytes[4] = sample_time;
     
-    bytes[6] = tmp >> 24;
-    bytes[7] = tmp >> 16;
-    bytes[8] = tmp >> 8;
-    bytes[9] = tmp;
+    bytes[5] = tmp >> 24;
+    bytes[6] = tmp >> 16;
+    bytes[7] = tmp >> 8;
+    bytes[8] = tmp;
 }
 
 void Configuration::populate_heart_rate(uint8_t * bytes, uint32_t heart_rate, unsigned long sample_time)
@@ -48,10 +48,10 @@ void Configuration::populate_heart_rate(uint8_t * bytes, uint32_t heart_rate, un
     bytes[3] = sample_time >> 8;
     bytes[4] = sample_time;
     
-    bytes[6] = tmp >> 24;
-    bytes[7] = tmp >> 16;
-    bytes[8] = tmp >> 8;
-    bytes[9] = tmp;
+    bytes[5] = tmp >> 24;
+    bytes[6] = tmp >> 16;
+    bytes[7] = tmp >> 8;
+    bytes[8] = tmp;
 }
 
 void Configuration::populate_bno(uint8_t * bytes, float * values, unsigned long sample_time)

@@ -253,11 +253,15 @@ bool synch_with_azure(void)
 		}
 		char file_name[128]; //64+32+puffer
 		char * device_name = global_ft->get_device_name();
-		strcpy(file_name, device_name);
-		strcat(file_name, "_");
-		strcat(file_name, strftime_buf);
+		char * container_name = global_ft->get_container_name();
+		
+		strcpy(file_name, container_name); // This is the user-id of the current user
+		strcat(file_name, "/");
+		strcat(file_name, "09-01-1997-59-13"); //DD-MM-YYYY-MM-HH, Needs to come from training meta data
 		strcat(file_name, ".txt");
 		free(device_name);
+		free(container_name);
+		ESP_LOGI(TAG_WiFi, "File name is %s", file_name);
 
 		global_ft->start_reading_data();
 		

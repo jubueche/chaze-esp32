@@ -10,7 +10,7 @@ struct Rx_buffer {
 };
 
 enum {IDLE, BATTERY, NAME, NAME_RECEIVED, WIFI, WIFI_2, SSID_RECEIVED, PASS_RECEIVED, VERSION, OTA, DATA,
-        CONN_STRING_RECEIVED, CONN_STRING, DEVICE_NAME, DEVICE_NAME_RECEIVED, SET_VERSION, VERSION_RECEIVED};
+        CONN_STRING_RECEIVED, CONN_STRING, DEVICE_NAME, DEVICE_NAME_RECEIVED, SET_VERSION, VERSION_RECEIVED,CONTAINER,CONTAINER_RECEIVED};
 static uint8_t CONNECTED_STATE = IDLE;
 
 static Rx_buffer *buffer;
@@ -27,5 +27,6 @@ void ota(void);
 void synch_data(void);
 void set_conn_string(void);
 void set_device_name(void);
+void set_container(void);
 
 #endif

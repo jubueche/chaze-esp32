@@ -23,6 +23,8 @@ needless. It is still included for practicality. ```Input: q``` followed by the 
 
 - **Set device name:** Set the device name of the device. This will be the ID that is used for the container where the data is uploaded to. ```Input: q``` followed by the device name, with max. 128 bytes.
 
+- **Set container name:** Set the name of the subfolder for the data to be uploaded in. If the devices name is for example set to "chaze-3" and the container to "28188", then the data will be stored as ```chaze-3/28188/XXX.txt```. ```Input: x``` followed by the name with max. 128 characters. ```Output successful ? 1 : 0```.
+
 - [Not so important for now] **Alarms:** Alarms are used to signal the swimmer when she/he is swimming too slow, too inefficient or with too much/less power.
 
 ## Flashtraining library further requirements

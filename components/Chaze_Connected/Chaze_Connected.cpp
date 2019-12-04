@@ -63,6 +63,10 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                 {
                     CONNECTED_STATE = SET_VERSION;
                     ESP_LOGI(TAG_Con, "Received set version command.");
+                } else if(strncmp(buffer->data, "x", buffer->size) == 0)
+                {
+                    CONNECTED_STATE = CONTAINER;
+                    ESP_LOGI(TAG_Con, "Received set container command.");
                 }
                 else { //default
                     ESP_LOGE(TAG_Con, "Command %c not recognized. Reset the state to IDLE.", buffer->data[0]);
@@ -123,6 +127,11 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                     CONNECTED_STATE = VERSION_RECEIVED;
                     break;
                 }
+                case CONTAINER:
+                {
+                    CONNECTED_STATE = CONTAINER_RECEIVED;
+                    break;
+                }
                 default:
                 {
                     CONNECTED_STATE = IDLE;
@@ -154,6 +163,7 @@ void connected()
 
     ESP_LOGI(TAG_Con, "Connected");
 
+    ble->write("r");
 
     while(config.ble_connected && !config.wifi_connected)
     {
@@ -213,6 +223,11 @@ void connected()
                 set_version();
                 break;
             }
+            case CONTAINER_RECEIVED:
+            {
+                set_container();
+                break;
+            }
             default:
             {
                 ESP_LOGI(TAG_Con, "Waiting...");
@@ -232,6 +247,24 @@ void connected()
     config.STATE = ADVERTISING;
     free(buffer);
 
+}
+
+void set_container()
+{
+    if(buffer->size > 128)
+        return;
+    ESP_LOGI(TAG_Con, "Set container name");
+    char container[buffer->size+1];
+    memcpy(container, buffer->data, buffer->size);
+    container[buffer->size] = '\0';
+    if(global_ft->set_container_name(container, buffer->size))
+    {
+        ble->write("1\n");
+    } else{
+        ble->write("0\n");
+    }
+    ESP_LOGI(TAG_Con, "Set the container to to %s", container);
+    CONNECTED_STATE = IDLE;
 }
 
 void set_conn_string()
@@ -410,10 +443,8 @@ void synch_data()
         // Call again for each training
         global_ft->start_reading_data();
         
-        ble->write("\nTraining number ");
-        ble->write(std::to_string(i));
-        ble->write("\n");
-
+        //! Need to get time and send it here!
+        ble->write("31-02-2019-13-45");
 
         int32_t response = 0;
         do {
@@ -430,7 +461,7 @@ void synch_data()
         ble->write(EOF); // Write EOF
 
         unsigned long response_timer = millis();
-        while (millis() - response_timer < 10000)
+        while (millis() - response_timer < 60000)
         {
             if(config.synched_training != AWAITING)
                 break;
@@ -447,10 +478,12 @@ void synch_data()
             global_ft->completed_synch_of_training(false);
             ESP_LOGE(TAG_Con, "Unsuccessful synch.");
             CONNECTED_STATE = IDLE; 
+            global_ft->abort_reading_data();
             return;
         } else {
             ESP_LOGE(TAG_Con, "Timeout waiting for response.");
             CONNECTED_STATE = IDLE; 
+            global_ft->abort_reading_data();
             return;
         }
         config.synched_training = AWAITING; // Reset the variable for the next trainings.

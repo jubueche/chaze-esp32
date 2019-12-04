@@ -332,6 +332,15 @@ char * Flashtraining::get_wifi_password(void)
 	return this->get_string_pointer_from_memory("password", 128, "Amm+Tag+Vc+0");
 }
 
+char * Flashtraining::get_container_name(void)
+{
+	return this->get_string_pointer_from_memory("container", 128, "default");
+}
+
+bool Flashtraining::set_container_name(char * name, uint8_t size)
+{
+	return this->set_string_in_memory("container", name, size);
+}
 
 bool Flashtraining::set_device_name(char * name, uint8_t size)
 {

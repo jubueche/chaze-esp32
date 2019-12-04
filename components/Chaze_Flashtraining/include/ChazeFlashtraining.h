@@ -55,6 +55,8 @@ class Flashtraining
     bool set_wifi_password(char *, uint8_t); //! Done
     bool set_name(char *, uint8_t); //! Done
     char * get_name(void); //! Done
+    bool set_container_name(char *, uint8_t); //! Done
+    char * get_container_name(void); //! Done
     uint8_t get_version(char *); //! Done
     bool set_version(char *, uint8_t); //! Done
 
