@@ -25,7 +25,13 @@
    <http://www.gnu.org/licenses/>.
 */
 
-#include "SPIFlash.h"
+#ifdef ARDUINO
+  #include "include/SPIFlash.h"
+#else
+  #include "SPIFlash.h"
+#endif
+
+
 
 // Constructor
 //If board has multiple SPI interfaces, this constructor lets the user choose between them

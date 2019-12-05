@@ -23,9 +23,14 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#include "SPIFlash.h"
+#ifdef ARDUINO
+  #include "include/SPIFlash.h"
+  #include "include/DMASAMD.h"
+#else
+  #include "SPIFlash.h"
+  #include "DMASAMD.h"
+#endif
 
-#include "DMASAMD.h"
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 //     Private functions used by read, write and erase operations     //
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

@@ -25,9 +25,13 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-#define RUNDIAGNOSTIC
+//#define RUNDIAGNOSTIC
 
-#include "SPIFlash.h"
+#ifdef ARDUINO
+  #include "include/SPIFlash.h"
+#else
+  #include "SPIFlash.h"
+#endif
 
 //Subfunctions for troubleshooting function
 void SPIFlash::_printErrorCode(void) {

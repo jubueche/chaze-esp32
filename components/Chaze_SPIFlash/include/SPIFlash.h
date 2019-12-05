@@ -67,7 +67,18 @@
   #include <Arduino.h>
   #include "defines.h"
   #include <SPI.h>
+#ifdef ARDUINO
+  #define SPIFlash_CS 15        //   <------  See configuration.h (but I don't use from in .ino files)
+  #define SPIFlash_RESET 13
+  #define SPIFlash_WP 32
+  #define SPIFlash_HOLD 14
+  #define SPI_MOSI 18
+  #define SPI_MISO 19
+  #define SPI_SCK 5
+  #define GPIO_SPI ((1ULL<<SPIFlash_RESET) | (1ULL<<SPIFlash_WP) | (1ULL<<SPIFlash_HOLD))
+#else
   #include "Configuration.h"
+#endif
 
 #if defined (ARDUINO_ARCH_SAM)
   #include <malloc.h>

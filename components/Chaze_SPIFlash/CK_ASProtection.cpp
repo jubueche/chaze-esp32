@@ -2,7 +2,11 @@
    to enable the use of Advanced Sector Protection (ASP).
 */
 
-#include "SPIFlash.h"
+#ifdef ARDUINO
+  #include "include/SPIFlash.h"
+#else
+  #include "SPIFlash.h"
+#endif
 
 //Command defines
 #define PPBP	0xE3	//Persistant Protection Bits Program
@@ -59,5 +63,3 @@ bool SPIFlash::ASP_release_all_sectors(void) {
   }
   return true;
 }
-
-
