@@ -62,13 +62,15 @@ void Configuration::populate_bno(uint8_t * bytes, float * values, unsigned long 
     bytes[3] = sample_time >> 8;
     bytes[4] = sample_time;
 
+    int j = 0;
     for(int i=5;i<33;i=i+4)
     {
-        long tmp = *(long*)&values[i];
+        long tmp = *(long*)&values[j];
         bytes[i] = tmp >> 24;
 		bytes[i+1] = tmp >> 16;
 		bytes[i+2] = tmp >> 8;
 		bytes[i+3] = tmp;
+        j += 1;
     }
 
 }

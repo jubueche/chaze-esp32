@@ -82,6 +82,7 @@ void synch_via_wifi(void *pvParameter)
 				config.wifi_synch_task_suspended = true;
 				xSemaphoreGive(config.wifi_synch_semaphore);
 				vTaskSuspend(NULL);
+				ESP_LOGI(TAG_WiFi, "Not allowing azure or num. uns. trainings is 0: Suspended wifi synch task");
 			} else {
 				if(!config.wifi_connected)
 				{
@@ -252,14 +253,14 @@ bool synch_with_azure(void)
 			}
 		}
 		char file_name[128]; //64+32+puffer
-		char * device_name = global_ft->get_device_name();
+		//char * device_name = global_ft->get_device_name();
 		char * container_name = global_ft->get_container_name();
 		
 		strcpy(file_name, container_name); // This is the user-id of the current user
 		strcat(file_name, "/");
 		strcat(file_name, "09-01-1997-59-13"); //DD-MM-YYYY-MM-HH, Needs to come from training meta data
 		strcat(file_name, ".txt");
-		free(device_name);
+		//free(device_name);
 		free(container_name);
 		ESP_LOGI(TAG_WiFi, "File name is %s", file_name);
 

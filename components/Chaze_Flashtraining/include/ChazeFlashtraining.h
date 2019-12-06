@@ -57,7 +57,7 @@ class Flashtraining
     char * get_name(void); //! Done
     bool set_container_name(char *, uint8_t); //! Done
     char * get_container_name(void); //! Done
-    uint8_t get_version(char *); //! Done
+    uint8_t get_version(char *); //! Done Maybe have #define in main.cpp or Configuration.c?
     bool set_version(char *, uint8_t); //! Done
 
 

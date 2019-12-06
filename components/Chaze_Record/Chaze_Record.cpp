@@ -167,7 +167,7 @@ void record()
 	// Start a new training
 	if(!FlashtrainingWrapper_start_new_training(ft))
 	{
-		ESP_LOGE(TAG_RECORD, "Error creating training.");
+		ESP_LOGE(TAG_RECORD, "Error creating training on flash.");
 		// TODO Close training or smth.?
 		config.flicker_led(GPIO_LED_RED);
 		config.STATE = DEEPSLEEP;
@@ -217,9 +217,13 @@ void record()
 			//setup_hr();
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "Setup complete.");
 		} else {
+			ESP_LOGE(TAG_RECORD, "Error initializing pressure.");
+			config.STATE = DEEPSLEEP;
 			return;
 		}
 	} else {
+		ESP_LOGE(TAG_RECORD, "Error initializing BNO055");
+		config.STATE = DEEPSLEEP;
 		return;
 	}
 
@@ -258,7 +262,6 @@ void record()
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "No motion interrupt");
 			bno.resetInterrupts();
 			nm_interrupt = false;
-
 			clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, pressure_backside_task_handle, ft);
 			return;
 		}
@@ -333,6 +336,7 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	{
 		config.flicker_led(GPIO_LED_GREEN);
 	} else {
+		ESP_LOGE(TAG_RECORD, "Failed stoppin training.");
 		config.flicker_led(GPIO_LED_RED);
 	}
 	

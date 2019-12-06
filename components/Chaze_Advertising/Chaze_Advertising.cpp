@@ -114,7 +114,6 @@ void advertise()
             bno_adv.resetInterrupts();
             config.STATE = RECORD;
             clean_up(&bno_adv);
-
             gpio_reset_pin(GPIO_BNO_INT);
             break;
         }
@@ -198,6 +197,7 @@ void clean_up(BNO055 *bno_adv)
     }
     // Should call destructors, detach interrupts
     config.detach_bno_int();
+    config.detach_btn_int();
     ble->~Chaze_ble();
     bno_adv->~BNO055();
     nvs_flash_deinit();
