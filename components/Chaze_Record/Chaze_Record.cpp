@@ -3,6 +3,8 @@
 
 const char * TAG_RECORD = "Chaze Record";
 
+#define DEBUG_RECORDING
+
 // TODO Emergency training stop when eg buffer can not be written anymore
 // TODO Enable no motion again
 //! Check exits (quick return statements and free objects there)
@@ -22,7 +24,7 @@ void sample_hr(void * pvParams)
 		//! Uncomment if heart rate sensor attached, use config.I2C methods for thread safety
 		//uint32_t heart_rate = hr.get_heart_rate();
 		heart_rate = 170;
-		//ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
+		//if(DEBUG) ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
 		vTaskDelay(20);
 		// Get time of sample
 		sample_time = millis() - base_time;
@@ -120,13 +122,13 @@ void check_buffer_and_write_to_flash_task(void * pvParams)
 	{
 		if(buf1->counter == BUFFER_SIZE)
 		{
-			ESP_LOGI(TAG_RECORD, "Buffer 0 is full. Call compress and save.");
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer 0 is full. Call compress and save.");
 			compress_and_save(ft, 0, buffers); // Compress buffer 1 (index 0 in buffers)
 			buf1->counter = 0; //Reset the buffer
 		}
 		if(buf2->counter == BUFFER_SIZE)
 		{
-			ESP_LOGI(TAG_RECORD, "Buffer 1 is full. Call compress and save.");
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer 1 is full. Call compress and save.");
 			compress_and_save(ft, 1, buffers); // Compress buffer 1 (index 0 in buffers)
 			buf2->counter = 0; //Reset the buffer
 		}
@@ -314,7 +316,7 @@ void record()
 void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHandle_t pressure_task_handle, TaskHandle_t pressure_backside_task_handle,
 						TaskHandle_t check_buffer_and_write_to_flash_task_task_handle, FlashtrainingWrapper_t *ft)
 {
-	ESP_LOGI(TAG_RECORD, "Called clean_up");
+	if(DEBUG) ESP_LOGI(TAG_RECORD, "Called clean_up");
 	config.STATE = DEEPSLEEP;
 	gpio_set_level(GPIO_VIB, 1);
 	vTaskDelay(80 / portTICK_PERIOD_MS);
@@ -352,7 +354,7 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	{
 		config.flicker_led(GPIO_LED_GREEN);
 	} else {
-		ESP_LOGE(TAG_RECORD, "Failed stoppin training.");
+		ESP_LOGE(TAG_RECORD, "Failed stopping training.");
 		config.flicker_led(GPIO_LED_RED);
 	}
 	
@@ -441,7 +443,7 @@ esp_err_t setup_bno(FlashtrainingWrapper_t * ft)
 
 void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, uint8_t length, char const * name)
 {
-	if(xSemaphoreTake(config.write_buffer_semaphore, portMAX_DELAY) == pdTRUE)
+	if(xSemaphoreTake(config.write_buffer_semaphore, (TickType_t) 500) == pdTRUE)
 	{
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
 		if(BUFFER_SIZE-curr_buff->counter >= length){

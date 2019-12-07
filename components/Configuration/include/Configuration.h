@@ -154,7 +154,7 @@ class Configuration {
     xQueueHandle gpio_evt_queue;
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
     SemaphoreHandle_t i2c_back_semaphore = xSemaphoreCreateRecursiveMutex();
-    SemaphoreHandle_t write_buffer_semaphore = xSemaphoreCreateBinary();
+    SemaphoreHandle_t write_buffer_semaphore = xSemaphoreCreateMutex();
     SemaphoreHandle_t wifi_synch_semaphore = NULL;
 
     TaskHandle_t bno_interrupt_task_handle = NULL;

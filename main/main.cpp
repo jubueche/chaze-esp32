@@ -9,8 +9,11 @@ extern "C" void app_main()
 	config.turn_on_main_circuit();
 	config.initialize_vib();
 	config.initialize_leds();
+	gpio_set_level(GPIO_LED_GREEN, 1);
+	vTaskDelay(200 / portTICK_PERIOD_MS);
+	gpio_set_level(GPIO_LED_GREEN, 0);
 
-	vTaskDelay(2000 / portTICK_PERIOD_MS);
+	//vTaskDelay(2000 / portTICK_PERIOD_MS);
 
 	//! Change to ADVERTISING
 	config.STATE = ADVERTISING;

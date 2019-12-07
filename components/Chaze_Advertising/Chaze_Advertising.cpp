@@ -83,7 +83,6 @@ void advertise()
 
     am_interrupt = false;
     rising_interrupt = false;
-    bool timeout_before = false;
     attach_am_interrupt(&bno_adv);
     config.attach_btn_int(&gpio_bno_task, &gpio_isr_handler);
     ESP_LOGI(TAG_Adv, "Attached Button interrupt");
@@ -126,21 +125,36 @@ void advertise()
 			while(gpio_get_level(GPIO_BUTTON))
 			{
 				ESP_LOGI(TAG_Adv, "Waiting for release...");
-				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && !timeout_before && millis() - timer < TIMEOUT_BUTTON_PUSHED_TO_OFF)
+				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && millis() - timer < TIMEOUT_BUTTON_PUSHED_TO_OFF)
 				{
-					timeout_before = true;
-					config.STATE = RECORD;
-                    clean_up(&bno_adv);
-                    gpio_set_level(GPIO_VIB, 1);
-                    vTaskDelay(80 / portTICK_PERIOD_MS);
-                    gpio_set_level(GPIO_VIB, 0);
-                    break;
+                    gpio_set_level(GPIO_LED_GREEN, 1);
+                    vTaskDelay(200 / portTICK_PERIOD_MS);
+                    gpio_set_level(GPIO_LED_GREEN, 0);
 				}
+                if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_OFF)
+                {
+                    gpio_set_level(GPIO_LED_RED, 1);
+                    vTaskDelay(200 / portTICK_PERIOD_MS);
+                    gpio_set_level(GPIO_LED_RED, 0);
+                }
 			}
-			if(timeout_before)
-			{
-				gpio_set_level(GPIO_LED_RED, 0);
-			}
+            if(millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_OFF)
+            {
+                config.STATE = DEEPSLEEP;
+                clean_up(&bno_adv);
+                gpio_set_level(GPIO_VIB, 1);
+                vTaskDelay(80 / portTICK_PERIOD_MS);
+                gpio_set_level(GPIO_VIB, 0);
+                return;
+            } else if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING)
+            {
+                config.STATE = RECORD;
+                clean_up(&bno_adv);
+                gpio_set_level(GPIO_VIB, 1);
+                vTaskDelay(80 / portTICK_PERIOD_MS);
+                gpio_set_level(GPIO_VIB, 0);
+                return;
+            }
 		}
 
         if(config.ble_connected)

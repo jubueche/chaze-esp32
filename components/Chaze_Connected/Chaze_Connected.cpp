@@ -152,6 +152,7 @@ BLECharacteristicCallbacks *callback = new ConnectedCallbacks();
 
 void connected()
 {
+    gpio_set_level(GPIO_BLUE, 1);
     CONNECTED_STATE = IDLE;
     buffer = (Rx_buffer *) malloc(sizeof(Rx_buffer));
     if(buffer == NULL)
@@ -246,7 +247,7 @@ void connected()
     }
     config.STATE = ADVERTISING;
     free(buffer);
-
+    gpio_set_level(GPIO_BLUE, 0);
 }
 
 void set_container()
