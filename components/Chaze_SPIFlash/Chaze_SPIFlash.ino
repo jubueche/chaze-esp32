@@ -53,7 +53,7 @@ void setup() {
   Serial.print("\nErasing Pages 0-511 (256kB sector): ... "); if (!flash.eraseBlock256K(0)) Serial.println("Error.");
   while (true) { if (flash.CheckErasing_inProgress() != 3) { if (flash.CheckErasing_inProgress() == 0) { Serial.println("Successful."); break;} else { Serial.println("Error."); break; }}}
 
-  //WRITING Array
+  //WRITING 2 Pages
   Serial.print("Writing testBuffer to flash ... \n");
   for (int i = 0; i < 2; i++) {
     if (flash.writeByteArray(i * 512, testBuffer, 512)) {
