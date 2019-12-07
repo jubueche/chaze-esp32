@@ -178,10 +178,8 @@ void write_data_to_flash(FlashtrainingWrapper_t * ft, uint8_t * data, uint32_t n
 
 		for(int i=0;i<CHUNK;i++)
 			printf("%d ", to_print[i]);
-		
-		ESP_LOGI(TAG, "In character form");
-
-		}
+		free(to_print);	
+	}
 }
 
 

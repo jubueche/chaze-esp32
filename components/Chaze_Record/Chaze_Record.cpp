@@ -9,34 +9,26 @@ const char * TAG_RECORD = "Chaze Record";
 
 void sample_hr(void * pvParams)
 {
-	FlashtrainingWrapper_t *ft = (FlashtrainingWrapper_t *) pvParams; 
-	
+	buffer_t * curr_buff;
+	uint32_t heart_rate;
+	unsigned long sample_time;
+	uint8_t bytes[9] = {};
+	char const * name = "HR";
 	for(;;){
 
 		//Try to aquire the mutex for a given amount of time then back-off
-		buffer_t * curr_buff = buffers[buff_idx];
-
-		if(xSemaphoreTakeRecursive(config.i2c_semaphore, 20) == pdPASS)
-		{
-			// Sample heart rate
-			//! Uncomment if heart rate sensor attached, use config.I2C methods for thread safety
-			//uint32_t heart_rate = hr.get_heart_rate();
-			uint32_t heart_rate = 170;
-			//ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
-			vTaskDelay(20);
-
-			// Get time of sample
-			unsigned long sample_time = millis() - base_time;
-
-			// Populate uint8_t array.
-			uint8_t bytes[9] = {};
-			config.populate_heart_rate(bytes, heart_rate, sample_time);
-			char const * name = "HR";
-			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
-
-			xSemaphoreGiveRecursive(config.i2c_semaphore);
-		}
-		vTaskDelay(config.random_between(5,50));
+		curr_buff = buffers[buff_idx];
+		// Sample heart rate
+		//! Uncomment if heart rate sensor attached, use config.I2C methods for thread safety
+		//uint32_t heart_rate = hr.get_heart_rate();
+		heart_rate = 170;
+		//ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
+		vTaskDelay(20);
+		// Get time of sample
+		sample_time = millis() - base_time;
+		// Populate uint8_t array.
+		config.populate_heart_rate(bytes, heart_rate, sample_time);
+		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
 	}
 	
 }
@@ -44,91 +36,102 @@ void sample_hr(void * pvParams)
 
 void sample_pressure(void * pvParams)
 {
-	FlashtrainingWrapper_t *ft = (FlashtrainingWrapper_t *) pvParams; 
-	
+	buffer_t * curr_buff;
+	float value;
+	unsigned long sample_time;
+	uint8_t bytes[9] = {};
+	char const * name = "Pressure";
 	for(;;){
 
 		//Try to aquire the mutex for a given amount of time then back-off
-		buffer_t * curr_buff = buffers[buff_idx];
-
-		if(xSemaphoreTakeRecursive(config.i2c_semaphore, 20) == pdPASS)
-		{
-			pressure.read_vals();
-			vTaskDelay(30 / portTICK_PERIOD_MS);
-			float value = pressure.pressure();
-			// Get time of sample
-			unsigned long sample_time = millis() - base_time;
-			if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
-			uint8_t bytes[9] = {};
-			config.populate_pressure(bytes, value, sample_time, false);
-			char const * name = "Pressure";
-			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
-
-			xSemaphoreGiveRecursive(config.i2c_semaphore);
-		}
-		vTaskDelay(config.random_between(5,50));
+		curr_buff = buffers[buff_idx];
+		pressure.read_vals();
+		value = pressure.pressure();
+		// Get time of sample
+		sample_time = millis() - base_time;
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
+		config.populate_pressure(bytes, value, sample_time, false);
+		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
 	}
 }
 
 void sample_pressure_backside(void * pvParams)
 {
-	FlashtrainingWrapper_t *ft = (FlashtrainingWrapper_t *) pvParams; 
-	
+	buffer_t * curr_buff;
+	float value;
+	unsigned long sample_time;
+	uint8_t bytes[9] = {};
+	char const * name = "Pressure Back";
 	for(;;){
 
 		//Try to aquire the mutex for a given amount of time then back-off
-		buffer_t * curr_buff = buffers[buff_idx];
-
-		if(xSemaphoreTakeRecursive(config.i2c_back_semaphore, 20) == pdPASS)
-		{
-			pressure_backside.read_vals();
-			vTaskDelay(30 / portTICK_PERIOD_MS);
-			float value = pressure_backside.pressure();
-			// Get time of sample
-			unsigned long sample_time = millis() - base_time;
-			if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure Backside: Time: %lu  Pressure: %f", sample_time, value);
-			uint8_t bytes[9] = {};
-			config.populate_pressure(bytes, value, sample_time,true);
-			char const * name = "Pressure Back";
-			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
-
-			xSemaphoreGiveRecursive(config.i2c_back_semaphore);
-		}
-		vTaskDelay(config.random_between(5,50));
+		curr_buff = buffers[buff_idx];
+		pressure_backside.read_vals();
+		value = pressure_backside.pressure();
+		// Get time of sample
+		sample_time = millis() - base_time;
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure Backside: Time: %lu  Pressure: %f", sample_time, value);
+		config.populate_pressure(bytes, value, sample_time,true);
+		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
 	}
 }
 
 
 void sample_bno(void * pvParams)
 {
-	FlashtrainingWrapper_t *ft = (FlashtrainingWrapper_t *) pvParams; 
-	
+	buffer_t * curr_buff;
+	unsigned long sample_time;
+	imu::Quaternion quat;
+	imu::Vector<3> acc;
+	uint8_t bytes[33] = {};
+	float values[7] = {};
+	double values_d[7] = {};
+	char const * name = "BNO055";
 	for(;;){
 
 		//Try to aquire the mutex for a given amount of time then back-off
-		buffer_t * curr_buff = buffers[buff_idx];
-
-		if(xSemaphoreTakeRecursive(config.i2c_semaphore, 20) == pdPASS)
-		{
-			// Get time of sample
-			unsigned long sample_time = millis() - base_time;
-			imu::Quaternion quat = bno.getQuat();
-			imu::Vector<3> acc = bno.getVector(BNO055::VECTOR_LINEARACCEL);
-			double values_d[7] = {acc.x(),acc.y(),acc.z(),quat.w(),quat.y(),quat.x(),quat.z()};
-			float values[7] = {};
-			for(int i=0;i<7;i++){
-				values[i] = (float) values_d[i];
-			}
-			if(DEBUG) ESP_LOGI(TAG_RECORD, "BNO: Time: %lu  AccX: %f, AccY: %f, AccZ: %f, QuatW: %f, QuatY: %f, QuatX: %f, QuatZ: %f, ", sample_time, values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
-			uint8_t bytes[33] = {};
-			config.populate_bno(bytes, values, sample_time);
-
-			char const * name = "BNO055";
-			aquire_lock_and_write_to_buffer(curr_buff, bytes, ft, sizeof(bytes), name);
-
-			xSemaphoreGiveRecursive(config.i2c_semaphore);
+		curr_buff = buffers[buff_idx];
+		sample_time = millis() - base_time;
+		quat = bno.getQuat();
+		acc = bno.getVector(BNO055::VECTOR_LINEARACCEL);
+		values_d[0] = acc.x(); values_d[1]=acc.y();values_d[2]=acc.z();values_d[3]=quat.w();values_d[4]=quat.y();values_d[5]=quat.x();values_d[6]=quat.z(); 
+		for(int i=0;i<7;i++){
+			values[i] = (float) values_d[i];
 		}
-		vTaskDelay(config.random_between(5,50));
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "BNO: Time: %lu  AccX: %f, AccY: %f, AccZ: %f, QuatW: %f, QuatY: %f, QuatX: %f, QuatZ: %f, ", sample_time, values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
+		config.populate_bno(bytes, values, sample_time);
+		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
+	}
+}
+
+/* This task is spawned when record is called and deleted when the RECORD state is exited.
+   It constantly checks if either of the buffers is full. If that is the case, it calls compress_and_write,
+   passing this buffer as an argument.
+   This task ensures that even if one buffer is full, the sensors can keep logging and the data is still
+   written to the flash. Main assumption: It takes longer to sample a complete buffer of size 8kB than 
+   compressing and writing it to flash.
+*/
+void check_buffer_and_write_to_flash_task(void * pvParams)
+{
+	buffer_t * buf1 = buffers[0];
+	buffer_t * buf2 = buffers[1];
+	FlashtrainingWrapper_t *ft = (FlashtrainingWrapper_t *) pvParams;
+	for (;;)
+	{
+		if(buf1->counter == BUFFER_SIZE)
+		{
+			ESP_LOGI(TAG_RECORD, "Buffer 0 is full. Call compress and save.");
+			compress_and_save(ft, 0, buffers); // Compress buffer 1 (index 0 in buffers)
+			buf1->counter = 0; //Reset the buffer
+		}
+		if(buf2->counter == BUFFER_SIZE)
+		{
+			ESP_LOGI(TAG_RECORD, "Buffer 1 is full. Call compress and save.");
+			compress_and_save(ft, 1, buffers); // Compress buffer 1 (index 0 in buffers)
+			buf2->counter = 0; //Reset the buffer
+		}
+		vTaskDelay(20 / portTICK_PERIOD_MS); // Wait half a second to check again.
+
 	}
 }
 
@@ -235,19 +238,25 @@ void record()
 	/*bno.enableSlowNoMotion(NO_MOTION_THRESHOLD, NO_MOTION_DURATION, NO_MOTION);
  	bno.enableInterruptsOnXYZ(ENABLE, ENABLE, ENABLE);
   	bno.setExtCrystalUse(true);*/
-	
+
+	// Give the binary semaphore for writing to the buffer
+	xSemaphoreGive(config.write_buffer_semaphore);
+
 	bool timeout_before = false;
 
 	TaskHandle_t hr_task_handle = NULL;
 	TaskHandle_t bno_task_handle = NULL;
 	TaskHandle_t pressure_task_handle = NULL;
 	TaskHandle_t pressure_backside_task_handle = NULL;
+	TaskHandle_t check_buffer_and_write_to_flash_task_task_handle = NULL;
 
 	// Start all tasks. Heart rate has the highest priority followed by pressure and BNO.
-	bool success = (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 8, ft, 10, &hr_task_handle);
-	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 8, ft, 10, &bno_task_handle);
-	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 8, ft, 10, &pressure_task_handle);
-	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 8, ft, 10, &pressure_backside_task_handle);
+	//! HIGH WATER MARK!
+	bool success = (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 7, NULL, 10, &hr_task_handle);
+	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 7, NULL, 10, &bno_task_handle);
+	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 7, NULL, 10, &pressure_task_handle);
+	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 7, NULL, 10, &pressure_backside_task_handle);
+	success = success && (bool) xTaskCreate(&check_buffer_and_write_to_flash_task, "check_and_compress", 1024*6, ft, 10, &check_buffer_and_write_to_flash_task_task_handle);
 	
 	if(!success){
 		ESP_LOGE(TAG_RECORD, "Failed to create tasks. Going to sleep.");
@@ -262,7 +271,7 @@ void record()
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "No motion interrupt");
 			bno.resetInterrupts();
 			nm_interrupt = false;
-			clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, pressure_backside_task_handle, ft);
+			clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, pressure_backside_task_handle, check_buffer_and_write_to_flash_task_task_handle, ft);
 			return;
 		}
 
@@ -277,7 +286,7 @@ void record()
 				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && !timeout_before)
 				{
 					timeout_before = true;
-					clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, pressure_backside_task_handle, ft);
+					clean_up(hr_task_handle, bno_task_handle, pressure_task_handle, pressure_backside_task_handle, check_buffer_and_write_to_flash_task_task_handle, ft);
 					return;
 				}
 			}
@@ -302,8 +311,10 @@ void record()
 
 }
 
-void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHandle_t pressure_task_handle, TaskHandle_t pressure_backside_task_handle, FlashtrainingWrapper_t *ft)
+void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHandle_t pressure_task_handle, TaskHandle_t pressure_backside_task_handle,
+						TaskHandle_t check_buffer_and_write_to_flash_task_task_handle, FlashtrainingWrapper_t *ft)
 {
+	ESP_LOGI(TAG_RECORD, "Called clean_up");
 	config.STATE = DEEPSLEEP;
 	gpio_set_level(GPIO_VIB, 1);
 	vTaskDelay(80 / portTICK_PERIOD_MS);
@@ -312,16 +323,21 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	config.detach_bno_int();
 	config.detach_btn_int();
 
-	// Delete the tasks
-	vTaskDelete(hr_task_handle);
-	vTaskDelete(bno_task_handle);
-	vTaskDelete(pressure_task_handle);
-	vTaskDelete(pressure_backside_task_handle);
+	if(xSemaphoreTake(config.write_buffer_semaphore, portMAX_DELAY) == pdTRUE)
+	{
+		// Delete the tasks
+		vTaskDelete(hr_task_handle);
+		vTaskDelete(bno_task_handle);
+		vTaskDelete(pressure_task_handle);
+		vTaskDelete(pressure_backside_task_handle);
+		vTaskDelete(check_buffer_and_write_to_flash_task_task_handle);
+		xSemaphoreGive(config.write_buffer_semaphore);
+	}
 	
 	// Write last buffer and stop training
 	buffer_t * curr_buff = buffers[buff_idx];
 	if(DEBUG) ESP_LOGI(TAG_RECORD, "Filling up %d many bytes", BUFFER_SIZE-curr_buff->counter);
-	for(int i=curr_buff->counter;i<BUFFER_SIZE/*-curr_buff->counter*/;i++)
+	for(int i=curr_buff->counter;i<BUFFER_SIZE;i++)
 		curr_buff->data[i] = 'f';
 	curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
 	if(DEBUG) ESP_LOGI(TAG_RECORD, "Curr buffer counter is %d", curr_buff->counter);
@@ -423,9 +439,9 @@ esp_err_t setup_bno(FlashtrainingWrapper_t * ft)
 }
 
 
-void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, FlashtrainingWrapper_t *ft, uint8_t length, char const * name)
+void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, uint8_t length, char const * name)
 {
-	if(xSemaphoreTakeRecursive(config.i2c_semaphore,(TickType_t) 100) == pdTRUE)
+	if(xSemaphoreTake(config.write_buffer_semaphore, portMAX_DELAY) == pdTRUE)
 	{
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
 		if(BUFFER_SIZE-curr_buff->counter >= length){
@@ -445,21 +461,11 @@ void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, Flas
 			if(buff_idx==0)
 				buff_idx=1;
 			else buff_idx=0;
-
-			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Call compress");
-			//Call compress. Switch the bit back since we want to compress the buffer that is full
-			if(ft == NULL){
-				if(DEBUG)  ESP_LOGE(TAG_RECORD, "FlashtrainingWrapper is NULL");
-				xSemaphoreGiveRecursive(config.i2c_semaphore);
-			} else {
-				compress_and_save(ft, !buff_idx, buffers);
-				curr_buff->counter = 0; //Reset the compressed buffer
-			}
 		}
 
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Release mutex");
 		//Release mutex
-		xSemaphoreGiveRecursive(config.i2c_semaphore);
+		xSemaphoreGive(config.write_buffer_semaphore);
 
 	}
 }

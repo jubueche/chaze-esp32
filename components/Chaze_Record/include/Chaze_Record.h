@@ -32,11 +32,11 @@ static volatile bool rising_interrupt;
 static unsigned long base_time;
 
 void setup_hr(void);
-void clean_up(TaskHandle_t, TaskHandle_t, TaskHandle_t, TaskHandle_t, FlashtrainingWrapper_t *);
+void clean_up(TaskHandle_t, TaskHandle_t, TaskHandle_t, TaskHandle_t, TaskHandle_t, FlashtrainingWrapper_t *);
 esp_err_t setup_bno(FlashtrainingWrapper_t *ft);
 esp_err_t setup_pressure(void);
 
-void aquire_lock_and_write_to_buffer(buffer_t *, uint8_t *, FlashtrainingWrapper_t *, uint8_t, char const *);
+void aquire_lock_and_write_to_buffer(buffer_t *, uint8_t *, uint8_t, char const *);
 
 //Tasks
 void sample_hr(void *);
