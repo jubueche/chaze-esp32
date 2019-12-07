@@ -66,7 +66,7 @@ bool BNO055::begin(bno055_opmode_t mode)
   }
   vTaskDelay(50 / portTICK_PERIOD_MS);
 
-  ESP_LOGI(TAG, "Done");
+  if(DEBUG) ESP_LOGI(TAG, "Done");
 
   /* Set to normal power mode */
   write8(BNO055_PWR_MODE_ADDR, POWER_MODE_NORMAL);

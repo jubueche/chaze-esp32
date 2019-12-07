@@ -3,8 +3,6 @@
 const char * TAG_Con = "Chaze-Connected";
 
 
-// TODO Set name when advertising
-// TODO check if we are connected to wifi before synching data
 // TODO Fix memory problem and maybe transmit some training meta data before sending the data
 
 class ConnectedCallbacks: public BLECharacteristicCallbacks {
@@ -14,11 +12,11 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
       if (rxValue.length() > 0) {
         uint8_t size = rxValue.length();
         buffer->size = size - 1; // Because of \n
-        ESP_LOGI(TAG_Con, "Length is %d", size);
+        if(DEBUG) ESP_LOGI(TAG_Con, "Length is %d", size);
         
         for (int i = 0; i < size; i++)
         {
-            ESP_LOGI(TAG_Con, "C is %c", rxValue[i]);
+            if(DEBUG) ESP_LOGI(TAG_Con, "C is %c", rxValue[i]);
             buffer->data[i] = rxValue[i];
         }
 
@@ -30,43 +28,43 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                 if(strncmp(buffer->data, "b", buffer->size) == 0)
                 {
                     CONNECTED_STATE = BATTERY;
-                    ESP_LOGI(TAG_Con, "Received battery command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received battery command.");
                 } else if(strncmp(buffer->data, "n", buffer->size) == 0)
                 {
                     CONNECTED_STATE = NAME;
-                    ESP_LOGI(TAG_Con, "Received name command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received name command.");
                 } else if(strncmp(buffer->data, "w", buffer->size) == 0)
                 {
                     CONNECTED_STATE = WIFI;
-                    ESP_LOGI(TAG_Con, "Received wifi command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received wifi command.");
                 } else if(strncmp(buffer->data, "v", buffer->size) == 0)
                 {
                     CONNECTED_STATE = VERSION;
-                    ESP_LOGI(TAG_Con, "Received get version command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received get version command.");
                 } else if(strncmp(buffer->data, "f", buffer->size) == 0)
                 {
                     CONNECTED_STATE = OTA;
-                    ESP_LOGI(TAG_Con, "Received perform OTA command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received perform OTA command.");
                 } else if(strncmp(buffer->data, "d", buffer->size) == 0)
                 {
                     CONNECTED_STATE = DATA;
-                    ESP_LOGI(TAG_Con, "Received send data command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received send data command.");
                 } else if(strncmp(buffer->data, "c", buffer->size) == 0)
                 {
                     CONNECTED_STATE = CONN_STRING;
-                    ESP_LOGI(TAG_Con, "Received set conn string command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received set conn string command.");
                 } else if(strncmp(buffer->data, "q", buffer->size) == 0)
                 {
                     CONNECTED_STATE = DEVICE_NAME;
-                    ESP_LOGI(TAG_Con, "Received set device name command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received set device name command.");
                 } else if(strncmp(buffer->data, "s", buffer->size) == 0)
                 {
                     CONNECTED_STATE = SET_VERSION;
-                    ESP_LOGI(TAG_Con, "Received set version command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received set version command.");
                 } else if(strncmp(buffer->data, "x", buffer->size) == 0)
                 {
                     CONNECTED_STATE = CONTAINER;
-                    ESP_LOGI(TAG_Con, "Received set container command.");
+                    if(DEBUG) ESP_LOGI(TAG_Con, "Received set container command.");
                 }
                 else { //default
                     ESP_LOGE(TAG_Con, "Command %c not recognized. Reset the state to IDLE.", buffer->data[0]);
@@ -104,7 +102,7 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
                     // Check if we have received a "1" or a "0" and set the "synched training flag" corresp.
                     if(strncmp(buffer->data, "1", buffer->size) == 0)
                     {
-                        ESP_LOGI(TAG_Con, "Synched successful.");
+                        if(DEBUG) ESP_LOGI(TAG_Con, "Synched successful.");
                         config.synched_training = SYNCH_COMPLETE;
                     } else {
                         ESP_LOGE(TAG_Con, "Synch unsuccessful.");
@@ -142,7 +140,7 @@ class ConnectedCallbacks: public BLECharacteristicCallbacks {
         }
       }
       else {
-          ESP_LOGI(TAG_Con, "Received one char.");
+          if(DEBUG) ESP_LOGI(TAG_Con, "Received one char.");
       }
     }
 };
@@ -162,7 +160,7 @@ void connected()
     
     ble->pRxCharacteristic->setCallbacks(callback);
 
-    ESP_LOGI(TAG_Con, "Connected");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Connected");
 
     ble->write("r");
 
@@ -231,7 +229,7 @@ void connected()
             }
             default:
             {
-                ESP_LOGI(TAG_Con, "Waiting...");
+                if(DEBUG) ESP_LOGI(TAG_Con, "Waiting...");
                 break;
             }
         }
@@ -240,7 +238,7 @@ void connected()
         vTaskDelay(500 / portTICK_PERIOD_MS);
 
     }
-    ESP_LOGI(TAG_Con, "Going back to advertising mode.");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Going back to advertising mode.");
     if(config.wifi_connected)
     {
         ble->pServer->disconnect(ble->pServer->getConnId());
@@ -254,7 +252,7 @@ void set_container()
 {
     if(buffer->size > 128)
         return;
-    ESP_LOGI(TAG_Con, "Set container name");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set container name");
     char container[buffer->size+1];
     memcpy(container, buffer->data, buffer->size);
     container[buffer->size] = '\0';
@@ -264,7 +262,7 @@ void set_container()
     } else{
         ble->write("0\n");
     }
-    ESP_LOGI(TAG_Con, "Set the container to to %s", container);
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set the container to to %s", container);
     CONNECTED_STATE = IDLE;
 }
 
@@ -272,7 +270,7 @@ void set_conn_string()
 {
     if(buffer->size > 512)
         return;
-    ESP_LOGI(TAG_Con, "Set Conn String");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set Conn String");
     char cs[buffer->size+1];
     memcpy(cs, buffer->data, buffer->size);
     cs[buffer->size] = '\0';
@@ -282,13 +280,13 @@ void set_conn_string()
     } else{
         ble->write("0\n");
     }
-    ESP_LOGI(TAG_Con, "Set the conn string to to %s", cs);
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set the conn string to to %s", cs);
     CONNECTED_STATE = IDLE;
 }
 
 void set_device_name()
 {
-    ESP_LOGI(TAG_Con, "Set device name");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set device name");
     if(buffer->size > 128)
         return;
     char device_name[buffer->size+1];
@@ -300,13 +298,13 @@ void set_device_name()
     } else{
         ble->write("0\n");
     }
-    ESP_LOGI(TAG_Con, "Set the device name to to %s", device_name);
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set the device name to to %s", device_name);
     CONNECTED_STATE = IDLE;
 }
 
 void set_version()
 {
-    ESP_LOGI(TAG_Con, "Set version");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set version");
     if(buffer->size > 128)
         return;
     char version[buffer->size+1];
@@ -318,7 +316,7 @@ void set_version()
     } else{
         ble->write("0\n");
     }
-    ESP_LOGI(TAG_Con, "Set version to to %s", version);
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set version to to %s", version);
     CONNECTED_STATE = IDLE;
 }
 
@@ -333,7 +331,7 @@ void set_name()
 {
     if(buffer->size > 128)
         return;
-    ESP_LOGI(TAG_Con, "Set Name");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set Name");
     char name[buffer->size+1];
     memcpy(name, buffer->data, buffer->size);
     name[buffer->size] = '\0';
@@ -343,7 +341,7 @@ void set_name()
     } else{
         ble->write("0\n");
     }
-    ESP_LOGI(TAG_Con, "Set the name to %s", name);
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set the name to %s", name);
     CONNECTED_STATE = IDLE;
 }
 
@@ -351,7 +349,7 @@ void set_ssid()
 {
     if(buffer->size > 128)
         return;
-    ESP_LOGI(TAG_Con, "Set SSID");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set SSID");
     //char ssid[buffer->size];
     char * ssid = new char[buffer->size];
     memcpy(ssid, buffer->data, buffer->size);
@@ -372,7 +370,7 @@ void set_password()
 {
     if(buffer->size > 128)
         return;
-    ESP_LOGI(TAG_Con, "Set password");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Set password");
     char password[buffer->size];
     memcpy(password, buffer->data, buffer->size);
 
@@ -397,13 +395,13 @@ void ota()
 {
     // We can be sure this task has the wifi_synch_semaphore. This means we are either connected to WiFi or not,
     // but there cannot happen a synch with azure.
-    ESP_LOGI(TAG_Con, "Performing OTA update.");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Performing OTA update.");
     if(!config.wifi_connected)
 	{
 		poll_wifi();
 		if(!config.wifi_connected)
         {
-            ESP_LOGI(TAG_Con, "Not connected.");
+            if(DEBUG) ESP_LOGI(TAG_Con, "Not connected.");
 			ble->write("\nn");
             CONNECTED_STATE = IDLE;
             return;
@@ -411,7 +409,7 @@ void ota()
 	}
     // We are connected
     ble->write("\ns");
-    ESP_LOGI(TAG_Con, "Connected to WiFi, attempting OTA update.");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Connected to WiFi, attempting OTA update.");
     perform_OTA();
     
     esp_err_t wifi_stop_res = esp_wifi_stop();
@@ -419,7 +417,7 @@ void ota()
         if(esp_wifi_deinit() != ESP_OK){
             ESP_LOGE(TAG_Con, "Failed to deinit WiFi");
         } else {
-            ESP_LOGI(TAG_Con, "Deinited WiFi l.342");
+            if(DEBUG) ESP_LOGI(TAG_Con, "Deinited WiFi l.342");
         }
     } else {
         ESP_LOGE(TAG_Con, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
@@ -432,7 +430,7 @@ void ota()
 void synch_data()
 {
 
-    ESP_LOGI(TAG_Con, "Synching data");
+    if(DEBUG) ESP_LOGI(TAG_Con, "Synching data");
     bool done = false;
     uint16_t num_unsynched_trainings = global_ft->get_number_of_unsynched_trainings();
 
@@ -444,7 +442,7 @@ void synch_data()
         // Call again for each training
         global_ft->start_reading_data();
         
-        //! Need to get time and send it here!
+        //! TODO Need to get time of the training and send it here!
         ble->write("31-02-2019-13-45");
 
         int32_t response = 0;
@@ -457,7 +455,7 @@ void synch_data()
 
         } while(response == -1);
          // This was the last chunk
-        ESP_LOGI(TAG_Con, "Response is %d", response);
+        if(DEBUG) ESP_LOGI(TAG_Con, "Response is %d", response);
         ble->write(data, response);
         ble->write(EOF); // Write EOF
 
@@ -473,7 +471,7 @@ void synch_data()
         {
             global_ft->completed_synch_of_training(true);
             global_ft->remove_unsynched_training();
-            ESP_LOGI(TAG_Con, "Successful synch.");
+            if(DEBUG) ESP_LOGI(TAG_Con, "Successful synch.");
         } else if(config.synched_training == SYNCH_INCOMPLETE)
         {
             global_ft->completed_synch_of_training(false);

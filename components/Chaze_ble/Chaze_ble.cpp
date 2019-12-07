@@ -24,12 +24,12 @@ Chaze_ble::Chaze_ble(void){
   {
     if(xSemaphoreTake(config.wifi_synch_semaphore, portMAX_DELAY) == pdTRUE)
     {
-        ESP_LOGI(TAG_BLE, "Took the WiFi semaphore. WiFi-Synch task terminated.");
+        if(DEBUG) ESP_LOGI(TAG_BLE, "Took the WiFi semaphore. WiFi-Synch task terminated.");
         break;
     }
     vTaskDelay(80);
   }
-  ESP_LOGI(TAG_BLE, "Obtained WiFi synch semaphore in BLE constructor.");
+  if(DEBUG) ESP_LOGI(TAG_BLE, "Obtained WiFi synch semaphore in BLE constructor.");
 
   pServer = NULL;
   pTxCharacteristic = NULL;
@@ -57,7 +57,7 @@ Chaze_ble::~Chaze_ble(void){
   //Release the wifi_synch_semaphore
   xSemaphoreGive(config.wifi_synch_semaphore);
   // vTaskDelay(1000);
-  ESP_LOGI(TAG_BLE, "Released wifi_synch_semaphore after BLE has been deallocated.");
+  if(DEBUG) ESP_LOGI(TAG_BLE, "Released wifi_synch_semaphore after BLE has been deallocated.");
 }
 
 bool Chaze_ble::is_initialized()
@@ -71,9 +71,9 @@ void Chaze_ble::initialize_connection(){
   // Create the BLE Device
   if(!BLEDevice::getInitialized())
   {
-    ESP_LOGI(TAG_BLE, "Not yet initialized, start init.");
+    if(DEBUG) ESP_LOGI(TAG_BLE, "Not yet initialized, start init.");
     char* name = global_ft->get_name();
-    ESP_LOGI(TAG_BLE, "Setting device name to %s", name);
+    if(DEBUG) ESP_LOGI(TAG_BLE, "Setting device name to %s", name);
     std::string name_s = name;
     BLEDevice::init(name_s);
     free(name);
@@ -86,7 +86,7 @@ void Chaze_ble::initialize_connection(){
   // Create the BLE Server
   pServer = BLEDevice::createServer(); 
 
-  ESP_LOGI(TAG_BLE, "Created server");
+  if(DEBUG) ESP_LOGI(TAG_BLE, "Created server");
   if(callbacks == NULL)
   {
     callbacks = new MyServerCallbacks();

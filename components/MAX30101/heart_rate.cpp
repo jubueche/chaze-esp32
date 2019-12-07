@@ -68,7 +68,7 @@ void HeartRate::init_structs(void)
 int32_t HeartRate::get_heart_rate(void)
 {
 	int32_t freq = max30101.get_sampling_freq();
-	ESP_LOGI(TAG, "Frquency is: %d\n", freq);
+	if(DEBUG) ESP_LOGI(TAG, "Frquency is: %d\n", freq);
 	int32_t total = freq*this->sampling_time;
 	uint64_t t1,t2;
 	int32_t * read_data =  (int32_t *) malloc(total*sizeof(int32_t));
@@ -94,7 +94,7 @@ int32_t HeartRate::get_heart_rate(void)
 	}
 
 	t2 = (uint64_t) esp_timer_get_time();
-	ESP_LOGI(TAG, "samples[%d] Hz [%.02f]\n", samplesTaken, (float)samplesTaken / ((t2 - t1) / 1000000.0));
+	if(DEBUG) ESP_LOGI(TAG, "samples[%d] Hz [%.02f]\n", samplesTaken, (float)samplesTaken / ((t2 - t1) / 1000000.0));
 
 	for(int i=0;i<total;i++){
 						printf("%d\n", read_data[i]);

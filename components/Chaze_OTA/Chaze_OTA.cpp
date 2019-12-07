@@ -28,16 +28,16 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt)
             ESP_LOGE(TAG_OTA, "HTTP_EVENT_ERROR");
             break;
         case HTTP_EVENT_ON_CONNECTED:
-            ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_CONNECTED");
+            if(DEBUG) ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_CONNECTED");
             break;
         case HTTP_EVENT_HEADER_SENT:
-            ESP_LOGI(TAG_OTA, "HTTP_EVENT_HEADER_SENT");
+            if(DEBUG) ESP_LOGI(TAG_OTA, "HTTP_EVENT_HEADER_SENT");
             break;
         case HTTP_EVENT_ON_HEADER:
-            ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_HEADER, key=%s, value=%s", evt->header_key, evt->header_value);
+            if(DEBUG) ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_HEADER, key=%s, value=%s", evt->header_key, evt->header_value);
             break;
         case HTTP_EVENT_ON_DATA: {
-            ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_DATA, len=%d", evt->data_len);
+            if(DEBUG) ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_DATA, len=%d", evt->data_len);
                 char rcv_buffer[evt->data_len];
                 memcpy(rcv_buffer,(char *)evt->data, evt->data_len);
     			json = cJSON_Parse(rcv_buffer);
@@ -53,16 +53,16 @@ esp_err_t _http_event_handler(esp_http_client_event_t *evt)
 							//Set the flag
 							new_firmware_available = true;
 						}
-						ESP_LOGI(TAG_OTA, "Version is: %.02f\n", new_version);
+						if(DEBUG) ESP_LOGI(TAG_OTA, "Version is: %.02f\n", new_version);
 					}
     			}
         }
             break;
         case HTTP_EVENT_ON_FINISH:
-            ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_FINISH");
+            if(DEBUG) ESP_LOGI(TAG_OTA, "HTTP_EVENT_ON_FINISH");
             break;
         case HTTP_EVENT_DISCONNECTED:
-            ESP_LOGI(TAG_OTA, "HTTP_EVENT_DISCONNECTED");
+            if(DEBUG) ESP_LOGI(TAG_OTA, "HTTP_EVENT_DISCONNECTED");
             break;
     }
     return ESP_OK;
@@ -79,17 +79,17 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
 	switch(event->event_id) {
 		case SYSTEM_EVENT_STA_START:
-			ESP_LOGI(TAG_OTA, "SYSTEM_EVENT_STA_START");
+			if(DEBUG) ESP_LOGI(TAG_OTA, "SYSTEM_EVENT_STA_START");
 			ESP_ERROR_CHECK(esp_wifi_connect());
 		break;
 		case SYSTEM_EVENT_STA_GOT_IP:
-			ESP_LOGI(TAG_OTA, "SYSTEM_EVENT_STA_GOT_IP");
-			ESP_LOGI(TAG_OTA, "got ip:%s\n",
+			if(DEBUG) ESP_LOGI(TAG_OTA, "SYSTEM_EVENT_STA_GOT_IP");
+			if(DEBUG) ESP_LOGI(TAG_OTA, "got ip:%s\n",
 			ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 			xEventGroupSetBits(ota_wifi_event_group, OTA_CONNECTED_BIT);
 			break;
 		case SYSTEM_EVENT_STA_DISCONNECTED:
-			ESP_LOGI(TAG_OTA, "SYSTEM_EVENT_STA_DISCONNECTED");
+			if(DEBUG) ESP_LOGI(TAG_OTA, "SYSTEM_EVENT_STA_DISCONNECTED");
 			xEventGroupClearBits(ota_wifi_event_group, OTA_CONNECTED_BIT);
 			break;
 		default:
@@ -177,7 +177,7 @@ void perform_OTA(void)
 	}
 	current_version = version_float;
 	new_version = current_version;
-	ESP_LOGI(TAG_OTA, "Current version %s transformed to %.4f", current_version_string, current_version);
+	if(DEBUG) ESP_LOGI(TAG_OTA, "Current version %s transformed to %.4f", current_version_string, current_version);
 
 	check_for_update();
 
@@ -190,7 +190,7 @@ void perform_OTA(void)
 	ret = esp_https_ota(&ota_client_config);
 	if (ret == ESP_OK) {
 		write_new_firmware_version();
-		ESP_LOGI(TAG_OTA, "OTA OK, restarting...");
+		if(DEBUG) ESP_LOGI(TAG_OTA, "OTA OK, restarting...");
 		esp_restart();
 	} else {
 		ESP_LOGE(TAG_OTA, "OTA failed...");
@@ -200,7 +200,7 @@ void perform_OTA(void)
 	/*if(new_firmware_available){
 		cJSON *file = cJSON_GetObjectItemCaseSensitive(json, "file");
 		if(cJSON_IsString(file) && (file->valuestring != NULL)) {
-			ESP_LOGI(TAG_OTA, "downloading and installing new firmware (%s).", file->valuestring);
+			if(DEBUG) ESP_LOGI(TAG_OTA, "downloading and installing new firmware (%s).", file->valuestring);
 
 			esp_http_client_config_t ota_client_config = {
 					.url = file->valuestring,
@@ -208,7 +208,7 @@ void perform_OTA(void)
 			ret = esp_https_ota(&ota_client_config);
 			if (ret == ESP_OK) {
 				write_new_firmware_version();
-				ESP_LOGI(TAG_OTA, "OTA OK, restarting...");
+				if(DEBUG) ESP_LOGI(TAG_OTA, "OTA OK, restarting...");
 				esp_restart();
 			} else {
 				ESP_LOGE(TAG_OTA, "OTA failed...");

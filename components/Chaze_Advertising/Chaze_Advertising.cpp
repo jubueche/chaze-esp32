@@ -48,7 +48,7 @@ void advertise()
 	{
 		config.wifi_synch_semaphore = xSemaphoreCreateMutex();
 		xSemaphoreGive(config.wifi_synch_semaphore);
-        ESP_LOGI(TAG_Adv, "Created wifi_synch_semaphore");
+        if(DEBUG) ESP_LOGI(TAG_Adv, "Created wifi_synch_semaphore");
 	}
 
     // Inilialize nvs
@@ -73,19 +73,19 @@ void advertise()
     if(ble == NULL)
     {
         ble = new Chaze_ble();
-        ESP_LOGI(TAG_Adv, "Created BLE object.");
-        ESP_LOGI(TAG_Adv, "Not initialized. Starting BLE.");
+        if(DEBUG) ESP_LOGI(TAG_Adv, "Created BLE object.");
+        if(DEBUG) ESP_LOGI(TAG_Adv, "Not initialized. Starting BLE.");
         ble->initialize_connection();
     }
 
-    ESP_LOGI(TAG_Adv, "Start advertising.");
+    if(DEBUG) ESP_LOGI(TAG_Adv, "Start advertising.");
     ble->advertise();
 
     am_interrupt = false;
     rising_interrupt = false;
     attach_am_interrupt(&bno_adv);
     config.attach_btn_int(&gpio_bno_task, &gpio_isr_handler);
-    ESP_LOGI(TAG_Adv, "Attached Button interrupt");
+    if(DEBUG) ESP_LOGI(TAG_Adv, "Attached Button interrupt");
     unsigned long blue_led_timer = millis();
     unsigned long timeout_timer = millis();
 
@@ -99,7 +99,7 @@ void advertise()
             }
     } else if (config.wifi_synch_task_suspended && global_ft->get_number_of_unsynched_trainings() > 0)
     {
-        ESP_LOGI(TAG_Adv, "Resuming the task");
+        if(DEBUG) ESP_LOGI(TAG_Adv, "Resuming the task");
         vTaskResume(wifi_synch_task_handle);
         config.wifi_synch_task_suspended = false;
     }
@@ -118,13 +118,13 @@ void advertise()
         }
 
         if(rising_interrupt){
-			ESP_LOGI(TAG_Adv, "Interrupt");
+			if(DEBUG) ESP_LOGI(TAG_Adv, "Interrupt");
 			rising_interrupt = false;
 			long timer = millis();
 
 			while(gpio_get_level(GPIO_BUTTON))
 			{
-				ESP_LOGI(TAG_Adv, "Waiting for release...");
+				if(DEBUG) ESP_LOGI(TAG_Adv, "Waiting for release...");
 				if (millis() - timer > TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING && millis() - timer < TIMEOUT_BUTTON_PUSHED_TO_OFF)
 				{
                     gpio_set_level(GPIO_LED_GREEN, 1);
@@ -160,7 +160,7 @@ void advertise()
         if(config.ble_connected)
         {
             // Switch to connected state
-            ESP_LOGI(TAG_Adv, "Connected");
+            if(DEBUG) ESP_LOGI(TAG_Adv, "Connected");
             config.flicker_led(GPIO_BLUE);
             config.STATE = CONNECTED;
             config.detach_bno_int();
@@ -179,13 +179,13 @@ void advertise()
         {
             config.STATE = DEEPSLEEP;
             clean_up(&bno_adv);
-            ESP_LOGI(TAG_Adv, "Advertising timeout. Going to sleep.");
+            if(DEBUG) ESP_LOGI(TAG_Adv, "Advertising timeout. Going to sleep.");
             return;
         }
 
         if(config.wifi_connected)
         {
-            ESP_LOGI(TAG_Adv, "WiFi is connected. Returning from advertise().");
+            if(DEBUG) ESP_LOGI(TAG_Adv, "WiFi is connected. Returning from advertise().");
             config.detach_bno_int();
             config.detach_btn_int();
             return;
@@ -203,7 +203,7 @@ void clean_up(BNO055 *bno_adv)
         if(wifi_stop_res == ESP_OK){
             if(esp_wifi_deinit() != ESP_OK){
                 ESP_LOGE(TAG_Adv, "Failed to deinit WiFi");
-            } else 	ESP_LOGI(TAG_Adv, "Deinited WiFi after successful upload.");
+            } else 	if(DEBUG) ESP_LOGI(TAG_Adv, "Deinited WiFi after successful upload.");
         } else {
             ESP_LOGE(TAG_Adv, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
         }
@@ -233,6 +233,6 @@ void attach_am_interrupt(BNO055 *bno_adv)
     
     config.attach_bno_int(task_pointer, isr_pointer);
 
-    ESP_LOGI(TAG_Adv, "Attached BNO interrupt.");
+    if(DEBUG) ESP_LOGI(TAG_Adv, "Attached BNO interrupt.");
 
 }

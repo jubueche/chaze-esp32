@@ -30,17 +30,17 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 {
 	switch(event->event_id) {
 		case SYSTEM_EVENT_STA_START:
-			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_START");
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_START");
 			ESP_ERROR_CHECK(esp_wifi_connect());
 		break;
 		case SYSTEM_EVENT_STA_GOT_IP:
-			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_GOT_IP");
-			ESP_LOGI(TAG_WiFi, "got ip:%s\n",
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_GOT_IP");
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "got ip:%s\n",
 			ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
 			config.wifi_connected = true;
 			break;
 		case SYSTEM_EVENT_STA_DISCONNECTED:
-			ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_DISCONNECTED");
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "SYSTEM_EVENT_STA_DISCONNECTED");
 			config.wifi_connected = false;
 			break;
 		default:
@@ -82,15 +82,15 @@ void synch_via_wifi(void *pvParameter)
 				config.wifi_synch_task_suspended = true;
 				xSemaphoreGive(config.wifi_synch_semaphore);
 				vTaskSuspend(NULL);
-				ESP_LOGI(TAG_WiFi, "Not allowing azure or num. uns. trainings is 0: Suspended wifi synch task");
+				if(DEBUG) ESP_LOGI(TAG_WiFi, "Not allowing azure or num. uns. trainings is 0: Suspended wifi synch task");
 			} else {
 				if(!config.wifi_connected)
 				{
 					poll_wifi(); // Tries to connect to WiFi. If successful sets config.wifi_connected to true.
-					ESP_LOGI(TAG_WiFi, "After poll_wifi(): Free heap space is %d", esp_get_free_heap_size());
+					if(DEBUG) ESP_LOGI(TAG_WiFi, "After poll_wifi(): Free heap space is %d", esp_get_free_heap_size());
 				} // No else if!
 				if(config.wifi_connected){
-					ESP_LOGI(TAG_WiFi, "Connected to WiFi, trying to synch data now...");
+					if(DEBUG) ESP_LOGI(TAG_WiFi, "Connected to WiFi, trying to synch data now...");
 
 					for(;;)
 					{
@@ -100,14 +100,14 @@ void synch_via_wifi(void *pvParameter)
 						}
 						vTaskDelay(80);
 					}
-					ESP_LOGI(TAG_WiFi, "Obtained wifi_synch_semaphore. Synching with azure.");
+					if(DEBUG) ESP_LOGI(TAG_WiFi, "Obtained wifi_synch_semaphore. Synching with azure.");
 					bool success = false;
 					if(config.allow_azure)
 					{
 						success = synch_with_azure();
 					}
 					xSemaphoreGive(config.wifi_synch_semaphore);
-					ESP_LOGI(TAG_WiFi, "Released wifi_synch_semaphore after synch with azure.");
+					if(DEBUG) ESP_LOGI(TAG_WiFi, "Released wifi_synch_semaphore after synch with azure.");
 
 					// Set the new number of trainings
 					if(success)
@@ -122,7 +122,7 @@ void synch_via_wifi(void *pvParameter)
 					if(wifi_stop_res == ESP_OK){
 						if(esp_wifi_deinit() != ESP_OK){
 							ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
-						} else 	ESP_LOGI(TAG_WiFi, "Deinited WiFi after successful upload.");
+						} else 	if(DEBUG) ESP_LOGI(TAG_WiFi, "Deinited WiFi after successful upload.");
 					} else {
 						ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
 					}
@@ -134,20 +134,20 @@ void synch_via_wifi(void *pvParameter)
 			// Release the semaphore and suspend for SCAN_INTERVAL number of seconds
 			xSemaphoreGive(config.wifi_synch_semaphore);
 			vTaskDelay(SCAN_INTERVAL*1000 / portTICK_PERIOD_MS); //Delay for 20s
-			ESP_LOGI(TAG_WiFi, "After delay.");
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "After delay.");
 		}
-		ESP_LOGI(TAG_WiFi, "State changed. Wifi is stopping.");
+		if(DEBUG) ESP_LOGI(TAG_WiFi, "State changed. Wifi is stopping.");
 		esp_err_t stop_wifi_res = esp_wifi_stop();
 		if(stop_wifi_res == ESP_OK){
 			esp_err_t deinit_wifi_res = esp_wifi_deinit();
 			if(deinit_wifi_res != ESP_OK){
 				ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi: %s", esp_err_to_name(deinit_wifi_res));
-			} else 	ESP_LOGI(TAG_WiFi, "Deinited WiFi: l.167");
+			} else 	if(DEBUG) ESP_LOGI(TAG_WiFi, "Deinited WiFi: l.167");
 		} else {
 			ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(stop_wifi_res));
 		}
 		xSemaphoreGive(config.wifi_synch_semaphore);
-		ESP_LOGI(TAG_WiFi, "Suspending task");
+		if(DEBUG) ESP_LOGI(TAG_WiFi, "Suspending task");
 		config.wifi_synch_task_suspended = true;
 		vTaskSuspend(NULL);
 	}
@@ -185,14 +185,14 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
 			} else {
 				*data = NULL;
                 *size = 0;
-                ESP_LOGI(TAG_WiFi, "Indicating upload is complete.");
+                if(DEBUG) ESP_LOGI(TAG_WiFi, "Indicating upload is complete.");
 			}
         }
         else
         {
             // The last call to this callback is to indicate the result of uploading the previous data block provided.
             // Note: In this last call, data and size pointers are NULL.
-            ESP_LOGI(TAG_WiFi, "Last call to getDataCallback (result: %s)", ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
+            if(DEBUG) ESP_LOGI(TAG_WiFi, "Last call to getDataCallback (result: %s)", ENUM_TO_STRING(IOTHUB_CLIENT_FILE_UPLOAD_RESULT, result));
         }
     }
     else
@@ -242,7 +242,7 @@ bool synch_with_azure(void)
 		if(rtc.begin()) {
 			rtc.set24Hour();
 			rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);	
-			ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
 		} else {
 			ESP_LOGE(TAG_WiFi, "Error setting time.");
 		}
@@ -262,7 +262,7 @@ bool synch_with_azure(void)
 		strcat(file_name, ".txt");
 		//free(device_name);
 		free(container_name);
-		ESP_LOGI(TAG_WiFi, "File name is %s", file_name);
+		if(DEBUG) ESP_LOGI(TAG_WiFi, "File name is %s", file_name);
 
 		global_ft->start_reading_data();
 		
@@ -272,7 +272,7 @@ bool synch_with_azure(void)
 		}
 		else
 		{
-			ESP_LOGI(TAG_WiFi, "Successful upload.");
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "Successful upload.");
 			success = true;
 		}
 
@@ -302,7 +302,7 @@ void poll_wifi(void){
 	{
 		esp_err_t ret = esp_event_loop_init(event_handler, NULL);
 		if(ret == ESP_FAIL){
-			ESP_LOGI(TAG_WiFi, "Event handler already initialized. That is ok. Continue.\n");
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "Event handler already initialized. That is ok. Continue.\n");
 		}
 		config.event_handler_set = true;
 	}
@@ -314,7 +314,7 @@ void poll_wifi(void){
 	if(wifi_init_res != ESP_OK){
 		ESP_LOGE(TAG_WiFi, "Could not initialize WiFi: %s", esp_err_to_name(wifi_init_res));
 		return;
-	} else ESP_LOGI(TAG_WiFi, "Initialized WiFi");
+	} else if(DEBUG) ESP_LOGI(TAG_WiFi, "Initialized WiFi");
 
 	wifi_sta_config_t sta_cnfg = {};
 	char * ssid = global_ft->get_wifi_ssid();
@@ -331,14 +331,14 @@ void poll_wifi(void){
 	if(!res)
 	{
 		esp_wifi_deinit();
-		ESP_LOGI(TAG_WiFi, "Set mode, set config or start failed.");
+		if(DEBUG) ESP_LOGI(TAG_WiFi, "Set mode, set config or start failed.");
 		return;
 	}
 
 	esp_wifi_set_ps(/*WIFI_PS_MAX_MODEM*/WIFI_PS_NONE); //Give 100% power for short amount of time
 
 	//Wait for connection. If not connected after WAIT_TIME many ms, continue as usual.
-	ESP_LOGI(TAG_WiFi, "Waiting for connection");
+	if(DEBUG) ESP_LOGI(TAG_WiFi, "Waiting for connection");
 	
 	unsigned long start = millis();
 	while(millis() - start < WAIT_TIME)
@@ -354,7 +354,7 @@ void poll_wifi(void){
 			if(esp_wifi_deinit() != ESP_OK){
 				ESP_LOGE(TAG_WiFi, "Failed to deinit WiFi");
 			} else {
-				ESP_LOGI(TAG_WiFi, "Deinited WiFi l.342");
+				if(DEBUG) ESP_LOGI(TAG_WiFi, "Deinited WiFi l.342");
 			}
 		} else {
 			ESP_LOGE(TAG_WiFi, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
@@ -362,6 +362,6 @@ void poll_wifi(void){
 		ESP_LOGW(TAG_WiFi, "Experienced timeout when trying to connect to WiFi. Maybe password wrong.");
 		return;
 	} else {
-		ESP_LOGI(TAG_WiFi, "Connected to WiFi");
+		if(DEBUG) ESP_LOGI(TAG_WiFi, "Connected to WiFi");
 	}
 }

@@ -82,7 +82,7 @@ bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
 
 bool Flashtraining::set_name(char * name, uint8_t size)
 {
-	ESP_LOGI(TAG, "Size is %d", size);
+	if(DEBUG) ESP_LOGI(TAG, "Size is %d", size);
 	if(size > 128 || size < 1)
 	{
 		ESP_LOGE(TAG, "Name length is too long.");
@@ -120,22 +120,22 @@ char * Flashtraining::get_name()
 void Flashtraining::add_unsynched_training()
 {
 	uint16_t current_unsynched = this->get_number_of_unsynched_trainings();
-	ESP_LOGI(TAG, "Number of unsycnhed trainings was %d", current_unsynched);
+	if(DEBUG) ESP_LOGI(TAG, "Number of unsycnhed trainings was %d", current_unsynched);
 	this->set_number_of_unsynched_trainings(current_unsynched + 1);
-	ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
+	if(DEBUG) ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
 }
 
 void Flashtraining::remove_unsynched_training()
 {
 	uint16_t current_unsynched = this->get_number_of_unsynched_trainings();
-	ESP_LOGI(TAG, "Number of unsynched trainings was %d", current_unsynched);
+	if(DEBUG) ESP_LOGI(TAG, "Number of unsynched trainings was %d", current_unsynched);
 	uint16_t new_val = 0;
 	if(current_unsynched >= 1)
 	{
 		new_val = current_unsynched -1;
 	}
 	this->set_number_of_unsynched_trainings(new_val);
-	ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
+	if(DEBUG) ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
 }
 
 uint16_t Flashtraining::get_number_of_unsynched_trainings(){
@@ -152,8 +152,8 @@ uint16_t Flashtraining::get_number_of_unsynched_trainings(){
 		err = nvs_get_u16(my_handle, "unsynched", &number_unsynched);
 		switch (err) {
 			case ESP_OK:
-				ESP_LOGI(TAG, "Done");
-				ESP_LOGI(TAG, "Num. unsynched trainings is = %d", number_unsynched);
+				if(DEBUG) ESP_LOGI(TAG, "Done");
+				if(DEBUG) ESP_LOGI(TAG, "Num. unsynched trainings is = %d", number_unsynched);
 				break;
 			case ESP_ERR_NVS_NOT_FOUND:
 				ESP_LOGE(TAG, "The value is not initialized yet!");
@@ -210,14 +210,14 @@ int32_t Flashtraining::get_next_buffer_of_training(uint8_t * buff)
 		for(int i=0;i<UPLOAD_BLOCK_SIZE_BLE;i++){
 			buff[i] = config.random_between(66,88);
 		}
-		ESP_LOGI(TAG, "Full chunk."); 
+		if(DEBUG) ESP_LOGI(TAG, "Full chunk."); 
 		return -1;
 	} else {
 		uint32_t n = config.random_between(20,100);
 		for(int i =0; i<n; i++) {
 			buff[i] = config.random_between(66,88);
 		}
-		ESP_LOGI(TAG, "Half full chunk of size %d.", n);
+		if(DEBUG) ESP_LOGI(TAG, "Half full chunk of size %d.", n);
 		return n;
 	}
 }
@@ -262,8 +262,8 @@ char * Flashtraining::get_string_pointer_from_memory(const char * indicator, siz
 					return (char*) malloc(1); // All hope is lost and we go to sleep.
 				}
 				memcpy(final_value, new_value, len);
-				ESP_LOGI(TAG, "Done");
-				ESP_LOGI(TAG, "%s is = %s", indicator,final_value);
+				if(DEBUG) ESP_LOGI(TAG, "Done");
+				if(DEBUG) ESP_LOGI(TAG, "%s is = %s", indicator,final_value);
 				return final_value;
 			} break;
 			case ESP_ERR_NVS_NOT_FOUND: {
@@ -277,13 +277,13 @@ char * Flashtraining::get_string_pointer_from_memory(const char * indicator, siz
 	char * ret_val = (char *) malloc(len_s+1);
 	memcpy(ret_val, default_value, len_s);
 	ret_val[len_s] = '\0';
-	ESP_LOGI(TAG, "The %s is = %s", indicator, ret_val);
+	if(DEBUG) ESP_LOGI(TAG, "The %s is = %s", indicator, ret_val);
 	return ret_val;
 }
 
 bool Flashtraining::set_string_in_memory(char * indicator, char * value, uint8_t size)
 {
-	ESP_LOGI(TAG, "Size is %d", size);
+	if(DEBUG) ESP_LOGI(TAG, "Size is %d", size);
 	
 	char new_value[size+1];
 	memcpy(new_value, value, size);
@@ -429,7 +429,7 @@ bool Flashtraining::abort_reading_data() {
 void Flashtraining::please_call_every_loop() {
 	_Check_or_Initialize();
 	if (_STATE == 4) {
-		ESP_LOGI(TAG, "_current_sector_eraseposition: %d", _current_sector_eraseposition);
+		if(DEBUG) ESP_LOGI(TAG, "_current_sector_eraseposition: %d", _current_sector_eraseposition);
 		if (myflash.CheckErasing_inProgress() == 0) {
 			myflash.readByteArray(_current_sector_eraseposition * 262144, _pagereadbuffer, 512);
 			if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
