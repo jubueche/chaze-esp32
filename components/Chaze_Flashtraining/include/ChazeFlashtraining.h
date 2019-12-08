@@ -24,27 +24,33 @@
 class Flashtraining
 { 
   static SPIFlash myflash; //Only declared, not initialized bc static
+  static RV3028 rtc;
+
   public:
     //The following functions return true if they were executed successfully
     Flashtraining(void);
 
     //WRITE TRAINING
     bool start_new_training(); //! Consti
+	bool write_compressed_chunk(uint8_t * data, uint32_t n);	//Write n chars to the flash (8192 bytes compressed to ~4000 bytes)
     bool stop_training(); //! Consti
 
-    //! Needs to be tested and implemented
-/**/bool write_compressed_chunk(uint8_t * data, uint32_t n); //! Consti
-/**/int32_t get_next_buffer_of_training(uint8_t *);  //! Consti // Takes pointer to buffer. Returns -1 if wrote 512 bytes else the number of bytes written.
-/**/void completed_synch_of_training(bool); // Passes a boolean indicating whether the training was successfully synched. //! Consti
-/**/char * get_device_name(void); //Returns device ID //! Consti
+	//TRAINING METADATA
+	uint32_t meta_total_number_of_trainings(void);						//returns the total number of trainings (synced and nonsynced ones)
+																		//trainindex: from 0 to meta_total_number_of_trainings() - 1
+	uint32_t meta_get_training_size(uint8_t trainindex);				//returns the training size in bytes
+	bool meta_get_training_starttime(uint8_t trainindex, void *buf);	//writes 5 bytes to buf: year (2019=19), month, date, hours, minutes
+	bool meta_get_training_endtime(uint8_t trainindex, void *buf);		//writes 5 bytes to buf: year (2019=19), month, date, hours, minutes
+	void meta_set_synced(uint8_t trainindex, bool synced);									// Passes a boolean indicating whether the training was successfully synched.
+	bool meta_is_synced(uint8_t trainindex);
 
 
     //READING TRAINING DATA
-    bool start_reading_data();
-    //In the following function, buflenght MUST be 512. If the returned value is false, the reading process has finished (in this case STATE is automatically resetted to "ready")
-    bool get_all_data_bufferwise(void *buf);
-    //the following function has to be called only when reading process is aborted externally (if you don´t call it is not possible to start a new training until the next reset)
-    bool abort_reading_data();
+    bool start_reading_data(uint8_t trainindex);
+	//Read the next page (512 bytes) from current training. If the returned value is false, the reading process has finished (in this case STATE is automatically resetted to "ready")
+	bool get_next_buffer_of_training(uint8_t * buf);
+	//the following function has to be called only when reading process is aborted externally (if you don´t call it is not possible to start a new training until the next reset)
+	bool abort_reading_data();
 
     //ERASE TRAINING DATA
     bool start_delete_all_trainings();
@@ -54,7 +60,7 @@ class Flashtraining
     float readCalibration(uint8_t storageaddress);	//default/error value is 0.0f
 
     //OTHER FUNCTIONS
-    void please_call_every_loop();
+	char * get_device_ID(void); //Returns device ID (OTP)
     int get_STATE();
     //0: not initialized
     //1: ready
@@ -68,16 +74,20 @@ class Flashtraining
 
     bool _Check_or_Initialize();
     bool _Check_buffer_contains_only_ff(uint8_t  *buffer);
-    //write
-    uint8_t _pagewritebuffer[512];
-    int _current_pagewritebuffer_position;	//Position, wo er noch nicht geschrieben hat
-    int _current_page_writeposition;		//Position, wo er noch nicht geschrieben hat
-    bool _write_bytebuffer_toflash(uint8_t *buffer, uint8_t  buflenght);
-    //read
-    uint8_t  _pagereadbuffer[512];
-    int _current_page_readposition;
-    //erase
-    int _current_sector_eraseposition;
+
+	//meta data variables
+	uint32_t _current_startaddress, _current_endaddress;
+	uint8_t _current_startyear, _current_startmonth, _current_startdate, _current_starthour, _current_startminute;
+	uint8_t _current_endyear, _current_endmonth, _current_enddate, _current_endhour, _current_endminute;
+	//write
+	uint8_t _pagewritebuffer[512];
+	int _current_page_writeposition;		//Position, wo er noch nicht geschrieben hat
+	bool _write_bytebuffer_toflash(uint8_t *buffer, uint8_t  buflenght);
+	//read
+	uint8_t  _pagereadbuffer[512];
+	int _current_page_readposition;
+	//erase
+	int _current_sector_eraseposition;
 
     int _STATE;
     //0: not initialized
