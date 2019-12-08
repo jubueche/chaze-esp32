@@ -11,15 +11,12 @@ const char * TAG_RECORD = "Chaze Record";
 
 void sample_hr(void * pvParams)
 {
-	buffer_t * curr_buff;
 	uint32_t heart_rate;
 	unsigned long sample_time;
 	uint8_t bytes[9] = {};
 	char const * name = "HR";
 	for(;;){
 
-		//Try to aquire the mutex for a given amount of time then back-off
-		curr_buff = buffers[buff_idx];
 		// Sample heart rate
 		//! Uncomment if heart rate sensor attached, use config.I2C methods for thread safety
 		//uint32_t heart_rate = hr.get_heart_rate();
@@ -30,7 +27,7 @@ void sample_hr(void * pvParams)
 		sample_time = millis() - base_time;
 		// Populate uint8_t array.
 		config.populate_heart_rate(bytes, heart_rate, sample_time);
-		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
+		aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name);
 	}
 	
 }
@@ -38,71 +35,60 @@ void sample_hr(void * pvParams)
 
 void sample_pressure(void * pvParams)
 {
-	buffer_t * curr_buff;
 	float value;
 	unsigned long sample_time;
 	uint8_t bytes[9] = {};
 	char const * name = "Pressure";
 	for(;;){
-
-		//Try to aquire the mutex for a given amount of time then back-off
-		curr_buff = buffers[buff_idx];
 		pressure.read_vals();
 		value = pressure.pressure();
 		// Get time of sample
 		sample_time = millis() - base_time;
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
 		config.populate_pressure(bytes, value, sample_time, false);
-		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
+		aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name);
 	}
 }
 
 void sample_pressure_backside(void * pvParams)
 {
-	buffer_t * curr_buff;
 	float value;
 	unsigned long sample_time;
 	uint8_t bytes[9] = {};
 	char const * name = "Pressure Back";
 	for(;;){
-
-		//Try to aquire the mutex for a given amount of time then back-off
-		curr_buff = buffers[buff_idx];
 		pressure_backside.read_vals();
 		value = pressure_backside.pressure();
 		// Get time of sample
 		sample_time = millis() - base_time;
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure Backside: Time: %lu  Pressure: %f", sample_time, value);
 		config.populate_pressure(bytes, value, sample_time,true);
-		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
+		aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name);
 	}
 }
 
 
 void sample_bno(void * pvParams)
 {
-	buffer_t * curr_buff;
 	unsigned long sample_time;
 	imu::Quaternion quat;
 	imu::Vector<3> acc;
-	uint8_t bytes[33] = {};
-	float values[7] = {};
-	double values_d[7] = {};
+	uint8_t bytes[33];
+	float values[7];
+	double values_d[7];
 	char const * name = "BNO055";
 	for(;;){
-
-		//Try to aquire the mutex for a given amount of time then back-off
-		curr_buff = buffers[buff_idx];
 		sample_time = millis() - base_time;
 		quat = bno.getQuat();
 		acc = bno.getVector(BNO055::VECTOR_LINEARACCEL);
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "Acc is %.3f", acc.x());
 		values_d[0] = acc.x(); values_d[1]=acc.y();values_d[2]=acc.z();values_d[3]=quat.w();values_d[4]=quat.y();values_d[5]=quat.x();values_d[6]=quat.z(); 
 		for(int i=0;i<7;i++){
 			values[i] = (float) values_d[i];
 		}
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "BNO: Time: %lu  AccX: %f, AccY: %f, AccZ: %f, QuatW: %f, QuatY: %f, QuatX: %f, QuatZ: %f, ", sample_time, values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
 		config.populate_bno(bytes, values, sample_time);
-		aquire_lock_and_write_to_buffer(curr_buff, bytes, sizeof(bytes), name);
+		aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name);
 	}
 }
 
@@ -122,15 +108,23 @@ void check_buffer_and_write_to_flash_task(void * pvParams)
 	{
 		if(buf1->counter == BUFFER_SIZE)
 		{
-			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer 0 is full. Call compress and save.");
-			compress_and_save(ft, 0, buffers); // Compress buffer 1 (index 0 in buffers)
-			buf1->counter = 0; //Reset the buffer
+			if(xSemaphoreTake(config.compress_and_save_semaphore, portMAX_DELAY) == pdTRUE)
+			{
+				if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer 0 is full. Call compress and save.");
+				compress_and_save(ft, 0, buffers); // Compress buffer 1 (index 0 in buffers)
+				buf1->counter = 0; //Reset the buffer
+				xSemaphoreGive(config.compress_and_save_semaphore);
+			}
 		}
 		if(buf2->counter == BUFFER_SIZE)
 		{
-			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer 1 is full. Call compress and save.");
-			compress_and_save(ft, 1, buffers); // Compress buffer 1 (index 0 in buffers)
-			buf2->counter = 0; //Reset the buffer
+			if(xSemaphoreTake(config.compress_and_save_semaphore, portMAX_DELAY) == pdTRUE)
+			{
+				if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer 1 is full. Call compress and save.");
+				compress_and_save(ft, 1, buffers); // Compress buffer 1 (index 0 in buffers)
+				buf2->counter = 0; //Reset the buffer
+				xSemaphoreGive(config.compress_and_save_semaphore);
+			}
 		}
 		vTaskDelay(20 / portTICK_PERIOD_MS); // Wait half a second to check again.
 
@@ -255,7 +249,7 @@ void record()
 	// Start all tasks. Heart rate has the highest priority followed by pressure and BNO.
 	//! HIGH WATER MARK!
 	bool success = (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 7, NULL, 10, &hr_task_handle);
-	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 7, NULL, 10, &bno_task_handle);
+	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 8, NULL, 10, &bno_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 7, NULL, 10, &pressure_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 7, NULL, 10, &pressure_backside_task_handle);
 	success = success && (bool) xTaskCreate(&check_buffer_and_write_to_flash_task, "check_and_compress", 1024*6, ft, 10, &check_buffer_and_write_to_flash_task_task_handle);
@@ -292,10 +286,6 @@ void record()
 					return;
 				}
 			}
-			if(timeout_before)
-			{
-				gpio_set_level(GPIO_LED_RED, 0);
-			}
 		}
 
 		if(millis() - red_led_timer > LED_RED_TIMEOUT)
@@ -305,7 +295,6 @@ void record()
 			vTaskDelay(80 / portTICK_PERIOD_MS);
 			gpio_set_level(GPIO_LED_RED, 0);
 		}
-
 		vTaskDelay(100 /portTICK_PERIOD_MS);
 	}
 
@@ -329,11 +318,21 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	{
 		// Delete the tasks
 		vTaskDelete(hr_task_handle);
+		ESP_LOGI(TAG_RECORD, "Deleted HR");
 		vTaskDelete(bno_task_handle);
+		ESP_LOGI(TAG_RECORD, "Deleted BNO");
 		vTaskDelete(pressure_task_handle);
+		ESP_LOGI(TAG_RECORD, "Deleted Pressure");
 		vTaskDelete(pressure_backside_task_handle);
-		vTaskDelete(check_buffer_and_write_to_flash_task_task_handle);
+		ESP_LOGI(TAG_RECORD, "Deleted Pressure back");
 		xSemaphoreGive(config.write_buffer_semaphore);
+	}
+
+	if(xSemaphoreTake(config.compress_and_save_semaphore, portMAX_DELAY) == pdTRUE)
+	{
+		vTaskDelete(check_buffer_and_write_to_flash_task_task_handle);
+		ESP_LOGI(TAG_RECORD, "Deleted Check buffer");
+		xSemaphoreGive(config.compress_and_save_semaphore);
 	}
 	
 	// Write last buffer and stop training
@@ -441,10 +440,11 @@ esp_err_t setup_bno(FlashtrainingWrapper_t * ft)
 }
 
 
-void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, uint8_t length, char const * name)
+void aquire_lock_and_write_to_buffer(uint8_t * bytes, uint8_t length, char const * name)
 {
 	if(xSemaphoreTake(config.write_buffer_semaphore, (TickType_t) 500) == pdTRUE)
 	{
+		buffer_t * curr_buff = buffers[buff_idx];
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
 		if(BUFFER_SIZE-curr_buff->counter >= length){
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "Space left: %d", BUFFER_SIZE-curr_buff->counter);
@@ -454,7 +454,7 @@ void aquire_lock_and_write_to_buffer(buffer_t * curr_buff, uint8_t * bytes, uint
 			curr_buff->counter += length;
 		} else{
 			//Fill up the buffer with 'f' and set the buff_idx to buff_idx XOR 1
-			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Buffer almost full, fill up");
+			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Buffer %d almost full, fill up", buff_idx);
 			for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
 				curr_buff->data[i] = 'f';
 			curr_buff->counter += BUFFER_SIZE-curr_buff->counter;

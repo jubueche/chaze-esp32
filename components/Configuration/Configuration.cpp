@@ -6,7 +6,10 @@ Configuration config;
 // TODO Needs implementation
 uint8_t Configuration::get_battery_level(void)
 {
-    return 97;
+    //! Need to read calibration of the voltage divider
+    float voltage = analogRead(GPIO_NUM_35) * 2.2 * 3.3 / 4096;   //! ACHTUNG: Spannungsteilerverhältnis kann variieren (hier 2.2, normal 2)
+    uint8_t percentage = (voltage - 3.7) * 2 * 100;
+    return percentage; 
 }
 
 uint32_t Configuration::get_number_of_unsynched_trainings(void)

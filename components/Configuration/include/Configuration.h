@@ -69,7 +69,7 @@
  */
 #define TIMEOUT_AFTER_ACK 3000 /*3.0s*/
 #define TIMEOUT_AFTER_SEND 20000
-#define TIMEOUT_AFTER_ADVERTISING 600000 // 10 min.
+#define TIMEOUT_AFTER_ADVERTISING 60000 // 10 min.
 #define TIMEOUT_BUTTON_PUSHED_TO_SLEEP 1200
 #define TIMEOUT_BUTTON_PUSHED_TO_ADVERTISING 1200
 #define TIMEOUT_BUTTON_PUSHED_TO_OFF 3000
@@ -155,6 +155,7 @@ class Configuration {
     SemaphoreHandle_t i2c_semaphore = xSemaphoreCreateRecursiveMutex();
     SemaphoreHandle_t i2c_back_semaphore = xSemaphoreCreateRecursiveMutex();
     SemaphoreHandle_t write_buffer_semaphore = xSemaphoreCreateMutex();
+    SemaphoreHandle_t compress_and_save_semaphore = xSemaphoreCreateMutex();
     SemaphoreHandle_t wifi_synch_semaphore = NULL;
 
     TaskHandle_t bno_interrupt_task_handle = NULL;
