@@ -57,6 +57,26 @@ void Configuration::populate_heart_rate(uint8_t * bytes, uint32_t heart_rate, un
     bytes[8] = tmp;
 }
 
+void Configuration::populate_heart_rate_raw(uint8_t * bytes, int32_t * heart_rate_raw, int32_t num_samples, unsigned long sample_time)
+{
+    bytes[0] = 6;
+    bytes[1] = sample_time >> 24;
+    bytes[2] = sample_time >> 16;
+    bytes[3] = sample_time >> 8;
+    bytes[4] = sample_time;
+
+    int j = 0;
+    for(int i=5;i<num_samples*4+5;i+=4)
+    {
+        long tmp = *(long*)&(heart_rate_raw[j]);
+        bytes[i+0] = tmp >> 24;
+        bytes[i+1] = tmp >> 16;
+        bytes[i+2] = tmp >> 8;
+        bytes[i+3] = tmp;
+        j +=1;
+    }
+}
+
 void Configuration::populate_bno(uint8_t * bytes, float * values, unsigned long sample_time)
 {
     bytes[0] = 4;
@@ -265,6 +285,20 @@ esp_err_t Configuration::turn_on_main_circuit(void)
 
 	esp_err_t err = gpio_set_level(GPIO_NUM_26,1);
 	return err;
+}
+
+esp_err_t Configuration::turn_on_boost(void)
+{
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = GPIO_HR_BOOST_MASK;
+    io_conf.pull_down_en = GPIO_PULLDOWN_DISABLE;
+    io_conf.pull_up_en = GPIO_PULLUP_ENABLE;
+    gpio_config(&io_conf);
+    
+    esp_err_t err = gpio_set_level(GPIO_HR_BOOST,1);
+    return err;
 }
 
 /**

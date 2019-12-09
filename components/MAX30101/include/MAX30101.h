@@ -218,6 +218,8 @@ public:
 	void setTEMP_EN(void);
 
 	void reset(void);
+	void shutdown(void);
+	void resume(void);
 	void reset_FIFO(void);
 	void init(maxim_config_t *);
 	void set_slots(void);

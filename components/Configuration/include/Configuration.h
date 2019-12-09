@@ -33,6 +33,9 @@
 #define GPIO_LED_GREEN GPIO_NUM_27
 #define GPIO_BLUE GPIO_NUM_33
 #define GPIO_LED_MASK ((1ULL<<12) | (1ULL<<27) | (1ULL<<33))
+// Heart rate sensor 5V boost
+#define GPIO_HR_BOOST GPIO_NUM_2
+#define GPIO_HR_BOOST_MASK (1ULL<<2)
 
 /*
  * Section SPI
@@ -119,12 +122,14 @@ class Configuration {
     void populate_pressure(uint8_t *, float, unsigned long, bool);
     void populate_bno(uint8_t *, float *, unsigned long);
     void populate_heart_rate(uint8_t *, uint32_t, unsigned long);
+    void populate_heart_rate_raw(uint8_t *, int32_t *, int32_t, unsigned long);
     
     void attach_bno_int(void (*)(void *), void (*)(void *));
     void attach_btn_int(void (*)(void *), void (*)(void *));
     void detach_bno_int(void);
     void detach_btn_int(void);
     
+    esp_err_t turn_on_boost(void);
     esp_err_t initialize_spi(void);
     esp_err_t turn_on_main_circuit(void);
     esp_err_t turn_off_main_circuit(void);

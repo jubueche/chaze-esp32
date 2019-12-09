@@ -36,7 +36,7 @@ void clean_up(TaskHandle_t, TaskHandle_t, TaskHandle_t, TaskHandle_t, TaskHandle
 esp_err_t setup_bno(FlashtrainingWrapper_t *ft);
 esp_err_t setup_pressure(void);
 
-void aquire_lock_and_write_to_buffer(uint8_t *, uint8_t, char const *);
+void aquire_lock_and_write_to_buffer(uint8_t *, int32_t, char const *);
 
 //Tasks
 void sample_hr(void *);

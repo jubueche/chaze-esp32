@@ -12,10 +12,7 @@
 /**
  * @brief Empty constructor for heart rate class.
  */
-HeartRate::HeartRate(void)
-{ 
-	
-}
+HeartRate::HeartRate(void) {}
 
 /**
  * @brief Constructor for heart rate class. Default settings apply when initializing this way.
@@ -44,6 +41,22 @@ HeartRate::HeartRate(uint8_t sample_time, maxim_config_t * ex1){
 	this->init_structs();
 }
 
+void HeartRate::shutdown()
+{
+	max30101.shutdown();
+}
+
+void HeartRate::resume()
+{
+	max30101.resume();
+	max30101.setMODE_CONFIG(DEFAULT_MODE);
+}
+
+void HeartRate::reset()
+{
+	max30101.reset();
+}
+
 /**
  * @brief Initialize structs for filtering.
  */
@@ -61,11 +74,36 @@ void HeartRate::init_structs(void)
 	meanDiff.count = 0;
 }
 
+uint8_t HeartRate::get_id(void)
+{
+	return max30101.readID();
+}
+
 /**
  * @brief Measures the heart rate in beats per minute.
  * @return Returns heart rate measure over window define by sample time.
  */
 int32_t HeartRate::get_heart_rate(void)
+{
+	int32_t freq = max30101.get_sampling_freq();
+	if(DEBUG) ESP_LOGI(TAG, "Frquency is: %d\n", freq);
+	int32_t total = freq*this->sampling_time;
+	int32_t * raw_data = this->get_heart_rate_raw();
+
+	for(int i=0;i<total/2;i++){
+		printf("%d\n", raw_data[i]);
+	}
+	printf("\n");
+
+	free(raw_data);
+
+	return 0; //Return heart rate
+}
+
+/*
+ * @brief Returns pointer to int32_t array holding raw heart rate data. Size: sampling_time/2 due to DC correction.
+*/
+int32_t * HeartRate::get_heart_rate_raw()
 {
 	int32_t freq = max30101.get_sampling_freq();
 	if(DEBUG) ESP_LOGI(TAG, "Frquency is: %d\n", freq);
@@ -96,13 +134,15 @@ int32_t HeartRate::get_heart_rate(void)
 	t2 = (uint64_t) esp_timer_get_time();
 	if(DEBUG) ESP_LOGI(TAG, "samples[%d] Hz [%.02f]\n", samplesTaken, (float)samplesTaken / ((t2 - t1) / 1000000.0));
 
-	for(int i=0;i<total;i++){
-						printf("%d\n", read_data[i]);
-	}
+	filter_low_mem(read_data, total, read_data);
 
-	filter(read_data, total, read_data);
+	/*int32_t * out =  (int32_t *) malloc((total/2)*sizeof(int32_t));
+	for(int i=total/2;i<total;i++){
+		out[i-(total/2)] = read_data[i];
+	}*/
 
-	return 0; //Return heart rate
+	//free(read_data);
+	return read_data;
 }
 
 /**
@@ -121,6 +161,20 @@ void HeartRate::filter(int32_t * data_in, int32_t n, int32_t * data_out)
 		this->lowPassButterworthFilter(meanDiffResIR, &lpbFilter);
 
 		data_out[i] = this->lpbFilter.result;
+	}
+}
+
+void HeartRate::filter_low_mem(int32_t * data_in, int32_t n, int32_t * data_out)
+{
+	for(int i=0;i<n;i++){
+		this->dcFilter = this->dcRemoval( (float)data_in[i], this->dcFilter.w, ALPHA);
+
+		float meanDiffResIR = this->get_meanDiff( dcFilter.result, &meanDiff);
+		this->lowPassButterworthFilter(meanDiffResIR, &lpbFilter);
+		if(i >= n/2)
+		{
+			data_out[i-n/2] = this->lpbFilter.result;
+		}
 	}
 }
 

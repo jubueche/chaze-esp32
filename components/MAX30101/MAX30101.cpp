@@ -78,7 +78,7 @@ MAX30101::MAX30101(maxim_config_t * args) {
 
 	this->port_num = I2C_NUM_0;
 
-	esp_err_t err = (config.i2c_master_init_IDF(I2C_NUM_1));
+	esp_err_t err = (config.i2c_master_init_IDF(I2C_NUM_0));
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to initialize I2C connection.");
 	}
@@ -103,7 +103,6 @@ MAX30101::MAX30101(maxim_config_t * args) {
 
 	this->reset_FIFO();
 	this->getIntStatus();
-
 }
 
 /**
@@ -411,6 +410,16 @@ void MAX30101::writeReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 void MAX30101::reset(void){
 	//Reset the board
 	this->setMODE_CONFIG(RESET);
+}
+
+void MAX30101::shutdown(void)
+{
+    this->setMODE_CONFIG(SHUTDOWN);
+}
+
+void MAX30101::resume(void)
+{
+    this->setMODE_CONFIG(RESUME);
 }
 
 uint8_t MAX30101::readID(){

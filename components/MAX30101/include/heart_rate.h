@@ -47,12 +47,18 @@ public:
 	struct butterworthFilter_t lpbFilter;
 	struct meanDiffFilter_t meanDiff;
 
+	void shutdown(void);
+	void reset(void);
+	void resume(void);
 	void filter(int32_t *, int32_t, int32_t *);
+	void filter_low_mem(int32_t *, int32_t, int32_t *);
+	uint8_t get_id(void);
 	void init_structs(void);
 	dcFilter_t dcRemoval(float, float, float);
 	float get_meanDiff(float, meanDiffFilter_t*);
 	void lowPassButterworthFilter(float, butterworthFilter_t *);
 	int32_t get_heart_rate(void);
+	int32_t * get_heart_rate_raw(void);
 
 private:
 	const char * TAG = "Chaze-HeartRate";

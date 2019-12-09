@@ -12,22 +12,47 @@ const char * TAG_RECORD = "Chaze Record";
 void sample_hr(void * pvParams)
 {
 	uint32_t heart_rate;
+	int32_t freq = hr.max30101.get_sampling_freq();
+	int32_t num_samples = (freq*hr.sampling_time) / 2;
 	unsigned long sample_time;
-	uint8_t bytes[9] = {};
-	char const * name = "HR";
+	uint8_t bytes[9];
+	if(DEBUG) ESP_LOGI(TAG_RECORD, "Num samples: %d", num_samples);
+	uint8_t bytes_raw[5+4*num_samples];
+	char const * name = "HR-Raw";
+	if(config.turn_on_boost() != ESP_OK)
+	{
+		ESP_LOGE(TAG_RECORD, "Error when setting boost pin.");
+		return;
+	}
 	for(;;){
-
+		if(DEBUG) ESP_LOGW(TAG_RECORD, "Free heap space is %d", esp_get_free_heap_size());
+		gpio_set_level(GPIO_HR_BOOST,1); //Activate boost
+		hr.resume();
 		// Sample heart rate
 		//! Uncomment if heart rate sensor attached, use config.I2C methods for thread safety
-		//uint32_t heart_rate = hr.get_heart_rate();
-		heart_rate = 170;
-		//if(DEBUG) ESP_LOGI(TAG_RECORD, "Heart rate sampled.");
-		vTaskDelay(20);
+		// uint32_t heart_rate = hr.get_heart_rate(); //! HR single
+		int32_t * raw_data = hr.get_heart_rate_raw();
+
+		for(int i=0;i<num_samples;i++)
+		{
+			printf("%d ", raw_data[i]);
+		}
+		printf("\n");
+
+		hr.shutdown();
+		gpio_set_level(GPIO_HR_BOOST,0); // Deactivate boost
+		//if(DEBUG) ESP_LOGI(TAG_RECORD, "Heart rate %d.", heart_rate);
 		// Get time of sample
 		sample_time = millis() - base_time;
 		// Populate uint8_t array.
-		config.populate_heart_rate(bytes, heart_rate, sample_time);
-		aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name);
+		//config.populate_heart_rate(bytes, heart_rate, sample_time); //! HR single
+
+		config.populate_heart_rate_raw(bytes_raw, raw_data, num_samples, sample_time);
+		// aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name); //! HR single
+		free(raw_data);
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "Writing HR Raw");
+		aquire_lock_and_write_to_buffer(bytes_raw, sizeof(bytes_raw), name);
+		vTaskDelay(5000 / portTICK_PERIOD_MS); // Sample every 5s
 	}
 	
 }
@@ -81,7 +106,6 @@ void sample_bno(void * pvParams)
 		sample_time = millis() - base_time;
 		quat = bno.getQuat();
 		acc = bno.getVector(BNO055::VECTOR_LINEARACCEL);
-		if(DEBUG) ESP_LOGI(TAG_RECORD, "Acc is %.3f", acc.x());
 		values_d[0] = acc.x(); values_d[1]=acc.y();values_d[2]=acc.z();values_d[3]=quat.w();values_d[4]=quat.y();values_d[5]=quat.x();values_d[6]=quat.z(); 
 		for(int i=0;i<7;i++){
 			values[i] = (float) values_d[i];
@@ -213,7 +237,7 @@ void record()
 	// Initialize all sensors (+ Calibration)
 	if(setup_bno(ft) == ESP_OK){
 		if(setup_pressure() == ESP_OK){
-			//setup_hr();
+			setup_hr();
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "Setup complete.");
 		} else {
 			ESP_LOGE(TAG_RECORD, "Error initializing pressure.");
@@ -247,12 +271,12 @@ void record()
 	TaskHandle_t check_buffer_and_write_to_flash_task_task_handle = NULL;
 
 	// Start all tasks. Heart rate has the highest priority followed by pressure and BNO.
-	//! HIGH WATER MARK!
-	bool success = (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 7, NULL, 10, &hr_task_handle);
-	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 8, NULL, 10, &bno_task_handle);
+	bool success = true;
+	success = success && (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 10, NULL, 10, &hr_task_handle);
+	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 7, NULL, 10, &bno_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 7, NULL, 10, &pressure_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 7, NULL, 10, &pressure_backside_task_handle);
-	success = success && (bool) xTaskCreate(&check_buffer_and_write_to_flash_task, "check_and_compress", 1024*6, ft, 10, &check_buffer_and_write_to_flash_task_task_handle);
+	success = success && (bool) xTaskCreate(&check_buffer_and_write_to_flash_task, "check_and_compress", 1024*8, ft, 10, &check_buffer_and_write_to_flash_task_task_handle);
 	
 	if(!success){
 		ESP_LOGE(TAG_RECORD, "Failed to create tasks. Going to sleep.");
@@ -391,7 +415,7 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 
 void setup_hr()
 {
-	hr = HeartRate(1);
+	hr = HeartRate(10);
 }
 
 esp_err_t setup_pressure()
@@ -440,7 +464,7 @@ esp_err_t setup_bno(FlashtrainingWrapper_t * ft)
 }
 
 
-void aquire_lock_and_write_to_buffer(uint8_t * bytes, uint8_t length, char const * name)
+void aquire_lock_and_write_to_buffer(uint8_t * bytes, int32_t length, char const * name)
 {
 	if(xSemaphoreTake(config.write_buffer_semaphore, (TickType_t) 500) == pdTRUE)
 	{
@@ -453,6 +477,7 @@ void aquire_lock_and_write_to_buffer(uint8_t * bytes, uint8_t length, char const
 			memcpy(curr_buff->data+(curr_buff->counter), bytes, length);
 			curr_buff->counter += length;
 		} else{
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer full. Writing in next one.");
 			//Fill up the buffer with 'f' and set the buff_idx to buff_idx XOR 1
 			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Buffer %d almost full, fill up", buff_idx);
 			for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
@@ -463,6 +488,12 @@ void aquire_lock_and_write_to_buffer(uint8_t * bytes, uint8_t length, char const
 			if(buff_idx==0)
 				buff_idx=1;
 			else buff_idx=0;
+
+			// Fill up the new buffer with the data
+			buffer_t * curr_buff = buffers[buff_idx];
+			curr_buff->counter = 0;
+			memcpy(curr_buff->data+(curr_buff->counter), bytes, length);
+			curr_buff->counter += length;
 		}
 
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Release mutex");
