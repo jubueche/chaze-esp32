@@ -7,110 +7,149 @@
 Flashtraining *global_ft = new Flashtraining();
 
 SPIFlash Flashtraining::myflash;
+RV3028 Flashtraining::rtc;
 
-//! Needs to be checked
-Flashtraining::Flashtraining()
+//CONSTRUCTOR
+Flashtraining::Flashtraining()	//TODO: validate metadata
 {
-	_STATE = 0;
+	esp_err_t err = config.initialize_spi();
+
+	if (!myflash.begin(SPIFlash_CS)) ESP_LOGI(TAG, " Error in SPIFlash.begin");
+	if (!rtc.begin()) ESP_LOGI(TAG, " Error in rtc.begin");
+
+	//Validation
+	uint32_t JEDEC = myflash.getJEDECID();
+	if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) ESP_LOGI(TAG, " Error in JEDEC validation");
+
 	_current_pagewritebuffer_position = 0;
 	_current_page_writeposition = 0;
 	_current_page_readposition = 0;
 	_current_sector_eraseposition = 0;
+	
+	_STATE = 1;
 }
 
 
-bool Flashtraining::start_new_training()
+//WRITING
+bool Flashtraining::start_new_training()	//ALMOST OLDGOOD (außer Startposition finden)
 {
-	if (!_Check_or_Initialize()) return false;
-
-	if (_STATE == 4) {
-		for (int ii = 0; ii < 1000; ii += 10) {
-			if (myflash.CheckErasing_inProgress() == 0) {
-				//erste freie page wiederfinden
-				_STATE = 5;
-				_Check_or_Initialize();
-				//Markierung setzen
-				uint8_t bytes[1] = { 9 };
-				_write_bytebuffer_toflash(bytes, sizeof(bytes));
-
-				_STATE = 1;
-				break;
-			}
-			delay(10);
-		}
-	}
 	if (_STATE == 1) {
-		uint8_t bytes[1] = { 1 };
-		if (!_write_bytebuffer_toflash(bytes, sizeof(bytes)))return false;
+		//TODO: _current_page_writeposition ...
+		_current_startaddress = _current_page_writeposition;
+
+		rtc.updateTime();
+		_current_startyear = (rtc.getYear() - 2000);
+		_current_startmonth = rtc.getMonth();
+		_current_startdate = rtc.getDate();
+		_current_starthour = rtc.getHours();
+		_current_startminute = rtc.getMinutes();
+
 		_STATE = 2;
 		return true;
 	}
 	return false;
 }
 
-bool Flashtraining::stop_training()
-{
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE == 2) {
-		uint8_t bytes[1] = { 2 };
-		if (!_write_bytebuffer_toflash(bytes, sizeof(bytes)))return false;
-		_STATE = 1;
-		return true;
-	}
-	return false;
-}
-
-
-
-// TODO: Needs implementation
-
 //! Use a temporary buffer of size 511 bytes that holds the bytes that were left over.
 //! At the next call to write_compressed_chunk, preprend these bytes and repeat.
 //! On stop_training, write the bytes in the temporary buffer to the flash.
 bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
 {
-	// Abort if not initialized
-	if (!_Check_or_Initialize()) return false;
-	if(_STATE == 2)
+	if (_STATE == 2)
 	{
 		// Can write since we started a training
 		return _write_bytebuffer_toflash(data, n);
 	}
 	return false;
-
 }
 
-
-// TODO: End Needs implementation
-
-bool Flashtraining::start_delete_all_trainings()
+bool Flashtraining::stop_training()
 {
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE != 1)return false;
+	if (_STATE == 2) {
+		_current_endaddress = _current_page_writeposition;
+		rtc.updateTime();
+		_current_endyear = (rtc.getYear() - 2000);
+		_current_endmonth = rtc.getMonth();
+		_current_enddate = rtc.getDate();
+		_current_endhour = rtc.getHours();
+		_current_endminute = rtc.getMinutes();
 
-	_current_sector_eraseposition = 126;
-	_STATE = 4;
-	return true;
+		//private metadata variables are now filled. Let's pack them to a buffer
+		_pagewritebuffer[0] = _current_startaddress >> 24;
+		_pagewritebuffer[1] = current_startaddress >> 16;
+		_pagewritebuffer[2] = current_startaddress >> 8;
+		_pagewritebuffer[3] = current_startaddress;
+		_pagewritebuffer[4] = _current_endaddress >> 24;
+		_pagewritebuffer[5] = _current_endaddress >> 16;
+		_pagewritebuffer[6] = _current_endaddress >> 8;
+		_pagewritebuffer[7] = _current_endaddress;
+		_pagewritebuffer[8] = _current_startyear;
+		_pagewritebuffer[9] = _current_startmonth;
+		_pagewritebuffer[10] = _current_startdate;
+		_pagewritebuffer[11] = _current_starthour;
+		_pagewritebuffer[12] = _current_startminute;
+		_pagewritebuffer[13] = _current_endyear;
+		_pagewritebuffer[14] = _current_endmonth;
+		_pagewritebuffer[15] = _current_enddate;
+		_pagewritebuffer[16] = _current_endhour;
+		_pagewritebuffer[17] = _current_endminute;
+
+		//find a free page in metadata sector to write the metadata of the finishing training
+		//address of the first byte in metadata sector: 0 + 262144 * 126 = 33030144
+		for (int metaaddress = 33030144; metaaddress < 33030144 + 512 * 512; metaaddress += 512) {
+			if (!myflash.readByteArray(metaaddress, _pagereadbuffer, 512)) return false;
+			if (_Check_buffer_contains_only_ff(_pagereadbuffer, 512)) {
+				if (!(myflash.writeByteArray(metaaddress, &_pagewritebuffer[0], 512))) return false;
+				_STATE = 1;
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
-bool Flashtraining::start_reading_data() {
-	if (!_Check_or_Initialize()) return false;
+
+//METADATA
+uint32_t Flashtraining::meta_total_number_of_trainings() {
+
+}
+uint32_t Flashtraining::meta_number_of_unsynced_trainings() {
+
+}
+uint32_t Flashtraining::meta_get_training_size(uint8_t trainindex) {
+
+}
+bool Flashtraining::meta_get_training_starttime(uint8_t trainindex, uint8_t * buf) {
+
+}
+bool Flashtraining::meta_get_training_endtime(uint8_t trainindex, uint8_t * buf) {
+
+}
+void Flashtraining::meta_set_synced(uint8_t trainindex) {
+
+}
+bool Flashtraining::meta_is_synced(uint8_t trainindex) {
+
+}
+
+
+//READING
+bool Flashtraining::start_reading_data(uint8_t trainindex) {
 	if (_STATE != 1)return false;
 	int _current_page_readposition = 0;
 	_STATE = 3;
 	return true;
 }
 
-bool Flashtraining::get_all_data_bufferwise(void *buf)
+bool Flashtraining::get_next_buffer_of_training(uint8_t * buf)
 {
-	if (!_Check_or_Initialize()) return false;
 	if (_STATE != 3)return false;
 
 	if (!myflash.readByteArray(_current_page_readposition * 512, _pagereadbuffer, 512)) return false;
 	_current_page_readposition++;
 	memcpy((char *)buf, _pagereadbuffer, 512);
 
-	if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
+	if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer, 512)) {
 		_STATE = 1;
 		return false;
 	}
@@ -118,42 +157,32 @@ bool Flashtraining::get_all_data_bufferwise(void *buf)
 }
 
 bool Flashtraining::abort_reading_data() {
-	if (!_Check_or_Initialize()) return false;
 	if (_STATE != 3)return false;
 	_STATE = 1;
 	return true;
 }
 
-void Flashtraining::please_call_every_loop() {
-	_Check_or_Initialize();
-	if (_STATE == 4) {
-		ESP_LOGI(TAG, "_current_sector_eraseposition: %d", _current_sector_eraseposition);
-		if (myflash.CheckErasing_inProgress() == 0) {
-			myflash.readByteArray(_current_sector_eraseposition * 262144, _pagereadbuffer, 512);
-			if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-				//Endbedingung
-				if (_current_sector_eraseposition == 0) {
-					_STATE = 1;
-					return;
-				}
-				_current_sector_eraseposition--;
-			}
-			else {
-				myflash.eraseBlock256K(_current_sector_eraseposition * 262144);
-			}
-		}
-	}
+
+//ERASING
+bool Flashtraining::delete_training(uint8_t trainindex) {
+
 }
 
-int Flashtraining::get_STATE() {
-	return _STATE;
+bool Flashtraining::start_delete_all_trainings()
+{
+	if (_STATE != 1)return false;
+
+	_current_sector_eraseposition = 126;
+	_STATE = 4;
+	return true;
 }
 
+
+//CALIBRATION STORAGE
 /*
  * @brief Possible adresses for storing a float: [0,256)
  */
-bool Flashtraining::writeCalibration(float value, uint8_t storageaddress) {
-	if (!_Check_or_Initialize()) return false;
+bool Flashtraining::writeCalibration(float value, uint8_t storageaddress) {	//OLDGOOD
 	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288
 
 	//selbst im Fehlerfalle soll erst ganz am Ende returnt werden, damit die Calibration noch gerettet werden kann
@@ -173,7 +202,7 @@ bool Flashtraining::writeCalibration(float value, uint8_t storageaddress) {
 	if (!myflash.eraseBlock256K(33292288)) fehlerfrei = false;
 	int mm = millis();
 	while (myflash.CheckErasing_inProgress()) {
-		if (millis() > mm + 2000) {
+		if (millis() > mm + 4000) {
 			fehlerfrei = false; break;
 		}
 	}
@@ -200,8 +229,7 @@ bool Flashtraining::writeCalibration(float value, uint8_t storageaddress) {
 	return fehlerfrei;
 }
 
-float Flashtraining::readCalibration(uint8_t storageaddress) {
-	if (!_Check_or_Initialize()) return false;
+float Flashtraining::readCalibration(uint8_t storageaddress) {	//OLDGOOD
 	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288
 
 	if (!myflash.readByteArray(33292288 + storageaddress * 512, _pagereadbuffer, 512)) return 0;
@@ -213,8 +241,27 @@ float Flashtraining::readCalibration(uint8_t storageaddress) {
 }
 
 
+//OTHER FUNCTIONS
+char * Flashtraining::get_device_ID() {	//TEST
+	return "Prototype v3.0";
+}
+
+int Flashtraining::get_STATE() {	//GOOD
+	return _STATE;
+}
+
+
+
 
 //PRIVATE ######################################################################
+
+bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer) {
+	bool only_ff = true;
+	for (int i = 0; i < 512; i++) {
+		if (buffer[i] != 255)only_ff = false;
+	}
+	return only_ff;
+}
 
 bool Flashtraining::_write_bytebuffer_toflash(uint8_t *buffer, uint8_t buflenght) {
 	//uint8_t _pagewritebuffer[512];
@@ -240,9 +287,7 @@ bool Flashtraining::_write_bytebuffer_toflash(uint8_t *buffer, uint8_t buflenght
 	//pagewritebuffer in Page schreiben und buffer zurücksetzen
 	else {
 		if (!myflash.writeByteArray(_current_page_writeposition * 512, &_pagewritebuffer[0], 512)) {
-#ifdef DEBUG 
-			Serial.print("ERROR "); Serial.println(_current_page_writeposition);
-#endif
+			ESP_LOGI(TAG, " Error writing at: %d:", _current_page_writeposition);
 			return false;
 		}
 		_current_page_writeposition++;
@@ -253,72 +298,10 @@ bool Flashtraining::_write_bytebuffer_toflash(uint8_t *buffer, uint8_t buflenght
 		//pagewritebuffer jetzt weiter schreiben
 		memcpy(&_pagewritebuffer[_current_pagewritebuffer_position], buffer, buflenght);
 		_current_pagewritebuffer_position += buflenght;
-}
-	return true;
-}
-
-bool Flashtraining::_Check_or_Initialize() {
-	if (_STATE == 0 || _STATE == 5) {
-		if (_STATE == 0) {
-			
-			esp_err_t err = config.initialize_spi();
-
-			if (!myflash.begin(SPIFlash_CS)) return false;
-
-			//Validation
-			uint32_t JEDEC = myflash.getJEDECID();
-			if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) return false;
-
-			_STATE = 1;
-		}
-		//Suchen der ersten freien Page (zum Beschreiben)
-		//zu suchen: Pages 0 bis 126 * 512 - 1 = 64511 
-		_current_page_writeposition = 0;
-		for (uint8_t i = 0; i <= 6; i++) {
-			myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-			if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-				if (_current_page_writeposition == 0) return true;
-				_current_page_writeposition -= 10000;
-				for (uint8_t ii = 0; ii < 10; ii++) {
-					myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-					if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-						_current_page_writeposition -= 1000;
-						for (uint8_t iii = 0; iii < 10; iii++) {
-							myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-							if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-								_current_page_writeposition -= 100;
-								for (uint8_t iiii = 0; iiii < 10; iiii++) {
-									myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-									if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-										_current_page_writeposition -= 10;
-										for (uint8_t iiiii = 0; iiiii < 10; iiiii++) {
-											myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-											if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-												return true;
-											}
-											_current_page_writeposition++;
-										}
-									}
-									_current_page_writeposition += 10;
-								}
-							}
-							_current_page_writeposition += 100;
-						}
-					}
-					_current_page_writeposition += 1000;
-				}
-			}
-			_current_page_writeposition += 10000;
-		}
-		_current_page_writeposition = 130048;
 	}
 	return true;
 }
 
-bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer) {
-	bool only_ff = true;
-	for (int i = 0; i < 512; i++) {
-		if (buffer[i] != 255)only_ff = false;
-	}
-	return only_ff;
+void Flashtraining::erase_trainings_to_erase() {
+
 }
