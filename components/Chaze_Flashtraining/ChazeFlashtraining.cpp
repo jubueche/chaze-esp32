@@ -263,6 +263,10 @@ bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer) {
 	return only_ff;
 }
 
+void Flashtraining::ensure_metadata_validity() {
+
+}
+
 bool Flashtraining::_write_bytebuffer_toflash(uint8_t *buffer, uint8_t buflenght) {
 	//uint8_t _pagewritebuffer[512];
 	//int _current_pagewritebuffer_position = 0;  //Position, wo er noch nicht geschrieben hat

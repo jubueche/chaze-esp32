@@ -76,6 +76,7 @@ class Flashtraining
     bool _Check_buffer_contains_only_ff(uint8_t  *buffer);
 
 	//meta data variables
+	void ensure_metadata_validity();
 	uint32_t _current_startaddress, _current_endaddress;
 	uint8_t _current_startyear, _current_startmonth, _current_startdate, _current_starthour, _current_startminute;
 	uint8_t _current_endyear, _current_endmonth, _current_enddate, _current_endhour, _current_endminute;
