@@ -44,6 +44,7 @@ class Flashtraining
 	bool meta_get_training_endtime(uint8_t trainindex, uint8_t * buf);		//writes 5 bytes to buf: year (2019=19), month, date, hours, minutes
 	void meta_set_synced(uint8_t trainindex);
 	bool meta_is_synced(uint8_t trainindex);
+	bool meta_is_deleted(uint8_t trainindex);
 
 
     //READING TRAINING DATA
@@ -54,50 +55,49 @@ class Flashtraining
 	bool abort_reading_data();
 
     //ERASE TRAINING DATA
-	bool delete_training(uint8_t trainindex);
-    bool start_delete_all_trainings();
+	bool init_delete_training(uint8_t trainindex);
+    bool init_delete_all_trainings();
+	//! Please call this method in an extra task, when there is "freetime" for the flash. You don't have to care about terminating it
+	void erase_trainings_to_erase();
 
     //CALIBRATION STORAGE
     bool writeCalibration(float value, uint8_t storageaddress);
     float readCalibration(uint8_t storageaddress);	//default/error value is 0.0f
 
     //OTHER FUNCTIONS
-	char * get_device_ID(); //Returns device ID (OTP)
+	const char * get_device_ID(); //Returns device ID (OTP)
     int get_STATE();
     //1: ready
     //2: writing
     //3: reading
     //4: erasing
-	//5: want to find new page start (after erasing) OCCURS SHORTLY AND ONLY PRIVATE
+	//5: want to stop erasing OCCURS SHORTLY AND ONLY PRIVATE
 
   private:
     const char * TAG = "Chaze-Flashtraining";
 
-    bool _Check_buffer_contains_only_ff(uint8_t  *buffer);
+    bool _Check_buffer_contains_only_ff(uint8_t *buffer, uint32_t length);
 
 	//meta data variables
 	void ensure_metadata_validity();
-	uint32_t _current_startaddress, _current_endaddress;
-	uint8_t _current_startyear, _current_startmonth, _current_startdate, _current_starthour, _current_startminute;
-	uint8_t _current_endyear, _current_endmonth, _current_enddate, _current_endhour, _current_endminute;
 
 	//write
-	uint8_t _pagewritebuffer[512];//TODO: dummes kopieren?
-	int _current_page_writeposition;		//Position, wo er noch nicht geschrieben hat
-	bool _write_bytebuffer_toflash(uint8_t *buffer, uint8_t  buflenght);
+	uint32_t _current_trainingdex;
+	uint32_t _current_writeposition;		//Position, wo er noch nicht geschrieben hat
 	//read
-	uint8_t  _pagereadbuffer[512];//TODO: dummes kopieren?
-	int _current_page_readposition;
+	uint8_t  _pagereadbuffer[512];	//Brauche ich manchmal
+	uint32_t _current_readposition;
+	uint32_t _current_endposition;
 	//erase
-	void erase_trainings_to_erase();
-	int _current_sector_eraseposition;
+	uint32_t _current_eraseposition;
+	void wait_for_erasing();
 
     int _STATE;
     //1: ready
     //2: writing
     //3: reading
     //4: erasing
-	//5: want to find new page start (after erasing) OCCURS SHORTLY AND ONLY PRIVATE
+	//5: want to stop erasing OCCURS SHORTLY AND ONLY PRIVATE
 };
 
 extern Flashtraining *global_ft;

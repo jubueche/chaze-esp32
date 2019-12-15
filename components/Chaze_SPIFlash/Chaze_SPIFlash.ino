@@ -65,6 +65,15 @@ void setup() {
 
   read_eight_pages();
 
+  //WRITING 4 Bytes with write ByteArray
+  Serial.print("Writing 4 bytes to flash ... \n");
+  uint8_t* bytes = new byte[4] { 3, 3, 3, 3 };
+  if (flash.writeByteArray(2 * 512 + 7, bytes, 4)) {
+    Serial.println("4 Bytes successfully written.");
+  } else Serial.println("Error in Page writing.");
+
+  read_eight_pages();
+
   //WRITING Single Bytes
   Serial.print("\n\nWriting single bytes to flash ... \n");
   Serial.print(flash.writeByte(512*2 + 3, 69));
