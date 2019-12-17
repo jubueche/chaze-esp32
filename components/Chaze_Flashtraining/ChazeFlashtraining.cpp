@@ -2,7 +2,9 @@
    Created by Constantin Koch, May 23, 2018
 */
 #include "ChazeFlashtraining.h"
+#ifndef ARDUINO
 #include "string.h"
+#endif
 
 #define META_STARTADDR 33030144
 #define CALIB_STARTADDR 33292288
@@ -15,7 +17,9 @@ RV3028 Flashtraining::rtc;
 //CONSTRUCTOR
 Flashtraining::Flashtraining()	//TEST
 {
+#ifndef ARDUINO
 	esp_err_t err = config.initialize_spi();
+#endif
 
 	if (!myflash.begin(SPIFlash_CS)) ESP_LOGI(TAG, " Error in SPIFlash.begin");
 	if (!rtc.begin()) ESP_LOGI(TAG, " Error in rtc.begin");
@@ -24,11 +28,12 @@ Flashtraining::Flashtraining()	//TEST
 	uint32_t JEDEC = myflash.getJEDECID();
 	if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) ESP_LOGI(TAG, " Error in JEDEC validation");
 
-	_current_trainingdex = 0;
+	_current_trainingindex = 0;
 	_current_writeposition = 0;
 	_current_readposition = 0;
-	uint32_t _current_endposition; = 0;
-	_current_sector_eraseposition = 0;
+	_current_endposition = 0;
+	_current_eraseposition = 0;
+	_pagereadbuffer = new uint8_t[512];
 
 	_STATE = 1;
 
@@ -44,12 +49,12 @@ bool Flashtraining::start_new_training()	//TEST
 		return false;
 
 	//Find next free trainindex
-	_current_trainingdex = meta_total_number_of_trainings();
+	_current_trainingindex = meta_total_number_of_trainings();
 
 	//Find next free startaddress
 	uint32_t* endaddr = new uint32_t();
 	_current_writeposition = 0;
-	for (uint32_t i = 0; i < _current_trainingdex; i++)
+	for (uint32_t i = 0; i < _current_trainingindex; i++)
 	{
 		myflash.readByteArray(META_STARTADDR + i * 512 + 4, (uint8_t*)endaddr, 4);
 		_current_writeposition = max(_current_writeposition, (*endaddr));
@@ -61,12 +66,12 @@ bool Flashtraining::start_new_training()	//TEST
 
 	//Write Metadata
 	//Write Startaddress
-	myflash.writeByteArray(META_STARTADDR + _current_trainindex * 512, (uint8_t*)&_current_writeposition, 4);
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512, (uint8_t*)&_current_writeposition, 4);
 
 	//Write starttime
 	rtc.updateTime();
-	uint8_t* start_time = new uint8_t[5]{ (rtc.getYear() - 2000), rtc.getMonth(), rtc.getDate(), rtc.getHours(), rtc.getMinutes() };
-	myflash.writeByteArray(META_STARTADDR + _current_trainindex * 512 + 8, start_time, 5);
+	uint8_t* start_time = new uint8_t[5]{ (uint8_t)(rtc.getYear() - 2000), rtc.getMonth(), rtc.getDate(), rtc.getHours(), rtc.getMinutes() };
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512 + 8, start_time, 5);
 
 	_STATE = 2;
 	return true;
@@ -102,12 +107,12 @@ bool Flashtraining::stop_training()	//TEST
 
 	//Write Metadata
 	//Write Endaddress
-	myflash.writeByteArray(META_STARTADDR + _current_trainindex * 512 + 4, (uint8_t*)&_current_writeposition, 4);
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512 + 4, (uint8_t*)&_current_writeposition, 4);
 
 	//Write Endtime
 	rtc.updateTime();
-	uint8_t* end_time = new uint8_t[5]{ (rtc.getYear() - 2000), rtc.getMonth(), rtc.getDate(), rtc.getHours(), rtc.getMinutes() };
-	myflash.writeByteArray(META_STARTADDR + _current_trainindex * 512 + 13, end_time, 5);
+	uint8_t* end_time = new uint8_t[5]{ (uint8_t)(rtc.getYear() - 2000), rtc.getMonth(), rtc.getDate(), rtc.getHours(), rtc.getMinutes() };
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512 + 13, end_time, 5);
 
 	_STATE = 1;
 
@@ -186,11 +191,11 @@ bool Flashtraining::start_reading_data(uint8_t trainindex) 	//TEST
 
 	//get startaddress
 	if (!myflash.readByteArray(META_STARTADDR + trainindex * 512 + 0, (uint8_t*)&_current_readposition, 4)) return false;
-	if (_Check_buffer_contains_only_ff(&_current_readposition, 4) return false;
+	if (_Check_buffer_contains_only_ff((uint8_t*)&_current_readposition, 4)) return false;
 
 	//get current endaddress
 	if (!myflash.readByteArray(META_STARTADDR + trainindex * 512 + 4, (uint8_t*)&_current_endposition, 4)) return false;
-	if (_Check_buffer_contains_only_ff(&_current_endposition, 4) return false;
+	if (_Check_buffer_contains_only_ff((uint8_t*)&_current_endposition, 4)) return false;
 
 	_STATE = 3;
 	return true;
@@ -283,6 +288,7 @@ void Flashtraining::erase_trainings_to_erase() //TEST
 	}
 	if(all_deleted)
 		myflash.eraseBlock256K(META_STARTADDR);
+	uint32_t mm = millis();
 	while (myflash.CheckErasing_inProgress()) { delay(10); if (millis() > mm + 4000) break; }
 
 	_STATE = 1;
@@ -301,7 +307,7 @@ bool Flashtraining::writeCalibration(float value, uint8_t storageaddress)	//TEST
 	bool fehlerfrei = true;
 
 	//Zwischenspeicher
-	float zwischenfloat[256];
+	float* zwischenfloat = new float[256];
 	for (int zwi = 0; zwi < 256; zwi++) {
 		zwischenfloat[zwi] = readCalibration(zwi);
 	}
@@ -400,8 +406,8 @@ void Flashtraining::ensure_metadata_validity()  //TEST
 	uint32_t lowest_free = META_STARTADDR;
 	for (uint32_t i = META_STARTADDR; 0 < i; i -= 262144) {
 		lowest_free = i;
-		myflash.ReadByteArray(i - 262144, _pagereadbuffer, 512);
-		if (!_Check_buffer_contains_only_ff(&_pagereadbuffer, 512))
+		myflash.readByteArray(i - 262144, _pagereadbuffer, 512);
+		if (!_Check_buffer_contains_only_ff(_pagereadbuffer, 512))
 			break;
 	}
 

@@ -4,10 +4,16 @@
 #ifndef FLASHTRAINING_H
 #define FLASHTRAINING_H
 
+#ifdef ARDUINO
 #include "SPIFlash.h"
+#include <RV-3028-C7.h>
+#else
+#include "SPIFlash.h"
+#include "Chaze_Realtime.h"
 #include "Configuration.h"
 #include "nvs_flash.h"
 #include "nvs.h"
+#endif
 
 //Necessary Defines:
 //SPIFlash_SUPPLY
@@ -82,10 +88,10 @@ class Flashtraining
 	void ensure_metadata_validity();
 
 	//write
-	uint32_t _current_trainingdex;
+	uint32_t _current_trainingindex;
 	uint32_t _current_writeposition;		//Position, wo er noch nicht geschrieben hat
 	//read
-	uint8_t  _pagereadbuffer[512];	//Brauche ich manchmal
+	uint8_t*  _pagereadbuffer;	//Brauche ich manchmal
 	uint32_t _current_readposition;
 	uint32_t _current_endposition;
 	//erase
