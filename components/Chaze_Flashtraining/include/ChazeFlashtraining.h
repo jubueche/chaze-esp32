@@ -29,9 +29,6 @@
 
 class Flashtraining
 { 
-  static SPIFlash myflash; //Only declared, not initialized bc static
-  static RV3028 rtc;
-
   public:
     Flashtraining();
 
@@ -67,7 +64,7 @@ class Flashtraining
 	void erase_trainings_to_erase();
 
     //CALIBRATION STORAGE
-    bool writeCalibration(float value, uint8_t storageaddress);
+    bool writeCalibration(uint8_t storageaddress, float value);
     float readCalibration(uint8_t storageaddress);	//default/error value is 0.0f
 
     //OTHER FUNCTIONS
@@ -80,6 +77,9 @@ class Flashtraining
 	//5: want to stop erasing OCCURS SHORTLY AND ONLY PRIVATE
 
   private:
+    SPIFlash myflash;
+    RV3028 rtc;
+  
     const char * TAG = "Chaze-Flashtraining";
 
     bool _Check_buffer_contains_only_ff(uint8_t *buffer, uint32_t length);
@@ -109,4 +109,3 @@ class Flashtraining
 extern Flashtraining *global_ft;
 
 #endif
-

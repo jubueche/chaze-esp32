@@ -11,11 +11,9 @@
 
 Flashtraining *global_ft = new Flashtraining();
 
-SPIFlash Flashtraining::myflash;
-RV3028 Flashtraining::rtc;
 
 //CONSTRUCTOR
-Flashtraining::Flashtraining()	//TEST
+Flashtraining::Flashtraining()	//DONE
 {
 #ifndef ARDUINO
 	esp_err_t err = config.initialize_spi();
@@ -42,7 +40,7 @@ Flashtraining::Flashtraining()	//TEST
 
 
 //WRITING
-bool Flashtraining::start_new_training()	//TEST
+bool Flashtraining::start_new_training()	//DONE
 {
 	wait_for_erasing();
 	if (_STATE != 1)
@@ -99,7 +97,7 @@ bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)	//TEST
 	return true;
 }
 
-bool Flashtraining::stop_training()	//TEST
+bool Flashtraining::stop_training()	//DONE
 {
 	wait_for_erasing();
 	if (_STATE != 2)
@@ -121,7 +119,7 @@ bool Flashtraining::stop_training()	//TEST
 
 
 //METADATA
-uint32_t Flashtraining::meta_total_number_of_trainings() //TEST
+uint32_t Flashtraining::meta_total_number_of_trainings() //DONE
 {
 	wait_for_erasing();
 	for (uint32_t i = 0; i < 512; i++)
@@ -132,7 +130,7 @@ uint32_t Flashtraining::meta_total_number_of_trainings() //TEST
 	}
 	return 512;
 }
-uint32_t Flashtraining::meta_number_of_unsynced_trainings() //TEST
+uint32_t Flashtraining::meta_number_of_unsynced_trainings() //DONE
 {
 	wait_for_erasing();
 	uint32_t total = meta_total_number_of_trainings();
@@ -146,37 +144,38 @@ uint32_t Flashtraining::meta_number_of_unsynced_trainings() //TEST
 
 	return count;
 }
-uint32_t Flashtraining::meta_get_training_size(uint8_t trainindex)	//TEST
+uint32_t Flashtraining::meta_get_training_size(uint8_t trainindex)	//DONE
 {
 	wait_for_erasing();
 	uint32_t* start = new uint32_t();
 	uint32_t* end = new uint32_t();
 	myflash.readByteArray(META_STARTADDR + trainindex * 512 + 0, (uint8_t*)start, 4);
 	myflash.readByteArray(META_STARTADDR + trainindex * 512 + 4, (uint8_t*)end, 4);
-
+ 
 	return (*end) - (*start);
 }
-bool Flashtraining::meta_get_training_starttime(uint8_t trainindex, uint8_t * buf)	//TEST
+bool Flashtraining::meta_get_training_starttime(uint8_t trainindex, uint8_t * buf)	//DONE
 {
 	wait_for_erasing();
 	return myflash.readByteArray(META_STARTADDR + trainindex * 512 + 8, buf, 5);
 }
-bool Flashtraining::meta_get_training_endtime(uint8_t trainindex, uint8_t * buf)	//TEST
+bool Flashtraining::meta_get_training_endtime(uint8_t trainindex, uint8_t * buf)	//DONE
 {
 	wait_for_erasing();
 	return myflash.readByteArray(META_STARTADDR + trainindex * 512 + 13, buf, 5);
 }
-void Flashtraining::meta_set_synced(uint8_t trainindex) 	//TEST
+void Flashtraining::meta_set_synced(uint8_t trainindex) 	//DONE
 {
 	wait_for_erasing();
+ if(meta_total_number_of_trainings() <= trainindex) return;
 	myflash.writeByte(META_STARTADDR + trainindex * 512 + 18, 1);
 }
-bool Flashtraining::meta_is_synced(uint8_t trainindex) 	//TEST
+bool Flashtraining::meta_is_synced(uint8_t trainindex) 	//DONE
 {
 	wait_for_erasing();
 	return (myflash.readByte(META_STARTADDR + trainindex * 512 + 18) == 1);
 }
-bool Flashtraining::meta_is_deleted(uint8_t trainindex) 	//TEST
+bool Flashtraining::meta_is_deleted(uint8_t trainindex) 	//DONE
 {
 	wait_for_erasing();
 	return (myflash.readByte(META_STARTADDR + trainindex * 512 + 19) == 1);
@@ -227,9 +226,10 @@ bool Flashtraining::abort_reading_data() 	//TEST
 
 
 //ERASING
-bool Flashtraining::init_delete_training(uint8_t trainindex) 	//TEST
+bool Flashtraining::init_delete_training(uint8_t trainindex) 	//DONE
 {
 	wait_for_erasing();
+  if(meta_total_number_of_trainings() <= trainindex) return false;
 	if (_STATE != 1) return false;
 	myflash.writeByte(META_STARTADDR + trainindex * 512 + 18, 1);
 	myflash.writeByte(META_STARTADDR + trainindex * 512 + 19, 1);
@@ -237,7 +237,7 @@ bool Flashtraining::init_delete_training(uint8_t trainindex) 	//TEST
 	return true;
 }
 
-bool Flashtraining::init_delete_all_trainings()	//TEST
+bool Flashtraining::init_delete_all_trainings()	//DONE
 {
 	wait_for_erasing();
 	if (_STATE != 1) return false;
@@ -252,7 +252,7 @@ bool Flashtraining::init_delete_all_trainings()	//TEST
 	return true;
 }
 
-void Flashtraining::erase_trainings_to_erase() //TEST
+void Flashtraining::erase_trainings_to_erase() //DONE
 {
 	if (_STATE != 1) return;
 
@@ -274,6 +274,7 @@ void Flashtraining::erase_trainings_to_erase() //TEST
 				myflash.eraseBlock256K(start);
 				int mm = millis();
 				while (myflash.CheckErasing_inProgress()) { delay(10);  if (millis() > mm + 4000) { _STATE = 4; return; } }
+        start += 262144;
 			}
 			//Set "deleted" flag
 			myflash.writeByte(META_STARTADDR + i * 512 + 20, 1);
@@ -298,7 +299,7 @@ void Flashtraining::erase_trainings_to_erase() //TEST
 /*
  * @brief Possible adresses for storing a float: [0,256)
  */
-bool Flashtraining::writeCalibration(float value, uint8_t storageaddress)	//TEST
+bool Flashtraining::writeCalibration(uint8_t storageaddress, float value)	//DONE
 {
 	wait_for_erasing();
 	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288	(CALIB_STARTADDR)
@@ -348,7 +349,7 @@ bool Flashtraining::writeCalibration(float value, uint8_t storageaddress)	//TEST
 	return fehlerfrei;
 }
 
-float Flashtraining::readCalibration(uint8_t storageaddress)	//TEST
+float Flashtraining::readCalibration(uint8_t storageaddress)	//DONE
 {
 	wait_for_erasing();
 	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288		(CALIB_STARTADDR)
@@ -363,11 +364,11 @@ float Flashtraining::readCalibration(uint8_t storageaddress)	//TEST
 
 
 //OTHER FUNCTIONS
-const char * Flashtraining::get_device_ID() {	//TEST
+const char * Flashtraining::get_device_ID() {	//DONE
 	return "Prototype v3.0";
 }
 
-int Flashtraining::get_STATE() {	//GOOD
+int Flashtraining::get_STATE() {	//DONE
 	return _STATE;
 }
 
@@ -376,7 +377,7 @@ int Flashtraining::get_STATE() {	//GOOD
 
 //PRIVATE ######################################################################
 
-bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer, uint32_t length) 	//TEST
+bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer, uint32_t length) 	//DONE
 {
 	bool only_ff = true;
 	for (int i = 0; i < length; i++) {
@@ -385,7 +386,7 @@ bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer, uint32_t len
 	return only_ff;
 }
 
-void Flashtraining::ensure_metadata_validity()  //TEST
+void Flashtraining::ensure_metadata_validity()  //DONE
 {
 	wait_for_erasing();
 	uint32_t total = meta_total_number_of_trainings();
@@ -421,7 +422,7 @@ void Flashtraining::ensure_metadata_validity()  //TEST
 	_current_endposition = 0;
 }
 
-void Flashtraining::wait_for_erasing()	//TEST
+void Flashtraining::wait_for_erasing()	//DONE
 {
 	if (_STATE != 4 && _STATE != 5) return;
 
