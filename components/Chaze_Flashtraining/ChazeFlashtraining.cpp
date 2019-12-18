@@ -78,7 +78,7 @@ bool Flashtraining::start_new_training()	//DONE
 //! Use a temporary buffer of size 511 bytes that holds the bytes that were left over.
 //! At the next call to write_compressed_chunk, preprend these bytes and repeat.
 //! On stop_training, write the bytes in the temporary buffer to the flash.
-bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)	//TEST
+bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)	//DONE
 {
 	wait_for_erasing();
 	if (_STATE != 2)
@@ -183,7 +183,7 @@ bool Flashtraining::meta_is_deleted(uint8_t trainindex) 	//DONE
 
 
 //READING
-bool Flashtraining::start_reading_data(uint8_t trainindex) 	//TEST
+bool Flashtraining::start_reading_data(uint8_t trainindex) 	//DONE
 {
 	wait_for_erasing();
 	if (_STATE != 1) return false;
@@ -200,7 +200,7 @@ bool Flashtraining::start_reading_data(uint8_t trainindex) 	//TEST
 	return true;
 }
 
-bool Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//TEST
+bool Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//DONE
 {
 	wait_for_erasing();
 	if (_STATE != 3) return false;
@@ -216,7 +216,7 @@ bool Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//TEST
 	return true;
 }
 
-bool Flashtraining::abort_reading_data() 	//TEST
+bool Flashtraining::abort_reading_data() 	//DONE
 {
 	wait_for_erasing();
 	if (_STATE != 3) return false;
