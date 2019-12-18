@@ -24,8 +24,11 @@
  * along with the Arduino SPIFlash Library.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
-#if defined (ARDUINO_ARCH_SAM)
-#include "SPIFlash.h"
+#ifdef ARDUINO
+  #include "include/SPIFlash.h"
+#else
+  #include "SPIFlash.h"
+#endif
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 //        Private functions used by Arduino Due DMA operations        //
@@ -291,7 +294,8 @@ void SPIFlash::_dueSPISendChar(const char* buf, size_t len) {
     pSpi->SPI_TDR = buf[i];
     while ((pSpi->SPI_SR & SPI_SR_TDRE) == 0) {}
   }
-#endif  // #if USE_SAM3X_DMAC
+#endif   
+#if USE_SAM3X_DMAC
   while ((pSpi->SPI_SR & SPI_SR_TXEMPTY) == 0) {}
   // leave RDR empty
   char b = pSpi->SPI_RDR;

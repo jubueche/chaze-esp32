@@ -2,467 +2,313 @@
    Created by Constantin Koch, May 23, 2018
 */
 #include "ChazeFlashtraining.h"
+#ifndef ARDUINO
 #include "string.h"
+#endif
+
+#define META_STARTADDR 33030144
+#define CALIB_STARTADDR 33292288
 
 Flashtraining *global_ft = new Flashtraining();
 
-SPIFlash Flashtraining::myflash;
 
-//! Needs to be checked
-Flashtraining::Flashtraining()
+//CONSTRUCTOR
+Flashtraining::Flashtraining()	//DONE
 {
-	_STATE = 0;
-	_current_pagewritebuffer_position = 0;
-	_current_page_writeposition = 0;
-	_current_page_readposition = 0;
-	_current_sector_eraseposition = 0;
+#ifndef ARDUINO
+	esp_err_t err = config.initialize_spi();
+#endif
+
+	if (!myflash.begin(SPIFlash_CS)) ESP_LOGI(TAG, " Error in SPIFlash.begin");
+	if (!rtc.begin()) ESP_LOGI(TAG, " Error in rtc.begin");
+
+	//Validation
+	uint32_t JEDEC = myflash.getJEDECID();
+	if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) ESP_LOGI(TAG, " Error in JEDEC validation");
+
+	_current_trainingindex = 0;
+	_current_writeposition = 0;
+	_current_readposition = 0;
+	_current_endposition = 0;
+	_current_eraseposition = 0;
+	_pagereadbuffer = new uint8_t[512];
+
+	_STATE = 1;
+
+	ensure_metadata_validity();
 }
 
 
-bool Flashtraining::start_new_training()
+//WRITING
+bool Flashtraining::start_new_training()	//DONE
 {
-	if (!_Check_or_Initialize()) return false;
+	wait_for_erasing();
+	if (_STATE != 1)
+		return false;
 
-	if (_STATE == 4) {
-		for (int ii = 0; ii < 1000; ii += 10) {
-			if (myflash.CheckErasing_inProgress() == 0) {
-				//erste freie page wiederfinden
-				_STATE = 5;
-				_Check_or_Initialize();
-				//Markierung setzen
-				uint8_t bytes[1] = { 9 };
-				_write_bytebuffer_toflash(bytes, sizeof(bytes));
+	//Find next free trainindex
+	_current_trainingindex = meta_total_number_of_trainings();
 
-				_STATE = 1;
-				break;
-			}
-			delay(10);
-		}
+	//Find next free startaddress
+	uint32_t* endaddr = new uint32_t();
+	_current_writeposition = 0;
+	for (uint32_t i = 0; i < _current_trainingindex; i++)
+	{
+		myflash.readByteArray(META_STARTADDR + i * 512 + 4, (uint8_t*)endaddr, 4);
+		_current_writeposition = max(_current_writeposition, (*endaddr));
 	}
-	if (_STATE == 1) {
-		uint8_t bytes[1] = { 1 };
-		if (!_write_bytebuffer_toflash(bytes, sizeof(bytes)))return false;
-		_STATE = 2;
-		return true;
-	}
-	return false;
+	//Start of next sector
+	if (_current_writeposition % 262144 != 0)
+		_current_writeposition = (_current_writeposition / 262144) * 262144 + 262144;
+	if (_current_writeposition > META_STARTADDR) return false;
+
+	//Write Metadata
+	//Write Startaddress
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512, (uint8_t*)&_current_writeposition, 4);
+
+	//Write starttime
+	rtc.updateTime();
+	uint8_t* start_time = new uint8_t[5]{ (uint8_t)(rtc.getYear() - 2000), rtc.getMonth(), rtc.getDate(), rtc.getHours(), rtc.getMinutes() };
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512 + 8, start_time, 5);
+
+	_STATE = 2;
+	return true;
 }
-
-bool Flashtraining::stop_training()
-{
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE == 2) {
-		uint8_t bytes[1] = { 2 };
-		if (!_write_bytebuffer_toflash(bytes, sizeof(bytes)))return false;
-		_STATE = 1;
-		return true;
-	}
-	return false;
-}
-
-
-
-// TODO: Needs implementation
 
 //! Use a temporary buffer of size 511 bytes that holds the bytes that were left over.
 //! At the next call to write_compressed_chunk, preprend these bytes and repeat.
 //! On stop_training, write the bytes in the temporary buffer to the flash.
-bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)
+bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)	//TEST
 {
-	// Abort if not initialized
-	if (!_Check_or_Initialize()) return false;
-	if(_STATE == 2)
-	{
-		// Can write since we started a training
-		return _write_bytebuffer_toflash(data, n);
-	}
-	return false;
-
-}
-
-bool Flashtraining::set_name(char * name, uint8_t size)
-{
-	if(DEBUG) ESP_LOGI(TAG, "Size is %d", size);
-	if(size > 128 || size < 1)
-	{
-		ESP_LOGE(TAG, "Name length is too long.");
+	wait_for_erasing();
+	if (_STATE != 2)
 		return false;
-	}
-	char new_name[size+1];
-	memcpy(new_name, name, size);
-	new_name[size] = '\0';
-	if(!initialize_flash())
-	{
+	if (_current_writeposition + n > META_STARTADDR) {
+		stop_training();
 		return false;
 	}
 
-	nvs_handle my_handle;
-	esp_err_t err = nvs_open("name", NVS_READWRITE, &my_handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
+	if (!myflash.writeByteArray(_current_writeposition, data, n)) {
+		ESP_LOGI(TAG, " Error writing at: %d:", _current_writeposition);
 		return false;
-    } else {
-		err = nvs_set_str(my_handle, "name", new_name);
-		if(err != ESP_OK)
-		{
-			ESP_LOGE(TAG, "Error setting new number of unsynched trainings.");
-			return false;
-		}
-    }
+	}
+	_current_writeposition += n;
+
 	return true;
 }
 
-char * Flashtraining::get_name()
+bool Flashtraining::stop_training()	//DONE
 {
-	return this->get_string_pointer_from_memory("name", 128, "Chaze Band");
-}
+	wait_for_erasing();
+	if (_STATE != 2)
+		return false;
 
-void Flashtraining::add_unsynched_training()
-{
-	uint16_t current_unsynched = this->get_number_of_unsynched_trainings();
-	if(DEBUG) ESP_LOGI(TAG, "Number of unsycnhed trainings was %d", current_unsynched);
-	this->set_number_of_unsynched_trainings(current_unsynched + 1);
-	if(DEBUG) ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
-}
+	//Write Metadata
+	//Write Endaddress
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512 + 4, (uint8_t*)&_current_writeposition, 4);
 
-void Flashtraining::remove_unsynched_training()
-{
-	uint16_t current_unsynched = this->get_number_of_unsynched_trainings();
-	if(DEBUG) ESP_LOGI(TAG, "Number of unsynched trainings was %d", current_unsynched);
-	uint16_t new_val = 0;
-	if(current_unsynched >= 1)
-	{
-		new_val = current_unsynched -1;
-	}
-	this->set_number_of_unsynched_trainings(new_val);
-	if(DEBUG) ESP_LOGI(TAG, "And now is %d", this->get_number_of_unsynched_trainings());
-}
+	//Write Endtime
+	rtc.updateTime();
+	uint8_t* end_time = new uint8_t[5]{ (uint8_t)(rtc.getYear() - 2000), rtc.getMonth(), rtc.getDate(), rtc.getHours(), rtc.getMinutes() };
+	myflash.writeByteArray(META_STARTADDR + _current_trainingindex * 512 + 13, end_time, 5);
 
-uint16_t Flashtraining::get_number_of_unsynched_trainings(){
-	uint16_t number_unsynched = 0; // value will default to 0, if not set yet in NVS
-	if(!initialize_flash())
-	{
-		return number_unsynched;
-	}
-	nvs_handle my_handle;
-	esp_err_t err = nvs_open("unsynched", NVS_READWRITE, &my_handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
-    } else {
-		err = nvs_get_u16(my_handle, "unsynched", &number_unsynched);
-		switch (err) {
-			case ESP_OK:
-				if(DEBUG) ESP_LOGI(TAG, "Done");
-				if(DEBUG) ESP_LOGI(TAG, "Num. unsynched trainings is = %d", number_unsynched);
-				break;
-			case ESP_ERR_NVS_NOT_FOUND:
-				ESP_LOGE(TAG, "The value is not initialized yet!");
-				break;
-			default :
-				ESP_LOGE(TAG, "Error (%s) reading!", esp_err_to_name(err));
-		}	
-	}
-	return number_unsynched;
-}
+	_STATE = 1;
 
-void Flashtraining::set_number_of_unsynched_trainings(uint16_t new_number_of_unsynched_trainings)
-{
-	if(!initialize_flash())
-	{
-		return;
-	}
-	nvs_handle my_handle;
-	esp_err_t err = nvs_open("unsynched", NVS_READWRITE, &my_handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-    } else {
-		err = nvs_set_u16(my_handle, "unsynched", new_number_of_unsynched_trainings);
-		if(err != ESP_OK)
-		{
-			ESP_LOGE(TAG, "Error setting new number of unsynched trainings.");
-		}
-    }
-	return;
-}
-
-bool Flashtraining::initialize_flash()
-{
-	esp_err_t ret = nvs_flash_init();
-    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-		if(nvs_flash_erase() == ESP_OK){
-			if(nvs_flash_init() != ESP_OK){
-				ESP_LOGE(TAG, "Failed to init NVS flash.");
-                return false;
-			}
-		} else{
-			ESP_LOGE(TAG, "Failed to erase flash.");
-            return false;
-		}
-	}
 	return true;
 }
 
 
-int32_t Flashtraining::get_next_buffer_of_training(uint8_t * buff)
+//METADATA
+uint32_t Flashtraining::meta_total_number_of_trainings() //DONE
 {
-	if(config.random_between(0,100) < 75)
+	wait_for_erasing();
+	for (uint32_t i = 0; i < 512; i++)
 	{
-		for(int i=0;i<UPLOAD_BLOCK_SIZE_BLE;i++){
-			buff[i] = config.random_between(66,88);
-		}
-		if(DEBUG) ESP_LOGI(TAG, "Full chunk."); 
-		return -1;
-	} else {
-		uint32_t n = config.random_between(20,100);
-		for(int i =0; i<n; i++) {
-			buff[i] = config.random_between(66,88);
-		}
-		if(DEBUG) ESP_LOGI(TAG, "Half full chunk of size %d.", n);
-		return n;
+		myflash.readByteArray(META_STARTADDR + i * 512, _pagereadbuffer, 25);
+		if (_Check_buffer_contains_only_ff(_pagereadbuffer, 25))
+			return i;
 	}
+	return 512;
 }
-
-
-void Flashtraining::completed_synch_of_training(bool b)
+uint32_t Flashtraining::meta_number_of_unsynced_trainings() //DONE
 {
-	return;
-}
+	wait_for_erasing();
+	uint32_t total = meta_total_number_of_trainings();
+	uint32_t count = 0;
 
-char * Flashtraining::get_string_pointer_from_memory(const char * indicator, size_t max_len, char * default_value)
-{
-	char new_value[max_len];
-	if(!initialize_flash())
-	{
-		uint16_t len_s = strlen(default_value);
-		char * ret_val = (char *) malloc(len_s+1);
-		memcpy(ret_val, default_value, len_s);
-		ret_val[len_s] = '\0';
-		return ret_val;
-	}
-	nvs_handle my_handle;
-	esp_err_t err = nvs_open(indicator, NVS_READWRITE, &my_handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error (%s) opening NVS handle!", esp_err_to_name(err));
-    } else {
-		err = nvs_get_str(my_handle, indicator, new_value, &max_len);
-		switch (err) {
-			case ESP_OK: {
-				uint16_t len = 0;
-				for(int i=0;i<max_len;i++)
-				{
-					if(new_value[i] == '\0')
-					{
-						len = i+1;
-						break;
-					}
-				}
-				char * final_value = (char *) malloc(len);
-				if(final_value == NULL){
-					config.STATE = DEEPSLEEP;
-					return (char*) malloc(1); // All hope is lost and we go to sleep.
-				}
-				memcpy(final_value, new_value, len);
-				if(DEBUG) ESP_LOGI(TAG, "Done");
-				if(DEBUG) ESP_LOGI(TAG, "%s is = %s", indicator,final_value);
-				return final_value;
-			} break;
-			case ESP_ERR_NVS_NOT_FOUND: {
-				ESP_LOGE(TAG, "The value is not initialized yet!");
-			} break;
-			default :
-				ESP_LOGE(TAG, "Error (%s) reading!", esp_err_to_name(err));
-		}	
-	}
-	uint16_t len_s = strlen(default_value);
-	char * ret_val = (char *) malloc(len_s+1);
-	memcpy(ret_val, default_value, len_s);
-	ret_val[len_s] = '\0';
-	if(DEBUG) ESP_LOGI(TAG, "The %s is = %s", indicator, ret_val);
-	return ret_val;
-}
-
-bool Flashtraining::set_string_in_memory(char * indicator, char * value, uint8_t size)
-{
-	if(DEBUG) ESP_LOGI(TAG, "Size is %d", size);
-	
-	char new_value[size+1];
-	memcpy(new_value, value, size);
-	new_value[size] = '\0';
-	if(!initialize_flash())
-	{
-		return false;
+	for (uint32_t i = 0; i < total; i++) {
+		//Check synced flag
+		if (myflash.readByte(META_STARTADDR + i * 512 + 18) == 255)
+			count++;
 	}
 
-	nvs_handle my_handle;
-	esp_err_t err = nvs_open(indicator, NVS_READWRITE, &my_handle);
-    if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Error (%s) opening NVS handle!\n", esp_err_to_name(err));
-		return false;
-    } else {
-		err = nvs_set_str(my_handle, indicator, new_value);
-		if(err != ESP_OK)
-		{
-			ESP_LOGE(TAG, "Error setting new %s.", indicator);
-			return false;
-		}
-    }
-	return true;
+	return count;
 }
-
-char * Flashtraining::get_device_name(void)
+uint32_t Flashtraining::meta_get_training_size(uint8_t trainindex)	//DONE
 {
-	return this->get_string_pointer_from_memory("device_name", 128, "chaze-3");
+	wait_for_erasing();
+	uint32_t* start = new uint32_t();
+	uint32_t* end = new uint32_t();
+	myflash.readByteArray(META_STARTADDR + trainindex * 512 + 0, (uint8_t*)start, 4);
+	myflash.readByteArray(META_STARTADDR + trainindex * 512 + 4, (uint8_t*)end, 4);
+ 
+	return (*end) - (*start);
 }
-
-char * Flashtraining::get_azure_connection_string(void)
+bool Flashtraining::meta_get_training_starttime(uint8_t trainindex, uint8_t * buf)	//DONE
 {
-	return this->get_string_pointer_from_memory("conn_string", 512, "HostName=chaze-iot-hub.azure-devices.net;DeviceId=chaze-3;SharedAccessKey=9vhufTtWrFy9vtucS1rzc4eKt9eIyfk6XnCoYIfI/7Y=");
-	// TODO Must be initially set to any value. Maybe set to one device to check if we forgot to save the correct conn string on this device?
+	wait_for_erasing();
+	return myflash.readByteArray(META_STARTADDR + trainindex * 512 + 8, buf, 5);
 }
-
-
-char * Flashtraining::get_wifi_ssid(void)
+bool Flashtraining::meta_get_training_endtime(uint8_t trainindex, uint8_t * buf)	//DONE
 {
-	return this->get_string_pointer_from_memory("ssid", 128, "Refhaus_Mitte/Zentral");
+	wait_for_erasing();
+	return myflash.readByteArray(META_STARTADDR + trainindex * 512 + 13, buf, 5);
 }
-
-
-char * Flashtraining::get_wifi_password(void)
+void Flashtraining::meta_set_synced(uint8_t trainindex) 	//DONE
 {
-	return this->get_string_pointer_from_memory("password", 128, "Amm+Tag+Vc+0");
+	wait_for_erasing();
+ if(meta_total_number_of_trainings() <= trainindex) return;
+	myflash.writeByte(META_STARTADDR + trainindex * 512 + 18, 1);
 }
-
-char * Flashtraining::get_container_name(void)
+bool Flashtraining::meta_is_synced(uint8_t trainindex) 	//DONE
 {
-	return this->get_string_pointer_from_memory("container", 128, "default");
+	wait_for_erasing();
+	return (myflash.readByte(META_STARTADDR + trainindex * 512 + 18) == 1);
 }
-
-bool Flashtraining::set_container_name(char * name, uint8_t size)
+bool Flashtraining::meta_is_deleted(uint8_t trainindex) 	//DONE
 {
-	return this->set_string_in_memory("container", name, size);
+	wait_for_erasing();
+	return (myflash.readByte(META_STARTADDR + trainindex * 512 + 19) == 1);
 }
 
-bool Flashtraining::set_device_name(char * name, uint8_t size)
+
+//READING
+bool Flashtraining::start_reading_data(uint8_t trainindex) 	//TEST
 {
-	return this->set_string_in_memory("device_name", name, size);
-}
+	wait_for_erasing();
+	if (_STATE != 1) return false;
 
-bool Flashtraining::set_azure_connection_string(char * conn_string, uint8_t size)
-{
-	return this->set_string_in_memory("conn_string", conn_string, size);
-}
+	//get startaddress
+	if (!myflash.readByteArray(META_STARTADDR + trainindex * 512 + 0, (uint8_t*)&_current_readposition, 4)) return false;
+	if (_Check_buffer_contains_only_ff((uint8_t*)&_current_readposition, 4)) return false;
 
-bool Flashtraining::set_wifi_ssid(char * ssid, uint8_t size)
-{
-	return this->set_string_in_memory("ssid", ssid, size);
-}
+	//get current endaddress
+	if (!myflash.readByteArray(META_STARTADDR + trainindex * 512 + 4, (uint8_t*)&_current_endposition, 4)) return false;
+	if (_Check_buffer_contains_only_ff((uint8_t*)&_current_endposition, 4)) return false;
 
-bool Flashtraining::set_wifi_password(char * pass, uint8_t size)
-{
-	return this->set_string_in_memory("password", pass, size);
-}
-
-uint8_t Flashtraining::get_version(char * version_buffer)
-{
-	char * version_from_mem = this->get_string_pointer_from_memory("version", 128, "v1.0");
-	uint8_t len = 4;
-	for(int i=0;i<128;i++)
-	{
-		version_buffer[i] =  version_from_mem[i];
-		if(version_from_mem[i] == '\0')
-		{
-			len = i+1;
-			break;
-		}
-	}
-	return len;
-}
-
-bool Flashtraining::set_version(char * version, uint8_t size)
-{
-	return this->set_string_in_memory("version", version, size);
-}
-
-// TODO: End Needs implementation
-
-bool Flashtraining::start_delete_all_trainings()
-{
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE != 1)return false;
-
-	_current_sector_eraseposition = 126;
-	_STATE = 4;
-	return true;
-}
-
-bool Flashtraining::start_reading_data() {
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE != 1)return false;
-	int _current_page_readposition = 0;
 	_STATE = 3;
 	return true;
 }
 
-bool Flashtraining::get_all_data_bufferwise(void *buf)
+bool Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//TEST
 {
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE != 3)return false;
+	wait_for_erasing();
+	if (_STATE != 3) return false;
 
-	if (!myflash.readByteArray(_current_page_readposition * 512, _pagereadbuffer, 512)) return false;
-	_current_page_readposition++;
-	memcpy((char *)buf, _pagereadbuffer, 512);
+	if (!myflash.readByteArray(_current_readposition, buf, 512)) return false;
+	_current_readposition += 512;
 
-	if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
+	if (_current_readposition >= _current_endposition) {
 		_STATE = 1;
 		return false;
 	}
-	else return true;
+
+	return true;
 }
 
-bool Flashtraining::abort_reading_data() {
-	if (!_Check_or_Initialize()) return false;
-	if (_STATE != 3)return false;
+bool Flashtraining::abort_reading_data() 	//TEST
+{
+	wait_for_erasing();
+	if (_STATE != 3) return false;
 	_STATE = 1;
 	return true;
 }
 
-void Flashtraining::please_call_every_loop() {
-	_Check_or_Initialize();
-	if (_STATE == 4) {
-		if(DEBUG) ESP_LOGI(TAG, "_current_sector_eraseposition: %d", _current_sector_eraseposition);
-		if (myflash.CheckErasing_inProgress() == 0) {
-			myflash.readByteArray(_current_sector_eraseposition * 262144, _pagereadbuffer, 512);
-			if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-				//Endbedingung
-				if (_current_sector_eraseposition == 0) {
-					_STATE = 1;
-					return;
-				}
-				_current_sector_eraseposition--;
+
+//ERASING
+bool Flashtraining::init_delete_training(uint8_t trainindex) 	//DONE
+{
+	wait_for_erasing();
+  if(meta_total_number_of_trainings() <= trainindex) return false;
+	if (_STATE != 1) return false;
+	myflash.writeByte(META_STARTADDR + trainindex * 512 + 18, 1);
+	myflash.writeByte(META_STARTADDR + trainindex * 512 + 19, 1);
+
+	return true;
+}
+
+bool Flashtraining::init_delete_all_trainings()	//DONE
+{
+	wait_for_erasing();
+	if (_STATE != 1) return false;
+
+	uint32_t total = meta_total_number_of_trainings();
+
+	for (uint32_t i = 0; i < total; i++)
+	{
+		init_delete_training(i);
+	}
+
+	return true;
+}
+
+void Flashtraining::erase_trainings_to_erase() //DONE
+{
+	if (_STATE != 1) return;
+
+	uint32_t total = meta_total_number_of_trainings();
+
+	for (uint32_t i = 0; i < total; i++) {
+		//		should delete this training?							//	is it not yet deleted?
+		if ((myflash.readByte(META_STARTADDR + i * 512 + 19) == 1) && (myflash.readByte(META_STARTADDR + i * 512 + 20) != 1)) {
+			//Delete all Sectors of this training
+			//Get start- and end address
+			uint32_t start = 0;
+			uint32_t end = 0;
+			myflash.readByteArray(META_STARTADDR + i * 512 + 0, (uint8_t*)&start, 4);
+			myflash.readByteArray(META_STARTADDR + i * 512 + 4, (uint8_t*)&end, 4);
+			while (start < end) {
+				//Terminate prematurely?
+				if (_STATE == 5) { _STATE = 1; return; }
+				//Erase Sector
+				myflash.eraseBlock256K(start);
+				int mm = millis();
+				while (myflash.CheckErasing_inProgress()) { delay(10);  if (millis() > mm + 4000) { _STATE = 4; return; } }
+        start += 262144;
 			}
-			else {
-				myflash.eraseBlock256K(_current_sector_eraseposition * 262144);
-			}
+			//Set "deleted" flag
+			myflash.writeByte(META_STARTADDR + i * 512 + 20, 1);
+
 		}
 	}
+
+	//If we get here and all meta-trainings are "deleted", we can erase the meta data sector
+	bool all_deleted = true;
+	for (uint32_t i = 0; i < total; i++) {
+		if (myflash.readByte(META_STARTADDR + i * 512 + 20) != 1) all_deleted = false;
+	}
+	if(all_deleted)
+		myflash.eraseBlock256K(META_STARTADDR);
+	uint32_t mm = millis();
+	while (myflash.CheckErasing_inProgress()) { delay(10); if (millis() > mm + 4000) break; }
+
+	_STATE = 1;
 }
 
-int Flashtraining::get_STATE() {
-	return _STATE;
-}
-
+//CALIBRATION STORAGE
 /*
  * @brief Possible adresses for storing a float: [0,256)
  */
-bool Flashtraining::writeCalibration(float value, uint8_t storageaddress) {
-	if (!_Check_or_Initialize()) return false;
-	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288
+bool Flashtraining::writeCalibration(uint8_t storageaddress, float value)	//DONE
+{
+	wait_for_erasing();
+	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288	(CALIB_STARTADDR)
 
 	//selbst im Fehlerfalle soll erst ganz am Ende returnt werden, damit die Calibration noch gerettet werden kann
 	bool fehlerfrei = true;
 
 	//Zwischenspeicher
-	float zwischenfloat[256];
+	float* zwischenfloat = new float[256];
 	for (int zwi = 0; zwi < 256; zwi++) {
 		zwischenfloat[zwi] = readCalibration(zwi);
 	}
@@ -472,10 +318,10 @@ bool Flashtraining::writeCalibration(float value, uint8_t storageaddress) {
 	//Sector Protection freigeben und Erasen
 	if (!myflash.ASP_release_all_sectors()) fehlerfrei = false;
 	delayMicroseconds(100);
-	if (!myflash.eraseBlock256K(33292288)) fehlerfrei = false;
+	if (!myflash.eraseBlock256K(CALIB_STARTADDR)) fehlerfrei = false;
 	int mm = millis();
 	while (myflash.CheckErasing_inProgress()) {
-		if (millis() > mm + 2000) {
+		if (millis() > mm + 4000) {
 			fehlerfrei = false; break;
 		}
 	}
@@ -488,137 +334,103 @@ bool Flashtraining::writeCalibration(float value, uint8_t storageaddress) {
 		barr[1] = l >> 16;
 		barr[2] = l >> 8;
 		barr[3] = l;                   //rechteste Bits von l
-		if (!(myflash.writeByteArray(33292288 + zwii * 512, &barr[0], 4)))fehlerfrei = false;
+		if (!(myflash.writeByteArray(CALIB_STARTADDR + zwii * 512, &barr[0], 4)))fehlerfrei = false;
 	}
 
 	//Sector protecten
-	if (!myflash.ASP_PPB_protect_sector(33292288))fehlerfrei = false;
+	if (!myflash.ASP_PPB_protect_sector(CALIB_STARTADDR))fehlerfrei = false;
 
 	//Protection überprüfen
 	if (myflash.ASP_PPB_read_Access_Register(0) != 255)fehlerfrei = false;
-	if (myflash.ASP_PPB_read_Access_Register(33292288) != 0)fehlerfrei = false;
+	if (myflash.ASP_PPB_read_Access_Register(CALIB_STARTADDR) != 0)fehlerfrei = false;
 
+	delete[] zwischenfloat;
 
 	return fehlerfrei;
 }
 
-float Flashtraining::readCalibration(uint8_t storageaddress) {
-	if (!_Check_or_Initialize()) return false;
-	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288
+float Flashtraining::readCalibration(uint8_t storageaddress)	//DONE
+{
+	wait_for_erasing();
+	//Adresse des ersten Bytes des letzten Sektors: 0 + 262144 * 127 = 33292288		(CALIB_STARTADDR)
 
-	if (!myflash.readByteArray(33292288 + storageaddress * 512, _pagereadbuffer, 512)) return 0;
+	if (!myflash.readByteArray(CALIB_STARTADDR + storageaddress * 512, _pagereadbuffer, 4)) return 0;
 
-	long l_regenerated = 16777216 * _pagereadbuffer[0] + 65536 * _pagereadbuffer[1] + 256 * _pagereadbuffer[2] + _pagereadbuffer[3];
+	long l_regenerated = 16777216 * _pagereadbuffer[0] + 65536 * _pagereadbuffer[1] + 256 * _pagereadbuffer[2] + _pagereadbuffer[3];	//TODO: geht besser
 	if (_pagereadbuffer[0] == 255 && _pagereadbuffer[1] == 255 && _pagereadbuffer[2] == 255 && _pagereadbuffer[3] == 255) return 0;
 	float float_regenerated = *(float*)&l_regenerated;
 	return float_regenerated;
 }
 
+
+//OTHER FUNCTIONS
+const char * Flashtraining::get_device_ID() {	//DONE
+	return "Prototype v3.0";
+}
+
+int Flashtraining::get_STATE() {	//DONE
+	return _STATE;
+}
+
+
+
+
 //PRIVATE ######################################################################
 
-bool Flashtraining::_write_bytebuffer_toflash(uint8_t *buffer, uint8_t buflenght) {
-	//uint8_t _pagewritebuffer[512];
-	//int _current_pagewritebuffer_position = 0;  //Position, wo er noch nicht geschrieben hat
-	//int _current_page_writeposition = 0;      //Position, wo er noch nicht geschrieben hat
-
-	//pagewritebuffer einfach weiter schreiben
-	if (_current_pagewritebuffer_position + buflenght <= 512) {
-		memcpy(&_pagewritebuffer[_current_pagewritebuffer_position], buffer, buflenght);
-		_current_pagewritebuffer_position += buflenght;
-		//für wenn der buffer für "STOP TRAINING" steht
-		if (buflenght == 1) {
-			if (buffer[0] == 2) {
-				if (!myflash.writeByteArray(_current_page_writeposition * 512, &_pagewritebuffer[0], 512))return false;
-				_current_page_writeposition++;
-				for (int i = 0; i < 512; i++) {
-					_pagewritebuffer[i] = 255;
-				}
-				_current_pagewritebuffer_position = 0;
-			}
-		}
-	}
-	//pagewritebuffer in Page schreiben und buffer zurücksetzen
-	else {
-		if (!myflash.writeByteArray(_current_page_writeposition * 512, &_pagewritebuffer[0], 512)) {
-#ifdef DEBUG 
-			Serial.print("ERROR "); Serial.println(_current_page_writeposition);
-#endif
-			return false;
-		}
-		_current_page_writeposition++;
-		for (int i = 0; i < 512; i++) {
-			_pagewritebuffer[i] = 255;
-		}
-		_current_pagewritebuffer_position = 0;
-		//pagewritebuffer jetzt weiter schreiben
-		memcpy(&_pagewritebuffer[_current_pagewritebuffer_position], buffer, buflenght);
-		_current_pagewritebuffer_position += buflenght;
-}
-	return true;
-}
-
-bool Flashtraining::_Check_or_Initialize() {
-	if (_STATE == 0 || _STATE == 5) {
-		if (_STATE == 0) {
-			
-			esp_err_t err = config.initialize_spi();
-
-			if (!myflash.begin(SPIFlash_CS)) return false;
-
-			//Validation
-			uint32_t JEDEC = myflash.getJEDECID();
-			if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) return false;
-
-			_STATE = 1;
-		}
-		//Suchen der ersten freien Page (zum Beschreiben)
-		//zu suchen: Pages 0 bis 126 * 512 - 1 = 64511 
-		_current_page_writeposition = 0;
-		for (uint8_t i = 0; i <= 6; i++) {
-			myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-			if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-				if (_current_page_writeposition == 0) return true;
-				_current_page_writeposition -= 10000;
-				for (uint8_t ii = 0; ii < 10; ii++) {
-					myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-					if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-						_current_page_writeposition -= 1000;
-						for (uint8_t iii = 0; iii < 10; iii++) {
-							myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-							if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-								_current_page_writeposition -= 100;
-								for (uint8_t iiii = 0; iiii < 10; iiii++) {
-									myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-									if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-										_current_page_writeposition -= 10;
-										for (uint8_t iiiii = 0; iiiii < 10; iiiii++) {
-											myflash.readByteArray(_current_page_writeposition * 512, _pagereadbuffer, 512);
-											if (Flashtraining::_Check_buffer_contains_only_ff(_pagereadbuffer)) {
-												return true;
-											}
-											_current_page_writeposition++;
-										}
-									}
-									_current_page_writeposition += 10;
-								}
-							}
-							_current_page_writeposition += 100;
-						}
-					}
-					_current_page_writeposition += 1000;
-				}
-			}
-			_current_page_writeposition += 10000;
-		}
-		_current_page_writeposition = 130048;
-	}
-	return true;
-}
-
-bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer) {
+bool Flashtraining::_Check_buffer_contains_only_ff(uint8_t *buffer, uint32_t length) 	//DONE
+{
 	bool only_ff = true;
-	for (int i = 0; i < 512; i++) {
-		if (buffer[i] != 255)only_ff = false;
+	for (int i = 0; i < length; i++) {
+		if (buffer[i] != 255) only_ff = false;
 	}
 	return only_ff;
+}
+
+void Flashtraining::ensure_metadata_validity()  //DONE
+{
+	wait_for_erasing();
+	uint32_t total = meta_total_number_of_trainings();
+
+	bool errorfree = true;
+
+	for (uint32_t i = 0; i < total; i++)
+	{
+		if (meta_get_training_size(i) > META_STARTADDR) errorfree = false;
+		if (!myflash.readByteArray(META_STARTADDR + i * 512 + 4, (uint8_t*)&_current_endposition, 4)) errorfree = false;
+		if (_current_endposition == UINT32_MAX) errorfree = false;
+	}
+	_current_endposition = 0;
+
+	if (errorfree) return;
+
+	//FIND LOWEST FREE SECTOR
+	uint32_t lowest_free = META_STARTADDR;
+	for (uint32_t i = META_STARTADDR; 0 < i; i -= 262144) {
+		lowest_free = i;
+		myflash.readByteArray(i - 262144, _pagereadbuffer, 512);
+		if (!_Check_buffer_contains_only_ff(_pagereadbuffer, 512))
+			break;
+	}
+
+	//Write this lowest free sector as end adress for incomplete trainings
+	for (uint32_t i = 0; i < total; i++)
+	{
+		myflash.readByteArray(META_STARTADDR + i * 512 + 4, (uint8_t*)&_current_endposition, 4);
+		if (_current_endposition == UINT32_MAX)
+			myflash.writeByteArray(META_STARTADDR + i * 512 + 4, (uint8_t*)&lowest_free, 4);
+	}
+	_current_endposition = 0;
+}
+
+void Flashtraining::wait_for_erasing()	//DONE
+{
+	if (_STATE != 4 && _STATE != 5) return;
+
+	_STATE = 5;
+	while (_STATE != 1) delay(10);
+	return;
+}
+
+int max(const int& a, const int& b) {
+	return (a < b) ? b : a;
 }
