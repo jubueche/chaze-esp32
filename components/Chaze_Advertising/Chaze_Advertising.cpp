@@ -197,7 +197,7 @@ void advertise()
 
 void clean_up(BNO055 *bno_adv)
 {
-    if(config.wifi_connected)
+    /*if(config.wifi_connected)
     {
         esp_err_t wifi_stop_res = esp_wifi_stop();
         if(wifi_stop_res == ESP_OK){
@@ -208,7 +208,18 @@ void clean_up(BNO055 *bno_adv)
             ESP_LOGE(TAG_Adv, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
         }
         config.wifi_connected = false;
+    }*/
+
+    esp_err_t wifi_stop_res = esp_wifi_stop();
+    if(wifi_stop_res == ESP_OK){
+        if(esp_wifi_deinit() != ESP_OK){
+            ESP_LOGE(TAG_Adv, "Failed to deinit WiFi");
+        } else 	if(DEBUG) ESP_LOGI(TAG_Adv, "Deinited WiFi after successful upload.");
+    } else {
+        ESP_LOGE(TAG_Adv, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
     }
+    config.wifi_connected = false;
+
     // Should call destructors, detach interrupts
     config.detach_bno_int();
     config.detach_btn_int();

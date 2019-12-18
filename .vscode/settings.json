@@ -5,5 +5,6 @@
         "streambuf": "cpp",
         "certs.h": "c"
     },
-    "C_Cpp.dimInactiveRegions": false
+    "C_Cpp.dimInactiveRegions": false,
+    "azureFunctions.templateFilter": "All"
 }

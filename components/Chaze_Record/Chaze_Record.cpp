@@ -1,5 +1,5 @@
 #include "Chaze_Record.h"
-
+#include "esp_heap_caps.h"
 
 const char * TAG_RECORD = "Chaze Record";
 
@@ -25,11 +25,10 @@ void sample_hr(void * pvParams)
 		return;
 	}
 	for(;;){
-		if(DEBUG) ESP_LOGW(TAG_RECORD, "Free heap space is %d", esp_get_free_heap_size());
+		if(DEBUG) ESP_LOGW(TAG_RECORD, "Maximum allocatable block %d", heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 		gpio_set_level(GPIO_HR_BOOST,1); //Activate boost
 		hr.resume();
 		// Sample heart rate
-		//! Uncomment if heart rate sensor attached, use config.I2C methods for thread safety
 		// uint32_t heart_rate = hr.get_heart_rate(); //! HR single
 		int32_t * raw_data = hr.get_heart_rate_raw();
 
@@ -478,10 +477,10 @@ void aquire_lock_and_write_to_buffer(uint8_t * bytes, int32_t length, char const
 			curr_buff->counter += length;
 		} else{
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer full. Writing in next one.");
-			//Fill up the buffer with 'f' and set the buff_idx to buff_idx XOR 1
+			//Fill up the buffer with 255 and set the buff_idx to buff_idx XOR 1
 			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Buffer %d almost full, fill up", buff_idx);
 			for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
-				curr_buff->data[i] = 'f';
+				curr_buff->data[i] = 255;
 			curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
 			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Counter is %d", curr_buff->counter);
 
