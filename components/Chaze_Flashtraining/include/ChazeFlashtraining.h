@@ -4,16 +4,11 @@
 #ifndef FLASHTRAINING_H
 #define FLASHTRAINING_H
 
-#ifdef ARDUINO
-#include "SPIFlash.h"
-#include <RV-3028-C7.h>
-#else
 #include "SPIFlash.h"
 #include "Chaze_Realtime.h"
 #include "Configuration.h"
 #include "nvs_flash.h"
 #include "nvs.h"
-#endif
 
 //Necessary Defines:
 //SPIFlash_SUPPLY

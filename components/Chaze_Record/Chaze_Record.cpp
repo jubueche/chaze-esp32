@@ -369,7 +369,6 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	
 	compress_and_save(ft, buff_idx, buffers);
 	curr_buff->counter = 0;
-	FlashtrainingWrapper_add_unsynched_training(ft);
 
 	// Stop training
 	if(FlashtrainingWrapper_stop_training(ft))

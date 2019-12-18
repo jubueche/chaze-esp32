@@ -256,7 +256,7 @@ void set_container()
     char container[buffer->size+1];
     memcpy(container, buffer->data, buffer->size);
     container[buffer->size] = '\0';
-    if(global_ft->set_container_name(container, buffer->size))
+    if(global_chaze_meta->set_container_name(container, buffer->size))
     {
         ble->write("1\n");
     } else{
@@ -274,7 +274,7 @@ void set_conn_string()
     char cs[buffer->size+1];
     memcpy(cs, buffer->data, buffer->size);
     cs[buffer->size] = '\0';
-    if(global_ft->set_azure_connection_string(cs, buffer->size))
+    if(global_chaze_meta->set_azure_connection_string(cs, buffer->size))
     {
         ble->write("1\n");
     } else{
@@ -292,7 +292,7 @@ void set_device_name()
     char device_name[buffer->size+1];
     memcpy(device_name, buffer->data, buffer->size);
     device_name[buffer->size] = '\0';
-    if(global_ft->set_device_name(device_name, buffer->size))
+    if(global_chaze_meta->set_device_name(device_name, buffer->size))
     {
         ble->write("1\n");
     } else{
@@ -310,7 +310,7 @@ void set_version()
     char version[buffer->size+1];
     memcpy(version, buffer->data, buffer->size);
     version[buffer->size] = '\0';
-    if(global_ft->set_version(version, buffer->size))
+    if(global_chaze_meta->set_version(version, buffer->size))
     {
         ble->write("1\n");
     } else{
@@ -335,7 +335,7 @@ void set_name()
     char name[buffer->size+1];
     memcpy(name, buffer->data, buffer->size);
     name[buffer->size] = '\0';
-    if(global_ft->set_name(name, buffer->size))
+    if(global_chaze_meta->set_name(name, buffer->size))
     {
         ble->write("1\n");
     } else{
@@ -354,7 +354,7 @@ void set_ssid()
     char * ssid = new char[buffer->size];
     memcpy(ssid, buffer->data, buffer->size);
 
-    if(global_ft->set_wifi_ssid(ssid, buffer->size))
+    if(global_chaze_meta->set_wifi_ssid(ssid, buffer->size))
     {
         ble->write("1\n");
     } else {
@@ -374,7 +374,7 @@ void set_password()
     char password[buffer->size];
     memcpy(password, buffer->data, buffer->size);
 
-    if(global_ft->set_wifi_password(password, buffer->size))
+    if(global_chaze_meta->set_wifi_password(password, buffer->size))
     {
         ble->write("1\n");
     } else {
@@ -386,7 +386,7 @@ void set_password()
 void get_version()
 {
     char version[128];
-    uint8_t n = global_ft->get_version(version);
+    uint8_t n = global_chaze_meta->get_version(version);
     ble->write(version, n);
     CONNECTED_STATE = IDLE;
 }
@@ -432,7 +432,7 @@ void synch_data()
 
     if(DEBUG) ESP_LOGI(TAG_Con, "Synching data");
     bool done = false;
-    uint16_t num_unsynched_trainings = global_ft->get_number_of_unsynched_trainings();
+    uint16_t num_unsynched_trainings = global_ft->meta_number_of_unsynced_trainings();
 
     uint8_t data[UPLOAD_BLOCK_SIZE_BLE];
     ble->write(std::to_string(num_unsynched_trainings));
@@ -440,23 +440,17 @@ void synch_data()
     for(int i=0;i<num_unsynched_trainings;i++)
     {
         // Call again for each training
-        global_ft->start_reading_data();
+        global_ft->start_reading_data(i);
         
         //! TODO Need to get time of the training and send it here!
         ble->write("31-02-2019-13-45");
 
-        int32_t response = 0;
+        bool response = true;
         do {
             response = global_ft->get_next_buffer_of_training(data);
-            if(response == -1) // data is full
-            {
-                ble->write(data, UPLOAD_BLOCK_SIZE_BLE);
-            }
+            ble->write(data, UPLOAD_BLOCK_SIZE_BLE);
 
-        } while(response == -1);
-         // This was the last chunk
-        if(DEBUG) ESP_LOGI(TAG_Con, "Response is %d", response);
-        ble->write(data, response);
+        } while(response);
         ble->write(EOF); // Write EOF
 
         unsigned long response_timer = millis();
@@ -469,12 +463,10 @@ void synch_data()
         
         if(config.synched_training == SYNCH_COMPLETE)
         {
-            global_ft->completed_synch_of_training(true);
-            global_ft->remove_unsynched_training();
             if(DEBUG) ESP_LOGI(TAG_Con, "Successful synch.");
+            global_ft->meta_set_synced(i);
         } else if(config.synched_training == SYNCH_INCOMPLETE)
         {
-            global_ft->completed_synch_of_training(false);
             ESP_LOGE(TAG_Con, "Unsuccessful synch.");
             CONNECTED_STATE = IDLE; 
             global_ft->abort_reading_data();
@@ -488,7 +480,6 @@ void synch_data()
         config.synched_training = AWAITING; // Reset the variable for the next trainings.
             
     }
-    global_ft->abort_reading_data();
     ble->write(EOF);
     CONNECTED_STATE = IDLE;
 }

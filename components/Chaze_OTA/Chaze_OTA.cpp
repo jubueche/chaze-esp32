@@ -119,7 +119,7 @@ bool write_new_firmware_version(void)
 	version_string[2] = '.';
 	version_string[3] = numbers[after_dot];
 	version_string[4] = '\0';
-	return global_ft->set_version(version_string, 5);
+	return global_chaze_meta->set_version(version_string, 5);
 }
 
 /**
@@ -153,7 +153,7 @@ void perform_OTA(void)
 	char current_version_string[128];
 	bool dot_occ = false;
 	float version_float = 9.9;
-	uint8_t n = global_ft->get_version(current_version_string);
+	uint8_t n = global_chaze_meta->get_version(current_version_string);
 	for(int i=0;i<n;i++)
 	{
 		if(current_version_string[i] == '.')

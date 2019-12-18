@@ -72,7 +72,7 @@ void Chaze_ble::initialize_connection(){
   if(!BLEDevice::getInitialized())
   {
     if(DEBUG) ESP_LOGI(TAG_BLE, "Not yet initialized, start init.");
-    char* name = global_ft->get_name();
+    char* name = global_chaze_meta->get_name();
     if(DEBUG) ESP_LOGI(TAG_BLE, "Setting device name to %s", name);
     std::string name_s = name;
     BLEDevice::init(name_s);

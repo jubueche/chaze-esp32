@@ -89,7 +89,7 @@ void advertise()
     unsigned long blue_led_timer = millis();
     unsigned long timeout_timer = millis();
 
-    if(wifi_synch_task_handle == NULL && global_ft->get_number_of_unsynched_trainings() > 0)
+    if(wifi_synch_task_handle == NULL && global_ft->meta_number_of_unsynced_trainings() > 0)
     {
         if (xTaskCreate(&synch_via_wifi, "synch_via_wifi", 1024 * 8, NULL, 5, &wifi_synch_task_handle) != pdPASS )
             {
@@ -97,7 +97,7 @@ void advertise()
                 config.STATE = DEEPSLEEP;
                 return;
             }
-    } else if (config.wifi_synch_task_suspended && global_ft->get_number_of_unsynched_trainings() > 0)
+    } else if (config.wifi_synch_task_suspended && global_ft->meta_number_of_unsynced_trainings() > 0)
     {
         if(DEBUG) ESP_LOGI(TAG_Adv, "Resuming the task");
         vTaskResume(wifi_synch_task_handle);
@@ -197,18 +197,6 @@ void advertise()
 
 void clean_up(BNO055 *bno_adv)
 {
-    /*if(config.wifi_connected)
-    {
-        esp_err_t wifi_stop_res = esp_wifi_stop();
-        if(wifi_stop_res == ESP_OK){
-            if(esp_wifi_deinit() != ESP_OK){
-                ESP_LOGE(TAG_Adv, "Failed to deinit WiFi");
-            } else 	if(DEBUG) ESP_LOGI(TAG_Adv, "Deinited WiFi after successful upload.");
-        } else {
-            ESP_LOGE(TAG_Adv, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
-        }
-        config.wifi_connected = false;
-    }*/
 
     esp_err_t wifi_stop_res = esp_wifi_stop();
     if(wifi_stop_res == ESP_OK){

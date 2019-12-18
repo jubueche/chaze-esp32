@@ -30,6 +30,7 @@ extern "C" {
 #include "esp_log.h"
 #include "Configuration.h"
 #include "ChazeFlashtraining.h"
+#include "ChazeMeta.h"
 
 void synch_via_wifi(void *);
 void poll_wifi(void);

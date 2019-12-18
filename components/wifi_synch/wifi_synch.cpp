@@ -73,7 +73,7 @@ void synch_via_wifi(void *pvParameter)
 		// Synch in connected mode.
 		while(config.STATE == ADVERTISING || config.STATE == CONNECTED ){
 
-			uint16_t number_of_unsynched_trainings = global_ft->get_number_of_unsynched_trainings();
+			uint16_t number_of_unsynched_trainings = global_ft->meta_number_of_unsynced_trainings();
 			// TODO Test that case
 			// vTaskResume(task_handle) will be called when the number of trainings is greater zero again
 			// Pre: config.wifi_connected == false
@@ -110,10 +110,8 @@ void synch_via_wifi(void *pvParameter)
 					if(DEBUG) ESP_LOGI(TAG_WiFi, "Released wifi_synch_semaphore after synch with azure.");
 
 					// Set the new number of trainings
-					if(success)
+					if(!success)
 					{
-						global_ft->remove_unsynched_training();
-					} else {
 						ESP_LOGE(TAG_WiFi, "Unsuccessful synch with azure");
 						config.allow_azure = false;
 					}
@@ -169,19 +167,14 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
     {
         if (data != NULL && size != NULL)
         {
-
 			if(!last_block)
 			{
-				int32_t bytes_read = global_ft->get_next_buffer_of_training(tmp_upload_buffer);
+				last_block = !global_ft->get_next_buffer_of_training(tmp_upload_buffer);
 				
 
 				*data = (const uint8_t *) tmp_upload_buffer;
-				if(bytes_read == -1){
-					*size = UPLOAD_BLOCK_SIZE;
-				} else {
-					last_block = true;
-					*size = bytes_read;
-				}
+				*size = UPLOAD_BLOCK_SIZE;
+				
 			} else {
 				*data = NULL;
                 *size = 0;
@@ -216,9 +209,9 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
  */
 bool synch_with_azure(void)
 {
-	bool success = false;
+	bool success = true;
 	(void)IoTHub_Init();
-	char * conn_string = global_ft->get_azure_connection_string();
+	char * conn_string = global_chaze_meta->get_azure_connection_string();
 	device_ll_handle = IoTHubDeviceClient_LL_CreateFromConnectionString(conn_string, HTTP_Protocol);
 	free(conn_string);
 	if (device_ll_handle == NULL)
@@ -252,33 +245,45 @@ bool synch_with_azure(void)
 				strftime_buf[i] = '_';
 			}
 		}
-		char file_name[128]; //64+32+puffer
-		//char * device_name = global_ft->get_device_name();
-		char * container_name = global_ft->get_container_name();
+
+		char * container_name = global_chaze_meta->get_container_name();
 		
-		strcpy(file_name, container_name); // This is the user-id of the current user
-		strcat(file_name, "/");
-		strcat(file_name, "09-01-1997-59-13"); //DD-MM-YYYY-MM-HH, Needs to come from training meta data
-		strcat(file_name, ".txt");
-		//free(device_name);
+		for(int i=0;i<global_ft->meta_number_of_unsynced_trainings();i++)
+		{
+			char file_name[128]; //64+32+puffer
+			strcpy(file_name, container_name); // This is the user-id of the current user
+			strcat(file_name, "/");
+			strcat(file_name, "09-01-1997-59-13"); //DD-MM-YYYY-MM-HH, Needs to come from training meta data
+			strcat(file_name, ".txt");
+			if(DEBUG) ESP_LOGI(TAG_WiFi, "File name is %s", file_name);
+
+			if(!global_ft->start_reading_data(i)){
+				success = false;
+				ESP_LOGE(TAG_WiFi, "Failed to start reading training.");
+				break;
+			}
+
+			if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
+			{
+				ESP_LOGE(TAG_WiFi, "Failed to upload");
+				success = false;
+				break;
+			}
+			else
+			{
+				if(DEBUG) ESP_LOGI(TAG_WiFi, "Successful upload.");
+				global_ft->meta_set_synced(i);
+				success = true;
+			}
+
+		}
 		free(container_name);
-		if(DEBUG) ESP_LOGI(TAG_WiFi, "File name is %s", file_name);
 
-		global_ft->start_reading_data();
-		
-		if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
+		if(!success)
 		{
-			ESP_LOGE(TAG_WiFi, "Failed to upload");
+			global_ft->abort_reading_data();
+			ESP_LOGE(TAG_WiFi, "Unsuccessful upload. Calling abort_reading_data()");
 		}
-		else
-		{
-			if(DEBUG) ESP_LOGI(TAG_WiFi, "Successful upload.");
-			success = true;
-		}
-
-
-		global_ft->abort_reading_data();
-
 		IoTHubDeviceClient_LL_Destroy(device_ll_handle);
 	}
 	IoTHub_Deinit();
@@ -317,8 +322,8 @@ void poll_wifi(void){
 	} else if(DEBUG) ESP_LOGI(TAG_WiFi, "Initialized WiFi");
 
 	wifi_sta_config_t sta_cnfg = {};
-	char * ssid = global_ft->get_wifi_ssid();
-	char * pass = global_ft->get_wifi_password();
+	char * ssid = global_chaze_meta->get_wifi_ssid();
+	char * pass = global_chaze_meta->get_wifi_password();
 	strcpy((char *) sta_cnfg.ssid, ssid);
 	strcpy((char *) sta_cnfg.password, pass);
 	free(ssid);
