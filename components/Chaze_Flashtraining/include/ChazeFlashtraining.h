@@ -52,8 +52,8 @@ class Flashtraining
 
     //READING TRAINING DATA
     bool start_reading_data(uint8_t trainindex);
-	//Read the next page (512 bytes) from current training. If the returned value is false, the reading process has finished (in this case STATE is automatically resetted to "ready")
-	bool get_next_buffer_of_training(uint8_t * buf);
+	//Read the next page (512 bytes) from current training. Returns the count of bytes written to buf
+	uint32_t get_next_buffer_of_training(uint8_t * buf);
 	//the following function has to be called only when reading process is aborted externally (if you don´t call it is not possible to start a new training until the next reset)
 	bool abort_reading_data();
 

@@ -200,20 +200,20 @@ bool Flashtraining::start_reading_data(uint8_t trainindex) 	//DONE
 	return true;
 }
 
-bool Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//DONE
+uint32_t Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//DONE
 {
 	wait_for_erasing();
-	if (_STATE != 3) return false;
+	if (_STATE != 3) return 0;
 
-	if (!myflash.readByteArray(_current_readposition, buf, 512)) return false;
-	_current_readposition += 512;
+	if (!myflash.readByteArray(_current_readposition, buf, 512)) return 0;
 
-	if (_current_readposition >= _current_endposition) {
+	if (_current_readposition + 512 >= _current_endposition) {
 		_STATE = 1;
-		return false;
+		return _current_endposition - _current_readposition;
 	}
+  _current_readposition += 512;
 
-	return true;
+	return 512;
 }
 
 bool Flashtraining::abort_reading_data() 	//DONE
