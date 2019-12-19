@@ -50,12 +50,7 @@ extern "C" void app_main()
 
 #pragma once
 
-#if (ARDUINO >= 100)
 #include "Arduino.h"
-#else
-#include "WProgram.h"
-#endif
-
 #include "Configuration.h"
 
 //The 7-bit I2C ADDRESS of the RV3028

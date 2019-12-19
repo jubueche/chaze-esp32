@@ -15,7 +15,7 @@ const char * TAG = "Chaze-Compression";
 
 buffer_t ** buffers = NULL;
 
-#define DEBUG_COMPRESSION 1
+#define DEBUG_COMPRESSION 0
 
 /**
  * @brief When recording sensor data, multiple tasks need to acquire a mutex in order to read from the bus and
@@ -111,7 +111,7 @@ uint32_t def(uint8_t * source, uint8_t * dest, uint8_t level)
 void write_data_to_flash(FlashtrainingWrapper_t * ft, uint8_t * data, uint32_t n)
 {
 
-	if(DEBUG_COMPRESSION) ESP_LOGI(TAG, "Writing data to flash.");
+	ESP_LOGI(TAG, "Writing %d uint8_ts to flash.", n);
 
 	bool err = !FlashtrainingWrapper_write_compressed_chunk(ft, data, n);
 

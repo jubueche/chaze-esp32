@@ -25,11 +25,8 @@
    <http://www.gnu.org/licenses/>.
 */
 
-#ifdef ARDUINO
-  #include "include/SPIFlash.h"
-#else
-  #include "SPIFlash.h"
-#endif
+
+#include "SPIFlash.h"
 
 
 

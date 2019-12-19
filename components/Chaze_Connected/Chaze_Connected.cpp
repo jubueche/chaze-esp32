@@ -432,25 +432,50 @@ void synch_data()
 
     if(DEBUG) ESP_LOGI(TAG_Con, "Synching data");
     bool done = false;
-    uint16_t num_unsynched_trainings = global_ft->meta_number_of_unsynced_trainings();
+    uint16_t num_trainings = global_ft->meta_total_number_of_trainings();
 
     uint8_t data[UPLOAD_BLOCK_SIZE_BLE];
-    ble->write(std::to_string(num_unsynched_trainings));
+    ble->write(std::to_string(global_ft->meta_number_of_unsynced_trainings()));
+    uint8_t date_buf[5];
 
-    for(int i=0;i<num_unsynched_trainings;i++)
+    for(int i=0;i<num_trainings;i++)
     {
+        // Skip this training if not synced yet
+        if(global_ft->meta_is_synced(i))
+        {
+            continue;
+        }
         // Call again for each training
         global_ft->start_reading_data(i);
-        
+
         //! TODO Need to get time of the training and send it here!
-        ble->write("31-02-2019-13-45");
+        if(global_ft->meta_get_training_starttime(i,date_buf))
+        {
+            uint8_t year = date_buf[0];
+            uint8_t month = date_buf[1];
+            uint8_t date = date_buf[2];
+            uint8_t hour = date_buf[3];
+            uint8_t min = date_buf[4];
+            char date_string[128];
+            sprintf(date_string, "%02d-%02d-20%02d-%02d-%02d", date,month,year,hour,min);
+            ESP_LOGI(TAG_Con, "Start training date is %s", date_string);
+            ble->write((const char *) date_string);
+        } else {
+            ble->write("00-00-0000-00-00");
+        }
 
-        bool response = true;
+        uint32_t num_written;
         do {
-            response = global_ft->get_next_buffer_of_training(data);
-            ble->write(data, UPLOAD_BLOCK_SIZE_BLE);
+            num_written = global_ft->get_next_buffer_of_training(data);
+            ble->write(data, num_written);
+            for(int j=0;j<num_written;j++)
+            {
+                printf("%d ",data[j]);
+            }
+            printf("\n");
 
-        } while(response);
+        } while(num_written == UPLOAD_BLOCK_SIZE_BLE);
+        printf("\n");
         ble->write(EOF); // Write EOF
 
         unsigned long response_timer = millis();
@@ -464,7 +489,8 @@ void synch_data()
         if(config.synched_training == SYNCH_COMPLETE)
         {
             if(DEBUG) ESP_LOGI(TAG_Con, "Successful synch.");
-            global_ft->meta_set_synced(i);
+            // A call to this function sets the ready-to-delete and synced flag of this training
+            global_ft->init_delete_training(i);
         } else if(config.synched_training == SYNCH_INCOMPLETE)
         {
             ESP_LOGE(TAG_Con, "Unsuccessful synch.");

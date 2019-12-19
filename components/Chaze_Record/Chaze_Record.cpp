@@ -25,13 +25,14 @@ void sample_hr(void * pvParams)
 		return;
 	}
 	for(;;){
+
 		if(DEBUG) ESP_LOGW(TAG_RECORD, "Maximum allocatable block %d", heap_caps_get_largest_free_block(MALLOC_CAP_8BIT));
 		gpio_set_level(GPIO_HR_BOOST,1); //Activate boost
 		hr.resume();
 		// Sample heart rate
 		// uint32_t heart_rate = hr.get_heart_rate(); //! HR single
 		int32_t * raw_data = hr.get_heart_rate_raw();
-
+		ESP_LOGW(TAG_RECORD, "HWM: %d", uxTaskGetStackHighWaterMark(NULL));
 		for(int i=0;i<num_samples;i++)
 		{
 			printf("%d ", raw_data[i]);
@@ -45,13 +46,14 @@ void sample_hr(void * pvParams)
 		sample_time = millis() - base_time;
 		// Populate uint8_t array.
 		//config.populate_heart_rate(bytes, heart_rate, sample_time); //! HR single
-
+		ESP_LOGW(TAG_RECORD, "HWM: %d", uxTaskGetStackHighWaterMark(NULL));
 		config.populate_heart_rate_raw(bytes_raw, raw_data, num_samples, sample_time);
 		// aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name); //! HR single
 		free(raw_data);
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Writing HR Raw");
 		aquire_lock_and_write_to_buffer(bytes_raw, sizeof(bytes_raw), name);
 		vTaskDelay(5000 / portTICK_PERIOD_MS); // Sample every 5s
+		ESP_LOGW(TAG_RECORD, "HWM: %d", uxTaskGetStackHighWaterMark(NULL));
 	}
 	
 }
@@ -253,10 +255,7 @@ void record()
 	config.attach_btn_int(&gpio_interrupt_handler_task, &record_gpio_isr_handler);
 	config.attach_bno_int(&gpio_interrupt_handler_task, &record_gpio_isr_handler);
 
-	//Enable no-motion interrupts on BNO
-	/*bno.enableSlowNoMotion(NO_MOTION_THRESHOLD, NO_MOTION_DURATION, NO_MOTION);
- 	bno.enableInterruptsOnXYZ(ENABLE, ENABLE, ENABLE);
-  	bno.setExtCrystalUse(true);*/
+  	bno.setExtCrystalUse(true);
 
 	// Give the binary semaphore for writing to the buffer
 	xSemaphoreGive(config.write_buffer_semaphore);
@@ -271,11 +270,13 @@ void record()
 
 	// Start all tasks. Heart rate has the highest priority followed by pressure and BNO.
 	bool success = true;
-	success = success && (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 10, NULL, 10, &hr_task_handle);
-	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 7, NULL, 10, &bno_task_handle);
-	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 7, NULL, 10, &pressure_task_handle);
-	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 7, NULL, 10, &pressure_backside_task_handle);
-	success = success && (bool) xTaskCreate(&check_buffer_and_write_to_flash_task, "check_and_compress", 1024*8, ft, 10, &check_buffer_and_write_to_flash_task_task_handle);
+	//int task_priority = tskIDLE_PRIORITY;
+	int task_priority = 10;
+	success = success && (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 10, NULL, task_priority, &hr_task_handle);
+	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 7, NULL, task_priority, &bno_task_handle);
+	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 7, NULL, task_priority, &pressure_task_handle);
+	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 7, NULL, task_priority, &pressure_backside_task_handle);
+	success = success && (bool) xTaskCreate(&check_buffer_and_write_to_flash_task, "check_and_compress", 1024*8, ft, task_priority, &check_buffer_and_write_to_flash_task_task_handle);
 	
 	if(!success){
 		ESP_LOGE(TAG_RECORD, "Failed to create tasks. Going to sleep.");

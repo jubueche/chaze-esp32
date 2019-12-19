@@ -95,3 +95,14 @@ uint32_t FlashtrainingWrapper_get_number_of_unsynched_trainings(FlashtrainingWra
     obj = static_cast<Flashtraining *>(ft->obj);
     return obj->meta_number_of_unsynced_trainings();
 }
+
+void FlashtrainingWrapper_erase_trainings_to_erase(FlashtrainingWrapper_t * ft)
+{
+    Flashtraining *obj;
+
+    if(ft != NULL)
+    {
+        obj = static_cast<Flashtraining *>(ft->obj);
+        obj->erase_trainings_to_erase();
+    }
+}

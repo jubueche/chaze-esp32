@@ -9,7 +9,7 @@
 
 
 const char * TAG_WiFi = "Chaze-WIFI-Synch";
-uint8_t * tmp_upload_buffer = new uint8_t[UPLOAD_BLOCK_SIZE];
+uint8_t tmp_upload_buffer[UPLOAD_BLOCK_SIZE];
 
 static bool last_block = false;
 
@@ -169,12 +169,30 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
         {
 			if(!last_block)
 			{
-				last_block = !global_ft->get_next_buffer_of_training(tmp_upload_buffer);
-				
+				int num_written = global_ft->get_next_buffer_with_size(tmp_upload_buffer, UPLOAD_BLOCK_SIZE);
+				ESP_LOGI(TAG_WiFi, "Free heap space: %d", esp_get_free_heap_size());
 
 				*data = (const uint8_t *) tmp_upload_buffer;
-				*size = UPLOAD_BLOCK_SIZE;
-				
+
+				if(num_written == -1)
+				{
+					ESP_LOGI(TAG_WiFi, "Block with size %d", UPLOAD_BLOCK_SIZE);
+					// for(int i=0;i<UPLOAD_BLOCK_SIZE;i++)
+					// {
+					// 	printf("%d ",tmp_upload_buffer[i]);
+					// }
+					// printf("\n");
+					*size = UPLOAD_BLOCK_SIZE;
+				} else {
+					ESP_LOGI(TAG_WiFi, "Last block with size %d", num_written);
+					// for(int i=0;i<num_written;i++)
+					// {
+					// 	printf("%d ",tmp_upload_buffer[i]);
+					// }
+					// printf("\n");
+					*size = num_written;
+					last_block = true;
+				}
 			} else {
 				*data = NULL;
                 *size = 0;
@@ -198,7 +216,8 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
 	if(config.STATE == ADVERTISING || config.STATE == CONNECTED){
 		return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_OK;
 	} else {
-		// Abort if we are suddently in RECORD or DEEPSLEEP state.
+		// Abort if we are suddenly in RECORD or DEEPSLEEP state.
+		ESP_LOGW(TAG_WiFi, "State has changed in Callback.");
 		return IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_ABORT;
 	}
 }
@@ -232,28 +251,42 @@ bool synch_with_azure(void)
 		localtime_r(&now, &timeinfo);
 		strftime(strftime_buf, sizeof(strftime_buf), "%c", &timeinfo);
 
-		if(rtc.begin()) {
-			rtc.set24Hour();
-			rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);	
-			if(DEBUG) ESP_LOGI(TAG_WiFi, "Set time to %s", rtc.stringDate());
-		} else {
-			ESP_LOGE(TAG_WiFi, "Error setting time.");
-		}
-
-		for(int i=0;i<strlen(strftime_buf);i++){
-			if(strftime_buf[i] == ' '){
-				strftime_buf[i] = '_';
-			}
-		}
+		// rtc is initialized in main
+		rtc.set24Hour();
+		rtc.setTime(timeinfo.tm_sec, timeinfo.tm_min, timeinfo.tm_hour, timeinfo.tm_wday, timeinfo.tm_mday, timeinfo.tm_mon +1, timeinfo.tm_year +1900);
 
 		char * container_name = global_chaze_meta->get_container_name();
+		int num_trainings = global_ft->meta_total_number_of_trainings();
+		ESP_LOGI(TAG_WiFi, "Number of trainings is %d", num_trainings);
+
 		
-		for(int i=0;i<global_ft->meta_number_of_unsynced_trainings();i++)
+		for(int i=0;i<num_trainings;i++)
 		{
+			// Skip if this training was already synched
+			if(global_ft->meta_is_synced(i))
+			{
+				ESP_LOGI(TAG_WiFi, "Training %d is already synched.", i);
+				continue;
+			}
 			char file_name[128]; //64+32+puffer
 			strcpy(file_name, container_name); // This is the user-id of the current user
 			strcat(file_name, "/");
-			strcat(file_name, "09-01-1997-59-13"); //DD-MM-YYYY-MM-HH, Needs to come from training meta data
+			uint8_t date_buf[5];
+			if(global_ft->meta_get_training_starttime(i,date_buf))
+			{
+				uint8_t year = date_buf[0];
+				uint8_t month = date_buf[1];
+				uint8_t date = date_buf[2];
+				uint8_t hour = date_buf[3];
+				uint8_t min = date_buf[4];
+				char date_string[128];
+				sprintf(date_string, "%02d-%02d-20%02d-%02d-%02d", date,month,year,hour,min);
+				ESP_LOGI(TAG_WiFi, "Start training date is %s", date_string);
+				strcat(file_name, (const char *) date_string);				
+			} else {
+				strcat(file_name, "00-00-0000-00-00");
+			}
+
 			strcat(file_name, ".txt");
 			if(DEBUG) ESP_LOGI(TAG_WiFi, "File name is %s", file_name);
 
@@ -262,6 +295,8 @@ bool synch_with_azure(void)
 				ESP_LOGE(TAG_WiFi, "Failed to start reading training.");
 				break;
 			}
+
+			ESP_LOGI(TAG_WiFi, "Synching training with size %d bytes", global_ft->meta_get_training_size(i));
 
 			if (IoTHubDeviceClient_LL_UploadMultipleBlocksToBlob(device_ll_handle, file_name, getDataCallback, NULL) != IOTHUB_CLIENT_OK)
 			{
@@ -272,7 +307,7 @@ bool synch_with_azure(void)
 			else
 			{
 				if(DEBUG) ESP_LOGI(TAG_WiFi, "Successful upload.");
-				global_ft->meta_set_synced(i);
+				global_ft->init_delete_training(i); // This sets the ready-to-delete-flag AND the is_synced flag
 				success = true;
 			}
 
@@ -302,6 +337,8 @@ void poll_wifi(void){
 	if(config.STATE != ADVERTISING && config.STATE != CONNECTED)
 		return;
 
+	config.wifi_setup_once = true;
+	
 	tcpip_adapter_init();
 	if(!config.event_handler_set)
 	{
@@ -314,7 +351,7 @@ void poll_wifi(void){
 
 	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
 
-	esp_err_t wifi_init_res = esp_wifi_init(&cfg);  
+	esp_err_t wifi_init_res = esp_wifi_init(&cfg);
 
 	if(wifi_init_res != ESP_OK){
 		ESP_LOGE(TAG_WiFi, "Could not initialize WiFi: %s", esp_err_to_name(wifi_init_res));

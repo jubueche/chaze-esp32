@@ -2,29 +2,22 @@
    Created by Constantin Koch, May 23, 2018
 */
 #include "ChazeFlashtraining.h"
-#ifndef ARDUINO
-#include "string.h"
-#endif
 
 #define META_STARTADDR 33030144
 #define CALIB_STARTADDR 33292288
 
 Flashtraining *global_ft = new Flashtraining();
 
-
 //CONSTRUCTOR
 Flashtraining::Flashtraining()	//DONE
 {
-#ifndef ARDUINO
+	
 	esp_err_t err = config.initialize_spi();
-#endif
-
-	if (!myflash.begin(SPIFlash_CS)) ESP_LOGI(TAG, " Error in SPIFlash.begin");
-	if (!rtc.begin()) ESP_LOGI(TAG, " Error in rtc.begin");
+	if (!myflash.begin(SPIFlash_CS)) ESP_LOGE(TAG, " Error in SPIFlash.begin");
 
 	//Validation
 	uint32_t JEDEC = myflash.getJEDECID();
-	if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) ESP_LOGI(TAG, " Error in JEDEC validation");
+	if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) ESP_LOGE(TAG, " Error in JEDEC validation");
 
 	_current_trainingindex = 0;
 	_current_writeposition = 0;
@@ -200,20 +193,44 @@ bool Flashtraining::start_reading_data(uint8_t trainindex) 	//TEST
 	return true;
 }
 
-bool Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//TEST
+uint32_t Flashtraining::get_next_buffer_of_training(uint8_t * buf)	//DONE
 {
 	wait_for_erasing();
-	if (_STATE != 3) return false;
+	if (_STATE != 3) return 0;
 
-	if (!myflash.readByteArray(_current_readposition, buf, 512)) return false;
-	_current_readposition += 512;
+	if (!myflash.readByteArray(_current_readposition, buf, 512)) return 0;
 
-	if (_current_readposition >= _current_endposition) {
+	if (_current_readposition + 512 >= _current_endposition) {
 		_STATE = 1;
-		return false;
+		return _current_endposition - _current_readposition;
 	}
+  _current_readposition += 512;
 
-	return true;
+	return 512;
+}
+
+int Flashtraining::get_next_buffer_with_size(uint8_t * buf, int max_size)
+{
+	if(max_size % 512 != 0)
+	{
+		ESP_LOGE(TAG, "Please specify upload size to be a multiple of 512.");
+		return -1;
+	} else {
+		int num_chunks = max_size / 512;
+		uint8_t * tmp_buf = (uint8_t *) malloc(sizeof(uint8_t)*512);
+		for(int i=0;i<num_chunks;i++)
+		{
+			uint32_t num_written = this->get_next_buffer_of_training(tmp_buf);
+			memcpy(buf+i*512, tmp_buf, num_written);
+			if(num_written < 512) //This was the last chunk
+			{
+				return i*512+num_written;
+			}
+		}
+		free(tmp_buf);
+		// We are done and have not reached the end
+		return -1;	
+	}
 }
 
 bool Flashtraining::abort_reading_data() 	//TEST
@@ -257,6 +274,10 @@ void Flashtraining::erase_trainings_to_erase() //DONE
 	if (_STATE != 1) return;
 
 	uint32_t total = meta_total_number_of_trainings();
+	if(total == 0)
+	{
+		return;
+	}
 
 	for (uint32_t i = 0; i < total; i++) {
 		//		should delete this training?							//	is it not yet deleted?
@@ -274,7 +295,7 @@ void Flashtraining::erase_trainings_to_erase() //DONE
 				myflash.eraseBlock256K(start);
 				int mm = millis();
 				while (myflash.CheckErasing_inProgress()) { delay(10);  if (millis() > mm + 4000) { _STATE = 4; return; } }
-        start += 262144;
+        		start += 262144;
 			}
 			//Set "deleted" flag
 			myflash.writeByte(META_STARTADDR + i * 512 + 20, 1);

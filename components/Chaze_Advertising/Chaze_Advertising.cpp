@@ -34,6 +34,17 @@ void gpio_bno_task(void* arg)
 
 void advertise()
 {
+    //! DEBUG
+    if(DEBUG)
+    {
+        int num_trainings = global_ft->meta_total_number_of_trainings();
+        ESP_LOGI(TAG_Adv, "Number of trainings is %d", num_trainings);
+        for(int i=0;i<num_trainings;i++)
+        {
+            ESP_LOGI(TAG_Adv, "Size of training %d is %d. Synched?: %d Deleted?: %d" ,i,global_ft->meta_get_training_size(i),global_ft->meta_is_synced(i),global_ft->meta_is_deleted(i));
+        }
+    }
+
 
     if(config.wifi_connected)
     {
@@ -198,13 +209,16 @@ void advertise()
 void clean_up(BNO055 *bno_adv)
 {
 
-    esp_err_t wifi_stop_res = esp_wifi_stop();
-    if(wifi_stop_res == ESP_OK){
-        if(esp_wifi_deinit() != ESP_OK){
-            ESP_LOGE(TAG_Adv, "Failed to deinit WiFi");
-        } else 	if(DEBUG) ESP_LOGI(TAG_Adv, "Deinited WiFi after successful upload.");
-    } else {
-        ESP_LOGE(TAG_Adv, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
+    if(config.wifi_setup_once)
+    {
+        esp_err_t wifi_stop_res = esp_wifi_stop();
+        if(wifi_stop_res == ESP_OK){
+            if(esp_wifi_deinit() != ESP_OK){
+                ESP_LOGE(TAG_Adv, "Failed to deinit WiFi");
+            } else 	if(DEBUG) ESP_LOGI(TAG_Adv, "Deinited WiFi.");
+        } else {
+            ESP_LOGE(TAG_Adv, "Could not stop WiFi: %s", esp_err_to_name(wifi_stop_res));
+        }
     }
     config.wifi_connected = false;
 

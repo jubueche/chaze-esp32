@@ -116,7 +116,7 @@ char * ChazeMeta::get_azure_connection_string(void)
 
 char * ChazeMeta::get_wifi_ssid(void)
 {
-	return this->get_string_pointer_from_memory("ssid", 128, "Refhaus_Mitte/Zentral");
+	return this->get_string_pointer_from_memory("ssid", 128, "Refhauss_Mitte/Zentral");
 }
 
 

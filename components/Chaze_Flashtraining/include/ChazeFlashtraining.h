@@ -32,7 +32,7 @@ class Flashtraining
     //WRITE TRAINING
     bool start_new_training();
 	bool write_compressed_chunk(uint8_t * data, uint32_t n);			//Write n chars to the flash (8192 bytes compressed to ~4000 bytes)
-    bool stop_training();
+	bool stop_training();
 
 	//TRAINING METADATA
 	uint32_t meta_total_number_of_trainings();								//returns the total number of trainings (synced and nonsynced ones)									
@@ -48,7 +48,8 @@ class Flashtraining
     //READING TRAINING DATA
     bool start_reading_data(uint8_t trainindex);
 	//Read the next page (512 bytes) from current training. If the returned value is false, the reading process has finished (in this case STATE is automatically resetted to "ready")
-	bool get_next_buffer_of_training(uint8_t * buf);
+	uint32_t get_next_buffer_of_training(uint8_t * buf);
+	int get_next_buffer_with_size(uint8_t *, int);
 	//the following function has to be called only when reading process is aborted externally (if you don´t call it is not possible to start a new training until the next reset)
 	bool abort_reading_data();
 
@@ -73,7 +74,6 @@ class Flashtraining
 
   private:
     SPIFlash myflash;
-    RV3028 rtc;
   
     const char * TAG = "Chaze-Flashtraining";
 

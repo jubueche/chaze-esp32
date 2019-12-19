@@ -81,6 +81,8 @@ bool RV3028::begin()
 		ESP_LOGE(TAG, "Failed to initialize I2C connection. Error: %s", esp_err_to_name(err));
 	}
 
+	vTaskDelay(100 /portTICK_PERIOD_MS);
+
 	set24Hour(); delay(1);
 	disableTrickleCharge(); delay(1);
 
