@@ -257,6 +257,7 @@ void Flashtraining::erase_trainings_to_erase() //DONE
 	if (_STATE != 1) return;
 
 	uint32_t total = meta_total_number_of_trainings();
+  if(total == 0) return;
 
 	for (uint32_t i = 0; i < total; i++) {
 		//		should delete this training?							//	is it not yet deleted?
