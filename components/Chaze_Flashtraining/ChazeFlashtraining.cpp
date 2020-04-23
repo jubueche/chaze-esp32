@@ -13,11 +13,44 @@ Flashtraining::Flashtraining()	//DONE
 {
 	
 	esp_err_t err = config.initialize_spi();
-	if (!myflash.begin(SPIFlash_CS)) ESP_LOGE(TAG, " Error in SPIFlash.begin");
+	int num_tries = 0;
+	while(err != ESP_OK)
+	{
+		if(num_tries == 10)
+		{
+			config.STATE = DEEPSLEEP;
+			return;
+		}
+		ESP_LOGE(TAG, "Error initializing SPI");
+		config.initialize_spi();
+		vTaskDelay(100 / portTICK_PERIOD_MS);
+		num_tries++;
+	}
+	num_tries = 0;
+	while (!myflash.begin(SPIFlash_CS))
+	{
+		if(num_tries == 10)
+		{
+			config.STATE = DEEPSLEEP;
+			return;
+		}
+		ESP_LOGE(TAG, " Error in SPIFlash.begin");
+		vTaskDelay(100 / portTICK_PERIOD_MS);
+		num_tries++;
+	}
+	num_tries = 0;
 
 	//Validation
-	uint32_t JEDEC = myflash.getJEDECID();
-	if (uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25) ESP_LOGE(TAG, " Error in JEDEC validation");
+	uint32_t JEDEC;
+	bool correct = false;
+	do {
+		JEDEC = myflash.getJEDECID();
+		correct = !(uint8_t(JEDEC >> 16) != 1 || uint8_t(JEDEC >> 8) != 2 || uint8_t(JEDEC >> 0) != 25);
+		if(!correct)
+		{
+			ESP_LOGE(TAG, " Error in JEDEC validation");
+		}
+	} while(!correct);
 
 	_current_trainingindex = 0;
 	_current_writeposition = 0;
@@ -86,6 +119,7 @@ bool Flashtraining::write_compressed_chunk(uint8_t * data, uint32_t n)	//TEST
 		return false;
 	}
 	_current_writeposition += n;
+
 
 	return true;
 }

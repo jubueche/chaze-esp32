@@ -7,7 +7,7 @@
 #include "freertos/queue.h"
 #include "ChazeFlashtrainingWrapper.h"
 #include "BLECharacteristic.h"
-#define DEBUG 1
+#define DEBUG 0
 
 
 /*

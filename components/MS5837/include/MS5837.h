@@ -59,7 +59,7 @@ private:
 	uint16_t C[8];
 	uint32_t D1, D2;
 	int32_t TEMP;
-	int32_t P;
+	float P;
 	uint8_t _model;
 
 	float fluidDensity;

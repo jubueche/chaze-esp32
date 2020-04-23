@@ -4,6 +4,7 @@
 const char * TAG_RECORD = "Chaze Record";
 
 #define DEBUG_RECORDING
+#define USE_HEART_RATE 0
 
 // TODO Emergency training stop when eg buffer can not be written anymore
 // TODO Enable no motion again
@@ -65,9 +66,17 @@ void sample_pressure(void * pvParams)
 	unsigned long sample_time;
 	uint8_t bytes[9] = {};
 	char const * name = "Pressure";
+	uint32_t count = 0; // For debugging the sampling rate w/o printing
+	unsigned long hz_base_time = millis();
 	for(;;){
 		pressure.read_vals();
 		value = pressure.pressure();
+		count += 1;
+		if(count == 100){
+			count=0;
+			printf("%.3f Hz\n", (1000.0/((double) (millis()-hz_base_time))*100.0));
+			hz_base_time = millis();
+		}
 		// Get time of sample
 		sample_time = millis() - base_time;
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure: Time: %lu  Pressure: %f", sample_time, value);
@@ -238,10 +247,13 @@ void record()
 	// Initialize all sensors (+ Calibration)
 	if(setup_bno(ft) == ESP_OK){
 		if(setup_pressure() == ESP_OK){
-			setup_hr();
+			if(USE_HEART_RATE)
+			{
+				setup_hr();
+			}
 			if(DEBUG) ESP_LOGI(TAG_RECORD, "Setup complete.");
 		} else {
-			ESP_LOGE(TAG_RECORD, "Error initializing pressure.");
+			ESP_LOGE(TAG_RECORD, "Error initializing any pressure.");
 			config.STATE = DEEPSLEEP;
 			return;
 		}
@@ -272,7 +284,10 @@ void record()
 	bool success = true;
 	//int task_priority = tskIDLE_PRIORITY;
 	int task_priority = 10;
-	success = success && (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 10, NULL, task_priority, &hr_task_handle);
+	if(USE_HEART_RATE)
+	{
+		success = success && (bool) xTaskCreate(&sample_hr, "sample_hr", 1024 * 10, NULL, task_priority, &hr_task_handle);
+	}
 	success = success && (bool) xTaskCreate(&sample_bno, "sample_bno", 1024 * 7, NULL, task_priority, &bno_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure, "sample_pressure", 1024 * 7, NULL, task_priority, &pressure_task_handle);
 	success = success && (bool) xTaskCreate(&sample_pressure_backside, "sample_pressure_backside", 1024 * 7, NULL, task_priority, &pressure_backside_task_handle);
@@ -341,8 +356,11 @@ void clean_up(TaskHandle_t hr_task_handle, TaskHandle_t bno_task_handle, TaskHan
 	if(xSemaphoreTake(config.write_buffer_semaphore, portMAX_DELAY) == pdTRUE)
 	{
 		// Delete the tasks
-		vTaskDelete(hr_task_handle);
-		ESP_LOGI(TAG_RECORD, "Deleted HR");
+		if(USE_HEART_RATE)
+		{
+			vTaskDelete(hr_task_handle);
+			ESP_LOGI(TAG_RECORD, "Deleted HR");
+		}
 		vTaskDelete(bno_task_handle);
 		ESP_LOGI(TAG_RECORD, "Deleted BNO");
 		vTaskDelete(pressure_task_handle);
@@ -424,7 +442,7 @@ esp_err_t setup_pressure()
 	if(!pressure.init(I2C_NUM_0))
 	{
 		config.STATE = DEEPSLEEP;
-		ESP_LOGE(TAG_RECORD, "Error initializing pressure.");
+		ESP_LOGE(TAG_RECORD, "Error initializing pressure front.");
 		return ESP_FAIL;
 	}
 	if(!pressure_backside.init(I2C_NUM_1))
@@ -480,7 +498,7 @@ void aquire_lock_and_write_to_buffer(uint8_t * bytes, int32_t length, char const
 			//Fill up the buffer with 255 and set the buff_idx to buff_idx XOR 1
 			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Buffer %d almost full, fill up", buff_idx);
 			for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
-				curr_buff->data[i] = 255;
+				curr_buff->data[i] = 0; // Fill up with zeros
 			curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
 			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Counter is %d", curr_buff->counter);
 

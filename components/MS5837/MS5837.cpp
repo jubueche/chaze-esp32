@@ -29,8 +29,13 @@ const uint8_t MS5837_ADDR = 0x76;
 const uint8_t MS5837_RESET = 0x1E;
 const uint8_t MS5837_ADC_READ = 0x00;
 const uint8_t MS5837_PROM_READ = 0xA0;
+
 const int MS5837_CONVERT_D1_8192 = 0x4A;
+const int MS5837_CONVERT_D1_4096 = 0x48;
+const int MS5837_CONVERT_D1_2048 = 0x46;
 const int MS5837_CONVERT_D2_8192 = 0x5A;
+const int MS5837_CONVERT_D2_4096 = 0x58; // Use 10ms delay, gives 25Hz
+const int MS5837_CONVERT_D2_2048 = 0x56; // Use 8ms delay, gives 50Hz
 
 
 const float MS5837::Pa = 100.0f;
@@ -97,13 +102,13 @@ void MS5837::setFluidDensity(float density) {
 void MS5837::read_vals() {
 	// Request D1 conversion
 	uint8_t t[1];
-	t[0] = MS5837_CONVERT_D1_8192;
+	t[0] = MS5837_CONVERT_D1_4096;
 	esp_err_t err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C.");
 	}
 
-	vTaskDelay(20 / portTICK_PERIOD_MS); // Max conversion time per datasheet
+	vTaskDelay(10 / portTICK_PERIOD_MS); // Max conversion time per datasheet
 
 	uint8_t tmp[3];
 	readReg_IDF(MS5837_ADC_READ, tmp, 3);
@@ -114,13 +119,13 @@ void MS5837::read_vals() {
 	D1 = (D1 << 8) | tmp[2];
 
 	// Request D2 conversion
-	t[0] = MS5837_CONVERT_D2_8192;
+	t[0] = MS5837_CONVERT_D2_4096;
 	err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C.");
 	}
 
-	vTaskDelay(20 / portTICK_PERIOD_MS); // Max conversion time per datasheet
+	vTaskDelay(10 / portTICK_PERIOD_MS); // Max conversion time per datasheet
 
 	readReg_IDF(MS5837_ADC_READ, tmp, 3);
 
@@ -189,10 +194,11 @@ void MS5837::calculate() {
 
 	if ( _model == MS5837_02BA ) {
 		TEMP = (TEMP-Ti);
-		P = (((D1*SENS2)/2097152l-OFF2)/32768l)/100;
+		// The last two digits are floating point digits, 10002 -> 100.02
+		P = (float) (((D1*SENS2)/2097152l-OFF2)/32768l)/100.0;
 	} else {
 		TEMP = (TEMP-Ti);
-		P = (((D1*SENS2)/2097152l-OFF2)/8192l)/10;
+		P = (float) (((D1*SENS2)/2097152l-OFF2)/8192l)/10.0;
 	}
 }
 
@@ -250,12 +256,11 @@ void MS5837::readReg_IDF(uint8_t reg, uint8_t * data, size_t size){
 		return;
 	}
 	uint8_t t[1] = {reg};
-	vTaskDelay(20 / portTICK_PERIOD_MS);
+	vTaskDelay(10 / portTICK_PERIOD_MS);
 	esp_err_t err = config.write(t, 1, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to write to I2C, Error was %s", esp_err_to_name(err));
 	}
-	//vTaskDelay(30 / portTICK_RATE_MS);
 	err = config.read(data,size, MS5837_ADDR, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to read from I2C, l260, Error was %s", esp_err_to_name(err));
