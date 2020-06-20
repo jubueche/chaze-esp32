@@ -790,7 +790,6 @@ bool BNO055::readLen(bno055_reg_t reg, uint8_t * data, uint8_t size){
 		ESP_LOGE(TAG, "Failed to write to I2C, l823, Error is %s", esp_err_to_name(err));
 		return false;
 	}
-	vTaskDelay(30 / portTICK_RATE_MS);
 	err = config.read(data,size, _address, port_num);
 	if(err != ESP_OK){
 		ESP_LOGE(TAG, "Failed to read from I2C, l829");

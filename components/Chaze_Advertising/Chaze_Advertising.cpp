@@ -34,20 +34,18 @@ void gpio_bno_task(void* arg)
 
 void advertise()
 {
-    //! DEBUG
-    if(DEBUG)
-    {
-        int num_trainings = global_ft->meta_total_number_of_trainings();
-        ESP_LOGI(TAG_Adv, "Number of trainings is %d", num_trainings);
-        for(int i=0;i<num_trainings;i++)
-        {
-            if(global_ft->meta_get_training_size(i) == 262144 || global_ft->meta_get_training_size(i) == 0)
-            {
-                global_ft->init_delete_training(i);
-            }
-            ESP_LOGI(TAG_Adv, "Size of training %d is %d. Synched?: %d Deleted?: %d" ,i,global_ft->meta_get_training_size(i),global_ft->meta_is_synced(i),global_ft->meta_is_deleted(i));
-        }
-    }
+    
+    // ESP_LOGE(TAG_Adv, "WARNING WARNING Deleteing all trainings.");
+    // int num_trainings = global_ft->meta_total_number_of_trainings();
+    // ESP_LOGI(TAG_Adv, "Number of trainings is %d", num_trainings);
+    // for(int i=0;i<num_trainings;i++)
+    // {
+    //     if(global_ft->meta_get_training_size(i) == 262144 || global_ft->meta_get_training_size(i) == 0 || true)
+    //     {
+    //         global_ft->init_delete_training(i);
+    //     }
+    //     ESP_LOGI(TAG_Adv, "Size of training %d is %d. Synched?: %d Deleted?: %d" ,i,global_ft->meta_get_training_size(i),global_ft->meta_is_synced(i),global_ft->meta_is_deleted(i));
+    // }
 
 
     if(config.wifi_connected)

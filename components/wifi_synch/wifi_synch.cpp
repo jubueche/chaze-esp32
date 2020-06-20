@@ -176,20 +176,27 @@ static IOTHUB_CLIENT_FILE_UPLOAD_GET_DATA_RESULT getDataCallback(IOTHUB_CLIENT_F
 
 				if(num_written == -1)
 				{
-					ESP_LOGI(TAG_WiFi, "Block with size %d", UPLOAD_BLOCK_SIZE);
-					for(int i=0;i<UPLOAD_BLOCK_SIZE;i++)
+					if(DEBUG)
 					{
-						printf("%d ",tmp_upload_buffer[i]);
+						// 24 bytes lost everytime
+						ESP_LOGI(TAG_WiFi, "Block with size %d", UPLOAD_BLOCK_SIZE);
+						for(int i=0;i<UPLOAD_BLOCK_SIZE;i++)
+						{
+							printf("%d ",tmp_upload_buffer[i]);
+						}
+						printf("\n");
 					}
-					printf("\n");
 					*size = UPLOAD_BLOCK_SIZE;
 				} else {
-					ESP_LOGI(TAG_WiFi, "Last block with size %d", num_written);
-					for(int i=0;i<num_written;i++)
+					if(DEBUG)
 					{
-						printf("%d ",tmp_upload_buffer[i]);
+						ESP_LOGI(TAG_WiFi, "Last block with size %d", num_written);
+						for(int i=0;i<num_written;i++)
+						{
+							printf("%d ",tmp_upload_buffer[i]);
+						}
+						printf("\n");
 					}
-					printf("\n");
 					*size = num_written;
 					last_block = true;
 				}

@@ -268,8 +268,6 @@ void set_container()
 
 void set_conn_string()
 {
-    if(buffer->size > 512)
-        return;
     if(DEBUG) ESP_LOGI(TAG_Con, "Set Conn String");
     char cs[buffer->size+1];
     memcpy(cs, buffer->data, buffer->size);
@@ -431,7 +429,6 @@ void synch_data()
 {
 
     if(DEBUG) ESP_LOGI(TAG_Con, "Synching data");
-    bool done = false;
     uint16_t num_trainings = global_ft->meta_total_number_of_trainings();
 
     uint8_t data[UPLOAD_BLOCK_SIZE_BLE];

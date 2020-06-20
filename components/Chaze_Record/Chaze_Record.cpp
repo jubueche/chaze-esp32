@@ -74,7 +74,7 @@ void sample_pressure(void * pvParams)
 		count += 1;
 		if(count == 100){
 			count=0;
-			printf("%.3f Hz\n", (1000.0/((double) (millis()-hz_base_time))*100.0));
+			// printf("Pressure: %.3f Hz\n", (1000.0/((double) (millis()-hz_base_time))*100.0));
 			hz_base_time = millis();
 		}
 		// Get time of sample
@@ -91,13 +91,21 @@ void sample_pressure_backside(void * pvParams)
 	unsigned long sample_time;
 	uint8_t bytes[9] = {};
 	char const * name = "Pressure Back";
+	uint32_t count = 0; // For debugging the sampling rate w/o printing
+	unsigned long hz_base_time = millis();
 	for(;;){
 		pressure_backside.read_vals();
 		value = pressure_backside.pressure();
+		count += 1;
+		if(count == 100){
+			count=0;
+			// printf("Back-Pressure: %.3f Hz\n", (1000.0/((double) (millis()-hz_base_time))*100.0));
+			hz_base_time = millis();
+		}
 		// Get time of sample
 		sample_time = millis() - base_time;
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Pressure Backside: Time: %lu  Pressure: %f", sample_time, value);
-		config.populate_pressure(bytes, value, sample_time,true);
+		config.populate_pressure(bytes, value, sample_time, true);
 		aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name);
 	}
 }
@@ -111,6 +119,8 @@ void sample_bno(void * pvParams)
 	uint8_t bytes[33];
 	float values[7];
 	double values_d[7];
+	uint32_t count = 0; // For debugging the sampling rate w/o printing
+	unsigned long hz_base_time = millis();
 	char const * name = "BNO055";
 	for(;;){
 		sample_time = millis() - base_time;
@@ -120,9 +130,16 @@ void sample_bno(void * pvParams)
 		for(int i=0;i<7;i++){
 			values[i] = (float) values_d[i];
 		}
+		count += 1;
+		if(millis()-hz_base_time > 1000.0){
+			// printf("%d Hz\n", count);
+			hz_base_time = millis();
+			count=0;
+		}
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "BNO: Time: %lu  AccX: %f, AccY: %f, AccZ: %f, QuatW: %f, QuatY: %f, QuatX: %f, QuatZ: %f, ", sample_time, values[0], values[1], values[2], values[3], values[4], values[5], values[6]);
 		config.populate_bno(bytes, values, sample_time);
 		aquire_lock_and_write_to_buffer(bytes, sizeof(bytes), name);
+		vTaskDelay(1); // 100 Hz
 	}
 }
 
@@ -487,21 +504,29 @@ void aquire_lock_and_write_to_buffer(uint8_t * bytes, int32_t length, char const
 	{
 		buffer_t * curr_buff = buffers[buff_idx];
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "%s acquired the lock", name);
-		if(BUFFER_SIZE-curr_buff->counter >= length){
-			if(DEBUG) ESP_LOGI(TAG_RECORD, "Space left: %d", BUFFER_SIZE-curr_buff->counter);
-			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Enough space to write");
-			//Enough space, we can write
+		int32_t space_left = BUFFER_SIZE-curr_buff->counter;
+		int32_t left_to_write = length;
+
+		if(DEBUG) ESP_LOGI(TAG_RECORD, "Space left: %d", BUFFER_SIZE-curr_buff->counter);
+		if(space_left >= length)
+		{
+			// Enough space, write everything
 			memcpy(curr_buff->data+(curr_buff->counter), bytes, length);
 			curr_buff->counter += length;
-		} else{
-			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer full. Writing in next one.");
-			//Fill up the buffer with 255 and set the buff_idx to buff_idx XOR 1
-			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Buffer %d almost full, fill up", buff_idx);
-			for(int i=curr_buff->counter;i<BUFFER_SIZE-curr_buff->counter;i++)
-				curr_buff->data[i] = 0; // Fill up with zeros
-			curr_buff->counter += BUFFER_SIZE-curr_buff->counter;
-			if(DEBUG)  ESP_LOGI(TAG_RECORD, "Counter is %d", curr_buff->counter);
+			left_to_write = 0;
+		} else {
+			// Not enough space, write the space that is left
+			memcpy(curr_buff->data+(curr_buff->counter), bytes, space_left);
+			left_to_write -= space_left;
+			curr_buff->counter += space_left;
+		}
 
+		// Check if there is still something to write. If so, we must switch the buffer
+		if(left_to_write > 0)
+		{
+			if(DEBUG) ESP_LOGI(TAG_RECORD, "Buffer full. Writing in next one.");
+			if(DEBUG && curr_buff->counter != BUFFER_SIZE) ESP_LOGE(TAG_RECORD, "Expected counter to be equal buffer size.");
+			// Switch the buffer
 			if(buff_idx==0)
 				buff_idx=1;
 			else buff_idx=0;
@@ -509,10 +534,9 @@ void aquire_lock_and_write_to_buffer(uint8_t * bytes, int32_t length, char const
 			// Fill up the new buffer with the data
 			buffer_t * curr_buff = buffers[buff_idx];
 			curr_buff->counter = 0;
-			memcpy(curr_buff->data+(curr_buff->counter), bytes, length);
-			curr_buff->counter += length;
+			memcpy(curr_buff->data, bytes+space_left, left_to_write);
+			curr_buff->counter += left_to_write;
 		}
-
 		if(DEBUG) ESP_LOGI(TAG_RECORD, "Release mutex");
 		//Release mutex
 		xSemaphoreGive(config.write_buffer_semaphore);

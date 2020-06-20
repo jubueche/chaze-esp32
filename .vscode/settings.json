@@ -3,7 +3,12 @@
     "files.associations": {
         "*.tcc": "cpp",
         "streambuf": "cpp",
-        "certs.h": "c"
+        "certs.h": "c",
+        "memory": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp"
     },
     "C_Cpp.dimInactiveRegions": false,
     "azureFunctions.templateFilter": "All"

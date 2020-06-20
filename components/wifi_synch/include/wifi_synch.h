@@ -1,9 +1,6 @@
 #ifndef WIFI_SYNCH_H
 #define WIFI_SYNCH_H
 
-
-#include "esp_log.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "string.h"
@@ -16,7 +13,6 @@ extern "C" {
 #include "iothubtransporthttp.h"
 #include "azure_c_shared_utility/agenttime.h"
 }
-
 
 #include "certs.h"
 
